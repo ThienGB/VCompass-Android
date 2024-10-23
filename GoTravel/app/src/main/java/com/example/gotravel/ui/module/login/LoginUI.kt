@@ -17,6 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.gotravel.R
@@ -65,8 +66,9 @@ fun LoginUI() {
 fun LoginForm() {
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var isPasswordVisible by remember { mutableStateOf(false) }
 
-    var keyboardController = LocalSoftwareKeyboardController.current
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     Column(
         modifier = Modifier
@@ -90,14 +92,14 @@ fun LoginForm() {
             colors = TextFieldDefaults.textFieldColors(
                 disabledIndicatorColor = Color.Transparent,
                 focusedIndicatorColor = Color.Transparent,
-                ),
+            ),
             shape = RoundedCornerShape(12.dp),
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
         )
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        // Password Input
+        // Password Input with Show/Hide Button
         OutlinedTextField(
             value = password,
             onValueChange = { password = it },
@@ -105,22 +107,36 @@ fun LoginForm() {
             placeholder = { Text("Enter your Password") },
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Done,
-                keyboardType =  KeyboardType.Password),
-            leadingIcon = {Icon(Icons.Default.Settings,  contentDescription = "Password Icon")},
+                keyboardType = KeyboardType.Password
+            ),
+            leadingIcon = {
+                Icon(Icons.Default.Settings, contentDescription = "Password Icon")
+            },
+            trailingIcon = {
+                IconButton(onClick = {
+                    isPasswordVisible = !isPasswordVisible
+                }) {
+                    Icon(
+                        painter = painterResource(id = if (isPasswordVisible) R.drawable.passwordshow else R.drawable.passwordhidden),
+                        contentDescription = if (isPasswordVisible) "Hide Password" else "Show Password",
+                        modifier = Modifier.size(24.dp) // Điều chỉnh kích thước hình ảnh (ví dụ: 24.dp)
+
+                    )
+                }
+            },
             keyboardActions = KeyboardActions(
                 onDone = {
-                    keyboardController?.hide();
+                    keyboardController?.hide()
                 }
             ),
             shape = RoundedCornerShape(12.dp),
-            visualTransformation = PasswordVisualTransformation()
+            visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation()
         )
 
-        TextButton(onClick = {} ,
+        TextButton(onClick = { /* Handle forgot password logic here */ },
             modifier = Modifier.align(Alignment.End)
-
         ) {
-            Text(text = "Forgot password ?", color = colorResource((R.color.darkGreen)))
+            Text(text = "Forgot password ?", color = colorResource(R.color.darkGreen))
         }
 
         // Login Button
@@ -128,7 +144,7 @@ fun LoginForm() {
             onClick = { /* Handle login logic here */ },
             modifier = Modifier
                 .fillMaxWidth(),
-            colors =  ButtonDefaults.buttonColors(
+            colors = ButtonDefaults.buttonColors(
                 containerColor = colorResource(R.color.darkBlue)
             ),
         ) {
@@ -138,7 +154,6 @@ fun LoginForm() {
         Spacer(modifier = Modifier.height(8.dp))
         Text(text = "or sign in with ABV")
         Spacer(modifier = Modifier.height(8.dp))
-
 
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -156,7 +171,6 @@ fun LoginForm() {
                 )
             }
         }
-
     }
 }
 

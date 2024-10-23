@@ -13,9 +13,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.gotravel.R
@@ -66,6 +68,8 @@ fun RegisterForm() {
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
+    var isPasswordVisible by remember { mutableStateOf(false) } // Trạng thái ẩn/hiện mật khẩu
+    var isConfirmPasswordVisible by remember { mutableStateOf(false) } // Trạng thái ẩn/hiện mật khẩu xác nhận
 
     val keyboardController = LocalSoftwareKeyboardController.current
 
@@ -128,13 +132,24 @@ fun RegisterForm() {
                 keyboardType = KeyboardType.Password
             ),
             leadingIcon = { Icon(Icons.Default.Settings, contentDescription = "Password Icon") },
+            trailingIcon = {
+                IconButton(onClick = {
+                    isPasswordVisible = !isPasswordVisible
+                }) {
+                    Icon(
+                        painter = painterResource(id = if (isPasswordVisible) R.drawable.passwordshow else R.drawable.passwordhidden),
+                        contentDescription = if (isPasswordVisible) "Hide Password" else "Show Password",
+                        modifier = Modifier.size(24.dp) // Điều chỉnh kích thước icon
+                    )
+                }
+            },
             keyboardActions = KeyboardActions(
                 onDone = {
                     keyboardController?.hide()
                 }
             ),
             shape = RoundedCornerShape(12.dp),
-            visualTransformation = PasswordVisualTransformation()
+            visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation()
         )
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -144,19 +159,30 @@ fun RegisterForm() {
             value = confirmPassword,
             onValueChange = { confirmPassword = it },
             label = { Text("Confirm Password") },
-            placeholder = { Text("Re-enter your Password") },
+            placeholder = { Text("Re-enter Password") },
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Done,
                 keyboardType = KeyboardType.Password
             ),
             leadingIcon = { Icon(Icons.Default.Settings, contentDescription = "Confirm Password Icon") },
+            trailingIcon = {
+                IconButton(onClick = {
+                    isConfirmPasswordVisible = !isConfirmPasswordVisible
+                }) {
+                    Icon(
+                        painter = painterResource(id = if (isConfirmPasswordVisible) R.drawable.passwordshow else R.drawable.passwordhidden),
+                        contentDescription = if (isConfirmPasswordVisible) "Hide Confirm Password" else "Show Confirm Password",
+                        modifier = Modifier.size(24.dp) // Điều chỉnh kích thước icon
+                    )
+                }
+            },
             keyboardActions = KeyboardActions(
                 onDone = {
                     keyboardController?.hide()
                 }
             ),
             shape = RoundedCornerShape(12.dp),
-            visualTransformation = PasswordVisualTransformation()
+            visualTransformation = if (isConfirmPasswordVisible) VisualTransformation.None else PasswordVisualTransformation()
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -174,6 +200,7 @@ fun RegisterForm() {
         }
     }
 }
+
 
 @Preview(showBackground = true)
 @Composable
