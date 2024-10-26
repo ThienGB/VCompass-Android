@@ -1,39 +1,43 @@
-import android.content.Context
-import io.realm.kotlin.Realm
-import io.realm.kotlin.RealmConfiguration
-import io.realm.kotlin.types.RealmObject
-import org.reflections.Reflections
-import kotlin.reflect.KClass
+package com.example.gotravel.helper
 
-class RealmHelper(context: Context?) {
-    var realm: Realm
+import android.content.Context
+import io.realm.Realm
+import io.realm.RealmConfiguration
+
+class RealmHelper private constructor(context: Context) {
+    private val realm: Realm
 
     init {
-        val config = RealmConfiguration.Builder(
-            schema = getAllRealmObjects()
-        )
-            .name("qlphongban1.realm")
-            .schemaVersion(1)
+        // Cấu hình Realm
+        val config = RealmConfiguration.Builder()
+            .name("travel.realm") // Tên file Realm
+            .schemaVersion(1) // Phiên bản schema
             .build()
 
-        // Mở Realm với cấu hình
-        realm = Realm.open(config)
+        Realm.init(context) // Khởi tạo Realm
+        realm = Realm.getInstance(config) // Lấy instance Realm
     }
 
-    fun closeRealm() {
-        realm.close()
+    fun getRealm(): Realm {
+        return realm
     }
 
-    fun openRealm() {
-        // Đảm bảo Realm đã được mở trước khi sử dụng
-        if (!realm.isClosed()) {
-            realm = Realm.open(realm.configuration)
+    companion object {
+        @Volatile
+        private var INSTANCE: RealmHelper? = null
+
+        // Phương thức getInstance
+        fun getInstance(context: Context): RealmHelper {
+            return INSTANCE ?: synchronized(this) {
+                INSTANCE ?: RealmHelper(context).also { INSTANCE = it }
+            }
         }
     }
-    private fun getAllRealmObjects(): Set<KClass<out RealmObject>> {
-        val reflections = Reflections("com.example.gotravel")
-        val classes = reflections.getSubTypesOf(RealmObject::class.java)
-
-        return classes.map { it.kotlin }.toSet()
+    // Đóng Realm nếu chưa đóng
+    fun closeRealm() {
+        if (!realm.isClosed) {
+            realm.close()
+        }
     }
+
 }

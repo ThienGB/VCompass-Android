@@ -1,7 +1,6 @@
 package com.example.gotravel.helper
 
 import com.example.gotravel.data.model.Accommodation
-import com.example.gotravel.data.model.Favorite
 
 interface CallbackHelper {
     fun onRoomChecked(isAvailable: Boolean) {}
