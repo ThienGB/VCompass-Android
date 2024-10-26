@@ -12,8 +12,8 @@ open class Accommodation : RealmObject() {
     var image: String? = null
     var description: String? = null
     var address: String? = null
-    var longitude: String? = null
-    var latitude: String? = null
+    var longitude: Double? = null
+    var latitude: Double? = null
     var cityId: String? = null
 
     fun copy(): Accommodation {

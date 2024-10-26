@@ -64,23 +64,6 @@ class AccomodationDetail: ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        FirebaseApp.initializeApp(this)
-        val db = FirebaseFirestore.getInstance()
-        val user = hashMapOf(
-            "first" to "Ada",
-            "last" to "Lovelace",
-            "born" to 1815
-        )
-
-        db.collection("users")
-            .add(user)
-            .addOnSuccessListener { documentReference ->
-                Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
-            }
-            .addOnFailureListener { e ->
-                Log.w(TAG, "Error adding document", e)
-            }
-
         realmHelper = (application as MainApplication).realmHelper
         val factory = ViewModelFactory(AccommodationDetailViewModel::class.java, realmHelper)
         viewModel = ViewModelProvider(this, factory)[AccommodationDetailViewModel::class.java]

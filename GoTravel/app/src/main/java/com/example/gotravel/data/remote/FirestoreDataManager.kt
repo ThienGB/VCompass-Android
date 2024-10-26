@@ -1,7 +1,6 @@
 package com.example.gotravel.data.remote
 
 import AccommodationDao
-import RealmHelper
 import android.util.Log
 import com.example.gotravel.data.model.Accommodation
 import com.example.gotravel.helper.FirestoreHelper.CL_ACCOM
@@ -26,7 +25,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
 class FirestoreDataManager (
-    private val realmHelper: RealmHelper
+    realmHelper: RealmHelper
 ) {
     private var accomDao: AccommodationDao = AccommodationDao(realmHelper.getRealm())
     private var listenerRegistration: ListenerRegistration? = null
@@ -42,14 +41,13 @@ class FirestoreDataManager (
                         DocumentChange.Type.ADDED -> {
                             val accommodation = change.document.toObject<Accommodation>()
                             CoroutineScope(Dispatchers.IO).launch {
-                                accomDao.insertOfUpdateAccomm(accommodation)
-                                onDataUpdated()
+                                accomDao.insertOfUpdateAccomm(accommodation, onDataUpdated)
                             }
                         }
                         DocumentChange.Type.MODIFIED -> {
                             val accommodation = change.document.toObject<Accommodation>()
                             CoroutineScope(Dispatchers.IO).launch {
-                                accomDao.insertOfUpdateAccomm(accommodation)
+                                accomDao.insertOfUpdateAccomm(accommodation, onDataUpdated)
                                 onDataUpdated()
                             }
                         }
@@ -67,13 +65,12 @@ class FirestoreDataManager (
 
     suspend fun fetchAccommodation(onComplete: () -> Unit) {
         try {
-            val result = db.collection(CL_ACCOM).get().await() // Sử dụng await để chờ kết quả
+            val result = db.collection(CL_ACCOM).get().await()
             for (document in result) {
                 val accommodation = document.toObject<Accommodation>()
-                accomDao.insertOfUpdateAccomm(accommodation)
+                accomDao.insertOfUpdateAccomm(accommodation, onComplete)
                 Log.d("fetchAccommodation", "Document ID: ${document.id}")
             }
-            onComplete()
         } catch (exception: Exception) {
             Log.w("FirestoreDataManager", "Error getting documents.", exception)
         }

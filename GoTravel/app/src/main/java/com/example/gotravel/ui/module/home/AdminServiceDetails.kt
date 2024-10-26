@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
@@ -99,7 +98,7 @@ fun AdminServiceDetailsScreen()
 
         ServiceInfo(
             text = "Địa chỉ:",
-            startIcon = R.drawable.ic_location, // Thay thế bằng icon phù hợp
+            startIcon = R.drawable.ic_aim, // Thay thế bằng icon phù hợp
             content = "TP Hồ Chí minh",
             onClick = { /* Hành động */ }
         )

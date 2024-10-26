@@ -1,3 +1,4 @@
+import android.util.Log
 import com.example.gotravel.data.model.Accommodation
 import io.realm.Realm
 import io.realm.kotlin.where
@@ -9,17 +10,25 @@ class AccommodationDao(private val realm: Realm) {
         return realm.where<Accommodation>().findAll()
     }
 
-    fun insertOfUpdateAccomm(accommodation: Accommodation) {
+    fun insertOfUpdateAccomm(accommodation: Accommodation, onSuccess: () -> Unit) {
         realm.use { realm ->
-            realm.executeTransaction {
-                it.insertOrUpdate(accommodation)
-            }
+            realm.executeTransactionAsync(
+                { it.insertOrUpdate(accommodation) },
+                {
+                    Log.d("RealmNotification", "Inserted Accommodation")
+                    onSuccess()
+
+                },
+                { }
+            )
         }
     }
     fun getAccommById(accommodationId: String): Accommodation? {
-        return realm.where(Accommodation::class.java)
-            .equalTo("accommodationId", accommodationId)
-            .findFirst()
+        return realm.use { realm ->
+            realm.where(Accommodation::class.java)
+                .equalTo("accommodationId", accommodationId)
+                .findFirst()
+        }
     }
 
     fun deleteAccommodation(accommodationId: String) {
