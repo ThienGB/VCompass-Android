@@ -14,9 +14,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class AccommodationDetailViewModel (private val realmHelper: RealmHelper) : ViewModel(){
-    private val firestoreDataManager = FirestoreDataManager(realmHelper)
-    private var accomDao: AccommodationDao = AccommodationDao(realmHelper.getRealm())
-
+    private val firestoreDataManager = FirestoreDataManager()
+    private var accomDao: AccommodationDao = AccommodationDao()
     private val _accommodations = MutableStateFlow(Accommodation())
     val accommodations: StateFlow<Accommodation> get() = _accommodations
 
@@ -26,19 +25,17 @@ class AccommodationDetailViewModel (private val realmHelper: RealmHelper) : View
                 fetchAccommodationsFromRealm()
             }
         }
-       // firestoreDataManager.listenToAccommodations { fetchAccommodationsFromRealm() }
+        firestoreDataManager.listenToAccommodations { fetchAccommodationsFromRealm() }
     }
 
 
 
     private fun fetchAccommodationsFromRealm() {
         viewModelScope.launch {
-            // Gọi getAccommById từ DAO
-            val accom = withContext(Dispatchers.IO) {
-                accomDao.getAccommById("10") // Thay "10" bằng ID thực tế nếu cần
-            }
+            val accom = accomDao.getAccommById("10")
             if (accom != null) {
-                _accommodations.value = accom
+                _accommodations.value = accom.copy()
+                Log.d("AccommodationDetail", accom.name.toString())
             } else {
                 Log.d("AccommodationDetail", "No accommodation found with the given ID.")
             }

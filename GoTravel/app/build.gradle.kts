@@ -84,7 +84,7 @@ dependencies {
     annotationProcessor (libs.dagger.compiler)
     annotationProcessor (libs.dagger.android.processor)
     implementation (libs.picasso)
-
+    implementation(libs.coil.compose)
     implementation (libs.retrofit)
     implementation (libs.converter.gson)
     implementation(libs.reflections)

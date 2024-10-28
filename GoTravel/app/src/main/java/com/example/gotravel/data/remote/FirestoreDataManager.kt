@@ -24,10 +24,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
-class FirestoreDataManager (
-    realmHelper: RealmHelper
-) {
-    private var accomDao: AccommodationDao = AccommodationDao(realmHelper.getRealm())
+class FirestoreDataManager () {
+    private var accomDao: AccommodationDao = AccommodationDao()
     private var listenerRegistration: ListenerRegistration? = null
     private val db = Firebase.firestore
     fun listenToAccommodations(onDataUpdated: () -> Unit) {
@@ -40,23 +38,17 @@ class FirestoreDataManager (
                     when (change.type) {
                         DocumentChange.Type.ADDED -> {
                             val accommodation = change.document.toObject<Accommodation>()
-                            CoroutineScope(Dispatchers.IO).launch {
                                 accomDao.insertOfUpdateAccomm(accommodation, onDataUpdated)
-                            }
                         }
                         DocumentChange.Type.MODIFIED -> {
                             val accommodation = change.document.toObject<Accommodation>()
-                            CoroutineScope(Dispatchers.IO).launch {
                                 accomDao.insertOfUpdateAccomm(accommodation, onDataUpdated)
                                 onDataUpdated()
-                            }
                         }
                         DocumentChange.Type.REMOVED -> {
                             val accommodationId = change.document.id
-                            CoroutineScope(Dispatchers.IO).launch {
                                 accomDao.deleteAccommodation(accommodationId)
                                 onDataUpdated()
-                            }
                         }
                     }
                 }

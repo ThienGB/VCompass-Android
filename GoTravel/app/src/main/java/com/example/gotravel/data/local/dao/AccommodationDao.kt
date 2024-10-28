@@ -4,31 +4,30 @@ import io.realm.Realm
 import io.realm.kotlin.where
 import javax.inject.Inject
 
-class AccommodationDao(private val realm: Realm) {
-
+class AccommodationDao() {
+    private val realm: Realm = Realm.getDefaultInstance()
     fun getAllAccommodations(): List<Accommodation> {
         return realm.where<Accommodation>().findAll()
     }
 
     fun insertOfUpdateAccomm(accommodation: Accommodation, onSuccess: () -> Unit) {
-        realm.use { realm ->
-            realm.executeTransactionAsync(
-                { it.insertOrUpdate(accommodation) },
-                {
-                    Log.d("RealmNotification", "Inserted Accommodation")
-                    onSuccess()
-
-                },
-                { }
-            )
-        }
+        realm.executeTransactionAsync(
+            { transactionRealm ->
+                transactionRealm.insertOrUpdate(accommodation)
+            },
+            {
+                Log.d("RealmNotification", "Inserted Accommodation")
+                onSuccess()
+            },
+            { error ->
+                Log.e("RealmNotification", "Error inserting Accommodation", error)
+            }
+        )
     }
     fun getAccommById(accommodationId: String): Accommodation? {
-        return realm.use { realm ->
-            realm.where(Accommodation::class.java)
-                .equalTo("accommodationId", accommodationId)
-                .findFirst()
-        }
+        return realm.where(Accommodation::class.java)
+            .equalTo("accommodationId", accommodationId)
+            .findFirst()
     }
 
     fun deleteAccommodation(accommodationId: String) {

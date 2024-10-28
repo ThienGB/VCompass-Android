@@ -8,32 +8,25 @@ class RealmHelper private constructor(context: Context) {
     private val realm: Realm
 
     init {
-        // Cấu hình Realm
         val config = RealmConfiguration.Builder()
-            .name("travel.realm") // Tên file Realm
-            .schemaVersion(1) // Phiên bản schema
+            .name("travel.realm")
+            .schemaVersion(1)
             .build()
-
-        Realm.init(context) // Khởi tạo Realm
-        realm = Realm.getInstance(config) // Lấy instance Realm
+        Realm.init(context)
+        realm = Realm.getInstance(config)
     }
-
     fun getRealm(): Realm {
         return realm
     }
-
     companion object {
         @Volatile
         private var INSTANCE: RealmHelper? = null
-
-        // Phương thức getInstance
         fun getInstance(context: Context): RealmHelper {
             return INSTANCE ?: synchronized(this) {
                 INSTANCE ?: RealmHelper(context).also { INSTANCE = it }
             }
         }
     }
-    // Đóng Realm nếu chưa đóng
     fun closeRealm() {
         if (!realm.isClosed) {
             realm.close()

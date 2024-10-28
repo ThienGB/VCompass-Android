@@ -1,9 +1,7 @@
 package com.example.gotravel.ui.module.accomodation
 
-import com.example.gotravel.helper.RealmHelper
-import android.content.ContentValues.TAG
+import android.credentials.CredentialDescription
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
@@ -43,6 +41,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
@@ -51,12 +50,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModelProvider
+import coil.compose.rememberAsyncImagePainter
+import coil.compose.rememberImagePainter
+import coil.request.ImageRequest
 import com.example.gotravel.MainApplication
 import com.example.gotravel.R
 import com.example.gotravel.data.model.Accommodation
+import com.example.gotravel.helper.CommonUtils.formatCurrency
+import com.example.gotravel.helper.RealmHelper
 import com.example.gotravel.ui.factory.ViewModelFactory
-import com.google.firebase.FirebaseApp
-import com.google.firebase.firestore.FirebaseFirestore
 
 class AccomodationDetail: ComponentActivity() {
     private lateinit var viewModel: AccommodationDetailViewModel
@@ -69,7 +71,6 @@ class AccomodationDetail: ComponentActivity() {
         viewModel = ViewModelProvider(this, factory)[AccommodationDetailViewModel::class.java]
         setContent {
             val accommodation by viewModel.accommodations.collectAsState()
-
             HotelDetailsScreen(accommodation)
         }
     }
@@ -81,7 +82,7 @@ fun HotelDetailsScreen(accommodations: Accommodation) {
         .fillMaxSize()
         .verticalScroll(rememberScrollState())) {
         Box(){
-            ImageSection()
+            ImageSection(accommodations.image.toString())
             Column (modifier = Modifier
                 .padding(top = 180.dp)
                 .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
@@ -111,12 +112,12 @@ fun HotelDetailsScreen(accommodations: Accommodation) {
                     thickness = 7.dp,
                     color = colorResource(R.color.lightGray)
                 )
-                HotelDescriptionSection()
+                HotelDescriptionSection(accommodations.description)
                 HorizontalDivider(
                     thickness = 7.dp,
                     color = colorResource(R.color.lightGray)
                 )
-                PriceSection()
+                PriceSection(accommodations.price.toString())
                 BookButton()
             }
         }
@@ -124,14 +125,22 @@ fun HotelDetailsScreen(accommodations: Accommodation) {
 }
 
 @Composable
-fun ImageSection() {
-    Box() {
-        Image(modifier = Modifier
-            .height(200.dp)
-            .fillMaxWidth(),
+fun ImageSection(imageUrl: String) {
+    Box {
+        Image(
+            modifier = Modifier
+                .height(200.dp)
+                .fillMaxWidth(),
+            painter = rememberAsyncImagePainter(ImageRequest.Builder
+                (LocalContext.current).data(data = imageUrl).apply(block = fun ImageRequest.Builder.() {
+                crossfade(true)
+                placeholder(R.drawable.accommodation_sample)
+
+            }).build()
+            ),
             contentScale = ContentScale.Crop,
-            painter = painterResource(id = R.drawable.accommodation_sample),
-            contentDescription = null)
+            contentDescription = null
+        )
     }
 }
 
@@ -321,13 +330,13 @@ fun CheckInOutSection() {
 }
 
 @Composable
-fun HotelDescriptionSection() {
+fun HotelDescriptionSection(description: String?) {
     Column(modifier = Modifier.padding(16.dp)) {
         Text(text = "Mô tả nơi ở ",
             fontFamily = FontFamily(Font(R.font.proxima_nova_bold)),
             fontSize = 22.sp, modifier = Modifier.padding(bottom = 10.dp))
         Text(
-            text = "Nằm dọc theo bãi biển Mỹ Khê cát trắng trải dài theo bãi biển Mỹ Khê cát trắng trải dài",
+            text = description.toString(),
             fontFamily = FontFamily(Font(R.font.proxima_nova_regular)),
             style = MaterialTheme.typography.bodyMedium
         )
@@ -335,14 +344,14 @@ fun HotelDescriptionSection() {
 }
 
 @Composable
-fun PriceSection() {
+fun PriceSection(price: String) {
     Row(modifier = Modifier.padding(16.dp)) {
         Text(text = "Giá phòng mỗi đêm từ ",
             fontFamily = FontFamily(Font(R.font.proxima_nova_bold)),
             fontSize = 18.sp, modifier = Modifier.padding(bottom = 10.dp))
         Spacer(modifier = Modifier.weight(1f))
         Column(modifier = Modifier.padding(end = 10.dp)) {
-            Text(text = "2.000.000 đ",
+            Text(text = formatCurrency(price) + " đ",
                 textAlign = TextAlign.Right,
                 modifier = Modifier.fillMaxWidth(),
                 fontSize = 17.sp,
