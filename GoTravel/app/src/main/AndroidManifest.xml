@@ -4,6 +4,7 @@
 
     <application
         android:allowBackup="true"
+        android:name=".MainApplication"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -13,12 +14,12 @@
         android:theme="@style/Theme.GoTravel"
         tools:targetApi="31">
         <activity
-            android:name=".ui.module.chat.ConversationActivity"
-            android:exported="false"
-            android:label="@string/title_activity_conversation"
-            android:theme="@style/Theme.GoTravel" />
+            android:name=".ui.module.main.user.MainUserActivity"
+            android:exported="true"
+            android:label="@string/app_name">
+        </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.module.accomodation.AccomodationDetail"
             android:exported="true"
             android:label="@string/app_name">
             <intent-filter>
@@ -28,5 +29,4 @@
             </intent-filter>
         </activity>
     </application>
-
 </manifest>

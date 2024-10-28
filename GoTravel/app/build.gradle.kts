@@ -1,8 +1,9 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
-    id("kotlin-android")
     id("kotlin-kapt")
+    id("realm-android")
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -74,6 +75,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.foundation.layout.android)
+    implementation(libs.firebase.firestore)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -82,12 +84,9 @@ dependencies {
     annotationProcessor (libs.dagger.compiler)
     annotationProcessor (libs.dagger.android.processor)
     implementation (libs.picasso)
-
+    implementation(libs.coil.compose)
     implementation (libs.retrofit)
     implementation (libs.converter.gson)
-
-    implementation(libs.realm.gradle.plugin)
-    implementation(libs.library.base)
     implementation(libs.reflections)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
@@ -95,5 +94,7 @@ dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.navigation.compose)
     androidTestImplementation(platform(libs.androidx.compose.bom))
+    implementation (libs.rxjava)
+    implementation (libs.rxandroid)
 
 }

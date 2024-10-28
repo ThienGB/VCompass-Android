@@ -1,60 +1,33 @@
 package com.example.gotravel.data.model
 
-import io.realm.kotlin.types.RealmObject
-import io.realm.kotlin.types.annotations.PrimaryKey
+import io.realm.RealmObject
+import io.realm.annotations.PrimaryKey
 
-
-class Accommodation : RealmObject {
+open class Accommodation : RealmObject() {
     @PrimaryKey
     var accommodationId: String? = null
+    var partnerId: String? = null
     var name: String? = null
     var price: Int = 0
-    var freeroom: Int = 0
-    var currentFreeroom: Int = 0
     var image: String? = null
     var description: String? = null
     var address: String? = null
-    var longitude: String? = null
-    var latitude: String? = null
+    var longitude: Double? = null
+    var latitude: Double? = null
     var cityId: String? = null
 
-
-    constructor(
-        accommodationId: String?,
-        name: String?,
-        price: Int,
-        freeroom: Int,
-        image: String?,
-        description: String?,
-        address: String?,
-        longitude: String?,
-        latitude: String?,
-        cityId: String?
-    ) {
-        this.accommodationId = accommodationId
-        this.name = name
-        this.price = price
-        this.freeroom = freeroom
-        this.image = image
-        this.description = description
-        this.address = address
-        this.longitude = longitude
-        this.latitude = latitude
-        this.cityId = cityId
+    fun copy(): Accommodation {
+        val copy = Accommodation()
+        copy.accommodationId = this.accommodationId
+        copy.partnerId = this.partnerId
+        copy.name = this.name
+        copy.price = this.price
+        copy.image = this.image
+        copy.description = this.description
+        copy.address = this.address
+        copy.longitude = this.longitude
+        copy.latitude = this.latitude
+        copy.cityId = this.cityId
+        return copy
     }
-
-    constructor(accommodationId: String?, name: String?, price: Int, cityId: String?) {
-        this.accommodationId = accommodationId
-        this.name = name
-        this.price = price
-        this.cityId = cityId
-    }
-
-    constructor(accommodationId: String?, name: String?, price: Int) {
-        this.accommodationId = accommodationId
-        this.name = name
-        this.price = price
-    }
-
-    constructor()
 }
