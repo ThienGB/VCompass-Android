@@ -18,7 +18,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -40,17 +39,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.gotravel.R
 
-class ProfileActivity : ComponentActivity() {
+class EditProfileActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            ProfileForm()
+            EditProfileForm()
         }
     }
 }
 
 @Composable
-fun Profile_Header() {
+fun EditProfile_Header() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -60,7 +59,6 @@ fun Profile_Header() {
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Button(
-
             onClick = { /*TODO*/ },
             colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.primary))
         ) {
@@ -70,13 +68,13 @@ fun Profile_Header() {
                 tint = Color.Unspecified,
                 contentDescription = "Setting"
             )
+            
         }
         Text(
-            text = "Profile",
+            text = "Edit Profile",
             style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color.White),
             modifier = Modifier.height(20.dp),
             textAlign = TextAlign.Center
-
         )
         Button(
             onClick = { /*TODO*/ },
@@ -93,47 +91,7 @@ fun Profile_Header() {
 }
 
 @Composable
-fun InputField(label: String, value: String, onValueChange: (String) -> Unit, placeHolder: String) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp)
-    ) {
-
-        Text(
-            text = label,
-            style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold),
-            modifier = Modifier.padding(bottom = 4.dp)
-        )
-        OutlinedTextField(
-            value = value,
-            onValueChange = {
-
-                onValueChange(it)
-            },
-            label = { Text(text = label) },
-            placeholder = {
-                Text(
-                    text = placeHolder,
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Light,
-                    color = Color.Gray
-                )
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp),
-            textStyle = androidx.compose.ui.text.TextStyle(
-                fontSize = 16.sp,
-                color = Color.Black
-            ),
-            singleLine = true
-        )
-    }
-}
-
-@Composable
-fun Profile_Content(modifier: Modifier = Modifier) {
+fun EditProfile_Content(modifier: Modifier = Modifier) {
 // State for each input field
     var ho by remember { mutableStateOf("") }
     var tenDemTen by remember { mutableStateOf("") }
@@ -148,37 +106,36 @@ fun Profile_Content(modifier: Modifier = Modifier) {
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Column {
-                Row {
-                    Box(
+            Row {
+                Box(
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .size(100.dp)
+                        .clip(CircleShape)
+                        .border(2.dp, Color.Gray, CircleShape)
+                        .padding(4.dp)
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_home_black_24dp),
+                        contentDescription = "Avatar",
+                        contentScale = ContentScale.Crop,
                         modifier = Modifier
-                            .padding(16.dp)
-                            .size(100.dp)
+                            .size(90.dp)
                             .clip(CircleShape)
-                            .border(2.dp, Color.Gray, CircleShape)
-                            .padding(4.dp)
-                    ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.ic_home_black_24dp),
-                            contentDescription = "Avatar",
-                            contentScale = ContentScale.Crop,
-                            modifier = Modifier
-                                .size(90.dp)
-                                .clip(CircleShape)
-                        )
-
-                    }
-                }
-                Row {
-                    Text(
-                        text = "Ho Khanh Dang",
-                        color = Color.Black,
-                        modifier = Modifier.padding(bottom = 4.dp),
-                        style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.SemiBold),
                     )
+
                 }
             }
+
+            Row {
+                Text(
+                    text = "Change avatar",
+                    color = Color.Blue,
+                )
+            }
         }
+
+
     }
 
     Column(
@@ -186,6 +143,8 @@ fun Profile_Content(modifier: Modifier = Modifier) {
             .fillMaxWidth()
             .padding(16.dp),
     ) {
+        InputField("Họ", ho, { ho = it }, "Ví dụ: Nguyễn")
+        InputField("Tên đệm và tên", tenDemTen, { tenDemTen = it }, "Ví dụ: Tuấn Anh")
         InputField("Số điện thoại", phoneInput, { phoneInput = it }, "Ví dụ: 0987654321")
         InputField("Email", emailInput, { emailInput = it }, "Ví dụ: a@gmail.com")
         Button(
@@ -193,33 +152,27 @@ fun Profile_Content(modifier: Modifier = Modifier) {
             colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.primary)),
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text(text = "Change password")
-        }
-        Button(
-            onClick = { /*TODO*/ },
-            colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.primary)),
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(text = "Log out")
+            Text(text = "Confirm")
         }
     }
     // Input Fields
 }
 
+
 @Composable
-fun ProfileForm(modifier: Modifier = Modifier) {
+fun EditProfileForm(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .fillMaxSize()
             .background(Color.White)
     ) {
-        Profile_Header()
-        Profile_Content()
+        EditProfile_Header()
+        EditProfile_Content()
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun ProfileFormPreview() {
-    ProfileForm()
+fun EditProfileFormPreview() {
+    EditProfileForm()
 }

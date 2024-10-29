@@ -14,12 +14,36 @@
         android:theme="@style/Theme.GoTravel"
         tools:targetApi="31">
         <activity
-            android:name=".ui.module.profile.ProfileActivity"
+            android:name=".ui.module.admin.AdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.module.chat.ChatActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.module.chat.ChatListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.module.chat.Chat_List_Activity"
             android:exported="false"
             android:theme="@style/Theme.GoTravel" />
         <activity
-            android:name=".ui.module.profile.enActivity"
-            android:exported="false" />
+            android:name=".ui.module.chat.ListChatActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.module.notifications.NotificationActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.module.accomodation.AccomodationDetail"
             android:exported="true"
