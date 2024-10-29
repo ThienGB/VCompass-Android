@@ -13,15 +13,11 @@ import com.example.gotravel.helper.FirestoreHelper.FL_LATITUDE
 import com.example.gotravel.helper.FirestoreHelper.FL_LONGTITUDE
 import com.example.gotravel.helper.FirestoreHelper.FL_NAME
 import com.example.gotravel.helper.FirestoreHelper.FL_PRICE
-import com.example.gotravel.helper.RealmHelper
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.toObject
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
 class FirestoreDataManager () {
@@ -38,12 +34,11 @@ class FirestoreDataManager () {
                     when (change.type) {
                         DocumentChange.Type.ADDED -> {
                             val accommodation = change.document.toObject<Accommodation>()
-                                accomDao.insertOfUpdateAccomm(accommodation, onDataUpdated)
+                                accomDao.insertOrUpdateAccomm(accommodation, onDataUpdated)
                         }
                         DocumentChange.Type.MODIFIED -> {
                             val accommodation = change.document.toObject<Accommodation>()
-                                accomDao.insertOfUpdateAccomm(accommodation, onDataUpdated)
-                                onDataUpdated()
+                                accomDao.insertOrUpdateAccomm(accommodation, onDataUpdated)
                         }
                         DocumentChange.Type.REMOVED -> {
                             val accommodationId = change.document.id
@@ -60,7 +55,7 @@ class FirestoreDataManager () {
             val result = db.collection(CL_ACCOM).get().await()
             for (document in result) {
                 val accommodation = document.toObject<Accommodation>()
-                accomDao.insertOfUpdateAccomm(accommodation, onComplete)
+                accomDao.insertOrUpdateAccomm(accommodation, onComplete)
                 Log.d("fetchAccommodation", "Document ID: ${document.id}")
             }
         } catch (exception: Exception) {

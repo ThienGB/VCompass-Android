@@ -27,10 +27,18 @@ class AccommodationDetailViewModel (private val realmHelper: RealmHelper) : View
         }
         firestoreDataManager.listenToAccommodations { fetchAccommodationsFromRealm() }
     }
-
-
-
     private fun fetchAccommodationsFromRealm() {
+        viewModelScope.launch {
+            val accom = accomDao.getAccommById("10")
+            if (accom != null) {
+                _accommodations.value = accom.copy()
+                Log.d("AccommodationDetail", accom.name.toString())
+            } else {
+                Log.d("AccommodationDetail", "No accommodation found with the given ID.")
+            }
+        }
+    }
+    fun addAccommodations() {
         viewModelScope.launch {
             val accom = accomDao.getAccommById("10")
             if (accom != null) {
