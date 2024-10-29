@@ -22,7 +22,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.gotravel.ui.module.chat.ChatScreen
+import com.example.gotravel.ui.module.chat.ChatComponentScreen
 import com.example.gotravel.ui.module.home.user.HomeUserScreen
 import com.example.gotravel.ui.module.home.user.NotificationScreen
 import com.example.gotravel.ui.module.home.user.ProfileScreen
@@ -86,7 +86,7 @@ fun CustomBottomBar(navController: NavController) {
 fun NavHostGraph(navController: NavHostController, modifier: Modifier = Modifier) {
     NavHost(navController = navController, startDestination = "home", modifier = modifier){
         composable("home") { HomeUserScreen() }
-        composable("chat") { ChatScreen() }
+        composable("chat") { ChatComponentScreen() }
         composable("notification") { NotificationScreen() }
         composable("profile") { ProfileScreen() }
     }
