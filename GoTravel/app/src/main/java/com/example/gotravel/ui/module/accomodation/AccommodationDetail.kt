@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -50,6 +51,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberAsyncImagePainter
 import coil.compose.rememberImagePainter
 import coil.request.ImageRequest
@@ -71,13 +73,16 @@ class AccomodationDetail: ComponentActivity() {
         viewModel = ViewModelProvider(this, factory)[AccommodationDetailViewModel::class.java]
         setContent {
             val accommodation by viewModel.accommodations.collectAsState()
-            HotelDetailsScreen(accommodation)
+            HotelDetailsScreen(accommodation, viewModel::addAccommodations)
         }
     }
 }
 
 @Composable
-fun HotelDetailsScreen(accommodations: Accommodation) {
+fun HotelDetailsScreen(
+    accommodations: Accommodation,
+    onClick: () -> Unit = {},
+) {
     Column(modifier = Modifier
         .fillMaxSize()
         .verticalScroll(rememberScrollState())) {
@@ -118,7 +123,7 @@ fun HotelDetailsScreen(accommodations: Accommodation) {
                     color = colorResource(R.color.lightGray)
                 )
                 PriceSection(accommodations.price.toString())
-                BookButton()
+                BookButton(onClick)
             }
         }
     }
@@ -369,7 +374,9 @@ fun PriceSection(price: String) {
 }
 
 @Composable
-fun BookButton() {
+fun BookButton(
+    onClick: () -> Unit = {}
+) {
     Row(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
@@ -379,6 +386,7 @@ fun BookButton() {
             .height(50.dp)
             .clip(RoundedCornerShape(5.dp))
             .background(colorResource(id = R.color.primary))
+            .clickable { onClick }
     ) {
         Text(text = "Chọn phòng", color = Color.White,
             fontFamily = FontFamily(Font(R.font.proxima_nova_regular)),

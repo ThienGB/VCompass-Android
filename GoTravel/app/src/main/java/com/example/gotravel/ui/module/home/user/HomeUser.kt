@@ -58,8 +58,7 @@ fun HomeUserScreen() {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        SearchCard()
-        RecentSearches()
+        Text(text = "This is home")
     }
 }
 @OptIn(ExperimentalMaterial3Api::class)

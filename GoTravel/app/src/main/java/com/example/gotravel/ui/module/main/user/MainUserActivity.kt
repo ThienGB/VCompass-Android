@@ -32,7 +32,7 @@ class MainUserActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            com.example.gotravel.ui.module.main.partner.MainScreen()
+            MainScreen()
         }
     }
 }
