@@ -1,48 +1,47 @@
-package com.example.gotravel.ui.module.home
+package com.example.gotravel.ui.module.admin.ServiceManagement
 
 
 
 import com.example.gotravel.R
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.foundation.background
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class AdminUsersManagement : ViewModel(){
+class AdminServiceManagement : ViewModel() {
+
     private val _text = MutableLiveData<String>().apply {
-        value = "Settings"
+        value = "This is home Admin Fragment"
     }
     val text: LiveData<String> = _text
+
 }
 
-
 @Composable
-fun AdminUserManagementScreen() {
+fun AdminServiceManagementScreen() {
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White), // Màu nền trắng cho toàn bộ màn hình
-        horizontalAlignment = Alignment.CenterHorizontally
+        modifier = Modifier.fillMaxSize()
     ) {
-        // Box màu xanh chứa tiêu đề "Quản lý người dùng"
+        // Box màu xanh chứa tiêu đề "Quản lý dịch vụ"
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(150.dp)
-                .background(Color(0xFF1A94FF))  // Màu nền xanh
+                .background(Color(0xFF1A94FF))
                 .padding(20.dp),
         ) {
             Column(
@@ -51,9 +50,9 @@ fun AdminUserManagementScreen() {
                 horizontalAlignment = Alignment.Start
             ) {
                 Spacer(modifier = Modifier.weight(1f))
-                // Tiêu đề "Quản lý người dùng"
+                // Tiêu đề "Quản lý dịch vụ"
                 Text(
-                    text = "Quản lý người dùng", // Tiêu đề
+                    text = "Quản lý dịch vụ", // Tiêu đề
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.White,
@@ -62,10 +61,10 @@ fun AdminUserManagementScreen() {
             }
         }
 
-        // Khoảng cách giữa Box và danh sách người dùng
+        // Khoảng cách giữa Box và danh sách dịch vụ
         Spacer(modifier = Modifier.height(30.dp))
 
-        // Box chứa danh sách người dùng và nút "Xuất dữ liệu"
+        // Box chứa danh sách dịch vụ và nút "Xuất dữ liệu"
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -74,22 +73,22 @@ fun AdminUserManagementScreen() {
         ) {
             Column(
                 modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.SpaceBetween, // Sắp xếp theo chiều dọc
+                verticalArrangement = Arrangement.SpaceBetween,
                 horizontalAlignment = Alignment.Start
             ) {
-                // Danh sách mẫu 5 người dùng
-                val users = listOf(
-                    User("Nguyễn Văn A", R.drawable.ic_user_info), // Sử dụng avatar mẫu
-                    User("Trần Thị B", R.drawable.ic_user_info),
-                    User("Lê Văn C", R.drawable.ic_user_info),
-                    User("Phạm Thị D", R.drawable.ic_user_info),
-                    User("Hoàng Văn E", R.drawable.ic_user_info)
+                // Danh sách mẫu 5 dịch vụ
+                val services = listOf(
+                    Service("Dịch vụ 1", R.drawable.ic_user_info), // Sử dụng icon dịch vụ mẫu
+                    Service("Dịch vụ 2", R.drawable.ic_user_info),
+                    Service("Dịch vụ 3", R.drawable.ic_user_info),
+                    Service("Dịch vụ 4", R.drawable.ic_user_info),
+                    Service("Dịch vụ 5", R.drawable.ic_user_info),
 
                 )
 
-                // Hiển thị danh sách người dùng
-                for (user in users) {
-                    UserItem(user)
+                // Hiển thị danh sách dịch vụ
+                for (service in services) {
+                    ServiceItem(service)
                     Spacer(modifier = Modifier.height(5.dp)) // Khoảng cách giữa các mục
                 }
 
@@ -109,7 +108,7 @@ fun AdminUserManagementScreen() {
 }
 
 @Composable
-fun UserItem(user: User) {
+fun ServiceItem(service: Service) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -118,29 +117,28 @@ fun UserItem(user: User) {
             .padding(8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // Avatar người dùng
+        // Icon dịch vụ
         Box(
             modifier = Modifier
-                .size(40.dp) // Kích thước avatar
-                .background(Color.Gray, shape = CircleShape), // Avatar mẫu
+                .size(40.dp) // Kích thước icon
+                .background(Color.Gray, shape = CircleShape), // Icon mẫu
             contentAlignment = Alignment.Center
         ) {
-            Text(
-                text = "A", // Chữ cái đại diện cho người dùng
-                color = Color.White,
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold
+            Image(
+                painter = painterResource(id = service.iconResId),
+                contentDescription = service.name,
+                modifier = Modifier.size(24.dp) // Kích thước icon trong Box
             )
         }
 
         Spacer(modifier = Modifier.width(16.dp))
 
-        // Tên người dùng
+        // Tên dịch vụ
         Text(
-            text = user.name,
+            text = service.name,
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold,
-            modifier = Modifier.weight(1f) // Để tên người dùng chiếm không gian còn lại
+            modifier = Modifier.weight(1f) // Để tên dịch vụ chiếm không gian còn lại
         )
 
         // Icon ở cuối
@@ -154,10 +152,10 @@ fun UserItem(user: User) {
     }
 }
 
-data class User(val name: String, val avatarResId: Int)
+data class Service(val name: String, val iconResId: Int)
 
 @Preview(showBackground = true)
 @Composable
-fun AdminUserManagementPreview() {
-    AdminUserManagementScreen()
+fun AdminServiceManagementPreview() {
+    AdminServiceManagementScreen()
 }

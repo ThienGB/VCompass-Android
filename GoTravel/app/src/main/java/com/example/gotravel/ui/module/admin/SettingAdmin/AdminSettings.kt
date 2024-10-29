@@ -1,4 +1,4 @@
-package com.example.gotravel.ui.module.home
+package com.example.gotravel.ui.module.admin.SettingAdmin
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
