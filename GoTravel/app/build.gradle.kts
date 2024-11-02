@@ -97,6 +97,7 @@ dependencies {
     androidTestImplementation(platform(libs.androidx.compose.bom))
     implementation (libs.rxjava)
     implementation (libs.rxandroid)
+    implementation (libs.accompanist.permissions)
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.0") {
         because("androidx.compose.ui:ui-test-junit4:1.7.2 requires 3.5.0")
     }
