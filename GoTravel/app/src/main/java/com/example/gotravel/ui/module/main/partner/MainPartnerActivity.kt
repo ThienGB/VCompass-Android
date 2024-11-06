@@ -82,9 +82,9 @@ fun CustomBottomBar(navController: NavController) {
 @Composable
 fun NavHostGraph(navController: NavHostController, modifier: Modifier = Modifier) {
     NavHost(navController = navController, startDestination = "home", modifier = modifier){
-        composable("home") { HomeUserScreen() }
-        composable("chat") { ChatComponentScreen() }
-        composable("notification") { NotificationScreen() }
-        composable("profile") { ProfileScreen() }
+//        composable("home") { HomeUserScreen() }
+//        composable("chat") { ChatComponentScreen() }
+//        composable("notification") { NotificationScreen() }
+//        composable("profile") { ProfileScreen() }
     }
 }

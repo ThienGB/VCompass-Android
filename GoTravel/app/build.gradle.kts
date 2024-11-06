@@ -77,6 +77,7 @@ dependencies {
     implementation(libs.androidx.foundation.layout.android)
     implementation(libs.firebase.firestore)
     implementation(libs.androidx.ui.test.android)
+    implementation(libs.androidx.runtime.livedata)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -98,6 +99,8 @@ dependencies {
     implementation (libs.rxjava)
     implementation (libs.rxandroid)
     implementation (libs.accompanist.permissions)
+    implementation(libs.gson)
+    implementation(libs.kotlinx.serialization.json)
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.0") {
         because("androidx.compose.ui:ui-test-junit4:1.7.2 requires 3.5.0")
     }

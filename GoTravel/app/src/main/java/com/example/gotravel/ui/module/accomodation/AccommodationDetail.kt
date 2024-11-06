@@ -68,12 +68,16 @@ class AccomodationDetail: ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val accommodationId = intent.getStringExtra("accommodationId")
         realmHelper = (application as MainApplication).realmHelper
         val factory = ViewModelFactory(AccommodationDetailViewModel::class.java, realmHelper)
         viewModel = ViewModelProvider(this, factory)[AccommodationDetailViewModel::class.java]
+        if (accommodationId != null) {
+            viewModel.currentId = accommodationId
+        }
         setContent {
             val accommodation by viewModel.accommodations.collectAsState()
-            HotelDetailsScreen(accommodation, viewModel::addAccommodations)
+            HotelDetailsScreen(accommodation)
         }
     }
 }
@@ -87,16 +91,16 @@ fun HotelDetailsScreen(
         .fillMaxSize()
         .verticalScroll(rememberScrollState())) {
         Box(){
-            ImageSection(accommodations.image.toString())
+            ImageSection(accommodations.image)
             Column (modifier = Modifier
                 .padding(top = 180.dp)
                 .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
                 .background(Color.White)
             ) {
                 HotelInfoSection(
-                    title = accommodations.name.toString(),
+                    title = accommodations.name,
                     numStart = 5,
-                    location = accommodations.address.toString()
+                    location = accommodations.address
                 )
                 HorizontalDivider(
                     thickness = 7.dp,

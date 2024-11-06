@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.gotravel.data.model.Accommodation
 import com.example.gotravel.data.remote.FirestoreDataManager
 import com.example.gotravel.helper.RealmHelper
+import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,6 +19,7 @@ class AccommodationDetailViewModel (private val realmHelper: RealmHelper) : View
     private var accomDao: AccommodationDao = AccommodationDao()
     private val _accommodations = MutableStateFlow(Accommodation())
     val accommodations: StateFlow<Accommodation> get() = _accommodations
+    var currentId: String = ""
 
     init {
         viewModelScope.launch {
@@ -29,21 +31,12 @@ class AccommodationDetailViewModel (private val realmHelper: RealmHelper) : View
     }
     private fun fetchAccommodationsFromRealm() {
         viewModelScope.launch {
-            val accom = accomDao.getAccommById("10")
+            val accom = accomDao.getAccommById(currentId)
             if (accom != null) {
                 _accommodations.value = accom.copy()
-                Log.d("AccommodationDetail", accom.name.toString())
-            } else {
-                Log.d("AccommodationDetail", "No accommodation found with the given ID.")
-            }
-        }
-    }
-    fun addAccommodations() {
-        viewModelScope.launch {
-            val accom = accomDao.getAccommById("10")
-            if (accom != null) {
-                _accommodations.value = accom.copy()
-                Log.d("AccommodationDetail", accom.name.toString())
+                val gson = Gson()
+                val json = gson.toJson(accom)
+                Log.d("AccommodationDetail", json)
             } else {
                 Log.d("AccommodationDetail", "No accommodation found with the given ID.")
             }
@@ -53,6 +46,7 @@ class AccommodationDetailViewModel (private val realmHelper: RealmHelper) : View
     override fun onCleared() {
         super.onCleared()
         realmHelper.closeRealm()
+        firestoreDataManager.stopListening()
     }
 
 }

@@ -25,7 +25,7 @@ class FirestoreDataManager () {
     private var listenerRegistration: ListenerRegistration? = null
     private val db = Firebase.firestore
     fun listenToAccommodations(onDataUpdated: () -> Unit) {
-        db.collection(CL_ACCOM)
+        listenerRegistration = db.collection(CL_ACCOM)
             .addSnapshotListener { snapshot, e ->
                 if (e != null) {
                     return@addSnapshotListener
@@ -74,8 +74,6 @@ class FirestoreDataManager () {
         user[FL_IMAGE] = accom.image.toString()
         user[FL_DESCRIPTION] = accom.description.toString()
         user[FL_ADDRESS] = accom.address.toString()
-        user[FL_LONGTITUDE] = accom.latitude.toString()
-        user[FL_LATITUDE] = accom.latitude.toString()
         user[FL_CITYID] = accom.cityId.toString()
         db.collection(CL_ACCOM).document(accom.accommodationId.toString()).set(user)
     }
