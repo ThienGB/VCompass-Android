@@ -2,6 +2,7 @@ package com.example.gotravel.ui.module.accomodation
 
 import android.credentials.CredentialDescription
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
@@ -19,18 +20,24 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -48,50 +55,43 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
 import coil.compose.rememberImagePainter
 import coil.request.ImageRequest
 import com.example.gotravel.MainApplication
 import com.example.gotravel.R
 import com.example.gotravel.data.model.Accommodation
+import com.example.gotravel.data.model.Rating
+import com.example.gotravel.data.model.Search
 import com.example.gotravel.helper.CommonUtils.formatCurrency
 import com.example.gotravel.helper.RealmHelper
 import com.example.gotravel.ui.factory.ViewModelFactory
+import com.example.gotravel.ui.module.main.user.MainUserViewModel
+import com.example.gotravel.ui.module.room.RoomDetailScreen
 
-class AccomodationDetail: ComponentActivity() {
-    private lateinit var viewModel: AccommodationDetailViewModel
-    private lateinit var realmHelper: RealmHelper
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val accommodationId = intent.getStringExtra("accommodationId")
-        realmHelper = (application as MainApplication).realmHelper
-        val factory = ViewModelFactory(AccommodationDetailViewModel::class.java, realmHelper)
-        viewModel = ViewModelProvider(this, factory)[AccommodationDetailViewModel::class.java]
-        if (accommodationId != null) {
-            viewModel.currentId = accommodationId
-        }
-        setContent {
-            val accommodation by viewModel.accommodations.collectAsState()
-            HotelDetailsScreen(accommodation)
-        }
-    }
-}
 
 @Composable
 fun HotelDetailsScreen(
     accommodations: Accommodation,
-    onClick: () -> Unit = {},
+    navController: NavController = NavController(LocalContext.current),
 ) {
+    val lowestPrice = accommodations.rooms.minOfOrNull { it.price } ?: 0
     Column(modifier = Modifier
         .fillMaxSize()
         .verticalScroll(rememberScrollState())) {
-        Box(){
-            ImageSection(accommodations.image)
+        Box{
+            ImageSection(accommodations.image) { navController.navigate("search") }
             Column (modifier = Modifier
                 .padding(top = 180.dp)
                 .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
@@ -99,19 +99,19 @@ fun HotelDetailsScreen(
             ) {
                 HotelInfoSection(
                     title = accommodations.name,
-                    numStart = 5,
+                    numStart = accommodations.totalRate,
                     location = accommodations.address
                 )
                 HorizontalDivider(
                     thickness = 7.dp,
                     color = colorResource(R.color.lightGray)
                 )
-                RatingsSection()
+                RatingsSection(accommodations.ratings)
                 HorizontalDivider(
                     thickness = 7.dp,
                     color = colorResource(R.color.lightGray)
                 )
-                AmenitiesSection()
+                AmenitiesSection(accommodations.amentities)
                 HorizontalDivider(
                     thickness = 7.dp,
                     color = colorResource(R.color.lightGray)
@@ -126,15 +126,19 @@ fun HotelDetailsScreen(
                     thickness = 7.dp,
                     color = colorResource(R.color.lightGray)
                 )
-                PriceSection(accommodations.price.toString())
-                BookButton(onClick)
+                PriceSection(lowestPrice.toString())
+                BookButton { navController.navigate("room_detail") }
             }
         }
     }
 }
 
+@Preview(showSystemUi = true)
 @Composable
-fun ImageSection(imageUrl: String) {
+fun ImageSection(
+    imageUrl: String = "",
+    onBackClick: () -> Unit = {}
+) {
     Box {
         Image(
             modifier = Modifier
@@ -150,6 +154,21 @@ fun ImageSection(imageUrl: String) {
             contentScale = ContentScale.Crop,
             contentDescription = null
         )
+        // Nút back
+        IconButton(
+            onClick = {onBackClick()},
+            modifier = Modifier
+                .padding(16.dp)
+                .size(30.dp)
+                .background(color = Color.Black.copy(alpha = 0.15f), shape = CircleShape) // Nền tròn mờ
+        ) {
+            Icon(
+                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
+                contentDescription = "Back",
+                modifier = Modifier.size(35.dp),
+                tint = Color.White
+            )
+        }
     }
 }
 
@@ -186,7 +205,11 @@ fun HotelInfoSection(
 }
 
 @Composable
-fun RatingsSection() {
+fun RatingsSection(
+    ratings: List<Rating>
+) {
+    val averageRating = ratings.map { it.rate }.average()
+    val topRatings = ratings.take(5)
     Column(modifier = Modifier.padding(16.dp)) {
         Row (verticalAlignment = Alignment.CenterVertically) {
             Text(text = "Xếp hạng và đánh giá",
@@ -203,14 +226,14 @@ fun RatingsSection() {
         }
         Row(modifier = Modifier.padding(vertical = 8.dp),
             verticalAlignment = Alignment.CenterVertically) {
-            Text(text = "8.6", fontSize = 50.sp,
+            Text(text = averageRating.toString(), fontSize = 50.sp,
                 fontFamily = FontFamily(Font(R.font.proxima_nova_semi_bold)),
                 color = colorResource(id = R.color.primary))
             Column(modifier = Modifier.padding(start = 10.dp)) {
                 Text(text = "Ấn tượng", fontSize = 18.sp,
                     fontFamily = FontFamily(Font(R.font.proxima_nova_bold)),
                     color = colorResource(id = R.color.primary))
-                Text(text = "288 lượt đánh giá", fontSize = 15.sp,
+                Text(text = ratings.size.toString() + " lượt đánh giá", fontSize = 15.sp,
                     fontFamily = FontFamily(Font(R.font.proxima_nova_regular)))
             }
         }
@@ -221,7 +244,7 @@ fun RatingsSection() {
             fontFamily = FontFamily(Font(R.font.proxima_nova_bold)),
             fontSize = 20.sp)
 
-        TopReviewSection()
+        TopReviewSection(topRatings)
     }
 }
 
@@ -245,20 +268,12 @@ fun RatingTag(text: String) {
 }
 
 @Composable
-fun TopReviewSection() {
-    val reviews = listOf(Review("Nguyen V.A.", "Khách sạn mới và đẹp, gần biển lại thuận tiện với nhân viên nhiệt tình và thân thiện."),
-        Review("Tran V.B.", "Khách sạn sạch sẽ, vị trí đắc địa, nhân viên nhiệt tình. Xứng đáng với giá tiền."))
-    ReviewItem(reviews)
-}
-data class Review(val name: String, val review: String)
-
-@Composable
-fun ReviewItem(
-    listItem :List<Review>
+fun TopReviewSection(
+    topRatings: List<Rating>
 ) {
     LazyRow(modifier = Modifier
         .fillMaxWidth()) {
-        items(listItem){ item ->
+        items(topRatings){ item ->
             Box(
                 modifier = Modifier
                     .padding(end = 10.dp, top = 10.dp)
@@ -268,18 +283,21 @@ fun ReviewItem(
                     .background(colorResource(id = R.color.bgRate))) {
                 Column(Modifier.padding(10.dp),
                     verticalArrangement = Arrangement.spacedBy(5.dp)){
-                    Text(text = item.name,fontFamily = FontFamily(Font(R.font.proxima_nova_bold)))
-                    Text(text = item.review, fontFamily = FontFamily(Font(R.font.proxima_nova_regular)))
+                    Text(text = item.userName,fontFamily = FontFamily(Font(R.font.proxima_nova_bold)))
+                    Text(text = item.content, fontFamily = FontFamily(Font(R.font.proxima_nova_regular)))
                 }
             }
         }
     }
 }
+data class Review(val name: String, val review: String)
+
 
 @Composable
 fun AmenitiesSection(
-    listItem: List<String> = listOf("Nhà hàng", "Lễ tân 24h", "Hồ bơi", "Wifi", "Massage", "Thú cưng")
+    amentities: String
 ) {
+    val amenitiesList = amentities.split(",").map { it.trim() }
     Column(modifier = Modifier.padding(16.dp)) {
         Row (verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.padding(bottom = 10.dp)) {
@@ -298,7 +316,7 @@ fun AmenitiesSection(
         }
         Row(horizontalArrangement = Arrangement.spacedBy(16.dp),
             modifier = Modifier.horizontalScroll(rememberScrollState())) {
-            listItem.forEach(){item ->
+            amenitiesList.forEach(){item ->
                 AmenityItem(item)
             }
         }
@@ -324,7 +342,7 @@ fun CheckInOutSection() {
             Column {
                 Text(text = "Nhận phòng", style = MaterialTheme.typography.titleMedium,
                     fontFamily = FontFamily(Font(R.font.proxima_nova_bold)))
-                Text(text = "15:00 - 03:00", style = MaterialTheme.typography.bodyMedium,
+                Text(text = "12:00 - 14:00", style = MaterialTheme.typography.bodyMedium,
                     fontFamily = FontFamily(Font(R.font.proxima_nova_regular)))
             }
             Spacer(modifier = Modifier.weight(1f))
@@ -390,7 +408,7 @@ fun BookButton(
             .height(50.dp)
             .clip(RoundedCornerShape(5.dp))
             .background(colorResource(id = R.color.primary))
-            .clickable { onClick }
+            .clickable { onClick() }
     ) {
         Text(text = "Chọn phòng", color = Color.White,
             fontFamily = FontFamily(Font(R.font.proxima_nova_regular)),

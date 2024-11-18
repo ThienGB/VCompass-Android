@@ -27,14 +27,17 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.gotravel.MainApplication
-import com.example.gotravel.data.model.Accommodation
+import com.example.gotravel.data.model.User
 import com.example.gotravel.helper.RealmHelper
 import com.example.gotravel.ui.factory.ViewModelFactory
-import com.example.gotravel.ui.module.accomodation.AccomodationDetail
+import com.example.gotravel.ui.module.accomodation.HotelDetailsScreen
+import com.example.gotravel.ui.module.booking.BookingDetailScreen
+import com.example.gotravel.ui.module.booking.BookingListActivity
 import com.example.gotravel.ui.module.chat.ChatComponentScreen
 import com.example.gotravel.ui.module.home.user.HomeUserScreen
 import com.example.gotravel.ui.module.home.user.NotificationScreen
 import com.example.gotravel.ui.module.home.user.ProfileScreen
+import com.example.gotravel.ui.module.room.RoomDetailScreen
 import com.example.gotravel.ui.module.search.SearchAccommodation
 
 
@@ -46,13 +49,13 @@ class MainUserActivity : ComponentActivity() {
         realmHelper = (application as MainApplication).realmHelper
         val factory = ViewModelFactory(MainUserViewModel::class.java, realmHelper)
         viewModel = ViewModelProvider(this, factory)[MainUserViewModel::class.java]
+        val user = User("123", "Hoang Cong Thien", "congthien@gmail.com")
         setContent {
-            MainScreen(viewModel, this){ accommodationId -> intentToAccomDetail(accommodationId) }
+            MainScreen(viewModel, user, this, { intentToBooking() })
         }
     }
-    private fun intentToAccomDetail(accommodationId: String) {
-        val intent = Intent(this, AccomodationDetail::class.java)
-        intent.putExtra("accommodationId", accommodationId)
+    private fun intentToBooking() {
+        val intent = Intent(this, BookingListActivity::class.java)
         startActivity(intent)
     }
 }
@@ -60,26 +63,33 @@ class MainUserActivity : ComponentActivity() {
 @Composable
 fun MainScreen(
     viewModel: MainUserViewModel,
+    user: User =  User(),
     context: Context,
-    intentToAccomDetail: (String) -> Unit
+    intentToBooking: () -> Unit
 ) {
+    val isShowBottomBar by viewModel.isShowBottomBar.collectAsState()
     val navController = rememberNavController()
     Scaffold(
         bottomBar = {
-            CustomBottomBar(navController = navController)
+            if (isShowBottomBar)
+                CustomBottomBar(navController){intentToBooking()}
         }
     ) { paddingValues ->
         NavHostGraph(
             navController = navController,
             viewModel = viewModel,
+            user = user,
             modifier = Modifier.padding(paddingValues),
             context = context,
-            intentToAccomDetail = intentToAccomDetail
+            intentToBooking = intentToBooking
         )
     }
 }
 @Composable
-fun CustomBottomBar(navController: NavController) {
+fun CustomBottomBar(
+    navController: NavController,
+    intentToBooking: () -> Unit
+) {
     NavigationBar {
         NavigationBarItem(
             icon = { Icon(Icons.Filled.Home, contentDescription = "Home") },
@@ -91,7 +101,8 @@ fun CustomBottomBar(navController: NavController) {
             icon = { Icon(Icons.Filled.Email, contentDescription = "Chat") },
             label = { Text("Chat") },
             selected = false,
-            onClick = { navController.navigate("chat") }
+            onClick = { navController.navigate("chat")
+                intentToBooking()}
         )
         NavigationBarItem(
             icon = { Icon(Icons.Filled.Notifications, contentDescription = "Notification") },
@@ -111,18 +122,25 @@ fun CustomBottomBar(navController: NavController) {
 fun NavHostGraph(
     navController: NavHostController,
     modifier: Modifier = Modifier,
+    user: User,
     viewModel: MainUserViewModel,
     context: Context,
-    intentToAccomDetail: (String) -> Unit
+    intentToBooking: () -> Unit
 )
 {
     val accommodations by viewModel.accommodations.collectAsState()
+    val accommodation by viewModel.accommodation.collectAsState()
+    val room by viewModel.room.collectAsState()
     val searchData by viewModel.searchData.collectAsState()
+    val isLoading by viewModel.isLoading.collectAsState()
     NavHost(navController = navController, startDestination = "home", modifier = modifier){
         composable("home") { HomeUserScreen(navController, viewModel, context) }
         composable("chat") { ChatComponentScreen() }
         composable("notification") { NotificationScreen() }
         composable("profile") { ProfileScreen() }
-        composable("search") { SearchAccommodation(navController, accommodations, searchData, intentToAccomDetail) }
+        composable("search") { SearchAccommodation(navController, accommodations, searchData, isLoading, viewModel) }
+        composable("accom_detail") { HotelDetailsScreen(accommodation, navController) }
+        composable("room_detail") { RoomDetailScreen(accommodation, viewModel, navController) }
+        composable("booking_detail") { BookingDetailScreen(accommodation, room, user, navController, viewModel, searchData, intentToBooking) }
     }
 }

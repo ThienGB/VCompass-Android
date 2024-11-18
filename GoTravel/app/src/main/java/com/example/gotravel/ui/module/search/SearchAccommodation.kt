@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -37,6 +38,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DateRangePicker
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
@@ -73,6 +75,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.gotravel.R
@@ -88,29 +91,31 @@ fun SearchAccommodation(
     navController: NavController = NavController(LocalContext.current),
     accommodations: List<Accommodation> = listOf(),
     searchData: Search = Search(),
-    intentToAccomDetail: (String) -> Unit)
+    isLoading: Boolean = true,
+    viewModel: MainUserViewModel = viewModel())
 {
+    viewModel.setIsShowBottomBar(false)
     Column {
-        NavTitle("Vũng Tàu") { navController.navigate("home") }
-        NavSearch(navController, accommodations, searchData, intentToAccomDetail)
+        NavTitle(searchData.destination) { navController.navigate("home") }
+        NavSearch(navController, accommodations, searchData, isLoading, viewModel)
     }
 }
 
-@Preview(showSystemUi = true)
 @Composable
 fun NavSearch(
     navController: NavController = NavController(LocalContext.current),
     accommodations: List<Accommodation> = listOf(),
     searchData: Search = Search(),
-    intentToAccomDetail: (String) -> Unit = {}
+    isLoading: Boolean = true,
+    viewModel: MainUserViewModel = viewModel()
 ){
     val sortOption = remember { mutableStateOf("Giá thấp nhất") }
     fun sortData(option: String): List<Accommodation> {
         return when (option) {
-            "Giá thấp nhất" -> accommodations.sortedBy { it.price }
-            "Giá cao nhất" -> accommodations.sortedByDescending { it.price }
-            "Phổ biến nhất" -> accommodations.sortedBy { it.price }
-            "Đánh giá cao nhất" -> accommodations.sortedBy { it.totalRate }
+            "Giá thấp nhất" -> accommodations.sortedBy { it -> it.rooms.minOfOrNull { it.price } ?: 0 }
+            "Giá cao nhất" -> accommodations.sortedByDescending { it -> it.rooms.minOfOrNull { it.price } ?: 0 }
+            "Phổ biến nhất" -> accommodations.sortedByDescending { it.ratings.size }
+            "Đánh giá cao nhất" -> accommodations.sortedByDescending { it.totalRate }
             else -> accommodations
         }
     }
@@ -124,7 +129,10 @@ fun NavSearch(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null
             )
-            .clickable { navController.navigate("home") }){
+            .clickable {
+                viewModel.setIsShowBottomBar(true)
+                navController.navigate("home")
+            }){
             Row(verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.padding(horizontal = 15.dp)) {
                 Image(painter = painterResource(id = R.drawable.ic_calendar),
@@ -209,19 +217,30 @@ fun NavSearch(
             }
         }
     }
-    Column (modifier = Modifier.verticalScroll(rememberScrollState())) {
-        sortedList.forEach { accommodation ->
-            HotelCard(accommodation, intentToAccomDetail)
+    if (isLoading){
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            CircularProgressIndicator()
+        }
+    }else {
+        Column (modifier = Modifier.verticalScroll(rememberScrollState())) {
+            sortedList.forEach { accommodation ->
+                HotelCard(accommodation, viewModel, navController)
+            }
         }
     }
+
 }
 
-@Preview(showSystemUi = true)
 @Composable
 fun HotelCard(
     accommodation: Accommodation = Accommodation(),
-    intentToAccomDetail: (String) -> Unit = {}
+    viewModel: MainUserViewModel,
+    navController: NavController
 ) {
+    val lowestPrice = accommodation.rooms.minOfOrNull { it.price } ?: 0
     Card(
         shape = RoundedCornerShape(10.dp),
         elevation = CardDefaults.cardElevation(8.dp),
@@ -230,7 +249,8 @@ fun HotelCard(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null
             ) {
-                intentToAccomDetail(accommodation.accommodationId)
+                viewModel.setAccommodation(accommodation)
+                navController.navigate("accom_detail")
             }
             .padding(10.dp)
             .fillMaxWidth()
@@ -307,7 +327,7 @@ fun HotelCard(
                 )
                 Row (verticalAlignment = Alignment.CenterVertically) {
                     Text(
-                        text = formatCurrency(accommodation.price.toString()) + " đ",
+                        text = formatCurrency(lowestPrice.toString()) + " đ",
                         color = colorResource(id = R.color.primary),
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold

@@ -67,6 +67,7 @@ fun HomeUserScreen(
     viewModel: MainUserViewModel,
     context: Context,
 ) {
+    viewModel.setIsShowBottomBar(true)
     val coroutineScope = rememberCoroutineScope()
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState()
     val currentSheet = remember { mutableStateOf(BottomSheetType.NONE) }
@@ -161,11 +162,12 @@ fun HomeUserScreen(
                         color = Color.White,
                         modifier = Modifier
                             .clickable {
-                                viewModel.fetchAccommodation()
+                                viewModel.fetchData()
                                 validate()
-                                if (isValid)
+                                if (isValid) {
+                                    viewModel.setIsShowBottomBar(false)
                                     navController.navigate("search")
-                                else
+                                } else
                                     Toast.makeText(context, "Vui lòng chọn đủ thông tin", Toast.LENGTH_SHORT).show()
                             }
                             .fillMaxWidth()

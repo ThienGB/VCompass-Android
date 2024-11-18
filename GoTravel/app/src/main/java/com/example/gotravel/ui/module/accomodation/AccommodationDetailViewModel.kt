@@ -7,7 +7,11 @@ import androidx.lifecycle.viewModelScope
 import com.example.gotravel.data.model.Accommodation
 import com.example.gotravel.data.remote.FirestoreDataManager
 import com.example.gotravel.helper.RealmHelper
+import com.google.gson.ExclusionStrategy
+import com.google.gson.FieldAttributes
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import io.realm.RealmObject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -34,9 +38,6 @@ class AccommodationDetailViewModel (private val realmHelper: RealmHelper) : View
             val accom = accomDao.getAccommById(currentId)
             if (accom != null) {
                 _accommodations.value = accom.copy()
-                val gson = Gson()
-                val json = gson.toJson(accom)
-                Log.d("AccommodationDetail", json)
             } else {
                 Log.d("AccommodationDetail", "No accommodation found with the given ID.")
             }

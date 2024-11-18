@@ -37,4 +37,9 @@ class AccommodationDao() {
             existingAccommodation?.deleteFromRealm()
         }
     }
+    fun deleteAllAccommodation() {
+        realm.executeTransactionAsync { transactionRealm ->
+            transactionRealm.where<Accommodation>().findAll()?.deleteAllFromRealm()
+        }
+    }
 }

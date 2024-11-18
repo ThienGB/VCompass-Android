@@ -9,6 +9,7 @@ open class Rating : RealmObject() {
     var userId: String = ""
     var content: String = ""
     var rate: Int = 0
+    var userName: String = ""
 
     fun copy(): Rating {
         val copy = Rating()
@@ -16,6 +17,7 @@ open class Rating : RealmObject() {
         copy.userId = this.userId
         copy.content = this.content
         copy.rate = this.rate
+        copy.userName= this.userName
         return copy
     }
 }

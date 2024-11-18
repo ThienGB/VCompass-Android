@@ -11,6 +11,8 @@ open class Room : RealmObject() {
     var price: Int = 0
     var people: Int = 0
     var bed: Int = 0
+    var image: String = ""
+    var area: Int = 0
     var status:  String = ""
 
     fun copy(): Room {
@@ -22,6 +24,8 @@ open class Room : RealmObject() {
         copy.people = this.people
         copy.bed = this.bed
         copy.status = this.status
+        copy.image = this.image
+        copy.area = this.area
         return copy
     }
 }
