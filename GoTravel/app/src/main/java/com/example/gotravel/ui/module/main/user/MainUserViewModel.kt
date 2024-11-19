@@ -124,7 +124,7 @@ class MainUserViewModel(private val realmHelper: RealmHelper) : ViewModel() {
             }
         }
     }
-    fun handleConfirmBooking(accommodation: Accommodation, room: Room, user: User, search: Search, phone: String, name: String, userEail: String){
+    fun handleConfirmBooking(accommodation: Accommodation, room: Room, user: User, search: Search, phone: String, name: String, userEmail: String){
         val booking = Booking().apply {
             bookingId = UUID.randomUUID().toString().take(15)
             roomId = room.roomId
@@ -137,7 +137,7 @@ class MainUserViewModel(private val realmHelper: RealmHelper) : ViewModel() {
             status = "pending"
             phoneNumber = phone
             fullName = name
-            email = userEail
+            email = userEmail
         }
         viewModelScope.launch {
             bookingDao.insertOrUpdateBooking(booking) {

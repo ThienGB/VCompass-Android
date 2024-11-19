@@ -58,6 +58,7 @@
             android:name=".ui.module.booking.BookingListActivity"
             android:exported="true">
         </activity>
+
         <activity
                 android:name=".ui.module.main.user.MainUserActivity"
                 android:exported="true">

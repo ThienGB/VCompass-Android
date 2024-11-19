@@ -225,11 +225,25 @@ fun NavSearch(
             CircularProgressIndicator()
         }
     }else {
-        Column (modifier = Modifier.verticalScroll(rememberScrollState())) {
-            sortedList.forEach { accommodation ->
-                HotelCard(accommodation, viewModel, navController)
+        if (accommodations.isEmpty()){
+            Column(modifier = Modifier.fillMaxWidth().padding(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally) {
+                Image(painter = painterResource(id = R.drawable.ic_no_search),
+                    contentDescription = null,
+                    modifier = Modifier.padding(bottom = 20.dp).size(150.dp)
+                )
+                Text(text = "Không có kết quả nào phù hợp",
+                    fontFamily = FontFamily(Font(R.font.proxima_nova_regular)),
+                    fontSize = 20.sp)
+            }
+        }else {
+            Column (modifier = Modifier.verticalScroll(rememberScrollState())) {
+                sortedList.forEach { accommodation ->
+                    HotelCard(accommodation, viewModel, navController)
+                }
             }
         }
+
     }
 
 }

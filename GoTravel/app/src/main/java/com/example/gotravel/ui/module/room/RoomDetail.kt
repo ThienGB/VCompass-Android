@@ -1,10 +1,14 @@
 package com.example.gotravel.ui.module.room
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.indication
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -19,14 +23,18 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
@@ -44,7 +52,9 @@ import coil.compose.rememberImagePainter
 import com.example.gotravel.R
 import com.example.gotravel.data.model.Accommodation
 import com.example.gotravel.data.model.Room
+import com.example.gotravel.data.model.Search
 import com.example.gotravel.helper.CommonUtils.formatCurrency
+import com.example.gotravel.helper.CommonUtils.formatDate
 import com.example.gotravel.ui.components.NavTitle
 import com.example.gotravel.ui.module.main.user.MainUserViewModel
 
@@ -52,12 +62,72 @@ import com.example.gotravel.ui.module.main.user.MainUserViewModel
 @Composable
 fun RoomDetailScreen(
     accommodation: Accommodation = Accommodation(),
+    searchData: Search = Search(),
     viewModel: MainUserViewModel,
     navController: NavController = NavController(LocalContext.current),
 ){
     val groupedRooms = accommodation.rooms.groupBy { room -> room.roomType }
     Column {
         NavTitle(accommodation.name) { navController.navigate("accom_detail") }
+        Column (modifier = Modifier.background(Color.White)) {
+            HorizontalDivider(thickness = 0.3.dp, color = Color.White)
+            Box(modifier = Modifier
+                .fillMaxWidth()
+                .background(colorResource(id = R.color.primary))
+                .indication(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = null
+                )
+                .clickable {
+                    viewModel.setIsShowBottomBar(true)
+                    navController.navigate("home")
+                }){
+                Row(verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.padding(horizontal = 15.dp)) {
+                    Image(painter = painterResource(id = R.drawable.ic_calendar),
+                        contentDescription = null,
+                        colorFilter = ColorFilter.tint(Color.White),
+                        modifier = Modifier
+                            .padding(end = 5.dp, top = 8.dp, bottom = 8.dp)
+                            .size(30.dp)
+                    )
+                    Text(text = formatDate(searchData.departureDate), color = Color.White,
+                        fontSize = 18.sp,
+                        fontFamily = FontFamily(Font(R.font.proxima_nova_regular)))
+                    Spacer(modifier = Modifier.weight(1f))
+                    Image(painter = painterResource(id = R.drawable.ic_moon),
+                        contentDescription = null,
+                        colorFilter = ColorFilter.tint(Color.White),
+                        modifier = Modifier
+                            .padding(start = 12.dp, end = 5.dp, top = 8.dp, bottom = 8.dp)
+                            .size(30.dp)
+                    )
+                    Text(text = searchData.vacationDays.toString(), color = Color.White,
+                        fontSize = 18.sp,
+                        fontFamily = FontFamily(Font(R.font.proxima_nova_regular)))
+                    Image(painter = painterResource(id = R.drawable.ic_door),
+                        contentDescription = null,
+                        colorFilter = ColorFilter.tint(Color.White),
+                        modifier = Modifier
+                            .padding(start = 12.dp, end = 5.dp, top = 8.dp, bottom = 8.dp)
+                            .size(30.dp)
+                    )
+                    Text(text = searchData.rooms.toString(), color = Color.White,
+                        fontSize = 18.sp,
+                        fontFamily = FontFamily(Font(R.font.proxima_nova_regular)))
+                    Image(painter = painterResource(id = R.drawable.ic_people),
+                        contentDescription = null,
+                        colorFilter = ColorFilter.tint(Color.White),
+                        modifier = Modifier
+                            .padding(start = 12.dp, end = 5.dp, top = 8.dp, bottom = 8.dp)
+                            .size(30.dp)
+                    )
+                    Text(text = searchData.guests.toString(), color = Color.White,
+                        fontSize = 18.sp,
+                        fontFamily = FontFamily(Font(R.font.proxima_nova_regular)))
+                }
+            }
+        }
         Column (modifier = Modifier.verticalScroll(rememberScrollState())) {
             groupedRooms.forEach { (_, rooms) ->
                 if (rooms.isNotEmpty())

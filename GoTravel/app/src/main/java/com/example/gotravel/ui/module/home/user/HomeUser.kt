@@ -57,7 +57,6 @@ import com.example.gotravel.ui.module.search.DatePickerBottomSheet
 import com.example.gotravel.ui.module.search.DestinationSelectionBottomSheet
 import com.example.gotravel.ui.module.search.PriceRangeBottomSheet
 import com.example.gotravel.ui.module.search.RoomGuestSelectionBottomSheet
-import com.example.gotravel.ui.module.search.ShareSearchViewModel
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)

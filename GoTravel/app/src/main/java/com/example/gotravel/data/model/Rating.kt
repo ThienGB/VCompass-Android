@@ -10,6 +10,7 @@ open class Rating : RealmObject() {
     var content: String = ""
     var rate: Int = 0
     var userName: String = ""
+    var createdAt: Long = System.currentTimeMillis()
 
     fun copy(): Rating {
         val copy = Rating()
@@ -18,6 +19,7 @@ open class Rating : RealmObject() {
         copy.content = this.content
         copy.rate = this.rate
         copy.userName= this.userName
+        copy.createdAt = this.createdAt
         return copy
     }
 }

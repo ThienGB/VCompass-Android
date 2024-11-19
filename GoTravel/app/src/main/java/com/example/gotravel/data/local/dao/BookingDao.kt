@@ -20,7 +20,22 @@ class BookingDao() {
     fun insertOrUpdateBooking(booking: Booking, onSuccess: () -> Unit = {}) {
         realm.executeTransactionAsync(
             { transactionRealm ->
+                transactionRealm.where<Booking>().findAll()?.deleteAllFromRealm()
                 transactionRealm.insertOrUpdate(booking)
+            },
+            {
+                Log.d("RealmNotification", "Inserted booking")
+                onSuccess()
+            },
+            { error ->
+                Log.e("RealmNotification", "Error inserting booking", error)
+            }
+        )
+    }
+    fun insertOrUpdateBooking(bookings: List<Booking>, onSuccess: () -> Unit = {}) {
+        realm.executeTransactionAsync(
+            { transactionRealm ->
+                transactionRealm.insertOrUpdate(bookings)
             },
             {
                 Log.d("RealmNotification", "Inserted booking")

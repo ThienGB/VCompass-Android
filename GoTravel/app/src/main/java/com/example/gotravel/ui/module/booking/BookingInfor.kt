@@ -4,6 +4,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.widget.Toast
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -23,23 +24,15 @@ import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
@@ -48,26 +41,19 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.gotravel.R
-import com.example.gotravel.data.model.Accommodation
 import com.example.gotravel.data.model.Booking
-import com.example.gotravel.data.model.Room
-import com.example.gotravel.data.model.Search
-import com.example.gotravel.data.model.User
-import com.example.gotravel.helper.CommonUtils.formatCurrency
 import com.example.gotravel.helper.CommonUtils.formatDateHaveDay
 import com.example.gotravel.ui.components.NavTitle
-import com.example.gotravel.ui.module.main.user.MainUserViewModel
-import java.util.UUID
-
 
 @Composable
 fun BookingInformation(
-    booking: Booking
+    booking: Booking = Booking(),
+    viewModel: BookingListViewModel,
+    navController: NavController = NavController(LocalContext.current)
 ) {
     val statusString = when (booking.status) {
         "pending" -> "Đang xử lý"
@@ -177,17 +163,47 @@ fun BookingInformation(
                     painter = painterResource(id = R.drawable.ic_copy),
                     contentDescription = "Copy",
                     tint = colorResource(id = R.color.primary),
-                    modifier = Modifier.size(30.dp)
+                    modifier = Modifier
+                        .size(30.dp)
                         .clickable {
-                            val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                            val clipboard =
+                                context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                             val clip = ClipData.newPlainText("Booking ID", booking.bookingId)
                             clipboard.setPrimaryClip(clip)
-                            Toast.makeText(context, "Đã sao chép mã đặt chỗ", Toast.LENGTH_SHORT).show()
+                            Toast
+                                .makeText(context, "Đã sao chép mã đặt chỗ", Toast.LENGTH_SHORT)
+                                .show()
                         }
                 )
             }
         }
+        Spacer(modifier = Modifier.height(16.dp))
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 40.dp, end = 40.dp, bottom = 16.dp)
+                .height(50.dp)
+                .clip(RoundedCornerShape(99.dp))
+                .background(colorResource(id = R.color.primary))
+                .clickable {
+                    viewModel.getAccomById()
+                    navController.navigate("rating")
+                }
+        ) {
+            Image(painter = painterResource(id = R.drawable.ic_rating),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(start = 20.dp)
+                    .size(25.dp),
+                colorFilter = ColorFilter.tint(Color.White))
+            Text(text = "Đánh giá chỗ ở", color = Color.White,
+                fontFamily = FontFamily(Font(R.font.proxima_nova_regular)),
+                fontSize = 20.sp, modifier = Modifier.padding(end = 70.dp))
+        }
     }
+
 }
 
 @Composable
@@ -225,10 +241,11 @@ fun PolicyItem(text: String, icon: ImageVector, iconColor: Color) {
 @Composable
 fun BookingInforScreen(
     booking: Booking,
+    viewModel: BookingListViewModel,
     navController: NavController
 ){
     Column {
         NavTitle("Thông tin đặt phòng"){navController.navigate("booking_list")}
-        BookingInformation(booking)
+        BookingInformation(booking,viewModel, navController)
     }
 }

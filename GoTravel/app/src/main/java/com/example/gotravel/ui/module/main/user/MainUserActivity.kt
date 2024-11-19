@@ -37,6 +37,7 @@ import com.example.gotravel.ui.module.chat.ChatComponentScreen
 import com.example.gotravel.ui.module.home.user.HomeUserScreen
 import com.example.gotravel.ui.module.home.user.NotificationScreen
 import com.example.gotravel.ui.module.home.user.ProfileScreen
+import com.example.gotravel.ui.module.review.ListReviewScreen
 import com.example.gotravel.ui.module.room.RoomDetailScreen
 import com.example.gotravel.ui.module.search.SearchAccommodation
 
@@ -140,7 +141,8 @@ fun NavHostGraph(
         composable("profile") { ProfileScreen() }
         composable("search") { SearchAccommodation(navController, accommodations, searchData, isLoading, viewModel) }
         composable("accom_detail") { HotelDetailsScreen(accommodation, navController) }
-        composable("room_detail") { RoomDetailScreen(accommodation, viewModel, navController) }
+        composable("room_detail") { RoomDetailScreen(accommodation,searchData, viewModel, navController) }
         composable("booking_detail") { BookingDetailScreen(accommodation, room, user, navController, viewModel, searchData, intentToBooking) }
+        composable("list_rating") { ListReviewScreen(accommodation, navController) }
     }
 }

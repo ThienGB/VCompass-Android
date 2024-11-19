@@ -1,11 +1,13 @@
 package com.example.gotravel.ui.module.booking
 
+import AccommodationDao
 import BookingDao
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.gotravel.data.model.Accommodation
 import com.example.gotravel.data.model.Booking
+import com.example.gotravel.data.model.Rating
 import com.example.gotravel.data.model.Room
 import com.example.gotravel.data.remote.FirestoreDataManager
 import com.example.gotravel.helper.RealmHelper
@@ -15,6 +17,7 @@ import kotlinx.coroutines.launch
 
 class BookingListViewModel(private val realmHelper: RealmHelper) : ViewModel() {
     private var bookingDao: BookingDao = BookingDao()
+    private var accomDao: AccommodationDao = AccommodationDao()
     private val firestoreDataManager = FirestoreDataManager()
 
     private val _bookings = MutableStateFlow<List<Booking>>(emptyList())
@@ -25,6 +28,9 @@ class BookingListViewModel(private val realmHelper: RealmHelper) : ViewModel() {
 
     private val _booking = MutableStateFlow(Booking())
     val booking: StateFlow<Booking> get() = _booking
+
+    private val _accommodation = MutableStateFlow(Accommodation())
+    val accommodation: StateFlow<Accommodation> get() = _accommodation
 
     private var currentUserId: String = ""
 
@@ -40,6 +46,7 @@ class BookingListViewModel(private val realmHelper: RealmHelper) : ViewModel() {
             firestoreDataManager.fetchBooking{
                 getBookingsByUser()
             }
+            firestoreDataManager.fetchAccommodation {  }
         }
     }
     private fun getBookingsByUser() {
@@ -53,5 +60,19 @@ class BookingListViewModel(private val realmHelper: RealmHelper) : ViewModel() {
                 Log.d("BookingList", "No booking found")
             }
         }
+    }
+    fun getAccomById() {
+        viewModelScope.launch {
+            val accom = accomDao.getAccommById(booking.value.accommodationId)
+            if (accom != null) {
+                _accommodation.value = accom.copy()
+            } else {
+                Log.d("BookingList", "No booking found")
+            }
+        }
+    }
+    fun insertReview(rating: Rating){
+        firestoreDataManager.updateRatingsInFirestore(booking.value.accommodationId, rating)
+        accomDao.insertRating(booking.value.accommodationId, rating)
     }
 }

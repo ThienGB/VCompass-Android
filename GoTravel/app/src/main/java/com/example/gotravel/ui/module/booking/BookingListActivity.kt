@@ -33,17 +33,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import com.example.gotravel.MainApplication
 import com.example.gotravel.R
 import com.example.gotravel.data.model.Booking
@@ -53,7 +52,7 @@ import com.example.gotravel.helper.RealmHelper
 import com.example.gotravel.ui.components.NavTitle
 import com.example.gotravel.ui.factory.ViewModelFactory
 import com.example.gotravel.ui.module.main.user.MainUserActivity
-import com.example.gotravel.ui.module.main.user.MainUserViewModel
+import com.example.gotravel.ui.module.review.ReviewScreen
 
 class BookingListActivity: ComponentActivity() {
     private lateinit var viewModel: BookingListViewModel
@@ -82,7 +81,11 @@ class BookingListActivity: ComponentActivity() {
                 }
                 composable("booking_infor",) {
                     val booking by viewModel.booking.collectAsState()
-                    BookingInforScreen(booking, navController)
+                    BookingInforScreen(booking, viewModel, navController)
+                }
+                composable("rating",) {
+                    val accommodation by viewModel.accommodation.collectAsState()
+                    ReviewScreen(accommodation, viewModel, user, navController)
                 }
             }
         }
@@ -208,13 +211,27 @@ fun BookingStatusList(
             ) {
                 CircularProgressIndicator()
             }
-        }else{
-            LazyColumn {
-                items(bookings) { booking ->
-                    BookingStatusItem(booking.status, booking.accommodationName, booking.bookingId,
-                        booking.price.toString(),booking,navController, viewModel)
+        }else {
+            if (bookings.isEmpty()){
+                Column(modifier = Modifier.fillMaxWidth().padding(16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally) {
+                    Image(painter = painterResource(id = R.drawable.ic_no_booking),
+                        contentDescription = null,
+                        modifier = Modifier.padding(bottom = 20.dp).size(150.dp)
+                    )
+                    Text(text = "Bạn chưa có bất kỳ đặt chỗ nào",
+                        fontFamily = FontFamily(Font(R.font.proxima_nova_regular)),
+                        fontSize = 20.sp)
+                }
+            } else {
+                LazyColumn {
+                    items(bookings) { booking ->
+                        BookingStatusItem(booking.status, booking.accommodationName, booking.bookingId,
+                            booking.price.toString(),booking,navController, viewModel)
+                    }
                 }
             }
+
         }
 
     }

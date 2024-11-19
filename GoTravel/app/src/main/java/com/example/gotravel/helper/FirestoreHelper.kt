@@ -30,4 +30,13 @@ object FirestoreHelper {
     const val FL_FULLNAME: String = "fullName"
     const val FL_EMAIL: String = "email"
 
+    //Rating
+    const val CL_RATING: String = "ratings"
+    const val FL_RATINGID: String = "ratingId"
+    const val FL_RATE: String = "rate"
+    const val FL_CONTENT: String = "content"
+    const val FL_USERNAME: String = "userName"
+    const val FL_CREATEDAT: String = "createdAt"
+
+
 }
