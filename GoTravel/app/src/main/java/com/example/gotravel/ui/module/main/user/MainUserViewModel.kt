@@ -3,8 +3,6 @@ package com.example.gotravel.ui.module.main.user
 import AccommodationDao
 import BookingDao
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.gotravel.data.model.Accommodation
@@ -14,8 +12,6 @@ import com.example.gotravel.data.model.Search
 import com.example.gotravel.data.model.User
 import com.example.gotravel.data.remote.FirestoreDataManager
 import com.example.gotravel.helper.RealmHelper
-import com.example.gotravel.ui.module.partner.Booking.BookingScreen
-import io.realm.RealmList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch

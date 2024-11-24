@@ -1,22 +1,29 @@
-package com.example.gotravel.ui.module.booking
+package com.example.gotravel.ui.module.partner.Booking
 
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import android.content.Intent
+import android.net.Uri
+import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Call
@@ -24,41 +31,37 @@ import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Info
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import com.example.gotravel.R
 import com.example.gotravel.data.model.Booking
 import com.example.gotravel.helper.CommonUtils.formatDateHaveDay
+import com.example.gotravel.ui.components.Loading
 import com.example.gotravel.ui.components.NavTitle
+import com.example.gotravel.ui.module.booking.BookingDetailItem
+import com.example.gotravel.ui.module.booking.BookingListViewModel
+import com.example.gotravel.ui.module.booking.PolicyItem
+import com.example.gotravel.ui.module.main.partner.MainPartnerViewModel
+import com.example.gotravel.ui.module.main.user.MainUserViewModel
 
 @Composable
 fun BookingInformation(
     booking: Booking = Booking(),
-    viewModel: BookingListViewModel,
+    viewModel: MainPartnerViewModel,
     navController: NavController = NavController(LocalContext.current)
 ) {
     val statusString = when (booking.status) {
-        "pending" -> "Đang xử lý"
-        "success" -> "Đặt Thành công"
-        "failed" -> "Thất bại"
+        "pending" -> "Đang chờ duyệt"
+        "success" -> "Đã duyêt"
+        "failed" -> "Đã từ chối"
         else -> {"Hủy"}
     }
     val textColor = when (booking.status) {
@@ -178,74 +181,73 @@ fun BookingInformation(
             }
         }
         Spacer(modifier = Modifier.height(16.dp))
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 40.dp, end = 40.dp, bottom = 16.dp)
-                .height(50.dp)
-                .clip(RoundedCornerShape(99.dp))
-                .background(colorResource(id = R.color.primary))
-                .clickable {
-                    viewModel.getAccomById()
-                    navController.navigate("rating")
-                }
-        ) {
-            Image(painter = painterResource(id = R.drawable.ic_rating),
-                contentDescription = null,
+        if (booking.status == "pending")
+            Row {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
-                    .padding(start = 20.dp)
-                    .size(25.dp),
-                colorFilter = ColorFilter.tint(Color.White))
-            Text(text = "Đánh giá chỗ ở", color = Color.White,
-                fontFamily = FontFamily(Font(R.font.proxima_nova_regular)),
-                fontSize = 20.sp, modifier = Modifier.padding(end = 70.dp))
+                    .weight(1f)
+                    .padding(start = 10.dp, end = 10.dp, bottom = 16.dp)
+                    .height(50.dp)
+                    .clip(RoundedCornerShape(99.dp))
+                    .background(Color(0xFFE71100))
+                    .clickable {
+                        viewModel.handleConfirmBooking("failed")
+                        navController.popBackStack()
+                        Toast.makeText(context, " Từ chối thành công",  Toast.LENGTH_SHORT).show()
+                    }
+            ) {
+                Image(painter = painterResource(id = R.drawable.ic_x_circle),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .padding(start = 20.dp)
+                        .size(25.dp),
+                    colorFilter = ColorFilter.tint(Color.White))
+                Text(text = "Từ chối", color = Color.White,
+                    fontFamily = FontFamily(Font(R.font.proxima_nova_regular)),
+                    fontSize = 20.sp, modifier = Modifier.padding(start = 10.dp))
+            }
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(start = 10.dp, end = 10.dp, bottom = 16.dp)
+                    .height(50.dp)
+                    .clip(RoundedCornerShape(99.dp))
+                    .background(Color(0xFF03D307))
+                    .clickable {
+                        viewModel.handleConfirmBooking("success")
+                        navController.popBackStack()
+                        Toast.makeText(context, " Duyệt thành công",  Toast.LENGTH_SHORT).show()
+                    }
+            ) {
+                Image(painter = painterResource(id = R.drawable.ic_check_circle),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .padding(start = 20.dp)
+                        .size(25.dp),
+                    colorFilter = ColorFilter.tint(Color.White))
+                Text(text = "Duyệt", color = Color.White,
+                    fontFamily = FontFamily(Font(R.font.proxima_nova_regular)),
+                    fontSize = 20.sp, modifier = Modifier.padding(start = 15.dp))
+            }
         }
     }
 
 }
 
 @Composable
-fun BookingDetailItem(icon: ImageVector, label: String, value: String) {
-    Row(modifier = Modifier.padding(vertical = 6.dp, horizontal = 16.dp)) {
-        Icon(
-            imageVector = icon,
-            contentDescription = label,
-            tint = Color.Gray,
-            modifier = Modifier.size(20.dp)
-        )
-        Spacer(modifier = Modifier.width(8.dp))
-        Column {
-            Text(text = label, fontSize = 13.sp, color = Color.Gray)
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(text = value, fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color.Black)
-        }
-    }
-}
-
-@Composable
-fun PolicyItem(text: String, icon: ImageVector, iconColor: Color) {
-    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(vertical = 4.dp, horizontal = 16.dp)) {
-        Icon(
-            imageVector = icon,
-            contentDescription = text,
-            tint = iconColor,
-            modifier = Modifier.size(20.dp)
-        )
-        Spacer(modifier = Modifier.width(8.dp))
-        Text(text = text, fontSize = 14.sp, color = Color.Black)
-    }
-}
-
-@Composable
-fun BookingInforScreen(
+fun BookingInforPartner(
     booking: Booking,
-    viewModel: BookingListViewModel,
+    isLoading: Boolean,
+    viewModel: MainPartnerViewModel,
     navController: NavController
 ){
     Column {
-        NavTitle("Thông tin đặt phòng"){navController.navigate("booking_list")}
-        BookingInformation(booking,viewModel, navController)
+        NavTitle("Thông tin đặt phòng"){navController.popBackStack()}
+        if (isLoading){
+            Loading()
+        }else
+            BookingInformation(booking,viewModel, navController)
     }
 }

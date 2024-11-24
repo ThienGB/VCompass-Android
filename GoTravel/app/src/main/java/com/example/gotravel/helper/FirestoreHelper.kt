@@ -12,10 +12,13 @@ object FirestoreHelper {
     const val FL_ADDRESS: String = "address"
     const val FL_LONGTITUDE: String = "longitude"
     const val FL_LATITUDE: String = "latitude"
-    const val FL_CITYID: String = "cityId"
-    const val CL_FAVORITE: String = "favorite"
+    const val FL_CITY: String = "city"
     const val FL_TARGETID: String = "idTaget"
     const val FL_TYPE: String = "accommodation"
+    const val FL_PARTNERID: String = "partnerId"
+    const val FL_AMENTITIES: String = "amentities"
+    const val FL_TOTALRATE: String = "totalRate"
+
 
     // Booking
     const val CL_BOOKING: String = "bookings"
@@ -37,6 +40,13 @@ object FirestoreHelper {
     const val FL_CONTENT: String = "content"
     const val FL_USERNAME: String = "userName"
     const val FL_CREATEDAT: String = "createdAt"
+
+    //Room
+    const val CL_ROOM: String = "rooms"
+    const val FL_ROOMTYPE: String = "roomType"
+    const val FL_PEOPLE: String = "people"
+    const val FL_BED: String = "bed"
+    const val FL_AREA: String = "area"
 
 
 }

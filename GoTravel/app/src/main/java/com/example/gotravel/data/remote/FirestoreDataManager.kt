@@ -10,11 +10,15 @@ import com.example.gotravel.data.model.Room
 import com.example.gotravel.helper.FirestoreHelper.CL_ACCOM
 import com.example.gotravel.helper.FirestoreHelper.CL_BOOKING
 import com.example.gotravel.helper.FirestoreHelper.CL_RATING
+import com.example.gotravel.helper.FirestoreHelper.CL_ROOM
 import com.example.gotravel.helper.FirestoreHelper.FL_ACCOMID
 import com.example.gotravel.helper.FirestoreHelper.FL_ACCOMNAME
 import com.example.gotravel.helper.FirestoreHelper.FL_ADDRESS
+import com.example.gotravel.helper.FirestoreHelper.FL_AMENTITIES
+import com.example.gotravel.helper.FirestoreHelper.FL_AREA
+import com.example.gotravel.helper.FirestoreHelper.FL_BED
 import com.example.gotravel.helper.FirestoreHelper.FL_BOOKINGID
-import com.example.gotravel.helper.FirestoreHelper.FL_CITYID
+import com.example.gotravel.helper.FirestoreHelper.FL_CITY
 import com.example.gotravel.helper.FirestoreHelper.FL_CONTENT
 import com.example.gotravel.helper.FirestoreHelper.FL_CREATEDAT
 import com.example.gotravel.helper.FirestoreHelper.FL_DESCRIPTION
@@ -22,16 +26,18 @@ import com.example.gotravel.helper.FirestoreHelper.FL_EMAIL
 import com.example.gotravel.helper.FirestoreHelper.FL_ENDDATE
 import com.example.gotravel.helper.FirestoreHelper.FL_FULLNAME
 import com.example.gotravel.helper.FirestoreHelper.FL_IMAGE
-import com.example.gotravel.helper.FirestoreHelper.FL_LATITUDE
-import com.example.gotravel.helper.FirestoreHelper.FL_LONGTITUDE
 import com.example.gotravel.helper.FirestoreHelper.FL_NAME
+import com.example.gotravel.helper.FirestoreHelper.FL_PARTNERID
+import com.example.gotravel.helper.FirestoreHelper.FL_PEOPLE
 import com.example.gotravel.helper.FirestoreHelper.FL_PHONE
 import com.example.gotravel.helper.FirestoreHelper.FL_PRICE
 import com.example.gotravel.helper.FirestoreHelper.FL_RATE
 import com.example.gotravel.helper.FirestoreHelper.FL_RATINGID
 import com.example.gotravel.helper.FirestoreHelper.FL_ROOMID
+import com.example.gotravel.helper.FirestoreHelper.FL_ROOMTYPE
 import com.example.gotravel.helper.FirestoreHelper.FL_STARTDATE
 import com.example.gotravel.helper.FirestoreHelper.FL_STATUS
+import com.example.gotravel.helper.FirestoreHelper.FL_TOTALRATE
 import com.example.gotravel.helper.FirestoreHelper.FL_USERID
 import com.example.gotravel.helper.FirestoreHelper.FL_USERNAME
 import com.google.firebase.firestore.DocumentChange
@@ -40,10 +46,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.toObject
 import com.google.firebase.ktx.Firebase
 import io.realm.RealmList
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
-import kotlinx.coroutines.withContext
 
 class FirestoreDataManager () {
     private var accomDao: AccommodationDao = AccommodationDao()
@@ -123,8 +126,7 @@ class FirestoreDataManager () {
                 bookingsList.add(booking)
             }
             if (bookingsList.isNotEmpty()) {
-                bookingDao.insertOrUpdateBooking(bookingsList)
-                onComplete()
+                bookingDao.insertOrUpdateBooking(bookingsList, onComplete)
             } else {
                 onComplete()
             }
@@ -183,5 +185,53 @@ class FirestoreDataManager () {
                 .addOnFailureListener { e ->
                     println("Error updating rating ${rating.ratingId}: $e")
                 }
+    }
+    fun updateRoomsInFirestore(accommodationId: String, room: Room) {
+        val ratingsCollectionRef = db.collection(CL_ACCOM)
+            .document(accommodationId)
+            .collection(CL_ROOM)
+        val roomMap = hashMapOf(
+            FL_ROOMID to room.roomId,
+            FL_NAME to room.name,
+            FL_ROOMTYPE to room.roomType,
+            FL_PRICE to room.price,
+            FL_PEOPLE to room.people,
+            FL_BED to room.bed,
+            FL_IMAGE to room.image,
+            FL_AREA to room.area,
+            FL_STATUS to room.status
+        )
+        ratingsCollectionRef
+            .document(room.roomId)
+            .set(roomMap)
+            .addOnSuccessListener {
+                println("Rating ${room.roomId} updated successfully!")
+            }
+            .addOnFailureListener { e ->
+                println("Error updating rating ${room.roomId}: $e")
+            }
+    }
+    fun addAccommodationToFirestore(accommodation: Accommodation) {
+        val accomMap = hashMapOf(
+            FL_ACCOMID to accommodation.accommodationId,
+            FL_PARTNERID to accommodation.partnerId,
+            FL_NAME to accommodation.name,
+            FL_IMAGE to accommodation.image,
+            FL_DESCRIPTION to accommodation.description,
+            FL_ADDRESS to accommodation.address,
+            FL_CITY to accommodation.city,
+            FL_AMENTITIES to accommodation.amentities,
+            FL_TOTALRATE to accommodation.totalRate,
+            FL_STATUS to accommodation.status
+        )
+        db.collection(CL_ACCOM)
+            .document(accommodation.accommodationId)
+            .set(accomMap)
+            .addOnSuccessListener {
+                println("Accommodation added successfully!")
+            }
+            .addOnFailureListener { e ->
+                println("Error adding accommodation: $e")
+            }
     }
 }

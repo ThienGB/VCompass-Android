@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -38,9 +39,10 @@ fun NavTitle(title: String = "Tìm kiếm khách sạn",
                     .clickable { onBackClick() },
                 tint = Color.White)
             Text(text = title,
-                fontSize = 22.sp,
+                fontSize = 21.sp,
                 color = Color.White,
-                fontFamily = FontFamily(Font(R.font.proxima_nova_bold)))
+                modifier = Modifier.fillMaxWidth().padding(end = 40.dp),
+                textAlign = TextAlign.Center)
         }
     }
 }

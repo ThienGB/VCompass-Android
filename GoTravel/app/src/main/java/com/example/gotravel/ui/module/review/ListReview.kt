@@ -44,6 +44,8 @@ import com.example.gotravel.data.model.Rating
 import com.example.gotravel.helper.CommonUtils
 import com.example.gotravel.ui.module.accomodation.HotelInfoSection
 import com.example.gotravel.ui.module.accomodation.ImageSection
+import java.math.BigDecimal
+import java.math.RoundingMode
 
 @Preview(showSystemUi = true)
 @Composable
@@ -51,10 +53,17 @@ fun ListReviewScreen(
     accommodation: Accommodation= Accommodation(),
     navController: NavController = NavController(LocalContext.current)
 ) {
-    val averageRating = accommodation.ratings.map { it.rate }.average()
+    val averageRating = if (accommodation.ratings.isNotEmpty()) {
+        BigDecimal(accommodation.ratings.map { it.rate }.average())
+            .setScale(1, RoundingMode.HALF_UP)
+            .toDouble()
+    } else {
+        5.0
+    }
+
     Column(modifier = Modifier.fillMaxSize()) {
         Box{
-            ImageSection(accommodation.image) { navController.navigate("accom_detail") }
+            ImageSection(accommodation.image) { navController.popBackStack() }
             Column (modifier = Modifier
                 .padding(top = 180.dp)
                 .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
@@ -62,7 +71,7 @@ fun ListReviewScreen(
             ) {
                 HotelInfoSection(
                     title = accommodation.name,
-                    numStart = accommodation.totalRate,
+                    numStart = averageRating.toInt(),
                     location = accommodation.address
                 )
                 HorizontalDivider(

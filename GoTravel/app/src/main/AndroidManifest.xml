@@ -13,23 +13,6 @@
             android:supportsRtl="true"
             android:theme="@style/Theme.GoTravel"
             tools:targetApi="31">
-
-        <!-- Add your own activities here -->
-        <!-- <activity -->
-        <!-- android:name=".ui.module.partner.Rooms.RoomsActivity" -->
-        <!-- android:exported="false" -->
-        <!-- android:label="@string/title_activity_rooms" -->
-        <!-- android:theme="@style/Theme.GoTravel"/> -->
-        <activity
-                android:name=".ui.module.partner.Booking.GuestInfo"
-                android:exported="false"
-                android:label="@string/title_activity_guest_info"
-                android:theme="@style/Theme.GoTravel"/>
-        <activity
-                android:name=".ui.module.partner.DashBoard.DashBoard"
-                android:exported="false"
-                android:label="@string/title_activity_dash_board"
-                android:theme="@style/Theme.GoTravel"/>
         <activity
                 android:name=".ui.module.partner.HomeScreen.HomeScreen"
                 android:exported="false"
@@ -46,12 +29,9 @@
                 android:exported="true">
         </activity>
         <activity
-                android:name=".ui.module.partner.Rooms.RoomsActivity"
-                android:exported="true">
-        </activity>
-        <activity
                 android:name=".ui.module.main.partner.MainPartnerActivity"
                 android:exported="true">
+
         </activity>
 
         <activity
@@ -62,6 +42,10 @@
         <activity
                 android:name=".ui.module.main.user.MainUserActivity"
                 android:exported="true">
+        </activity>
+        <activity
+            android:name=".ui.module.admin.main.MainAdminActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

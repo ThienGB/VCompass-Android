@@ -1,5 +1,6 @@
 import android.util.Log
 import com.example.gotravel.data.model.Booking
+import com.example.gotravel.helper.FirestoreHelper.FL_ACCOMID
 import com.example.gotravel.helper.FirestoreHelper.FL_BOOKINGID
 import com.example.gotravel.helper.FirestoreHelper.FL_USERID
 import io.realm.Realm
@@ -16,11 +17,15 @@ class BookingDao() {
             .equalTo(FL_USERID, userId)
             .findAll()
     }
+    fun getBookingsByAccom(accomId: String): List<Booking> {
+        return realm.where<Booking>()
+            .equalTo(FL_ACCOMID, accomId)
+            .findAll()
+    }
 
     fun insertOrUpdateBooking(booking: Booking, onSuccess: () -> Unit = {}) {
         realm.executeTransactionAsync(
             { transactionRealm ->
-                transactionRealm.where<Booking>().findAll()?.deleteAllFromRealm()
                 transactionRealm.insertOrUpdate(booking)
             },
             {
@@ -35,6 +40,7 @@ class BookingDao() {
     fun insertOrUpdateBooking(bookings: List<Booking>, onSuccess: () -> Unit = {}) {
         realm.executeTransactionAsync(
             { transactionRealm ->
+                transactionRealm.where<Booking>().findAll()?.deleteAllFromRealm()
                 transactionRealm.insertOrUpdate(bookings)
             },
             {

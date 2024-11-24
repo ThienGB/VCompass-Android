@@ -4,98 +4,191 @@ package com.example.gotravel.ui.module.partner.DashBoard
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicText
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.KeyboardArrowUp
-import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material3.*
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.tooling.preview.Preview
-
-
-
-class DashBoard : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            DashboardScreen()
-        }
-    }
-}
+import androidx.navigation.NavController
+import coil.compose.rememberAsyncImagePainter
+import com.example.gotravel.R
+import com.example.gotravel.data.model.Accommodation
+import com.example.gotravel.data.model.Booking
+import com.example.gotravel.data.model.Room
+import com.example.gotravel.helper.CommonUtils.formatCurrency
+import com.example.gotravel.ui.components.Loading
+import com.example.gotravel.ui.module.accomodation.TopReviewSection
+import com.example.gotravel.ui.module.main.partner.MainPartnerViewModel
 
 @Composable
-fun DashboardScreen() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0xFFF5F5F5)) // Light gray background
-            .padding(10.dp)
-    ) {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f), // Take up available space
-            contentPadding = PaddingValues(start = 8.dp, end = 8.dp) // Padding for the column
-        ) {
-            // Display hotel info card at the top
-            item {
-                HotelInfoCard()
-                Spacer(modifier = Modifier.height(16.dp)) // Spacer for spacing
-            }
-
-            // Display booking stats
-            item {
-                BookingStats()
-                Spacer(modifier = Modifier.height(16.dp)) // Spacer for spacing
-            }
-
-            // Display recent bookings
-            item {
-                RecentBookings()
-                Spacer(modifier = Modifier.height(16.dp)) // Spacer for spacing
-            }
-
-            // Display rooms listed
-            item {
-                RoomsListed() // Pass room data to the function
-                Spacer(modifier = Modifier.height(8.dp)) // Spacer for spacing between room items
+fun DashboardScreen(
+    accommodation: Accommodation = Accommodation(),
+    bookings: List<Booking> = listOf(),
+    isLoading: Boolean = true,
+    navController: NavController,
+    viewModel: MainPartnerViewModel
+) {
+    viewModel.setRoom(Room())
+    if (isLoading) {
+        Loading()
+    } else {
+        val topRatings = accommodation.ratings.take(5)
+        Box(modifier = Modifier.verticalScroll(rememberScrollState())) {
+            Image(painter = painterResource(id = R.drawable.bg_partner),
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(220.dp),
+                contentScale = ContentScale.Crop
+            )
+            Column(
+                modifier = Modifier
+                    .background(Color.Transparent)
+                    .padding(10.dp)
+            ) {
+                if (accommodation.accommodationId == ""){
+                    Spacer(modifier = Modifier.height(30.dp))
+                    AddHotelCard(navController)
+                    Spacer(modifier = Modifier.height(145.dp))
+                    Text(
+                        text = "Bạn chưa có khách sạn nào, hãy thêm để sử dụng đầy đủ dịch vụ",
+                        fontSize = 18.sp,
+                        textAlign = TextAlign.Center,
+                    )
+                } else if (accommodation.status == "pending"){
+                    Spacer(modifier = Modifier.height(30.dp))
+                    HotelInfoCard(accommodation)
+                    Spacer(modifier = Modifier.height(145.dp))
+                    Text(
+                        text = "Khách sạn của bạn đang được xét duyệt, vui lòng chờ trong giây lát",
+                        fontSize = 18.sp,
+                        color = Color(0xFFD6A100),
+                        textAlign = TextAlign.Center,
+                    )
+                }
+                else{
+                    Spacer(modifier = Modifier.height(30.dp))
+                    HotelInfoCard(accommodation)
+                    Spacer(modifier = Modifier.height(115.dp))
+                    Text(
+                        text = "Tổng quan",
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 18.sp,
+                    )
+                    BookingStats(bookings, navController)
+                    Spacer(modifier = Modifier.height(16.dp))
+                    RoomsListed(accommodation, viewModel, navController)
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Text(
+                        text = "Đánh giá",
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 18.sp,
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    TopReviewSection(topRatings)
+                }
             }
         }
     }
-}
 
+}
 @Composable
-fun HotelInfoCard() {
+fun AddHotelCard(
+    navController: NavController
+) {
     Card(
         shape = RoundedCornerShape(12.dp),
-        modifier = Modifier.fillMaxWidth()
+        elevation = CardDefaults.cardElevation(8.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .graphicsLayer(alpha = 0.9f)
+            .clickable { navController.navigate("add_accom") }
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // Thay thế bằng hình ảnh khách sạn
-                Box(
+                Image(
+                    painter = painterResource(id = R.drawable.ic_add_accom),
+                    contentDescription = null,
                     modifier = Modifier
                         .size(48.dp)
-                        .background(Color.Gray, RoundedCornerShape(12.dp))
+                        .background(Color.Transparent, RoundedCornerShape(12.dp))
+                )
+                Spacer(modifier = Modifier.width(30.dp))
+                Text(text = "Thêm khách sạn", fontWeight = FontWeight.Bold, fontSize = 25.sp)
+
+            }
+        }
+    }
+}
+@Composable
+fun HotelInfoCard(
+    accommodation: Accommodation = Accommodation()
+) {
+    Card(
+        shape = RoundedCornerShape(12.dp),
+        elevation = CardDefaults.cardElevation(8.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .graphicsLayer(alpha = 0.9f)
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Image(
+                    painter = rememberAsyncImagePainter(accommodation.image),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(48.dp)
+                        .background(Color.Transparent, RoundedCornerShape(12.dp)),
+                    contentScale = ContentScale.Crop,
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Column {
-                    Text(text = "Raddison Hotel", fontWeight = FontWeight.Bold, fontSize = 18.sp)
-                    Text(text = "Noida", color = Color.Gray, fontSize = 14.sp)
+                    Text(text = accommodation.name, fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                    Text(text = accommodation.city, color = Color.Gray, fontSize = 14.sp)
                 }
             }
         }
@@ -103,146 +196,170 @@ fun HotelInfoCard() {
 }
 
 @Composable
-fun BookingStats() {
-    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-        StatCard(
-            title = "PAYMENTS RECEIVED",
-            amount = "₹ 12,426",
-            percentageChange = "+36%",
-            isPositive = true
-        )
-        StatCard(
-            title = "TOTAL BOOKINGS",
-            amount = "5",
-            percentageChange = "+14%",
-            isPositive = false
-        )
-    }
-}
-
-@Composable
-fun StatCard(title: String, amount: String, percentageChange: String, isPositive: Boolean) {
-    Card(
-        shape = RoundedCornerShape(12.dp),
-        modifier = Modifier
-            .padding(8.dp)
-    ) {
-        Column(
-            modifier = Modifier.padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+fun BookingStats(
+   bookings: List<Booking> = listOf(),
+   navController: NavController
+) {
+    val revenue = bookings.sumOf { booking -> booking.price }
+    Row(modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween) {
+        Card(
+            shape = RoundedCornerShape(12.dp),
+            elevation = CardDefaults.cardElevation(8.dp),
+            colors = CardDefaults.cardColors(containerColor = Color.White),
+            modifier = Modifier
+                .padding(8.dp)
+                .weight(1f)
         ) {
-            Text(text = title, color = Color.Gray, fontSize = 14.sp)
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(text = amount, fontWeight = FontWeight.Bold, fontSize = 24.sp)
-            Spacer(modifier = Modifier.height(8.dp))
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(
-                    imageVector = if (isPositive) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
-                    contentDescription = null,
-                    tint = if (isPositive) Color.Green else Color.Red
-                )
-                Text(
-                    text = percentageChange,
-                    color = if (isPositive) Color.Green else Color.Red,
-                    fontSize = 14.sp
-                )
-            }
-        }
-    }
-}
-
-@Composable
-fun RecentBookings() {
-    Column {
-        Text(text = "Recent Bookings", fontWeight = FontWeight.Bold, fontSize = 18.sp)
-        Spacer(modifier = Modifier.height(8.dp))
-        BookingCard()
-    }
-}
-
-@Composable
-fun BookingCard() {
-    Card(
-        shape = RoundedCornerShape(12.dp),
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(
-                text = "Booking on - 23 Jan 2023",
-                fontWeight = FontWeight.Bold,
-                fontSize = 16.sp
-            )
-            Text(text = "2 Adults - 5 nights", fontSize = 14.sp, color = Color.Gray)
-            Text(text = "Single room", fontSize = 14.sp, color = Color.Gray)
-            Spacer(modifier = Modifier.height(8.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
+            Column(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Column {
-                    Text(text = "Check-In", fontWeight = FontWeight.Bold)
-                    Text(text = "23 Mar 2023", color = Color.Gray)
-                    Text(text = "10:00 AM", color = Color.Gray)
-                }
-                Column {
-                    Text(text = "Check-Out", fontWeight = FontWeight.Bold)
-                    Text(text = "25 Mar 2023", color = Color.Gray)
-                    Text(text = "10:00 AM", color = Color.Gray)
-                }
-            }
-            Spacer(modifier = Modifier.height(8.dp))
-            Button(onClick = { /*TODO*/ }, modifier = Modifier.align(Alignment.CenterHorizontally)) {
-                Text(text = "Guest Information")
+                Text(text = "DOANH THU", color = Color.Gray, fontSize = 14.sp)
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(text = formatCurrency(revenue.toString())+ " đ", color = colorResource(id = R.color.green),
+                    fontWeight = FontWeight.Bold, fontSize = 24.sp)
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(text = "Tổng doanh thu",color = colorResource(id = R.color.primary),
+                    fontStyle = FontStyle.Italic, fontSize = 16.sp)
             }
         }
-    }
-}
-
-@Composable
-fun RoomsListed() {
-    Column() {
-        Text(
-            text = "Rooms Listed",
-            fontWeight = FontWeight.Bold,
-            fontSize = 18.sp,
-            modifier = Modifier.padding(bottom = 8.dp)
-        )
-
-        // Sử dụng LazyRow để tạo scroll ngang
-        LazyRow(
-            horizontalArrangement = Arrangement.spacedBy(8.dp),  // Khoảng cách giữa các item
-            contentPadding = PaddingValues(start = 8.dp, end = 8.dp)  // Khoảng cách hai đầu
+        Card(
+            shape = RoundedCornerShape(12.dp),
+            elevation = CardDefaults.cardElevation(8.dp),
+            colors = CardDefaults.cardColors(containerColor = Color.White),
+            modifier = Modifier
+                .padding(8.dp)
+                .weight(1f)
+                .clickable { navController.navigate("booking_partner") }
         ) {
-            items(6) {  // Giả sử có 2 phòng, có thể thay đổi số lượng này
-                RoomCard()
+            Column(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(text = "ĐẶT PHÒNG", color = Color.Gray, fontSize = 14.sp)
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(text = bookings.size.toString(),color = colorResource(id = R.color.green),
+                    fontWeight = FontWeight.Bold, fontSize = 24.sp)
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(text = "Xem chi tiết",color = colorResource(id = R.color.primary),
+                    fontStyle = FontStyle.Italic, fontSize = 16.sp, textDecoration = TextDecoration.Underline)
             }
         }
     }
 }
 
 @Composable
-fun RoomCard() {
+fun RoomsListed(
+    accommodation: Accommodation = Accommodation(),
+    viewModel: MainPartnerViewModel,
+    navController: NavController
+) {
+    Column{
+        Row(verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(bottom = 8.dp, end = 8.dp)) {
+            Text(
+                text = "Danh sách phòng",
+                fontWeight = FontWeight.Bold,
+                fontSize = 18.sp,
+            )
+            Spacer(modifier = Modifier.weight(1f))
+            Row(modifier = Modifier.clickable {
+                viewModel.setRoom(Room())
+                navController.navigate("add_room")
+            }) {
+                Icon(Icons.Default.Add, contentDescription = "Add",
+                    tint = colorResource(id = R.color.primary),
+                    modifier = Modifier.padding(bottom = 5.dp))
+                Text(
+                    text = "Thêm phòng",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 18.sp,
+                    color = colorResource(id = R.color.primary),
+                )
+            }
+        }
+        LazyRow(
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            items(accommodation.rooms){ room ->
+                RoomCard(room, viewModel, navController)
+            }
+        }
+    }
+}
+
+@Composable
+fun RoomCard(
+    room: Room = Room(),
+    viewModel: MainPartnerViewModel,
+    navController: NavController
+) {
     Card(
         shape = RoundedCornerShape(12.dp),
-        modifier = Modifier.fillMaxWidth()
+        elevation = CardDefaults.cardElevation(4.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 5.dp, end = 5.dp)
     ) {
-        Column(modifier = Modifier.padding(10.dp)) {
-            Text(text = "Deluxe King Room", fontWeight = FontWeight.Bold, fontSize = 16.sp)
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(text = "Non-Refundable", fontSize = 12.sp, color = Color.Gray)
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(text = "Price for 1 Adult", fontSize = 12.sp, color = Color.Gray)
-            Text(text = "₹ 3,493", fontWeight = FontWeight.Bold, fontSize = 16.sp, color = Color.Green)
-            Spacer(modifier = Modifier.height(8.dp))
-            Button(onClick = { /*TODO*/ }, modifier = Modifier.align(Alignment.End)) {
-                Text(text = "Edit")
+        Column(modifier = Modifier
+            .padding(10.dp)
+            .width(150.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Text(text = room.name,
+                maxLines = 2,
+                textAlign = TextAlign.Center,
+                fontWeight = FontWeight.Bold,
+                fontSize = 16.sp)
+            Text(text = "Số giường: "+ room.bed.toString(),
+                modifier = Modifier.fillMaxWidth(),
+                fontWeight = FontWeight.Bold,
+                fontSize = 14.sp,
+                color = Color.Gray,
+                )
+            Text(text = "Số nguời: " + room.people.toString(),
+                modifier = Modifier.fillMaxWidth(),
+                fontWeight = FontWeight.Bold,
+                fontSize = 14.sp,
+                color = Color.Gray,
+            )
+            Text(text = "Loại phòng: " + room.roomType,
+                modifier = Modifier.fillMaxWidth(),
+                fontWeight = FontWeight.Bold,
+                fontSize = 14.sp,
+                color = Color.Gray,
+            )
+            Text(text = formatCurrency(room.price.toString()) + " đ",
+                modifier = Modifier.fillMaxWidth(),
+                fontWeight = FontWeight.Bold,
+                fontSize = 16.sp,
+                textAlign = TextAlign.Right,
+                color = colorResource(id = R.color.green),
+
+            )
+            Row(
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(30.dp)
+                    .clip(RoundedCornerShape(5.dp))
+                    .background(colorResource(id = R.color.primary))
+                    .clickable {
+                        viewModel.setRoom(room)
+                        navController.navigate("add_room")
+                    }
+
+            ) {
+                Text(text = "Chỉnh sửa", color = Color.White,
+                    fontFamily = FontFamily(Font(R.font.proxima_nova_regular)),
+                    fontSize = 15.sp)
             }
         }
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun HotelDashboardPreview() {
-    DashboardScreen()
-}

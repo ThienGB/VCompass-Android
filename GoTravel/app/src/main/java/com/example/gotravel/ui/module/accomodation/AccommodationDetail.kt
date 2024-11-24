@@ -1,10 +1,5 @@
 package com.example.gotravel.ui.module.accomodation
 
-import android.credentials.CredentialDescription
-import android.os.Bundle
-import android.util.Log
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -30,10 +25,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.HorizontalDivider
@@ -43,8 +36,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -53,47 +44,41 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
-import coil.compose.rememberImagePainter
 import coil.request.ImageRequest
-import com.example.gotravel.MainApplication
 import com.example.gotravel.R
 import com.example.gotravel.data.model.Accommodation
 import com.example.gotravel.data.model.Rating
-import com.example.gotravel.data.model.Search
 import com.example.gotravel.helper.CommonUtils.formatCurrency
-import com.example.gotravel.helper.RealmHelper
-import com.example.gotravel.ui.factory.ViewModelFactory
-import com.example.gotravel.ui.module.main.user.MainUserViewModel
-import com.example.gotravel.ui.module.room.RoomDetailScreen
-
+import java.math.BigDecimal
+import java.math.RoundingMode
+import kotlin.math.roundToInt
 
 
 @Composable
 fun HotelDetailsScreen(
     accommodations: Accommodation,
     navController: NavController = NavController(LocalContext.current),
+    calledBy: String = "user"
 ) {
     val lowestPrice = accommodations.rooms.minOfOrNull { it.price } ?: 0
+    val averageRating = if (accommodations.ratings.isNotEmpty()) {
+        accommodations.ratings.map { it.rate }.average().roundToInt()
+    } else {
+        5
+    }
     Column(modifier = Modifier
         .fillMaxSize()
         .verticalScroll(rememberScrollState())) {
         Box{
-            ImageSection(accommodations.image) { navController.navigate("search") }
+            ImageSection(accommodations.image) { navController.popBackStack() }
             Column (modifier = Modifier
                 .padding(top = 180.dp)
                 .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
@@ -101,7 +86,7 @@ fun HotelDetailsScreen(
             ) {
                 HotelInfoSection(
                     title = accommodations.name,
-                    numStart = accommodations.totalRate,
+                    numStart = averageRating,
                     location = accommodations.address
                 )
                 HorizontalDivider(
@@ -124,12 +109,14 @@ fun HotelDetailsScreen(
                     color = colorResource(R.color.lightGray)
                 )
                 HotelDescriptionSection(accommodations.description)
-                HorizontalDivider(
-                    thickness = 7.dp,
-                    color = colorResource(R.color.lightGray)
-                )
-                PriceSection(lowestPrice.toString())
-                BookButton { navController.navigate("room_detail") }
+                if (calledBy == "user"){
+                    HorizontalDivider(
+                        thickness = 7.dp,
+                        color = colorResource(R.color.lightGray)
+                    )
+                    PriceSection(lowestPrice.toString())
+                    BookButton { navController.navigate("room_detail") }
+                }
             }
         }
     }
@@ -211,7 +198,13 @@ fun RatingsSection(
     ratings: List<Rating>,
     navController: NavController
 ) {
-    val averageRating = ratings.map { it.rate }.average()
+    val averageRating = if (ratings.isNotEmpty()) {
+        BigDecimal(ratings.map { it.rate }.average())
+            .setScale(1, RoundingMode.HALF_UP)
+            .toDouble()
+    } else {
+        5.0
+    }
     val topRatings = ratings.take(5)
     Column(modifier = Modifier.padding(16.dp)) {
         Row (verticalAlignment = Alignment.CenterVertically) {
@@ -278,7 +271,7 @@ fun RatingTag(text: String) {
 
 @Composable
 fun TopReviewSection(
-    topRatings: List<Rating>
+    topRatings: List<Rating> = listOf()
 ) {
     LazyRow(modifier = Modifier
         .fillMaxWidth()) {
@@ -299,8 +292,6 @@ fun TopReviewSection(
         }
     }
 }
-data class Review(val name: String, val review: String)
-
 
 @Composable
 fun AmenitiesSection(

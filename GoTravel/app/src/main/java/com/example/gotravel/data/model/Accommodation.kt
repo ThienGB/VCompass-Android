@@ -17,6 +17,7 @@ open class Accommodation : RealmObject() {
     var totalRate: Int = 5
     var ratings: RealmList<Rating> = RealmList()
     var rooms: RealmList<Room> = RealmList()
+    var status: String = ""
 
     fun copy(): Accommodation {
         val copy = Accommodation()
@@ -29,6 +30,7 @@ open class Accommodation : RealmObject() {
         copy.city = this.city
         copy.totalRate = this.totalRate
         copy.amentities = this.amentities
+        copy.status = this.status
         copy.ratings.addAll(this.ratings.map { it.copy() })
         copy.rooms.addAll(this.rooms.map { it.copy() })
         return copy

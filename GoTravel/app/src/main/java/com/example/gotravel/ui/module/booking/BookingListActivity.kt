@@ -49,6 +49,7 @@ import com.example.gotravel.data.model.Booking
 import com.example.gotravel.data.model.User
 import com.example.gotravel.helper.CommonUtils.formatCurrency
 import com.example.gotravel.helper.RealmHelper
+import com.example.gotravel.ui.components.Loading
 import com.example.gotravel.ui.components.NavTitle
 import com.example.gotravel.ui.factory.ViewModelFactory
 import com.example.gotravel.ui.module.main.user.MainUserActivity
@@ -205,19 +206,18 @@ fun BookingStatusList(
         NavTitle("Danh sách đặt phòng"){ intentToHome() }
         Spacer(modifier = Modifier.height(15.dp))
         if (isLoading){
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator()
-            }
+            Loading()
         }else {
             if (bookings.isEmpty()){
-                Column(modifier = Modifier.fillMaxWidth().padding(16.dp),
+                Column(modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
                     horizontalAlignment = Alignment.CenterHorizontally) {
                     Image(painter = painterResource(id = R.drawable.ic_no_booking),
                         contentDescription = null,
-                        modifier = Modifier.padding(bottom = 20.dp).size(150.dp)
+                        modifier = Modifier
+                            .padding(bottom = 20.dp)
+                            .size(150.dp)
                     )
                     Text(text = "Bạn chưa có bất kỳ đặt chỗ nào",
                         fontFamily = FontFamily(Font(R.font.proxima_nova_regular)),

@@ -78,6 +78,7 @@ dependencies {
     implementation(libs.firebase.firestore)
     implementation(libs.androidx.ui.test.android)
     implementation(libs.androidx.runtime.livedata)
+    implementation(libs.firebase.storage)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -107,7 +108,10 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.7.2") {
         exclude(group = "androidx.test.espresso", module = "espresso-core")
     }
-
+    implementation(libs.cloudinary.android)
+    implementation (libs.retrofit.v290)
+    implementation (libs.converter.gson.v290)
+    implementation (libs.okhttp)
 }
 configurations.all {
     resolutionStrategy {

@@ -1,6 +1,10 @@
 import android.util.Log
 import com.example.gotravel.data.model.Accommodation
 import com.example.gotravel.data.model.Rating
+import com.example.gotravel.data.model.Room
+import com.example.gotravel.helper.FirestoreHelper
+import com.example.gotravel.helper.FirestoreHelper.FL_PARTNERID
+import com.example.gotravel.helper.RealmHelper
 import io.realm.Realm
 import io.realm.kotlin.where
 
@@ -60,9 +64,36 @@ class AccommodationDao() {
             }
         )
     }
+    fun insertRoom(accommodationId: String, room: Room, onSuccess: () -> Unit = {}) {
+        realm.executeTransactionAsync(
+            { transactionRealm ->
+                val accommodation = transactionRealm.where(Accommodation::class.java)
+                    .equalTo("accommodationId", accommodationId)
+                    .findFirst()
+                if (accommodation != null) {
+                    accommodation.rooms.add(room)
+                    transactionRealm.insertOrUpdate(room)
+                } else {
+                    Log.e("RealmNotification", "Accommodation with ID $accommodationId not found.")
+                }
+            },
+            {
+                onSuccess()
+                Log.d("RealmNotification", "Rating ${room.roomId} added successfully.")
+            },
+            { error ->
+                Log.e("RealmNotification", "Error adding Rating: $error")
+            }
+        )
+    }
     fun getAccommById(accommodationId: String): Accommodation? {
         return realm.where(Accommodation::class.java)
             .equalTo("accommodationId", accommodationId)
+            .findFirst()
+    }
+    fun getAccommByPartner(partnerId: String): Accommodation? {
+        return realm.where(Accommodation::class.java)
+            .equalTo(FL_PARTNERID, partnerId)
             .findFirst()
     }
 
@@ -79,4 +110,6 @@ class AccommodationDao() {
             transactionRealm.where<Accommodation>().findAll()?.deleteAllFromRealm()
         }
     }
+
+
 }

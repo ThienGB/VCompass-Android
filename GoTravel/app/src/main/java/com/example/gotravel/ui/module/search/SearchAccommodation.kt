@@ -83,6 +83,7 @@ import com.example.gotravel.data.model.Accommodation
 import com.example.gotravel.data.model.Search
 import com.example.gotravel.helper.CommonUtils.formatCurrency
 import com.example.gotravel.helper.CommonUtils.formatDate
+import com.example.gotravel.ui.components.Loading
 import com.example.gotravel.ui.components.NavTitle
 import com.example.gotravel.ui.module.main.user.MainUserViewModel
 
@@ -218,19 +219,18 @@ fun NavSearch(
         }
     }
     if (isLoading){
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            CircularProgressIndicator()
-        }
+        Loading()
     }else {
         if (accommodations.isEmpty()){
-            Column(modifier = Modifier.fillMaxWidth().padding(16.dp),
+            Column(modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally) {
                 Image(painter = painterResource(id = R.drawable.ic_no_search),
                     contentDescription = null,
-                    modifier = Modifier.padding(bottom = 20.dp).size(150.dp)
+                    modifier = Modifier
+                        .padding(bottom = 20.dp)
+                        .size(150.dp)
                 )
                 Text(text = "Không có kết quả nào phù hợp",
                     fontFamily = FontFamily(Font(R.font.proxima_nova_regular)),
@@ -319,7 +319,7 @@ fun HotelCard(
                             modifier = Modifier.size(16.dp)
                         )
                     }
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.width(8.dp))
                     Image(painter = painterResource(id = R.drawable.ic_rating),
                         contentDescription = null,
                         colorFilter = ColorFilter.tint(colorResource(id = R.color.primary)),
