@@ -14,12 +14,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.gotravel.R
 
 @Composable
-fun ForgetPasswordUI() {
+fun ForgetPasswordUI(navController: NavController, authViewModel: AuthViewModel) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -39,7 +39,7 @@ fun ForgetPasswordUI() {
                     .padding(16.dp),
                 elevation = CardDefaults.cardElevation(8.dp)
             ) {
-                ForgetPasswordForm()
+                ForgetPasswordForm(authViewModel)
             }
 
             Button(
@@ -59,8 +59,10 @@ fun ForgetPasswordUI() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ForgetPasswordForm() {
+fun ForgetPasswordForm(authViewModel: AuthViewModel) {
     var email by remember { mutableStateOf("") }
+    var message by remember { mutableStateOf("") }
+    var isSuccess by remember { mutableStateOf(false) }
     val keyboardController = LocalSoftwareKeyboardController.current
 
     Column(
@@ -102,7 +104,17 @@ fun ForgetPasswordForm() {
 
         // Send Button
         Button(
-            onClick = { /* Handle send email logic */ },
+            onClick = {
+                if (email.isNotEmpty()) {
+                    authViewModel.sendPasswordResetLink(email) { success, msg ->
+                        isSuccess = success
+                        message = msg
+                    }
+                } else {
+                    message = "Please enter a valid email."
+                    isSuccess = false
+                }
+            },
             modifier = Modifier
                 .fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(
@@ -111,12 +123,17 @@ fun ForgetPasswordForm() {
         ) {
             Text(text = "Send Password Reset Link")
         }
-    }
-}
 
-@Preview(showBackground = true)
-@Composable
-fun PreviewForgetPasswordScreen() {
-    ForgetPasswordUI()
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Display message based on the result
+        if (message.isNotEmpty()) {
+            Text(
+                text = message,
+                color = if (isSuccess) Color.Green else Color.Red,
+                style = MaterialTheme.typography.bodyMedium
+            )
+        }
+    }
 }
 
