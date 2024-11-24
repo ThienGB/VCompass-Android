@@ -1,29 +1,38 @@
+package com.example.gotravel.ui.module.login
+
+import android.content.Intent
+import android.os.Bundle
+import android.widget.Toast
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
 import com.example.gotravel.R
+import com.example.gotravel.ui.module.main.user.MainUserActivity
 
 @Composable
-fun RegisterUI() {
+fun RegisterUI(navController: NavController, authViewModel: AuthViewModel) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -44,10 +53,10 @@ fun RegisterUI() {
                     .padding(16.dp),
                 elevation = CardDefaults.cardElevation(8.dp)
             ) {
-                RegisterForm() // Form đăng ký bên trong panel
+                RegisterForm(navController, authViewModel) // Form đăng ký bên trong panel
             }
             Button(
-                onClick = { /* Handle register logic here */ },
+                onClick = { navController.popBackStack() },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp),
@@ -55,26 +64,63 @@ fun RegisterUI() {
                     containerColor = colorResource(R.color.white)
                 ),
             ) {
-                Text(text = "Register", color = colorResource(R.color.black))
+                Text(text = "Back", color = colorResource(R.color.black))
             }
         }
     }
 }
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RegisterForm() {
-    var fullName by remember { mutableStateOf("") } // Field Tên người dùng
-    var username by remember { mutableStateOf("") }
+fun RegisterForm(navController: NavController, authViewModel: AuthViewModel) {
+    var fullName by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var phone by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
-    var isPasswordVisible by remember { mutableStateOf(false) } // Trạng thái ẩn/hiện mật khẩu
-    var isConfirmPasswordVisible by remember { mutableStateOf(false) } // Trạng thái ẩn/hiện mật khẩu xác nhận
+    var isPasswordVisible by remember { mutableStateOf(false) }
+    var isConfirmPasswordVisible by remember { mutableStateOf(false) }
+    var selectedRole by remember { mutableStateOf("user") }
+
+    val authState = authViewModel.authState.observeAsState()
+    val context = LocalContext.current
+
+    LaunchedEffect(authState.value) {
+        when (authState.value) {
+            is AuthState.Authenticated -> {
+                val role = authViewModel.checkRoleNavigate();
+
+                if(role.isNullOrEmpty())
+                {
+                    navController.navigate("select-role")
+                }
+
+                if(role == "user")
+                {
+                    val intent = Intent(context, MainUserActivity::class.java)
+                    context.startActivity(intent)
+                }
+                else if(role == "partner")
+                {
+                    //Partner
+                }
+
+            }
+            is AuthState.Error -> {
+                Toast.makeText(
+                    context,
+                    (authState.value as AuthState.Error).message,
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            else -> Unit
+        }
+    }
 
     val keyboardController = LocalSoftwareKeyboardController.current
 
     Column(
         modifier = Modifier
+            .fillMaxWidth()
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
@@ -83,73 +129,58 @@ fun RegisterForm() {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Full Name Input (Tên người dùng)
+        // Full Name Input
         OutlinedTextField(
             value = fullName,
             onValueChange = { fullName = it },
             label = { Text("Full Name") },
-            placeholder = { Text("Enter your Full Name") },
-            leadingIcon = {
-                Icon(Icons.Default.Person, contentDescription = "Full Name Icon")
-            },
-            colors = TextFieldDefaults.textFieldColors(
-                disabledIndicatorColor = Color.Transparent,
-                focusedIndicatorColor = Color.Transparent,
-            ),
-            shape = RoundedCornerShape(12.dp),
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+            placeholder = { Text("Enter your full name") },
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(12.dp)
         )
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        // Username Input
+        // Email Input
         OutlinedTextField(
-            value = username,
-            onValueChange = { username = it },
-            label = { Text("Username") },
-            placeholder = { Text("Enter your Username") },
-            leadingIcon = {
-                Icon(Icons.Default.Person, contentDescription = "Username Icon")
-            },
-            colors = TextFieldDefaults.textFieldColors(
-                disabledIndicatorColor = Color.Transparent,
-                focusedIndicatorColor = Color.Transparent,
-            ),
-            shape = RoundedCornerShape(12.dp),
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+            value = email,
+            onValueChange = { email = it },
+            label = { Text("Email") },
+            placeholder = { Text("Enter your email") },
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(12.dp)
         )
 
         Spacer(modifier = Modifier.height(8.dp))
+
+        // Phone Input
+        OutlinedTextField(
+            value = phone,
+            onValueChange = { phone = it },
+            label = { Text("Phone") },
+            placeholder = { Text("Enter your phone number") },
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(12.dp)
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
 
         // Password Input
         OutlinedTextField(
             value = password,
             onValueChange = { password = it },
             label = { Text("Password") },
-            placeholder = { Text("Enter your Password") },
-            keyboardOptions = KeyboardOptions(
-                imeAction = ImeAction.Next,
-                keyboardType = KeyboardType.Password
-            ),
-            leadingIcon = { Icon(Icons.Default.Settings, contentDescription = "Password Icon") },
-            trailingIcon = {
-                IconButton(onClick = {
-                    isPasswordVisible = !isPasswordVisible
-                }) {
-                    Icon(
-                        painter = painterResource(id = if (isPasswordVisible) R.drawable.passwordshow else R.drawable.passwordhidden),
-                        contentDescription = if (isPasswordVisible) "Hide Password" else "Show Password",
-                        modifier = Modifier.size(24.dp) // Điều chỉnh kích thước icon
-                    )
-                }
-            },
-            keyboardActions = KeyboardActions(
-                onDone = {
-                    keyboardController?.hide()
-                }
-            ),
+            placeholder = { Text("Enter your password") },
+            visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+            keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
+            modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(12.dp),
-            visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation()
+            trailingIcon = {
+                IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
+                    val iconResource = if (isPasswordVisible) R.drawable.passwordshow else R.drawable.hidden
+                    Image(painter = painterResource(id = iconResource), contentDescription = null)
+                }
+            }
         )
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -159,51 +190,40 @@ fun RegisterForm() {
             value = confirmPassword,
             onValueChange = { confirmPassword = it },
             label = { Text("Confirm Password") },
-            placeholder = { Text("Re-enter Password") },
-            keyboardOptions = KeyboardOptions(
-                imeAction = ImeAction.Done,
-                keyboardType = KeyboardType.Password
-            ),
-            leadingIcon = { Icon(Icons.Default.Settings, contentDescription = "Confirm Password Icon") },
-            trailingIcon = {
-                IconButton(onClick = {
-                    isConfirmPasswordVisible = !isConfirmPasswordVisible
-                }) {
-                    Icon(
-                        painter = painterResource(id = if (isConfirmPasswordVisible) R.drawable.passwordshow else R.drawable.passwordhidden),
-                        contentDescription = if (isConfirmPasswordVisible) "Hide Confirm Password" else "Show Confirm Password",
-                        modifier = Modifier.size(24.dp) // Điều chỉnh kích thước icon
-                    )
-                }
-            },
-            keyboardActions = KeyboardActions(
-                onDone = {
-                    keyboardController?.hide()
-                }
-            ),
+            placeholder = { Text("Confirm your password") },
+            visualTransformation = if (isConfirmPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+            keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
+            modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(12.dp),
-            visualTransformation = if (isConfirmPasswordVisible) VisualTransformation.None else PasswordVisualTransformation()
+            trailingIcon = {
+                IconButton(onClick = { isConfirmPasswordVisible = !isConfirmPasswordVisible }) {
+                    val iconResource = if (isConfirmPasswordVisible) R.drawable.passwordshow else R.drawable.hidden
+                    Image(painter = painterResource(id = iconResource), contentDescription = null)
+                }
+            }
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
         // Register Button
         Button(
-            onClick = { /* Handle register logic here */ },
-            modifier = Modifier
-                .fillMaxWidth(),
+            onClick = {
+                if (password != confirmPassword) {
+                    Toast.makeText(
+                        context,
+                        "Passwords do not match!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    authViewModel.signup(email, password, fullName, phone)
+                }
+            },
+            modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(
                 containerColor = colorResource(R.color.darkBlue)
             ),
         ) {
-            Text(text = "Register")
+            Text(text = "Register", color = colorResource(R.color.white))
         }
     }
-}
-
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewRegisterScreen() {
-    RegisterUI()
 }

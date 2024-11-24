@@ -79,6 +79,8 @@ dependencies {
     implementation(libs.androidx.ui.test.android)
     implementation(libs.androidx.runtime.livedata)
     implementation(libs.firebase.storage)
+    implementation(libs.firebase.auth)
+    implementation(libs.androidx.runtime.livedata)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -102,12 +104,19 @@ dependencies {
     implementation (libs.accompanist.permissions)
     implementation(libs.gson)
     implementation(libs.kotlinx.serialization.json)
+
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.0") {
         because("androidx.compose.ui:ui-test-junit4:1.7.2 requires 3.5.0")
     }
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.7.2") {
         exclude(group = "androidx.test.espresso", module = "espresso-core")
     }
+
+    implementation(platform("com.google.firebase:firebase-bom:33.5.1"))
+    implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.android.gms:play-services-auth:21.2.0")
+
+
     implementation(libs.cloudinary.android)
     implementation (libs.retrofit.v290)
     implementation (libs.converter.gson.v290)

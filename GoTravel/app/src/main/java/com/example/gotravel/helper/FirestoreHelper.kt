@@ -15,6 +15,10 @@ object FirestoreHelper {
     const val FL_CITY: String = "city"
     const val FL_TARGETID: String = "idTaget"
     const val FL_TYPE: String = "accommodation"
+    const val CL_USER: String = "users"
+    const val FL_ROLE: String = "role"
+    const val FL_FULLNAME : String = "fullName"
+    const val FL_PHONE : String =  "phone"
     const val FL_PARTNERID: String = "partnerId"
     const val FL_AMENTITIES: String = "amentities"
     const val FL_TOTALRATE: String = "totalRate"
@@ -28,9 +32,8 @@ object FirestoreHelper {
     const val FL_ENDDATE: String = "endDate"
     const val FL_USERID: String = "userId"
     const val FL_STATUS: String = "status"
-    const val FL_PHONE: String = "phoneNumber"
+    const val FL_PHONENUMBER: String = "phoneNumber"
     const val FL_ACCOMNAME: String = "accommodationName"
-    const val FL_FULLNAME: String = "fullName"
     const val FL_EMAIL: String = "email"
 
     //Rating

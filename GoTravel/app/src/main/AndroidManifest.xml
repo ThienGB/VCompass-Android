@@ -29,14 +29,15 @@
                 android:exported="true">
         </activity>
         <activity
-                android:name=".ui.module.main.partner.MainPartnerActivity"
-                android:exported="true">
-
+            android:name=".ui.module.main.login.MainLoginActivity"
+            android:exported="true"
+            >
         </activity>
 
         <activity
             android:name=".ui.module.booking.BookingListActivity"
-            android:exported="true">
+            android:exported="true"
+            >
         </activity>
 
         <activity

@@ -15,3 +15,4 @@ class ViewModelFactory<T : ViewModel>(
         throw IllegalArgumentException("Unknown ViewModel class")
     }
 }
+
