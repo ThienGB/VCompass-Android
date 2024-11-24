@@ -1,4 +1,4 @@
-package com.example.gotravel.ui.module.partner.Rooms
+package com.example.gotravel.ui.module.partner.accommodation
 
 import android.net.Uri
 import android.widget.Toast
@@ -17,22 +17,18 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExposedDropdownMenuBox
-import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -48,7 +44,6 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -56,41 +51,36 @@ import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.gotravel.R
 import com.example.gotravel.data.model.Accommodation
-import com.example.gotravel.data.model.Room
 import com.example.gotravel.ui.components.NavTitle
 import com.example.gotravel.ui.module.main.partner.MainPartnerViewModel
 
 @Composable
-fun AddUpdateRoomScreen(
+fun AddAccomScreen(
     navController: NavController = NavController(LocalContext.current),
     accommodation: Accommodation = Accommodation(),
-    room: Room = Room(),
     viewModel: MainPartnerViewModel
 ) {
-    var roomId by remember { mutableStateOf(room.roomId) }
-    var name by remember { mutableStateOf(room.name) }
-    var roomType by remember { mutableStateOf(room.roomType) }
-    var price by remember { mutableIntStateOf(room.price) }
-    var people by remember { mutableIntStateOf(room.people) }
-    var bed by remember { mutableIntStateOf(room.bed) }
-    var area by remember { mutableIntStateOf(room.area) }
-    var image by remember { mutableStateOf(room.image) }
-    var status by remember { mutableStateOf(room.status) }
-    val statusOptions = listOf("Active", "Non Active")
-    val roomTypeOptions = listOf("S", "M", "L")
+    var name by remember { mutableStateOf(accommodation.name) }
+    var address by remember { mutableStateOf(accommodation.address) }
+    var city by remember { mutableStateOf(accommodation.city) }
+    var description by remember { mutableStateOf(accommodation.description) }
+    var amentities by remember { mutableStateOf(accommodation.amentities) }
+    val amentitiesOptions = listOf("Nhà hàng", "Lễ Tân 24h","Hồ Bơi", "Wifi","Massage", "Thú Cưng")
     var selectedImageUri by remember { mutableStateOf<Uri?>(null) }
-    val context = LocalContext.current
     val launcher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         selectedImageUri = uri
     }
+    val context = LocalContext.current
     fun upLoadImage():String{
         if (selectedImageUri != null) {
-            return "https://cdn3.ivivu.com/2023/04/Vinpearl-Landmark-81-Autograph-Collection-ivivu-3.jpg"
+            return "selectedImageUri.toString()"
         }
         return ""
     }
-    Column {
-        NavTitle(accommodation.name) { navController.navigate("home_partner") }
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .background(Color(0xFFEDFAFC))) {
+        NavTitle("Thêm chỗ ở ") { navController.navigate("home_partner") }
         Box(modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 20.dp))
         {
             Card (
@@ -100,15 +90,6 @@ fun AddUpdateRoomScreen(
                 if (selectedImageUri != null) {
                     Image(
                         painter = rememberAsyncImagePainter(model = selectedImageUri),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(200.dp),
-                        contentScale = ContentScale.Crop
-                    )
-                } else if (image !=  "") {
-                    Image(
-                        painter = rememberAsyncImagePainter(image),
                         contentDescription = null,
                         modifier = Modifier
                             .fillMaxWidth()
@@ -150,6 +131,7 @@ fun AddUpdateRoomScreen(
                     fontSize = 17.sp)
             }
         }
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -160,55 +142,71 @@ fun AddUpdateRoomScreen(
             OutlinedTextField(
                 value = name,
                 onValueChange = { name = it },
-                label = { Text("Tên phòng") },
+                label = { Text("Tên chỗ ở") },
                 modifier = Modifier.fillMaxWidth()
             )
-            DropdownField(
-                label = "Loại phòng",
-                options = roomTypeOptions,
-                selectedOption = roomType,
-                onOptionSelected = { roomType = it }
+            OutlinedTextField(
+                value = city,
+                onValueChange = { city = it },
+                label = { Text("Tên thành phố") },
+                modifier = Modifier.fillMaxWidth()
             )
             OutlinedTextField(
-                value = price.toString(),
-                onValueChange = { price = it.toIntOrNull() ?: 0 },
-                label = { Text("Giá một đêm") },
-                modifier = Modifier.fillMaxWidth(),
-                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
+                value = address,
+                onValueChange = { newText ->
+                    address = newText
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(100.dp),
+                label = { Text("Địa chỉ") },
+                placeholder = { Text("Nhập địa chỉ... ") },
+                singleLine = false,
+            )
+            OutlinedTextField(
+                value = description,
+                onValueChange = { newText ->
+                    description = newText
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(100.dp),
+                label = { Text("Mô tả") },
+                placeholder = { Text("Nhập mô tả... ") },
+                singleLine = false,
             )
 
-            // People Input
-            OutlinedTextField(
-                value = people.toString(),
-                onValueChange = { people = it.toIntOrNull() ?: 0 },
-                label = { Text("Số người ở") },
-                modifier = Modifier.fillMaxWidth(),
-                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
-            )
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                amentitiesOptions.forEach { option ->
+                    val isChecked = amentities.contains(option)
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable {},
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Checkbox(
+                            checked = isChecked,
+                            onCheckedChange = {checked ->
+                                amentities = if (checked) {
+                                    if (amentities.isEmpty()) option else "$amentities, $option"
+                                } else {
+                                    amentities.split(", ")
+                                        .filter { it != option }
+                                        .joinToString(", ")
+                                }
+                            },
+                            colors = CheckboxDefaults.colors(
+                                uncheckedColor = colorResource(id = R.color.green),
+                                checkedColor = colorResource(id = R.color.green))
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(text = option, fontSize = 16.sp)
+                    }
+                }
+            }
 
-            // Bed Input
-            OutlinedTextField(
-                value = bed.toString(),
-                onValueChange = { bed = it.toIntOrNull() ?: 0 },
-                label = { Text("Số giường") },
-                modifier = Modifier.fillMaxWidth(),
-                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
-            )
 
-            // Area Input
-            OutlinedTextField(
-                value = area.toString(),
-                onValueChange = { area = it.toIntOrNull() ?: 0 },
-                label = { Text("Diện tích") },
-                modifier = Modifier.fillMaxWidth(),
-                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
-            )
-            DropdownField(
-                label = "Trạng thái",
-                options = statusOptions,
-                selectedOption = status,
-                onOptionSelected = { status = it }
-            )
             Spacer(modifier = Modifier.height(20.dp))
             Row(
                 horizontalArrangement = Arrangement.Center,
@@ -219,15 +217,10 @@ fun AddUpdateRoomScreen(
                     .clip(RoundedCornerShape(5.dp))
                     .background(colorResource(id = R.color.primary))
                     .clickable {
-                        if (selectedImageUri != null) {
-                            image = upLoadImage()
-                        }
-                        viewModel.insertRoom(roomId, name, roomType, price, people, bed, image, area, status)
+                        val image = upLoadImage()
+                        viewModel.insertAccom(name, image, address, city, description, amentities)
                         navController.navigate("home_partner")
-                        if (roomId == "")
-                            Toast.makeText(context, "Thêm phòng thành công", Toast.LENGTH_SHORT).show()
-                        else
-                            Toast.makeText(context, "Cập nhật phòng thành công", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Thêm thành công, vui lòng chờ xét duyệt", Toast.LENGTH_SHORT).show()
                     }
 
             ) {
@@ -239,47 +232,4 @@ fun AddUpdateRoomScreen(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun DropdownField(
-    label: String,
-    options: List<String>,
-    selectedOption: String,
-    onOptionSelected: (String) -> Unit
-) {
-    var expanded by remember { mutableStateOf(false) }
-
-    ExposedDropdownMenuBox(
-        expanded = expanded,
-        onExpandedChange = { expanded = !expanded }
-    ) {
-        OutlinedTextField(
-            readOnly = true,
-            value = selectedOption,
-            onValueChange = {},
-            label = { Text(label) },
-            modifier = Modifier
-                .fillMaxWidth()
-                .menuAnchor(),
-            trailingIcon = {
-                ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
-            },
-            colors = ExposedDropdownMenuDefaults.textFieldColors()
-        )
-        ExposedDropdownMenu(
-            expanded = expanded,
-            onDismissRequest = { expanded = false }
-        ) {
-            options.forEach { option ->
-                DropdownMenuItem(
-                    text = { Text(text = option) },
-                    onClick = {
-                        onOptionSelected(option)
-                        expanded = false
-                    }
-                )
-            }
-        }
-    }
-}
 

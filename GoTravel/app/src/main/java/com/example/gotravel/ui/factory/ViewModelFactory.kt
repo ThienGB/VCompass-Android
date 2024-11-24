@@ -10,7 +10,6 @@ class ViewModelFactory<T : ViewModel>(
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (viewModelClass.isAssignableFrom(modelClass)) {
-            // Khởi tạo ViewModel với com.example.gotravel.helper.RealmHelper
             return viewModelClass.getConstructor(RealmHelper::class.java).newInstance(realmHelper) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
