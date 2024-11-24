@@ -5,7 +5,7 @@ import com.example.gotravel.data.model.UserAccount
 import kotlinx.coroutines.*
 import com.example.gotravel.helper.FirestoreHelper.CL_USER
 import com.example.gotravel.helper.FirestoreHelper.FL_FULLNAME
-import com.example.gotravel.helper.FirestoreHelper.FL_PHONE
+import com.example.gotravel.helper.FirestoreHelper.FL_PHONENUMBER
 import com.example.gotravel.helper.FirestoreHelper.FL_ROLE
 import com.example.gotravel.helper.FirestoreHelper.FL_USERID
 import com.google.android.gms.tasks.Tasks
@@ -21,7 +21,7 @@ class User_FirestoreDataManager {
         user[FL_USERID] = userAccount.userId.toString()
         user[FL_ROLE] = userAccount.role.toString()
         user[FL_FULLNAME] = userAccount.fullName.toString()
-        user[FL_PHONE] = userAccount.phone.toString()
+        user[FL_PHONENUMBER] = userAccount.phone.toString()
 
         db.collection(CL_USER).document(userAccount.userId.toString()).set(user)
     }

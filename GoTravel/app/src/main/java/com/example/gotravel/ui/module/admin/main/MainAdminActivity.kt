@@ -30,7 +30,7 @@ import com.example.gotravel.helper.RealmHelper
 import com.example.gotravel.ui.factory.ViewModelFactory
 import com.example.gotravel.ui.module.accomodation.HotelDetailsScreen
 import com.example.gotravel.ui.module.admin.accommodation.AccomList
-import com.example.gotravel.ui.module.admin.home.HomeAdmin
+import com.example.gotravel.ui.module.admin.HomeAdmin
 import com.example.gotravel.ui.module.admin.user.ListUser
 import com.example.gotravel.ui.module.chat.ChatComponentScreen
 import com.example.gotravel.ui.module.home.user.NotificationScreen
