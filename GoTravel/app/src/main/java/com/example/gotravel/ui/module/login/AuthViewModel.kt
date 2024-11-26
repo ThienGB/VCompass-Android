@@ -11,6 +11,7 @@ import com.example.gotravel.data.local.dao.UserAccountDao
 import com.example.gotravel.data.model.UserAccount
 import com.example.gotravel.data.remote.User_FirestoreDataManager
 import com.example.gotravel.helper.RealmHelper
+import com.google.firebase.auth.EmailAuthProvider
 import kotlinx.coroutines.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
@@ -70,21 +71,35 @@ class AuthViewModel(private val realmHelper: RealmHelper,
             }
         }
     }
+    //                    Log.e(auth.uid,"Khong ton tai");
+    //                    checkIfUserExistsAndCreateIfNot()
+    //                    getUserFromDb()
 
     //Dang nhap bằng google
-    fun signInWithGoogle(idToken: String) {
-        val credential = GoogleAuthProvider.getCredential(idToken, null)
-        auth.signInWithCredential(credential)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Log.e(auth.uid,"Khong ton tai");
-                    checkIfUserExistsAndCreateIfNot()
-                    getUserFromDb()
-                } else {
-                    _authState.value = AuthState.Error(task.exception?.message ?: "Google sign-in failed")
+        fun signInWithGoogle(idToken: String) {
+            val credential = GoogleAuthProvider.getCredential(idToken, null)
+            auth.signInWithCredential(credential)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val currentUser = auth.currentUser
+                        viewModelScope.launch {
+                            currentUser?.linkWithCredential(credential)
+                                ?.addOnCompleteListener { linkTask ->
+                                    if (linkTask.isSuccessful) {
+                                        Log.d("Auth", "Google account linked to existing email: ${currentUser.email}")
+                                    } else {
+                                        _authState.value = AuthState.Error("Failed to link Google account: ${linkTask.exception?.message}")
+                                    }
+                                }
+                        }
+                        checkIfUserExistsAndCreateIfNot();
+                        getUserFromDb()
+
+                    } else {
+                        _authState.value = AuthState.Error(task.exception?.message ?: "Google sign-in failed")
+                    }
                 }
-            }
-    }
+        }
 
     //Dang ky
     fun signup(email: String, password: String, fullName: String, phone: String)
@@ -188,7 +203,8 @@ class AuthViewModel(private val realmHelper: RealmHelper,
             }
             Log.e(userFromDb?.email, "Lay du lieu that bai")
             val editor = sharedPreferences.edit()
-            editor.putString("fullname", userFromDb?.fullName)
+            editor.putString("userId", auth.currentUser?.uid)
+            editor.putString("fullName", userFromDb?.fullName)
             editor.putString("role", userFromDb?.role)
             editor.putString("email", userFromDb?.email)
             editor.putString("phone", userFromDb?.phone)
@@ -208,6 +224,33 @@ class AuthViewModel(private val realmHelper: RealmHelper,
         auth.signOut()
         _authState.value = AuthState.Unauthenticated
     }
+
+    fun changePassword(currentPassword: String, newPassword: String, onComplete: (Boolean, String) -> Unit) {
+        val user = auth.currentUser
+        if (user == null) {
+            onComplete(false, "User is not authenticated.")
+            return
+        }
+        if (currentPassword == newPassword) {
+            onComplete(false, "New password cannot be the same as the current password.")
+            return
+        }
+        val credential = EmailAuthProvider.getCredential(user.email!!, currentPassword)
+        user.reauthenticate(credential).addOnCompleteListener { reAuthTask ->
+            if (reAuthTask.isSuccessful) {
+                user.updatePassword(newPassword).addOnCompleteListener { updateTask ->
+                    if (updateTask.isSuccessful) {
+                        onComplete(true, "Password changed successfully.")
+                    } else {
+                        onComplete(false, "Failed to update password: ${updateTask.exception?.message}")
+                    }
+                }
+            } else {
+                onComplete(false, "Current password is incorrect.")
+            }
+        }
+    }
+
 }
 
 sealed class AuthState{

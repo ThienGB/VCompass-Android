@@ -18,6 +18,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.colorResource
@@ -29,16 +30,24 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import com.example.gotravel.R
+import com.example.gotravel.ui.module.main.partner.MainPartnerActivity
 import com.example.gotravel.ui.module.main.user.MainUserActivity
 
 @Composable
 fun RegisterUI(navController: NavController, authViewModel: AuthViewModel) {
     Box(
         modifier = Modifier
-            .fillMaxSize()
-            .background(colorResource(R.color.darkBlue)),
+            .fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
+        //Background
+        Image(
+            painter = painterResource(id = R.drawable.beach),
+            contentDescription = "Background",
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
+
         // Register Panel
         Column(
             modifier = Modifier
@@ -64,7 +73,7 @@ fun RegisterUI(navController: NavController, authViewModel: AuthViewModel) {
                     containerColor = colorResource(R.color.white)
                 ),
             ) {
-                Text(text = "Back", color = colorResource(R.color.black))
+                Text(text = "Quay lại trang đăng nhập", color = colorResource(R.color.black))
             }
         }
     }
@@ -101,9 +110,9 @@ fun RegisterForm(navController: NavController, authViewModel: AuthViewModel) {
                 }
                 else if(role == "partner")
                 {
-                    //Partner
+                    val intent = Intent(context, MainPartnerActivity::class.java)
+                    context.startActivity(intent)
                 }
-
             }
             is AuthState.Error -> {
                 Toast.makeText(
@@ -125,7 +134,7 @@ fun RegisterForm(navController: NavController, authViewModel: AuthViewModel) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Text(text = "Register With Us!", style = MaterialTheme.typography.headlineLarge)
+        Text(text = "Đăng ký", style = MaterialTheme.typography.headlineLarge)
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -133,8 +142,8 @@ fun RegisterForm(navController: NavController, authViewModel: AuthViewModel) {
         OutlinedTextField(
             value = fullName,
             onValueChange = { fullName = it },
-            label = { Text("Full Name") },
-            placeholder = { Text("Enter your full name") },
+            label = { Text("Họ và Tên") },
+            placeholder = { Text("Nhập họ và tên") },
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(12.dp)
         )
@@ -146,19 +155,22 @@ fun RegisterForm(navController: NavController, authViewModel: AuthViewModel) {
             value = email,
             onValueChange = { email = it },
             label = { Text("Email") },
-            placeholder = { Text("Enter your email") },
+            placeholder = { Text("Nhập email") },
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(12.dp)
         )
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        // Phone Input
         OutlinedTextField(
             value = phone,
-            onValueChange = { phone = it },
-            label = { Text("Phone") },
-            placeholder = { Text("Enter your phone number") },
+            onValueChange = { input ->
+                if (input.length <= 11 && input.all { it.isDigit() }) {
+                    phone = input
+                }
+            },
+            label = { Text("Số Điện thoai") },
+            placeholder = { Text("Nhập số điện thoai") },
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(12.dp)
         )
@@ -169,16 +181,21 @@ fun RegisterForm(navController: NavController, authViewModel: AuthViewModel) {
         OutlinedTextField(
             value = password,
             onValueChange = { password = it },
-            label = { Text("Password") },
-            placeholder = { Text("Enter your password") },
+            label = { Text("Mật khẩu") },
+            placeholder = { Text("Nhập mật khẩu") },
             visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(12.dp),
             trailingIcon = {
                 IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
-                    val iconResource = if (isPasswordVisible) R.drawable.passwordshow else R.drawable.hidden
-                    Image(painter = painterResource(id = iconResource), contentDescription = null)
+                    Icon(
+                        painter = painterResource(
+                            id = if (isPasswordVisible) R.drawable.passwordshow else R.drawable.passwordhidden
+                        ),
+                        contentDescription = null,
+                        modifier = Modifier.size(18.dp)
+                    )
                 }
             }
         )
@@ -189,16 +206,21 @@ fun RegisterForm(navController: NavController, authViewModel: AuthViewModel) {
         OutlinedTextField(
             value = confirmPassword,
             onValueChange = { confirmPassword = it },
-            label = { Text("Confirm Password") },
-            placeholder = { Text("Confirm your password") },
+            label = { Text("Nhập lại mật kẩu") },
+            placeholder = { Text("Vui lòng nhập lại mật khẩu") },
             visualTransformation = if (isConfirmPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(12.dp),
             trailingIcon = {
                 IconButton(onClick = { isConfirmPasswordVisible = !isConfirmPasswordVisible }) {
-                    val iconResource = if (isConfirmPasswordVisible) R.drawable.passwordshow else R.drawable.hidden
-                    Image(painter = painterResource(id = iconResource), contentDescription = null)
+                    Icon(
+                        painter = painterResource(
+                            id = if (isPasswordVisible) R.drawable.passwordshow else R.drawable.passwordhidden
+                        ),
+                        contentDescription = null,
+                        modifier = Modifier.size(18.dp)
+                    )
                 }
             }
         )
@@ -211,7 +233,7 @@ fun RegisterForm(navController: NavController, authViewModel: AuthViewModel) {
                 if (password != confirmPassword) {
                     Toast.makeText(
                         context,
-                        "Passwords do not match!",
+                        "Mật khẩu không khớp !",
                         Toast.LENGTH_SHORT
                     ).show()
                 } else {
@@ -220,10 +242,10 @@ fun RegisterForm(navController: NavController, authViewModel: AuthViewModel) {
             },
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(
-                containerColor = colorResource(R.color.darkBlue)
+                containerColor = colorResource(R.color.primary)
             ),
         ) {
-            Text(text = "Register", color = colorResource(R.color.white))
+            Text(text = "Đăng ký", color = colorResource(R.color.white))
         }
     }
 }
