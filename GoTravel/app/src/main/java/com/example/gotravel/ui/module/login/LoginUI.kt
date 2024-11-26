@@ -32,6 +32,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.example.gotravel.R
 import androidx.navigation.NavController
+import com.example.gotravel.ui.module.admin.main.MainAdminActivity
 import com.example.gotravel.ui.module.main.login.MainLoginActivity
 import com.example.gotravel.ui.module.main.partner.MainPartnerActivity
 import com.example.gotravel.ui.module.main.user.MainUserActivity
@@ -104,14 +105,19 @@ fun LoginForm(
         when (authState.value) {
             is AuthState.Authenticated -> {
                 val role = authViewModel.checkRoleNavigate();
-                if(role == "user")
-                {
-                    val intent = Intent(context, MainUserActivity::class.java)
-                    context.startActivity(intent)
-                }
-                else if(role == "partner") {
-                    val intent = Intent(context, MainPartnerActivity::class.java)
-                    context.startActivity(intent)
+                when (role) {
+                    "user" -> {
+                        val intent = Intent(context, MainUserActivity::class.java)
+                        context.startActivity(intent)
+                    }
+                    "partner" -> {
+                        val intent = Intent(context, MainPartnerActivity::class.java)
+                        context.startActivity(intent)
+                    }
+                    "admin" -> {
+                        val intent = Intent(context, MainAdminActivity::class.java)
+                        context.startActivity(intent)
+                    }
                 }
                 if(role.isNullOrEmpty())
                 {

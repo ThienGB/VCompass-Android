@@ -28,7 +28,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.gotravel.MainApplication
 import com.example.gotravel.data.model.User
+import com.example.gotravel.helper.CommonUtils.getUserFromShareRef
 import com.example.gotravel.helper.RealmHelper
+import com.example.gotravel.helper.SharedPreferencesHelper
 import com.example.gotravel.ui.factory.ViewModelFactory
 import com.example.gotravel.ui.module.accomodation.HotelDetailsScreen
 import com.example.gotravel.ui.module.booking.BookingDetailScreen
@@ -50,7 +52,8 @@ class MainUserActivity : ComponentActivity() {
         realmHelper = (application as MainApplication).realmHelper
         val factory = ViewModelFactory(MainUserViewModel::class.java, realmHelper)
         viewModel = ViewModelProvider(this, factory)[MainUserViewModel::class.java]
-        val user = User("123", "Hoang Cong Thien", "congthien@gmail.com")
+        val sharedPreferences = getSharedPreferences(SharedPreferencesHelper.SHARED_PREFS, Context.MODE_PRIVATE)
+        val user = getUserFromShareRef(sharedPreferences)
         setContent {
             MainScreen(viewModel, user, this, { intentToBooking() })
         }

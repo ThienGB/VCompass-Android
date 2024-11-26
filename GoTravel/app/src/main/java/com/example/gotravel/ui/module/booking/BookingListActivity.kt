@@ -1,5 +1,6 @@
 package com.example.gotravel.ui.module.booking
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -48,7 +49,9 @@ import com.example.gotravel.R
 import com.example.gotravel.data.model.Booking
 import com.example.gotravel.data.model.User
 import com.example.gotravel.helper.CommonUtils.formatCurrency
+import com.example.gotravel.helper.CommonUtils.getUserFromShareRef
 import com.example.gotravel.helper.RealmHelper
+import com.example.gotravel.helper.SharedPreferencesHelper
 import com.example.gotravel.ui.components.Loading
 import com.example.gotravel.ui.components.NavTitle
 import com.example.gotravel.ui.factory.ViewModelFactory
@@ -63,7 +66,8 @@ class BookingListActivity: ComponentActivity() {
         realmHelper = (application as MainApplication).realmHelper
         val factory = ViewModelFactory(BookingListViewModel::class.java, realmHelper)
         viewModel = ViewModelProvider(this, factory)[BookingListViewModel::class.java]
-        val user = User("123", "Hoang Cong Thien", "congthien@gmail.com")
+        val sharedPreferences = getSharedPreferences(SharedPreferencesHelper.SHARED_PREFS, Context.MODE_PRIVATE)
+        val user = getUserFromShareRef(sharedPreferences)
         viewModel.setUserId(user.userId)
         viewModel.fetchData()
         setContent {

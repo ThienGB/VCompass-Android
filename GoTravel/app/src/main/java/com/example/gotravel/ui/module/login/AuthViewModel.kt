@@ -203,6 +203,7 @@ class AuthViewModel(private val realmHelper: RealmHelper,
             }
             Log.e(userFromDb?.email, "Lay du lieu that bai")
             val editor = sharedPreferences.edit()
+            editor.putString("userId", userFromDb?.userId)
             editor.putString("userId", auth.currentUser?.uid)
             editor.putString("fullName", userFromDb?.fullName)
             editor.putString("role", userFromDb?.role)

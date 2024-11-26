@@ -4,5 +4,6 @@ data class User (
     var userId: String = "",
     var name: String = "",
     var email: String = "",
+    var phone: String = "",
     val role: String = ""
 )
