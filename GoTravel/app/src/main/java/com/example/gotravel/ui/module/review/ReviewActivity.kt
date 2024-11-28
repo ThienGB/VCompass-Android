@@ -42,7 +42,7 @@ import androidx.navigation.NavController
 import com.example.gotravel.R
 import com.example.gotravel.data.model.Accommodation
 import com.example.gotravel.data.model.Rating
-import com.example.gotravel.data.model.User
+import com.example.gotravel.data.model.UserAccount
 import com.example.gotravel.ui.module.accomodation.HotelInfoSection
 import com.example.gotravel.ui.module.accomodation.ImageSection
 import com.example.gotravel.ui.module.booking.BookingListViewModel
@@ -54,7 +54,7 @@ import java.util.UUID
 fun ReviewScreen(
     accommodation: Accommodation= Accommodation(),
     viewModel: BookingListViewModel,
-    user: User,
+    user: UserAccount,
     navController: NavController = NavController(LocalContext.current)
 ) {
     val context = LocalContext.current
@@ -165,7 +165,7 @@ fun ReviewScreen(
                                 rate = currentRating
                                 content = reviewText
                                 userId = user.userId
-                                userName = user.name
+                                userName = user.fullName
                                 createdAt = System.currentTimeMillis()
                                 ratingId = UUID.randomUUID().toString()
 

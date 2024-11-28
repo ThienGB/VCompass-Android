@@ -47,7 +47,6 @@ import androidx.navigation.compose.rememberNavController
 import com.example.gotravel.MainApplication
 import com.example.gotravel.R
 import com.example.gotravel.data.model.Booking
-import com.example.gotravel.data.model.User
 import com.example.gotravel.helper.CommonUtils.formatCurrency
 import com.example.gotravel.helper.CommonUtils.getUserFromShareRef
 import com.example.gotravel.helper.RealmHelper

@@ -6,10 +6,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavController
-import com.example.gotravel.data.local.dao.UserAccountDao
 import com.example.gotravel.data.model.UserAccount
-import com.example.gotravel.data.remote.User_FirestoreDataManager
+import com.example.gotravel.data.remote.UserFirestoreDataManager
 import com.example.gotravel.helper.RealmHelper
 import com.google.firebase.auth.EmailAuthProvider
 import kotlinx.coroutines.*
@@ -24,9 +22,7 @@ class AuthViewModel(private val realmHelper: RealmHelper,
     private  val sharedPreferences: SharedPreferences
 ) : ViewModel()
 {
-    private val firestoreDataManager = User_FirestoreDataManager()
-
-    private var userDao: UserAccountDao = UserAccountDao()
+    private val firestoreDataManager = UserFirestoreDataManager()
 
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
     private val _authState = MutableLiveData<AuthState>()
@@ -62,7 +58,6 @@ class AuthViewModel(private val realmHelper: RealmHelper,
 
         auth.signInWithEmailAndPassword(email,password).addOnCompleteListener { task
             -> if(task.isSuccessful){
-                _authState.value = AuthState.Authenticated
                 getUserFromDb()
             }
             else
@@ -115,7 +110,7 @@ class AuthViewModel(private val realmHelper: RealmHelper,
             _authState.value = AuthState.Authenticated
 
             val userAccount = UserAccount()
-            userAccount.userId = auth.currentUser?.uid
+            userAccount.userId = auth.currentUser?.uid.toString()
             userAccount.fullName = fullName
             userAccount.phone = phone
             userAccount.role = ""

@@ -13,6 +13,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -29,51 +30,50 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.gotravel.data.model.User
+import com.example.gotravel.data.model.UserAccount
 import com.example.gotravel.ui.components.CustomSearchBar
+import com.example.gotravel.ui.components.Loading
 import com.example.gotravel.ui.components.NavTitle
+import com.example.gotravel.ui.module.admin.main.MainAdminViewModel
 
 @Composable
 fun ListUser(
     users: List<User>,
-    navController: NavController
+    navController: NavController,
+    viewModel: MainAdminViewModel,
+    isLoading: Boolean,
+    calledBy: String = "user"
 ) {
+    viewModel.setIsShowBottomBar(false)
+    val title = if (calledBy == "user") "Danh sách người dùng" else "Danh sách nhà cung cấp"
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        NavTitle("Danh sách người dùng") { navController.popBackStack() }
-        CustomSearchBar()
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.White)
-        ) {
-            Column(
+        NavTitle(title) { navController.popBackStack() }
+        if (isLoading){
+            Loading()
+        }else{
+            CustomSearchBar()
+            Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(vertical = 10.dp, horizontal = 5.dp)
-                    .verticalScroll(rememberScrollState()),
-                verticalArrangement = Arrangement.SpaceBetween,
-                horizontalAlignment = Alignment.Start
+                    .background(Color.White)
             ) {
-                UserItem()
-                UserItem()
-                UserItem()
-                UserItem()
-                UserItem()
-                UserItem()
-                UserItem()
-                UserItem()
-                UserItem()
-                UserItem()
-                UserItem()
-                UserItem()
-                UserItem()
-                UserItem()
-                UserItem()
-                UserItem()
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(vertical = 10.dp, horizontal = 5.dp)
+                        .verticalScroll(rememberScrollState()),
+                    horizontalAlignment = Alignment.Start
+                ) {
+                    users.forEach { user ->
+                        if (user.role == calledBy)
+                            UserItem(user, navController, viewModel)
+                    }
+                }
             }
         }
     }
@@ -81,13 +81,19 @@ fun ListUser(
 
 @Composable
 fun UserItem(
-    user: User = User("", "Cong Thien", "thienlove161203@gmail.com", "user")
+    user: User,
+    navController: NavController,
+    viewModel: MainAdminViewModel
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .background(Color.White)
-            .padding(vertical = 10.dp),
+            .padding(vertical = 10.dp)
+            .clickable {
+                viewModel.setCurrentUser(user)
+                navController.navigate("user_infor")
+            },
         verticalAlignment = Alignment.CenterVertically
     ) {
         Image(rememberAsyncImagePainter("https://scontent.fsgn8-3.fna.fbcdn.net/v/t39.30808-6/464155622_1188059512260875_297674526356158310_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeHxKZsoRqZfIT9epYsvGl55ad4eogWvx0Bp3h6iBa_HQKJ_l10yFyfLYqgoFhRnnssbOi42kaZiAurWnXO3DP0I&_nc_ohc=-r4h1mmadcYQ7kNvgFlrD7B&_nc_zt=23&_nc_ht=scontent.fsgn8-3.fna&_nc_gid=ARbsAeXYjviHc5FEmRJcUv_&oh=00_AYCP39wbGG_lHowyPkbw-ZOyAvQ1p4fBX1oDHs9e1X7ZBw&oe=6746F57A"),
@@ -98,9 +104,9 @@ fun UserItem(
             contentScale = ContentScale.Crop)
         Spacer(modifier = Modifier.width(16.dp))
         Column {
-            Text(text = "Hoàng Công Thiện", fontWeight = FontWeight.Bold, fontSize = 18.sp)
+            Text(text = user.fullName, fontWeight = FontWeight.Bold, fontSize = 18.sp)
             Spacer(modifier = Modifier.height(5.dp))
-            Text(text = "thienlove161203@gmail.com", color = Color.Gray, fontSize = 14.sp)
+            Text(text = user.email, color = Color.Gray, fontSize = 14.sp)
         }
         Spacer(modifier = Modifier.weight(1f))
         Image(

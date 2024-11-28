@@ -9,7 +9,7 @@ import com.example.gotravel.data.model.Accommodation
 import com.example.gotravel.data.model.Booking
 import com.example.gotravel.data.model.Room
 import com.example.gotravel.data.model.Search
-import com.example.gotravel.data.model.User
+import com.example.gotravel.data.model.UserAccount
 import com.example.gotravel.data.remote.FirestoreDataManager
 import com.example.gotravel.helper.RealmHelper
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -79,7 +79,7 @@ class MainUserViewModel(private val realmHelper: RealmHelper) : ViewModel() {
                     room.price in search.minPrice..search.maxPrice &&
                             room.people >= search.guests / search.rooms &&
                             bookings.none { booking ->
-                                booking.roomId == room.roomId &&
+                                booking.roomId == room.roomId && room.status == "Active" &&
                                         booking.accommodationId == accommodation.accommodationId &&
                                         !(search.returnDate <= booking.startDate || search.departureDate >= booking.endDate)
                             }
@@ -120,7 +120,7 @@ class MainUserViewModel(private val realmHelper: RealmHelper) : ViewModel() {
             }
         }
     }
-    fun handleConfirmBooking(accommodation: Accommodation, room: Room, user: User, search: Search, phone: String, name: String, userEmail: String){
+    fun handleConfirmBooking(accommodation: Accommodation, room: Room, user: UserAccount, search: Search, phone: String, name: String, userEmail: String){
         val booking = Booking().apply {
             bookingId = UUID.randomUUID().toString().take(15)
             roomId = room.roomId

@@ -10,7 +10,7 @@ import com.example.gotravel.data.model.Booking
 import com.example.gotravel.data.model.Rating
 import com.example.gotravel.data.model.Room
 import com.example.gotravel.data.model.Search
-import com.example.gotravel.data.model.User
+import com.example.gotravel.data.model.UserAccount
 import com.example.gotravel.data.remote.FirestoreDataManager
 import com.example.gotravel.helper.RealmHelper
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -38,7 +38,7 @@ class MainPartnerViewModel (private val realmHelper: RealmHelper) : ViewModel() 
     private val _room = MutableStateFlow(Room())
     val room: StateFlow<Room> get() = _room
 
-    private var user: User = User()
+    private var user: UserAccount = UserAccount()
     fun fetchData(){
         _isLoading.value = true
         viewModelScope.launch {
@@ -50,7 +50,7 @@ class MainPartnerViewModel (private val realmHelper: RealmHelper) : ViewModel() 
             }
         }
     }
-    fun setUser(user: User) {
+    fun setUser(user: UserAccount) {
         this.user = user
     }
     fun setRoom(room: Room) {
@@ -85,6 +85,21 @@ class MainPartnerViewModel (private val realmHelper: RealmHelper) : ViewModel() 
     fun insertAccom(name: String, image: String, description: String, address: String, city: String, amentities: String){
         val accom = Accommodation().apply {
             accommodationId = UUID.randomUUID().toString()
+            partnerId = user.userId
+            this.name = name
+            this.image = image
+            this.description = description
+            this.address = address
+            this.city = city
+            this.amentities = amentities
+            this.status = "pending"
+        }
+        firestoreDataManager.addAccommodationToFirestore(accom)
+        accomDao.insertOrUpdateAccomm(accom){fetchData()}
+    }
+    fun updateAccom(accommodationId: String,name: String, image: String, description: String, address: String, city: String, amentities: String){
+        val accom = Accommodation().apply {
+            this.accommodationId = accommodationId
             partnerId = user.userId
             this.name = name
             this.image = image

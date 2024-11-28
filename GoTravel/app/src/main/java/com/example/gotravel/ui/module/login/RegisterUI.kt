@@ -96,7 +96,7 @@ fun RegisterForm(navController: NavController, authViewModel: AuthViewModel) {
     LaunchedEffect(authState.value) {
         when (authState.value) {
             is AuthState.Authenticated -> {
-                val role = authViewModel.checkRoleNavigate();
+                val role = authViewModel.checkRoleNavigate()
 
                 if(role.isNullOrEmpty())
                 {

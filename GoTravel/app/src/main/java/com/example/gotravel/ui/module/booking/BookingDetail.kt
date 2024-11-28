@@ -40,7 +40,7 @@ import com.example.gotravel.data.model.Accommodation
 import com.example.gotravel.data.model.Booking
 import com.example.gotravel.data.model.Room
 import com.example.gotravel.data.model.Search
-import com.example.gotravel.data.model.User
+import com.example.gotravel.data.model.UserAccount
 import com.example.gotravel.helper.CommonUtils.formatCurrency
 import com.example.gotravel.ui.components.NavTitle
 import com.example.gotravel.ui.module.main.user.MainUserViewModel
@@ -50,14 +50,14 @@ import java.util.UUID
 fun ContactInfoForm(
     accommodation: Accommodation = Accommodation(),
     room: Room = Room(),
-    user: User,
+    user: UserAccount,
     viewModel: MainUserViewModel,
     search: Search,
     intentToBooking: () -> Unit
 ) {
     val context = LocalContext.current
-    var fullName by remember { mutableStateOf(user.name) }
-    var phoneNumber by remember { mutableStateOf("") }
+    var fullName by remember { mutableStateOf(user.fullName) }
+    var phoneNumber by remember { mutableStateOf(user.phone) }
     var email by remember { mutableStateOf(user.email) }
     Column(
         modifier = Modifier
@@ -167,7 +167,7 @@ fun ContactTextField(label: String, placeholder: String, value: String, onValueC
 fun BookingDetailScreen(
     accommodation: Accommodation = Accommodation(),
     room: Room = Room(),
-    user: User = User(),
+    user: UserAccount = UserAccount(),
     navController: NavController,
     viewModel: MainUserViewModel,
     search: Search,

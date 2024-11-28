@@ -104,24 +104,21 @@ fun LoginForm(
     LaunchedEffect(authState.value) {
         when (authState.value) {
             is AuthState.Authenticated -> {
-                val role = authViewModel.checkRoleNavigate();
-                when (role) {
-                    "user" -> {
-                        val intent = Intent(context, MainUserActivity::class.java)
-                        context.startActivity(intent)
-                    }
-                    "partner" -> {
-                        val intent = Intent(context, MainPartnerActivity::class.java)
-                        context.startActivity(intent)
-                    }
-                    "admin" -> {
-                        val intent = Intent(context, MainAdminActivity::class.java)
-                        context.startActivity(intent)
-                    }
-                }
+                val role = authViewModel.checkRoleNavigate()
+
                 if(role.isNullOrEmpty())
                 {
                     navController.navigate("select-role")
+                }
+                if (role == "user") {
+                    val intent = Intent(context, MainUserActivity::class.java)
+                    context.startActivity(intent)
+                } else if(role == "partner") {
+                    val intent = Intent(context, MainPartnerActivity::class.java)
+                    context.startActivity(intent)
+                } else if (role == "admin") {
+                    val intent = Intent(context, MainAdminActivity::class.java)
+                    context.startActivity(intent)
                 }
             }
             is AuthState.Error -> {

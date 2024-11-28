@@ -27,7 +27,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.gotravel.MainApplication
-import com.example.gotravel.data.model.User
+import com.example.gotravel.data.model.UserAccount
 import com.example.gotravel.helper.CommonUtils.getUserFromShareRef
 import com.example.gotravel.helper.RealmHelper
 import com.example.gotravel.helper.SharedPreferencesHelper
@@ -67,7 +67,7 @@ class MainUserActivity : ComponentActivity() {
 @Composable
 fun MainScreen(
     viewModel: MainUserViewModel,
-    user: User =  User(),
+    user: UserAccount,
     context: Context,
     intentToBooking: () -> Unit
 ) {
@@ -126,7 +126,7 @@ fun CustomBottomBar(
 fun NavHostGraph(
     navController: NavHostController,
     modifier: Modifier = Modifier,
-    user: User,
+    user: UserAccount,
     viewModel: MainUserViewModel,
     context: Context,
     intentToBooking: () -> Unit

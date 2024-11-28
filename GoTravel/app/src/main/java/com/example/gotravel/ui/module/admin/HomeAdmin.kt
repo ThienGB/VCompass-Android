@@ -39,6 +39,7 @@ import coil.compose.rememberAsyncImagePainter
 import com.example.gotravel.R
 import com.example.gotravel.data.model.Accommodation
 import com.example.gotravel.data.model.User
+import com.example.gotravel.data.model.UserAccount
 import com.example.gotravel.ui.components.Loading
 import com.example.gotravel.ui.module.admin.main.MainAdminViewModel
 
@@ -90,7 +91,9 @@ fun BookingStats(
     users: List<User>,
     navController: NavController
 ) {
-    val pendingCount = accommodations.count { it.status == "pending" }
+    val partnerCount = users.count { it.role == "partner" }
+    val userCount = users.count { it.role == "user" }
+    val pendingCount = accommodations.count { it.status != "accept" }
     val successCount = accommodations.count { it.status == "accept" }
 
     Row(modifier = Modifier.fillMaxWidth(),
@@ -115,7 +118,7 @@ fun BookingStats(
             ) {
                 Text(text = "NGƯỜI DÙNG", color = Color.Gray, fontSize = 14.sp)
                 Spacer(modifier = Modifier.height(8.dp))
-                Text(text = "10", color = colorResource(id = R.color.green),
+                Text(text = userCount.toString(), color = colorResource(id = R.color.green),
                     fontWeight = FontWeight.Bold, fontSize = 24.sp)
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(text = "Xem chi tiết",color = colorResource(id = R.color.primary),
@@ -129,7 +132,7 @@ fun BookingStats(
             modifier = Modifier
                 .padding(8.dp)
                 .weight(1f)
-                .clickable { navController.navigate("booking_partner") }
+                .clickable { navController.navigate("list_partner") }
         ) {
             Column(
                 modifier = Modifier
@@ -139,7 +142,7 @@ fun BookingStats(
             ) {
                 Text(text = "NHÀ CUNG CẤP", color = Color.Gray, fontSize = 14.sp)
                 Spacer(modifier = Modifier.height(8.dp))
-                Text(text = "5",color = colorResource(id = R.color.green),
+                Text(text = partnerCount.toString(),color = colorResource(id = R.color.green),
                     fontWeight = FontWeight.Bold, fontSize = 24.sp)
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(text = "Xem chi tiết",color = colorResource(id = R.color.primary),
@@ -183,7 +186,7 @@ fun BookingStats(
             modifier = Modifier
                 .padding(8.dp)
                 .weight(1f)
-                .clickable { navController.navigate("booking_partner") }
+                .clickable { navController.navigate("list_accom_register") }
         ) {
             Column(
                 modifier = Modifier

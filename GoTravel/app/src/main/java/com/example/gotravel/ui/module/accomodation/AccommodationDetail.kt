@@ -1,5 +1,6 @@
 package com.example.gotravel.ui.module.accomodation
 
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -41,9 +42,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
@@ -66,7 +69,9 @@ import kotlin.math.roundToInt
 fun HotelDetailsScreen(
     accommodations: Accommodation,
     navController: NavController = NavController(LocalContext.current),
-    calledBy: String = "user"
+    calledBy: String = "user",
+    onDenyClick: () -> Unit = {},
+    onAcceptClick: () -> Unit = {}
 ) {
     val lowestPrice = accommodations.rooms.minOfOrNull { it.price } ?: 0
     val averageRating = if (accommodations.ratings.isNotEmpty()) {
@@ -93,11 +98,13 @@ fun HotelDetailsScreen(
                     thickness = 7.dp,
                     color = colorResource(R.color.lightGray)
                 )
-                RatingsSection(accommodations.ratings, navController)
-                HorizontalDivider(
-                    thickness = 7.dp,
-                    color = colorResource(R.color.lightGray)
-                )
+                if (calledBy != "accept"){
+                    RatingsSection(accommodations.ratings, navController)
+                    HorizontalDivider(
+                        thickness = 7.dp,
+                        color = colorResource(R.color.lightGray)
+                    )
+                }
                 AmenitiesSection(accommodations.amentities)
                 HorizontalDivider(
                     thickness = 7.dp,
@@ -117,9 +124,79 @@ fun HotelDetailsScreen(
                     PriceSection(lowestPrice.toString())
                     BookButton { navController.navigate("room_detail") }
                 }
+                if (calledBy == "accept"){
+                    HorizontalDivider(
+                        thickness = 100.dp,
+                        color = colorResource(R.color.lightGray),
+                    )
+                    DenyAndAcceptButton(
+                        onDenyClick,
+                        onAcceptClick,
+                        navController
+                    )
+                }
             }
         }
     }
+}
+@Composable
+fun DenyAndAcceptButton(
+    onDenyClick: () -> Unit = {},
+    onAcceptClick: () -> Unit = {},
+    navController: NavController = NavController(LocalContext.current),
+) {
+    val context = LocalContext.current
+    Row (modifier = Modifier.padding(top = 16.dp)) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .weight(1f)
+                .padding(start = 10.dp, end = 10.dp, bottom = 16.dp)
+                .height(50.dp)
+                .clip(RoundedCornerShape(99.dp))
+                .background(Color(0xFFE71100))
+                .clickable {
+                    onDenyClick()
+                    navController.popBackStack()
+                    Toast.makeText(context, " Từ chối thành công",  Toast.LENGTH_SHORT).show()
+                }
+        ) {
+            Image(painter = painterResource(id = R.drawable.ic_x_circle),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(start = 20.dp)
+                    .size(25.dp),
+                colorFilter = ColorFilter.tint(Color.White))
+            Text(text = "Từ chối", color = Color.White,
+                fontFamily = FontFamily(Font(R.font.proxima_nova_regular)),
+                fontSize = 20.sp, modifier = Modifier.padding(start = 10.dp))
+        }
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .weight(1f)
+                .padding(start = 10.dp, end = 10.dp, bottom = 16.dp)
+                .height(50.dp)
+                .clip(RoundedCornerShape(99.dp))
+                .background(Color(0xFF03D307))
+                .clickable {
+                    onAcceptClick()
+                    navController.popBackStack()
+                    Toast.makeText(context, " Duyệt thành công",  Toast.LENGTH_SHORT).show()
+                }
+        ) {
+            Image(painter = painterResource(id = R.drawable.ic_check_circle),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(start = 20.dp)
+                    .size(25.dp),
+                colorFilter = ColorFilter.tint(Color.White))
+            Text(text = "Duyệt", color = Color.White,
+                fontFamily = FontFamily(Font(R.font.proxima_nova_regular)),
+                fontSize = 20.sp, modifier = Modifier.padding(start = 15.dp))
+        }
+    }
+
 }
 
 @Preview(showSystemUi = true)

@@ -19,7 +19,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
@@ -27,16 +26,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.gotravel.MainApplication
-import com.example.gotravel.data.model.User
 import com.example.gotravel.helper.CommonUtils.getUserFromShareRef
 import com.example.gotravel.helper.RealmHelper
 import com.example.gotravel.helper.SharedPreferencesHelper
 import com.example.gotravel.ui.factory.ViewModelFactory
 import com.example.gotravel.ui.module.chat.ChatComponentScreen
-import com.example.gotravel.ui.module.home.user.HomeUserScreen
 import com.example.gotravel.ui.module.home.user.NotificationScreen
 import com.example.gotravel.ui.module.home.user.ProfileScreen
-import com.example.gotravel.ui.module.main.user.MainUserViewModel
 import com.example.gotravel.ui.module.partner.Booking.BookingInforPartner
 import com.example.gotravel.ui.module.partner.Booking.BookingListPartner
 import com.example.gotravel.ui.module.partner.DashBoard.DashboardScreen
