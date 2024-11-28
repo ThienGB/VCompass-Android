@@ -32,7 +32,7 @@ object FirestoreHelper {
     const val FL_ENDDATE: String = "endDate"
     const val FL_USERID: String = "userId"
     const val FL_STATUS: String = "status"
-    const val FL_PHONENUMBER: String = "phoneNumber"
+    const val FL_PHONENUMBER: String = "phone"
     const val FL_ACCOMNAME: String = "accommodationName"
 
     //Rating
@@ -49,7 +49,26 @@ object FirestoreHelper {
     const val FL_PEOPLE: String = "people"
     const val FL_BED: String = "bed"
     const val FL_AREA: String = "area"
-
-
     const val FL_EMAIL: String = "email"
+
+    //notification
+    const val CL_NOTIFICATION: String = "notification"
+    const val FL_NOTIFICATION_ID: String = "id_notification"
+    const val FL_CREATE_AT: String = "create_at"
+    const val FL_ID_SENDER: String = "id_sender"
+    const val FL_ID_RECEIVER: String = "id_receiver"
+    const val FL_ISREAD: String = "isRead"
+
+    //conversation
+    const val CL_CONVERSATION: String = "conversations"
+    const val FL_CONVERSATION_ID: String = "id_conversation"
+    const val FL_ID_FIRSTUSER: String = "id_firstUser"
+    const val FL_ID_SECONDUSER: String = "id_secondUser"
+    const val FL_MESSAGES: String = "messages"
+    const val FL_CREATED_AT: String = "createdAt"
+
+    //messages
+    const val FL_MESSAGE_ID: String = "id_message"
+    const val FL_CONTENT_MESSAGE: String = "content"
+    const val FL_USER_ID_MESSAGE: String = "id_user"
 }

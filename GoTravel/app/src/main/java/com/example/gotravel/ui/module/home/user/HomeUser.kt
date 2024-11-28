@@ -57,6 +57,7 @@ import com.example.gotravel.ui.module.search.DatePickerBottomSheet
 import com.example.gotravel.ui.module.search.DestinationSelectionBottomSheet
 import com.example.gotravel.ui.module.search.PriceRangeBottomSheet
 import com.example.gotravel.ui.module.search.RoomGuestSelectionBottomSheet
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -67,6 +68,7 @@ fun HomeUserScreen(
     context: Context,
 ) {
     viewModel.setIsShowBottomBar(true)
+    var currentIndex by remember { mutableStateOf(0) }
     val coroutineScope = rememberCoroutineScope()
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState()
     val currentSheet = remember { mutableStateOf(BottomSheetType.NONE) }
@@ -84,6 +86,18 @@ fun HomeUserScreen(
                 || searchData.guests == 0
                 || searchData.maxPrice == 0)
     }
+    val imageList = listOf(
+        R.drawable.bg_home4,
+        R.drawable.bg_home1,
+        R.drawable.bg_home2,
+        R.drawable.bg_home3
+    )
+    LaunchedEffect(Unit) {
+        while (true) {
+            delay(4000)
+            currentIndex = (currentIndex + 1) % imageList.size
+        }
+    }
     LaunchedEffect(currentSheet.value) {
         if (currentSheet.value == BottomSheetType.NONE) {
             coroutineScope.launch {
@@ -98,30 +112,31 @@ fun HomeUserScreen(
             bottomSheetScaffoldState.bottomSheetState.expand()
         }
     }
-    Column (modifier = Modifier.verticalScroll(rememberScrollState())) {
+    Column (modifier = Modifier.background(Color.White)
+        .verticalScroll(rememberScrollState())) {
         Box(modifier = Modifier.fillMaxWidth()) {
             Image(
-                painter = painterResource(id = R.drawable.bg_home),
-                contentScale = ContentScale.FillBounds,
+                painter = painterResource(id = imageList[currentIndex]),
                 contentDescription = null,
+                contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(130.dp)
+                    .height(230.dp)
             )
             Card(
                 shape = RoundedCornerShape(10.dp),
                 elevation = CardDefaults.cardElevation(8.dp),
                 modifier = Modifier
-                    .padding(top = 100.dp, start = 20.dp, end = 20.dp, bottom = 10.dp)
+                    .padding(top = 200.dp, start = 20.dp, end = 20.dp, bottom = 10.dp)
                     .fillMaxWidth()
             ) {
                 Column(
                     modifier = Modifier
                         .background(Color.White)
-                        .padding(16.dp)
+                        .padding(horizontal = 16.dp, vertical = 8.dp)
                 ) {
                     SearchInfor(
-                        title = "Điểm đến - khách sạn",
+                        title = "Điểm đến",
                         content = searchData.destination,
                         icon = R.drawable.ic_aim,
                         onColumnClick = { showBottomSheet(BottomSheetType.DESTINATION_PICKER) },
@@ -215,7 +230,7 @@ fun SearchInfor(
     isValid: Boolean = true
 ) {
     Column(modifier = Modifier
-        .padding(vertical = 8.dp)
+        .padding(vertical = 6.dp)
         .clickable { onColumnClick() }) {
         Row {
             Image(
@@ -228,15 +243,15 @@ fun SearchInfor(
             Text(
                 text = title,
                 fontFamily = FontFamily(Font(R.font.proxima_nova_regular)),
-                fontSize = 16.sp
+                fontSize = 15.sp
             )
         }
         Text(
             text = if (isValid) content else "Không thể trống",
-            fontSize = 18.sp,
+            fontSize = 16.sp,
             color = if (isValid) colorResource(id = R.color.secondBlack) else Color.Red,
             fontFamily = FontFamily(Font(R.font.proxima_nova_bold)),
-            modifier = Modifier.padding(bottom = 3.dp, top = 10.dp, start = 20.dp)
+            modifier = Modifier.padding(bottom = 3.dp, top = 8.dp, start = 20.dp)
         )
         HorizontalDivider(thickness = 0.5.dp)
     }
@@ -248,19 +263,30 @@ fun RecentSearches() {
         Search(
             "Vũng Tàu",
             System.currentTimeMillis(),
-            System.currentTimeMillis(),
+            System.currentTimeMillis() + (24 * 60 * 60 * 1000),
+            1,
             2,
-            2,
-            2,
-            1000000),
+            1,
+            0,
+            2000000),
         Search(
-            "Phan Thiet",
+            "Hà Nội",
             System.currentTimeMillis(),
-            System.currentTimeMillis(),
+            System.currentTimeMillis() + (24 * 60 * 60 * 1000)*2,
             2,
             4,
             2,
-            1000000),)
+            100000,
+            600000),
+        Search(
+            "Huế",
+            System.currentTimeMillis(),
+            System.currentTimeMillis() + (24 * 60 * 60 * 1000)*3,
+            3,
+            2,
+            1,
+            100000,
+            900000))
     Column {
         Text(
             text = "Tra cứu gần đây",

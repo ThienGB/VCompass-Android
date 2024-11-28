@@ -204,6 +204,7 @@ class AuthViewModel(private val realmHelper: RealmHelper,
             editor.putString("role", userFromDb?.role)
             editor.putString("email", userFromDb?.email)
             editor.putString("phone", userFromDb?.phone)
+            editor.putString("status", userFromDb?.status)
             editor.apply()
             roleUser = userFromDb?.role;
             _authState.value = AuthState.Authenticated

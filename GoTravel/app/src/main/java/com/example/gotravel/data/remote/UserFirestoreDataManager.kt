@@ -34,7 +34,6 @@ class UserFirestoreDataManager {
     suspend fun getUserById(userId: String): UserAccount? {
         return try {
             val document = db.collection(CL_USER).document(userId).get().await()
-
             if (document.exists()) {
                 val user = document.toObject(UserAccount::class.java)
                 Log.e(user?.email ?: "No Email", "In Db")
@@ -116,5 +115,27 @@ class UserFirestoreDataManager {
             Log.w("FirestoreDataManager", "Error getting documents.", exception)
         }
     }
-
+    fun editProfile(user: UserAccount, onComplete: () -> Unit = {}){
+        try {
+            val query = db.collection(CL_USER).whereEqualTo("userId", user.userId)
+            query.get()
+                .addOnSuccessListener { querySnapshot ->
+                    if (!querySnapshot.isEmpty) {
+                        for (document in querySnapshot.documents) {
+                            val documentRef = document.reference
+                            documentRef.update("fullName", user.fullName)
+                            documentRef.update("phone", user.phone)
+                        }
+                        onComplete()
+                    } else {
+                        Log.w("FirestoreUserManager", "No document found ")
+                    }
+                }
+                .addOnFailureListener { e ->
+                    Log.w("FirestoreUserManager", "Error finding document", e)
+                }
+        } catch (e: Exception) {
+            Log.w("FirestoreUserManager", "Error during Firestore operation.", e)
+        }
+    }
 }

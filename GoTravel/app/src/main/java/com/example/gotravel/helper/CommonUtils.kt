@@ -32,9 +32,16 @@ object CommonUtils {
     fun getUserFromShareRef(sharedPreferences: SharedPreferences): UserAccount {
         return UserAccount(
             sharedPreferences.getString("userId", "").toString(),
-            sharedPreferences.getString("fullname", "").toString(),
+            sharedPreferences.getString("fullName", "").toString(),
             sharedPreferences.getString("email", "").toString(),
+            sharedPreferences.getString("role", "").toString(),
             sharedPreferences.getString("phone", "").toString(),
-            sharedPreferences.getString("role", "").toString())
+            sharedPreferences.getString("status", "").toString())
+    }
+    @JvmStatic
+    fun formatDateToVi(date: Date): String {
+        val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
+        sdf.timeZone = TimeZone.getTimeZone("Asia/Ho_Chi_Minh")
+        return sdf.format(date)
     }
 }

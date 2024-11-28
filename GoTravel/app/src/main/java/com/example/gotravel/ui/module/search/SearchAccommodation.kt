@@ -48,6 +48,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.RangeSlider
 import androidx.compose.material3.SelectableDates
+import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -71,6 +72,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -385,7 +387,8 @@ fun PriceRangeBottomSheet(
             },
             valueRange = minPrice..maxPrice,
             steps = 9,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            colors = SliderDefaults.colors(colorResource(id = R.color.primary))
         )
 
         Text(
@@ -393,22 +396,35 @@ fun PriceRangeBottomSheet(
             fontSize = 18.sp,
             modifier = Modifier.padding(top = 16.dp)
         )
-
-        Button(
-            onClick = {
-                if (currentPrice.endInclusive.toInt() == 0) {
-                    Toast.makeText(context, "Vui lòng chọn cả giá thấp và giá cao", Toast.LENGTH_SHORT).show()
-                }else {
-                    searchData.minPrice = currentPrice.start.toInt()
-                    searchData.maxPrice = currentPrice.endInclusive.toInt()
-                    sharedViewModel.setSearchData(searchData)
-                    onDismiss()
+        Text(
+            text = "Xác nhận",
+            fontSize = 18.sp,
+            fontFamily = FontFamily(Font(R.font.proxima_nova_regular)),
+            textAlign = TextAlign.Center,
+            color = Color.White,
+            modifier = Modifier
+                .clickable {
+                    if (currentPrice.endInclusive.toInt() == 0) {
+                        Toast
+                            .makeText(
+                                context,
+                                "Vui lòng chọn cả giá thấp và giá cao",
+                                Toast.LENGTH_SHORT
+                            )
+                            .show()
+                    } else {
+                        searchData.minPrice = currentPrice.start.toInt()
+                        searchData.maxPrice = currentPrice.endInclusive.toInt()
+                        sharedViewModel.setSearchData(searchData)
+                        onDismiss()
+                    }
                 }
-            },
-            modifier = Modifier.padding(top = 16.dp)
-        ) {
-            Text(text = "Xác nhận")
-        }
+                .fillMaxWidth()
+                .padding(vertical = 10.dp, horizontal = 50.dp)
+                .clip(RoundedCornerShape(10.dp))
+                .background(colorResource(id = R.color.primary))
+                .padding(10.dp)
+        )
     }
 }
 @Composable
@@ -472,7 +488,8 @@ fun RoomGuestSelectionBottomSheet(
             Spacer(modifier = Modifier.weight(1f))
             Row (verticalAlignment = Alignment.CenterVertically) {
                 IconButton(onClick = {handleMinus("room") }) {
-                    Icon(Icons.Default.Delete, contentDescription = "Remove")
+                    Icon(painter = painterResource(id = R.drawable.ic_minus), contentDescription = "Remove",
+                        modifier = Modifier.padding(10.dp))
                 }
                 Text(text = rooms.intValue.toString())
                 IconButton(onClick = {handleAdd("room") }) {
@@ -491,7 +508,8 @@ fun RoomGuestSelectionBottomSheet(
             Spacer(modifier = Modifier.weight(1f))
             Row (verticalAlignment = Alignment.CenterVertically) {
                 IconButton(onClick = { handleMinus("guest") }) {
-                    Icon(Icons.Default.Delete, contentDescription = "Remove")
+                    Icon(painterResource(id = R.drawable.ic_minus), contentDescription = "Remove",
+                        modifier = Modifier.padding(10.dp))
                 }
                 Text(text = guests.value.toString())
                 IconButton(onClick = { handleAdd("guest") }) {
@@ -501,23 +519,45 @@ fun RoomGuestSelectionBottomSheet(
         }
         Spacer(modifier = Modifier.height(16.dp))
         Row (modifier = Modifier
-            .fillMaxWidth()
-            .padding(end = 15.dp),
+            .fillMaxWidth(),
             horizontalArrangement = Arrangement.End) {
-            Button(onClick = {
-                if (rooms.intValue == 0 ||  guests.intValue == 0) {
-                    Toast.makeText(context, "Số phòng và khách phải khác 0 ", Toast.LENGTH_SHORT).show()
-                } else if (rooms.intValue > guests.intValue) {
-                    Toast.makeText(context, "Số khách không được vượt quá số phòng", Toast.LENGTH_SHORT).show()
-                } else {
-                    searchData.rooms = rooms.intValue
-                    searchData.guests = guests.intValue
-                    sharedViewModel.setSearchData(searchData)
-                    onDismiss() }
-                })
-                 {
-                Text(text = "Xác nhận")
-            }
+            Text(
+                text = "Xác nhận",
+                fontSize = 18.sp,
+                fontFamily = FontFamily(Font(R.font.proxima_nova_regular)),
+                textAlign = TextAlign.Center,
+                color = Color.White,
+                modifier = Modifier
+                    .clickable {
+                        if (rooms.intValue == 0 || guests.intValue == 0) {
+                            Toast
+                                .makeText(
+                                    context,
+                                    "Số phòng và khách phải khác 0 ",
+                                    Toast.LENGTH_SHORT
+                                )
+                                .show()
+                        } else if (rooms.intValue > guests.intValue) {
+                            Toast
+                                .makeText(
+                                    context,
+                                    "Số khách không được vượt quá số phòng",
+                                    Toast.LENGTH_SHORT
+                                )
+                                .show()
+                        } else {
+                            searchData.rooms = rooms.intValue
+                            searchData.guests = guests.intValue
+                            sharedViewModel.setSearchData(searchData)
+                            onDismiss()
+                        }
+                    }
+                    .fillMaxWidth()
+                    .padding(vertical = 10.dp, horizontal = 50.dp)
+                    .clip(RoundedCornerShape(10.dp))
+                    .background(colorResource(id = R.color.primary))
+                    .padding(10.dp)
+            )
         }
     }
 }
@@ -530,12 +570,12 @@ fun DestinationSelectionBottomSheet(
     val text = remember { mutableStateOf("") }
     val provinces = listOf(
         "Hà Nội", "Hồ Chí Minh", "Đà Nẵng", "Hải Phòng", "Cần Thơ",
-        "Nha Trang", "Bà Rịa - Vũng Tàu", "Quảng Ninh",
+        "Nha Trang", "Vũng Tàu", "Quảng Ninh",
         "Khánh Hòa", "Bình Định", "Đắk Lắk", "Gia Lai",
         "Lâm Đồng", "Tây Ninh", "Bình Dương", "Đồng Tháp",
         "Vĩnh Long", "Ninh Thuận", "Bình Thuận", "Thái Nguyên",
         "Lào Cai", "Yên Bái", "Sơn La", "Hà Giang",
-        "Nghệ An", "Thanh Hóa", "Quảng Trị", "Thừa Thiên Huế",
+        "Nghệ An", "Thanh Hóa", "Quảng Trị", "Huế",
         "Bến Tre", "Kiên Giang", "Vĩnh Phúc", "Hải Dương"
     )
     val filteredProvinces = provinces.filter { province ->
@@ -580,15 +620,10 @@ fun DestinationSelectionBottomSheet(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text("Tìm kiếm gần đây", fontWeight = FontWeight.Bold)
-                Text(
-                    text = "Xóa",
-                    color = Color.Blue,
-                    modifier = Modifier.clickable {  }
-                )
             }
             Spacer(modifier = Modifier.height(8.dp))
             Column {
-                val recentSearches = listOf("Hà Nội, Việt Nam", "InterContinental ", "Khách sạn Pullman Vũng Tàu")
+                val recentSearches = listOf("Hà Nội", "Vũng Tàu ", "Huế", "Đà Nẵng")
                 recentSearches.forEach { destination ->
                     Row(
                         modifier = Modifier
@@ -674,30 +709,52 @@ fun DatePickerBottomSheet(
     Box (modifier = Modifier
         .fillMaxWidth()
         .height(550.dp)
-        .padding(end = 15.dp, bottom = 15.dp),
+        .padding(bottom = 15.dp),
         contentAlignment = Alignment.BottomEnd) {
-        Button(onClick = {
-            val startDateMillis = state.selectedStartDateMillis
-            val endDateMillis = state.selectedEndDateMillis
+        Text(
+            text = "Xác nhận",
+            fontSize = 18.sp,
+            fontFamily = FontFamily(Font(R.font.proxima_nova_regular)),
+            textAlign = TextAlign.Center,
+            color = Color.White,
+            modifier = Modifier
+                .clickable {
+                    val startDateMillis = state.selectedStartDateMillis
+                    val endDateMillis = state.selectedEndDateMillis
 
-            if (startDateMillis == null || endDateMillis == null) {
-                Toast.makeText(context, "Vui lòng chọn cả ngày đi và ngày về", Toast.LENGTH_SHORT).show()
-            } else {
-                val days = ((endDateMillis - startDateMillis).toInt()) / 86400000
-                if (days <= 10){
-                    searchData.departureDate = startDateMillis
-                    searchData.returnDate = endDateMillis
-                    searchData.vacationDays = days
-                    sharedViewModel.setSearchData(searchData)
-                    onDismiss()
-                }else {
-                    Toast.makeText(context, "Vui lòng chọn tối đa 10 ngày", Toast.LENGTH_SHORT).show()
+                    if (startDateMillis == null || endDateMillis == null) {
+                        Toast
+                            .makeText(
+                                context,
+                                "Vui lòng chọn cả ngày đi và ngày về",
+                                Toast.LENGTH_SHORT
+                            )
+                            .show()
+                    } else {
+                        val days = ((endDateMillis - startDateMillis).toInt()) / 86400000
+                        if (days <= 10) {
+                            searchData.departureDate = startDateMillis
+                            searchData.returnDate = endDateMillis
+                            searchData.vacationDays = days
+                            sharedViewModel.setSearchData(searchData)
+                            onDismiss()
+                        } else {
+                            Toast
+                                .makeText(
+                                    context,
+                                    "Vui lòng chọn tối đa 10 ngày",
+                                    Toast.LENGTH_SHORT
+                                )
+                                .show()
+                        }
+                    }
                 }
-
-            }
-        }) {
-            Text(text = "Xác nhận")
-        }
+                .fillMaxWidth()
+                .padding(vertical = 10.dp, horizontal = 50.dp)
+                .clip(RoundedCornerShape(10.dp))
+                .background(colorResource(id = R.color.primary))
+                .padding(10.dp)
+        )
     }
 }
 enum class BottomSheetType {
