@@ -61,9 +61,10 @@ fun AccomList(
     viewModel: MainAdminViewModel
 ) {
     viewModel.setIsShowBottomBar(false)
-    var filterAccom by remember { mutableStateOf(accommodations) }
+    var filterAccom by remember { mutableStateOf(accommodations.filter { it.status == "accept" }) }
     fun onTextChange(query: String){
         filterAccom = accommodations.filter { accom ->
+            accom.status == "accept" &&
             accom.name.contains(query, ignoreCase = true) ||
                     accom.address.contains(query, ignoreCase = true)
         }

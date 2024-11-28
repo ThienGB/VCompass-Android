@@ -239,7 +239,8 @@ fun NavSearch(
         }else {
             Column (modifier = Modifier.verticalScroll(rememberScrollState())) {
                 sortedList.forEach { accommodation ->
-                    HotelCard(accommodation, viewModel, navController)
+                    if (accommodation.status == "accept")
+                        HotelCard(accommodation, viewModel, navController)
                 }
             }
         }

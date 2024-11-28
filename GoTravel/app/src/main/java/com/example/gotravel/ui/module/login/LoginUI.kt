@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -19,6 +20,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.colorResource
@@ -30,6 +32,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.example.gotravel.R
 import androidx.navigation.NavController
+import com.example.gotravel.ui.module.admin.main.MainAdminActivity
 import com.example.gotravel.ui.module.main.login.MainLoginActivity
 import com.example.gotravel.ui.module.main.partner.MainPartnerActivity
 import com.example.gotravel.ui.module.main.user.MainUserActivity
@@ -42,11 +45,17 @@ fun LoginUI(
     googleSignInClient: GoogleSignInClient
 ) {
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(colorResource(R.color.primary)),
+        modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
+        // Background Image
+        Image(
+            painter = painterResource(id = R.drawable.beach),
+            contentDescription = "Background",
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
+
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -71,13 +80,12 @@ fun LoginUI(
                     .padding(16.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color.White)
             ) {
-                Text(text = "Sign Up", color = Color.Black)
+                Text(text = "Đăng ký", color = Color.Black)
             }
-
-
         }
     }
 }
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -96,19 +104,21 @@ fun LoginForm(
     LaunchedEffect(authState.value) {
         when (authState.value) {
             is AuthState.Authenticated -> {
-                val role = authViewModel.checkRoleNavigate();
-                if(role == "user")
-                {
-                    val intent = Intent(context, MainUserActivity::class.java)
-                    context.startActivity(intent)
-                }
-                else if(role == "partner") {
-                    val intent = Intent(context, MainPartnerActivity::class.java)
-                    context.startActivity(intent)
-                }
+                val role = authViewModel.checkRoleNavigate()
+
                 if(role.isNullOrEmpty())
                 {
                     navController.navigate("select-role")
+                }
+                if (role == "user") {
+                    val intent = Intent(context, MainUserActivity::class.java)
+                    context.startActivity(intent)
+                } else if(role == "partner") {
+                    val intent = Intent(context, MainPartnerActivity::class.java)
+                    context.startActivity(intent)
+                } else if (role == "admin") {
+                    val intent = Intent(context, MainAdminActivity::class.java)
+                    context.startActivity(intent)
                 }
             }
             is AuthState.Error -> {
@@ -138,7 +148,7 @@ fun LoginForm(
             value = email,
             onValueChange = { email = it },
             label = { Text("Email") },
-            placeholder = { Text("Enter your Email") },
+            placeholder = { Text("Nhập email") },
             leadingIcon = { Icon(Icons.Default.Person, contentDescription = "Email Icon") },
             colors = TextFieldDefaults.textFieldColors(),
             shape = RoundedCornerShape(12.dp),
@@ -151,8 +161,8 @@ fun LoginForm(
         OutlinedTextField(
             value = password,
             onValueChange = { password = it },
-            label = { Text("Password") },
-            placeholder = { Text("Enter your Password") },
+            label = { Text("Mật khẩu") },
+            placeholder = { Text("Nhập mật khẩu") },
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Done,
                 keyboardType = KeyboardType.Password
@@ -165,7 +175,7 @@ fun LoginForm(
                             id = if (isPasswordVisible) R.drawable.passwordshow else R.drawable.passwordhidden
                         ),
                         contentDescription = null,
-                        modifier = Modifier.size(24.dp)
+                        modifier = Modifier.size(18.dp)
                     )
                 }
             },
@@ -178,7 +188,7 @@ fun LoginForm(
             onClick = {  navController.navigate("forget-password")  },
             modifier = Modifier.align(Alignment.End)
         ) {
-            Text(text = "Forgot password?", color = colorResource(R.color.darkGreen))
+            Text(text = "Quên mật khẩu", color = colorResource(R.color.primary))
         }
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -188,9 +198,9 @@ fun LoginForm(
             onClick = { authViewModel.login(email, password) },
             modifier = Modifier.fillMaxWidth(),
             enabled = authState.value != AuthState.Loading,
-            colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.darkBlue))
+            colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.primary))
         ) {
-            Text(text = "Sign In")
+            Text(text = "Đăng nhập")
         }
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -202,7 +212,7 @@ fun LoginForm(
                 (context as ComponentActivity).startActivityForResult(signInIntent, MainLoginActivity.REQUEST_CODE_SIGN_IN)
             },
             modifier = Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.darkBlue))
+            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error)
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.google),
@@ -210,7 +220,7 @@ fun LoginForm(
                 modifier = Modifier.size(24.dp)
             )
             Spacer(modifier = Modifier.width(8.dp))
-            Text(text = "Sign in with Google", color = Color.White)
+            Text(text = "Đăng nhập bằng Google", color = Color.White)
         }
     }
 }

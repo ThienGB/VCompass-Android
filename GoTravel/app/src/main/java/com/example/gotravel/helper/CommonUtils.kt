@@ -1,5 +1,7 @@
 package com.example.gotravel.helper
 
+import android.content.SharedPreferences
+import com.example.gotravel.data.model.UserAccount
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -25,5 +27,14 @@ object CommonUtils {
 
         val date = Date(timeMillis)
         return dayFormat.format(date)
+    }
+    @JvmStatic
+    fun getUserFromShareRef(sharedPreferences: SharedPreferences): UserAccount {
+        return UserAccount(
+            sharedPreferences.getString("userId", "").toString(),
+            sharedPreferences.getString("fullname", "").toString(),
+            sharedPreferences.getString("email", "").toString(),
+            sharedPreferences.getString("phone", "").toString(),
+            sharedPreferences.getString("role", "").toString())
     }
 }

@@ -1,5 +1,6 @@
 package com.example.gotravel.ui.module.admin.main
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -25,13 +26,17 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.gotravel.MainApplication
-import com.example.gotravel.data.model.User
+import com.example.gotravel.data.model.UserAccount
+import com.example.gotravel.helper.CommonUtils.getUserFromShareRef
 import com.example.gotravel.helper.RealmHelper
+import com.example.gotravel.helper.SharedPreferencesHelper
 import com.example.gotravel.ui.factory.ViewModelFactory
 import com.example.gotravel.ui.module.accomodation.HotelDetailsScreen
 import com.example.gotravel.ui.module.admin.accommodation.AccomList
 import com.example.gotravel.ui.module.admin.HomeAdmin
+import com.example.gotravel.ui.module.admin.accommodation.AccomRegisterList
 import com.example.gotravel.ui.module.admin.user.ListUser
+import com.example.gotravel.ui.module.admin.user.UserInfor
 import com.example.gotravel.ui.module.chat.ChatComponentScreen
 import com.example.gotravel.ui.module.home.user.NotificationScreen
 import com.example.gotravel.ui.module.home.user.ProfileScreen
@@ -46,7 +51,8 @@ class MainAdminActivity : ComponentActivity() {
         realmHelper = (application as MainApplication).realmHelper
         val factory = ViewModelFactory(MainAdminViewModel::class.java, realmHelper)
         viewModel = ViewModelProvider(this, factory)[MainAdminViewModel::class.java]
-        val user = User("123", "Hoang Cong Thien", "congthien@gmail.com")
+        val sharedPreferences = getSharedPreferences(SharedPreferencesHelper.SHARED_PREFS, Context.MODE_PRIVATE)
+        val user = getUserFromShareRef(sharedPreferences)
         viewModel.setUser(user)
         viewModel.fetchData()
         setContent {
@@ -112,13 +118,21 @@ fun NavHostAdminGraph(
     val accommodations by viewModel.accommodations.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
     val accommodation  by viewModel.accommodation.collectAsState()
-    val users :List<User> = listOf()
+    val users by viewModel.users.collectAsState()
+    val user by viewModel.currentUser.collectAsState()
     NavHost(navController = navController, startDestination = "home_admin", modifier = modifier){
         composable("home_admin") { HomeAdmin(accommodations, users, isLoading, navController, viewModel) }
-        composable("accept_partner") { HomeAdmin(accommodations, users, isLoading, navController, viewModel) }
-        composable("list_partner") { HomeAdmin(accommodations, users, isLoading, navController, viewModel) }
-        composable("list_user") { ListUser(users, navController) }
+        composable("list_user") { ListUser(users, navController, viewModel, isLoading, "user") }
+        composable("list_partner") { ListUser(users, navController, viewModel, isLoading, "partner") }
+        composable("user_infor") { UserInfor(user, navController,
+            { viewModel.handleBanUser("banned") },
+            { viewModel.handleBanUser("Active") }) }
         composable("list_accom") { AccomList(accommodations, navController, viewModel) }
+        composable("list_accom_register") { AccomRegisterList(accommodations, navController, viewModel) }
+        composable("accept_register") { HotelDetailsScreen(
+            accommodation, navController, "accept",
+            { viewModel.handleConfirmAccom("cancel") },
+            { viewModel.handleConfirmAccom("accept") }) }
         composable("accom_infor_admin") { HotelDetailsScreen(accommodation, navController, "admin") }
         composable("list_rating") { ListReviewScreen(accommodation, navController) }
         composable("chat") { ChatComponentScreen() }

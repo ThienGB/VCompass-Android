@@ -97,7 +97,7 @@ fun DashboardScreen(
                     )
                 } else if (accommodation.status == "pending"){
                     Spacer(modifier = Modifier.height(30.dp))
-                    HotelInfoCard(accommodation)
+                    HotelInfoCard(accommodation, navController)
                     Spacer(modifier = Modifier.height(145.dp))
                     Text(
                         text = "Khách sạn của bạn đang được xét duyệt, vui lòng chờ trong giây lát",
@@ -108,7 +108,7 @@ fun DashboardScreen(
                 }
                 else{
                     Spacer(modifier = Modifier.height(30.dp))
-                    HotelInfoCard(accommodation)
+                    HotelInfoCard(accommodation, navController)
                     Spacer(modifier = Modifier.height(115.dp))
                     Text(
                         text = "Tổng quan",
@@ -164,7 +164,8 @@ fun AddHotelCard(
 }
 @Composable
 fun HotelInfoCard(
-    accommodation: Accommodation = Accommodation()
+    accommodation: Accommodation = Accommodation(),
+    navController: NavController
 ) {
     Card(
         shape = RoundedCornerShape(12.dp),
@@ -189,7 +190,18 @@ fun HotelInfoCard(
                 Column {
                     Text(text = accommodation.name, fontWeight = FontWeight.Bold, fontSize = 18.sp)
                     Text(text = accommodation.city, color = Color.Gray, fontSize = 14.sp)
+
                 }
+                Spacer(modifier = Modifier.weight(1f))
+                Image(
+                    painter = painterResource(id = R.drawable.ic_edit),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(30.dp)
+                        .background(Color.Transparent, RoundedCornerShape(12.dp))
+                        .clickable { navController.navigate("add_accom") },
+                    contentScale = ContentScale.Crop,
+                )
             }
         }
     }

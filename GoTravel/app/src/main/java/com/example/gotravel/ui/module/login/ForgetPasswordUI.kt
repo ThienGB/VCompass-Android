@@ -1,4 +1,5 @@
 package com.example.gotravel.ui.module.login
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -11,8 +12,10 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -22,10 +25,17 @@ import com.example.gotravel.R
 fun ForgetPasswordUI(navController: NavController, authViewModel: AuthViewModel) {
     Box(
         modifier = Modifier
-            .fillMaxSize()
-            .background(colorResource(R.color.darkBlue)),
+            .fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
+        // Background
+        Image(
+            painter = painterResource(id = R.drawable.beach),
+            contentDescription = "Background",
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
+
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -43,7 +53,7 @@ fun ForgetPasswordUI(navController: NavController, authViewModel: AuthViewModel)
             }
 
             Button(
-                onClick = { /* Navigate back to Login or other logic */ },
+                onClick = { navController.popBackStack()  },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp),
@@ -51,7 +61,7 @@ fun ForgetPasswordUI(navController: NavController, authViewModel: AuthViewModel)
                     containerColor = colorResource(R.color.white)
                 ),
             ) {
-                Text(text = "Back to Login", color = colorResource(R.color.black))
+                Text(text = "Quay lai trang Đăng nhập", color = colorResource(R.color.black))
             }
         }
     }
@@ -71,7 +81,7 @@ fun ForgetPasswordForm(authViewModel: AuthViewModel) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Text(text = "Forgot Password?", style = MaterialTheme.typography.headlineLarge)
+        Text(text = "Quên mật khẩu?", style = MaterialTheme.typography.headlineLarge)
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -80,7 +90,7 @@ fun ForgetPasswordForm(authViewModel: AuthViewModel) {
             value = email,
             onValueChange = { email = it },
             label = { Text("Email") },
-            placeholder = { Text("Enter your email") },
+            placeholder = { Text("Vui lòng nhập Email") },
             leadingIcon = {
                 Icon(Icons.Default.Email, contentDescription = "Email Icon")
             },
@@ -111,17 +121,17 @@ fun ForgetPasswordForm(authViewModel: AuthViewModel) {
                         message = msg
                     }
                 } else {
-                    message = "Please enter a valid email."
+                    message = "Vui lòng nhập lại email"
                     isSuccess = false
                 }
             },
             modifier = Modifier
                 .fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(
-                containerColor = colorResource(R.color.darkBlue)
+                containerColor = colorResource(R.color.primary)
             ),
         ) {
-            Text(text = "Send Password Reset Link")
+            Text(text = "Xác nhận")
         }
 
         Spacer(modifier = Modifier.height(16.dp))

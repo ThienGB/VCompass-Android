@@ -42,23 +42,31 @@ import androidx.navigation.NavController
 import com.example.gotravel.R
 import com.example.gotravel.data.model.Accommodation
 import com.example.gotravel.data.model.Rating
-import com.example.gotravel.data.model.User
+import com.example.gotravel.data.model.UserAccount
 import com.example.gotravel.ui.module.accomodation.HotelInfoSection
 import com.example.gotravel.ui.module.accomodation.ImageSection
 import com.example.gotravel.ui.module.booking.BookingListViewModel
+import java.math.BigDecimal
+import java.math.RoundingMode
 import java.util.UUID
 
 @Composable
 fun ReviewScreen(
     accommodation: Accommodation= Accommodation(),
     viewModel: BookingListViewModel,
-    user: User,
+    user: UserAccount,
     navController: NavController = NavController(LocalContext.current)
 ) {
     val context = LocalContext.current
-    val averageRating = accommodation.ratings.map { it.rate }.average()
     var currentRating by remember { mutableStateOf(1) }
     var reviewText by remember { mutableStateOf("") }
+    val averageRating = if (accommodation.ratings.isNotEmpty()) {
+        BigDecimal(accommodation.ratings.map { it.rate }.average())
+            .setScale(1, RoundingMode.HALF_UP)
+            .toDouble()
+    } else {
+        5.0
+    }
     Column(modifier = Modifier
         .fillMaxSize()
         .verticalScroll(rememberScrollState())) {
@@ -71,7 +79,7 @@ fun ReviewScreen(
             ) {
                 HotelInfoSection(
                     title = accommodation.name,
-                    numStart = accommodation.totalRate,
+                    numStart = averageRating.toInt(),
                     location = accommodation.address
                 )
                 HorizontalDivider(
@@ -157,7 +165,7 @@ fun ReviewScreen(
                                 rate = currentRating
                                 content = reviewText
                                 userId = user.userId
-                                userName = user.name
+                                userName = user.fullName
                                 createdAt = System.currentTimeMillis()
                                 ratingId = UUID.randomUUID().toString()
 

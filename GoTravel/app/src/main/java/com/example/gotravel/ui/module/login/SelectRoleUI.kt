@@ -35,7 +35,7 @@ fun SelectRoleScreen(navController: NavController, authViewModel: AuthViewModel)
 
                 when (selectedRole) {
                     "user" -> {
-                        val intent = Intent(context, MainPartnerActivity::class.java)
+                        val intent = Intent(context, MainUserActivity::class.java)
                         context.startActivity(intent)
                     }
                     "partner" -> {
@@ -57,7 +57,7 @@ fun SelectRoleScreen(navController: NavController, authViewModel: AuthViewModel)
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(colorResource(R.color.darkBlue)),
+            .background(colorResource(R.color.primary)),
         contentAlignment = Alignment.Center
     ) {
         Column(

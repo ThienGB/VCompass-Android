@@ -34,7 +34,6 @@ object FirestoreHelper {
     const val FL_STATUS: String = "status"
     const val FL_PHONENUMBER: String = "phoneNumber"
     const val FL_ACCOMNAME: String = "accommodationName"
-    const val FL_EMAIL: String = "email"
 
     //Rating
     const val CL_RATING: String = "ratings"
@@ -52,4 +51,5 @@ object FirestoreHelper {
     const val FL_AREA: String = "area"
 
 
+    const val FL_EMAIL: String = "email"
 }

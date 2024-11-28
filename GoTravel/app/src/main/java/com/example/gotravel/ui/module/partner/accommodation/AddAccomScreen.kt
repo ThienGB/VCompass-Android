@@ -65,12 +65,14 @@ fun AddAccomScreen(
     var city by remember { mutableStateOf(accommodation.city) }
     var description by remember { mutableStateOf(accommodation.description) }
     var amentities by remember { mutableStateOf(accommodation.amentities) }
+    var image by remember {mutableStateOf(accommodation.image)}
     val amentitiesOptions = listOf("Nhà hàng", "Lễ Tân 24h","Hồ Bơi", "Wifi","Massage", "Thú Cưng")
     var selectedImageUri by remember { mutableStateOf<Uri?>(null) }
     val launcher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         selectedImageUri = uri
     }
     val context = LocalContext.current
+    val title = if (accommodation.accommodationId == "") "Thêm chỗ ở" else "Cập nhật chỗ ở"
     fun upLoadImage():String{
         if (selectedImageUri != null) {
             return "selectedImageUri.toString()"
@@ -80,7 +82,7 @@ fun AddAccomScreen(
     Column(modifier = Modifier
         .fillMaxSize()
         .background(Color(0xFFEDFAFC))) {
-        NavTitle("Thêm chỗ ở ") { navController.navigate("home_partner") }
+        NavTitle(title) { navController.popBackStack() }
         Box(modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 20.dp))
         {
             Card (
@@ -90,6 +92,15 @@ fun AddAccomScreen(
                 if (selectedImageUri != null) {
                     Image(
                         painter = rememberAsyncImagePainter(model = selectedImageUri),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(200.dp),
+                        contentScale = ContentScale.Crop
+                    )
+                } else if (image !=  "") {
+                    Image(
+                        painter = rememberAsyncImagePainter(image),
                         contentDescription = null,
                         modifier = Modifier
                             .fillMaxWidth()
@@ -118,7 +129,6 @@ fun AddAccomScreen(
                     .clip(RoundedCornerShape(99.dp))
                     .background(colorResource(id = R.color.primary))
                     .clickable { launcher.launch("image/*") }
-
             ) {
                 Image(painter = painterResource(id = R.drawable.ic_upload),
                     contentDescription = null,
@@ -217,10 +227,42 @@ fun AddAccomScreen(
                     .clip(RoundedCornerShape(5.dp))
                     .background(colorResource(id = R.color.primary))
                     .clickable {
-                        val image = upLoadImage()
-                        viewModel.insertAccom(name, image, address, city, description, amentities)
+                        image = upLoadImage()
+                        if (accommodation.accommodationId == "") {
+                            viewModel.insertAccom(
+                                name,
+                                image,
+                                description,
+                                address,
+                                city,
+                                amentities
+                            )
+                            Toast
+                                .makeText(
+                                    context,
+                                    "Thêm thành công, vui lòng chờ xét duyệt",
+                                    Toast.LENGTH_SHORT
+                                )
+                                .show()
+                        } else {
+                            viewModel.updateAccom(
+                                accommodation.accommodationId,
+                                name,
+                                image,
+                                description,
+                                address,
+                                city,
+                                amentities
+                            )
+                            Toast
+                                .makeText(
+                                    context,
+                                    "Cập nhật  thành công, vui lòng chờ xét duyệt",
+                                    Toast.LENGTH_SHORT
+                                )
+                                .show()
+                        }
                         navController.navigate("home_partner")
-                        Toast.makeText(context, "Thêm thành công, vui lòng chờ xét duyệt", Toast.LENGTH_SHORT).show()
                     }
 
             ) {

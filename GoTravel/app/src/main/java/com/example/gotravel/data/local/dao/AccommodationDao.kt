@@ -17,7 +17,6 @@ class AccommodationDao() {
     fun insertOrUpdateAccomm(accommodation: Accommodation, onSuccess: () -> Unit = {}) {
         realm.executeTransactionAsync(
             { transactionRealm ->
-                transactionRealm.where<Accommodation>().findAll()?.deleteAllFromRealm()
                 transactionRealm.insertOrUpdate(accommodation)
             },
             {
@@ -32,6 +31,7 @@ class AccommodationDao() {
     fun insertOrUpdateAccomm(accommodations: List<Accommodation>, onSuccess: () -> Unit = {}) {
         realm.executeTransactionAsync(
             { transactionRealm ->
+                transactionRealm.where<Accommodation>().findAll()?.deleteAllFromRealm()
                 transactionRealm.insertOrUpdate(accommodations)
             },
             {
