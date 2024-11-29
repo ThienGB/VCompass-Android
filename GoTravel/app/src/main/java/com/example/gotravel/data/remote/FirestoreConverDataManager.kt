@@ -124,15 +124,34 @@ class FirestoreConverManager(private val scope: CoroutineScope) {
             Log.w("FirestoreNotificationManager", "Error getting documents.", exception)
         }
     }
-    fun addConversationToFirestore(conversation: Conversation){
-        val conversationMap = hashMapOf(
-            "idFirstUser" to conversation.idFirstUser,
-            "idSecondUser" to conversation.idSecondUser,
-            "createdAt" to conversation.createdAt
-        )
-        db.collection(CL_CONVERSATION)
-            .document(conversation.id_conversation)
-            .set(conversationMap)
+    fun addConversationToFirestore(conversation: Conversation, onComplete: () -> Unit){
+        val conversationQuery = db.collection(CL_CONVERSATION)
+            .whereIn("idFirstUser", listOf(conversation.idFirstUser, conversation.idSecondUser))
+            .whereIn("idSecondUser", listOf(conversation.idFirstUser, conversation.idSecondUser))
+            .get()
+        conversationQuery.addOnSuccessListener { querySnapshot ->
+            if (querySnapshot.isEmpty) {
+                val conversationMap = hashMapOf(
+                    "id_conversation" to conversation.id_conversation,
+                    "idFirstUser" to conversation.idFirstUser,
+                    "idSecondUser" to conversation.idSecondUser,
+                    "createdAt" to conversation.createdAt
+                )
+                db.collection(CL_CONVERSATION)
+                    .document(conversation.id_conversation)
+                    .set(conversationMap)
+                    .addOnSuccessListener {
+                        onComplete()
+                    }
+                    .addOnFailureListener { e ->
+                        println("Error adding conversation: ${e.message}")
+                    }
+            } else {
+                println("Conversation already exists!")
+            }
+        }.addOnFailureListener { e ->
+            println("Error checking conversation: ${e.message}")
+        }
     }
     fun stopListening() {
         listenerRegistration?.remove()

@@ -29,6 +29,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.Date
 import java.util.UUID
 
 class MainAdminViewModel (private val realmHelper: RealmHelper) : ViewModel() {
@@ -100,11 +101,12 @@ class MainAdminViewModel (private val realmHelper: RealmHelper) : ViewModel() {
             setConversation(conversation.value)}
     }
     fun fetchHighPriorityData(){
+        _isLoading.value = true
         viewModelScope.launch {
             firestoreNotiManager.fetchNotifications(_user.value.userId
             ) { fetchNotificationsFromRealm() }
         }
-        firestoreNotiManager.listenToNotifications { fetchNotificationsFromRealm() }
+        firestoreNotiManager.listenToNotifications(_user.value.userId) { fetchNotificationsFromRealm() }
         viewModelScope.launch {
             firestoreConverManager.fetchConversation(_user.value.userId
             ) { fetchConversationsFromRealm()
@@ -166,8 +168,36 @@ class MainAdminViewModel (private val realmHelper: RealmHelper) : ViewModel() {
             this.amentities = accommodation.value.amentities
             this.status = status
         }
+        val acceptContent = "Chỗ ở của bạn đã được xét duyệt," +
+                " giờ đây bạn có thể bắt đầu kinh doanh bằng cách thêm phòng," +
+                " hệ thống sẽ tự động giúp bạn tìm những khách hàng tiềm năng," +
+                " chúc may mắn và cảm ơn đã sử dụng dịch vụ."
+        val rejectContent = "Chúng tôi rất tiếc, nhưng sau quá trình xem xét và đánh giá " +
+                "thì chỗ ở của bạn không được xét duyệt vì một số lý do như" +
+                " vị trí chưa chính xác, quy mô quá nhỏ,... " +
+                "Bạn có thể sửa lại thông tin và chúng tôi sẵn lòng xem xét lần nữa"
+        val notification = Notification().apply {
+            id_notification = UUID.randomUUID().toString().take(15)
+            id_sender = _user.value.userId
+            id_receiver = accommodation.value.partnerId
+            title = "Thông báo duyệt chỗ ở" + if (status == "accept") " thành công" else " thất bại"
+            content = if (status == "accept") acceptContent else rejectContent
+            isRead = "false"
+            type = "booking"
+            create_at = Date()
+        }
+        val conversation = Conversation().apply {
+            id_conversation = UUID.randomUUID().toString().take(15)
+            idFirstUser = _user.value.userId
+            idSecondUser = accommodation.value.partnerId
+            createdAt = Date()
+        }
         firestoreDataManager.addAccommodationToFirestore(accom)
         accomDao.insertOrUpdateAccomm(accom){fetchData()}
+        firestoreNotiManager.addNotification(notification)
+        firestoreConverManager.addConversationToFirestore(conversation){
+            fetchHighPriorityData()
+        }
     }
     fun handleBanUser(status: String){
         val newUser = User().apply {

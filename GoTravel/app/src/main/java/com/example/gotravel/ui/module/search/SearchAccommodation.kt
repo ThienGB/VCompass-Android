@@ -623,7 +623,7 @@ fun DestinationSelectionBottomSheet(
             }
             Spacer(modifier = Modifier.height(8.dp))
             Column {
-                val recentSearches = listOf("Hà Nội", "Vũng Tàu ", "Huế", "Đà Nẵng")
+                val recentSearches = listOf("Hà Nội", "Vũng Tàu", "Huế", "Đà Nẵng")
                 recentSearches.forEach { destination ->
                     Row(
                         modifier = Modifier

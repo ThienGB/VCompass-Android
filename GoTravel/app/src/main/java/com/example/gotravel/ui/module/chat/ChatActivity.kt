@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.gotravel.data.model.Message
 import com.example.gotravel.data.model.UserAccount
+import com.example.gotravel.helper.CommonUtils.formatDateToVi
 
 @Composable
 fun MessageBubble(message: Message, user1: UserAccount) {
@@ -55,7 +56,7 @@ fun MessageBubble(message: Message, user1: UserAccount) {
             }
 
             Text(
-                text = formatDate(message.createdAt.toString()),
+                text = formatDateToVi(message.createdAt),
                 color = Color.Gray,
                 fontSize = 10.sp,
                 modifier = Modifier.padding(top = 4.dp)

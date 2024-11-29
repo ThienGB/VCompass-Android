@@ -4,6 +4,7 @@ import ProfileScreen
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
@@ -62,6 +63,7 @@ import com.example.gotravel.ui.module.booking.BookingListActivity
 import com.example.gotravel.ui.module.chat.ChatScreen
 import com.example.gotravel.ui.module.chat.ConversationScreen
 import com.example.gotravel.ui.module.home.user.HomeUserScreen
+import com.example.gotravel.ui.module.main.login.MainLoginActivity
 import com.example.gotravel.ui.module.notifications.NotificationDetail
 import com.example.gotravel.ui.module.notifications.NotificationScreen
 import com.example.gotravel.ui.module.review.ListReviewScreen
@@ -79,6 +81,12 @@ class MainUserActivity : ComponentActivity() {
         viewModel = ViewModelProvider(this, factory)[MainUserViewModel::class.java]
         val sharedPreferences = getSharedPreferences(SharedPreferencesHelper.SHARED_PREFS, Context.MODE_PRIVATE)
         val user = getUserFromShareRef(sharedPreferences)
+        if (user.status == "banned"){
+            viewModel.logout()
+            val intent = Intent(this, MainLoginActivity::class.java)
+            startActivity(intent)
+            Toast.makeText(this, "Tài khoản của bạn đã bị khóa", Toast.LENGTH_SHORT).show()
+        }
         viewModel.setUser(user)
         viewModel.fetchHighPriorityData()
         setContent {
@@ -122,7 +130,7 @@ fun CustomBottomBar(
     selectedRoute: String
 ) {
     val gradient = Brush.horizontalGradient(
-        colors = listOf(colorResource(id = R.color.primary), Color(0xFF4900EE))
+        colors = listOf(colorResource(id = R.color.primary), Color(0xFF0C47F8), colorResource(id = R.color.primary))
     )
 
     Box(

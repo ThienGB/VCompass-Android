@@ -32,6 +32,8 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -59,6 +61,8 @@ import com.example.gotravel.helper.CommonUtils.formatCurrency
 import com.example.gotravel.ui.components.Loading
 import com.example.gotravel.ui.module.accomodation.TopReviewSection
 import com.example.gotravel.ui.module.main.partner.MainPartnerViewModel
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 @Composable
 fun DashboardScreen(
@@ -68,65 +72,73 @@ fun DashboardScreen(
     navController: NavController,
     viewModel: MainPartnerViewModel
 ) {
+    val isResfreshing by viewModel.isLoading.collectAsState()
     viewModel.setIsShowBottomBar(true)
     viewModel.setRoom(Room())
-    if (isLoading) {
-        Loading()
-    } else {
-        val topRatings = accommodation.ratings.take(5)
-        Box(modifier = Modifier.verticalScroll(rememberScrollState())) {
-            Image(painter = painterResource(id = R.drawable.bg_partner),
-                contentDescription = null,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(220.dp),
-                contentScale = ContentScale.Crop
-            )
-            Column(
-                modifier = Modifier
-                    .background(Color.Transparent)
-                    .padding(10.dp)
-            ) {
-                if (accommodation.accommodationId == ""){
-                    Spacer(modifier = Modifier.height(30.dp))
-                    AddHotelCard(navController)
-                    Spacer(modifier = Modifier.height(145.dp))
-                    Text(
-                        text = "Bạn chưa có khách sạn nào, hãy thêm để sử dụng đầy đủ dịch vụ",
-                        fontSize = 18.sp,
-                        textAlign = TextAlign.Center,
-                    )
-                } else if (accommodation.status == "pending"){
-                    Spacer(modifier = Modifier.height(30.dp))
-                    HotelInfoCard(accommodation, navController)
-                    Spacer(modifier = Modifier.height(145.dp))
-                    Text(
-                        text = "Khách sạn của bạn đang được xét duyệt, vui lòng chờ trong giây lát",
-                        fontSize = 18.sp,
-                        color = Color(0xFFD6A100),
-                        textAlign = TextAlign.Center,
-                    )
-                }
-                else{
-                    Spacer(modifier = Modifier.height(30.dp))
-                    HotelInfoCard(accommodation, navController)
-                    Spacer(modifier = Modifier.height(115.dp))
-                    Text(
-                        text = "Tổng quan",
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 18.sp,
-                    )
-                    BookingStats(bookings, navController)
-                    Spacer(modifier = Modifier.height(16.dp))
-                    RoomsListed(accommodation, viewModel, navController)
-                    Spacer(modifier = Modifier.height(16.dp))
-                    Text(
-                        text = "Đánh giá",
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 18.sp,
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    TopReviewSection(topRatings)
+    SwipeRefresh(
+        state = rememberSwipeRefreshState(isResfreshing),
+        onRefresh = {
+            viewModel.fetchData()
+        }
+    ) {
+        if (isLoading) {
+            Loading()
+        } else {
+            val topRatings = accommodation.ratings.take(5)
+            Box(modifier = Modifier.verticalScroll(rememberScrollState())) {
+                Image(
+                    painter = painterResource(id = R.drawable.bg_partner),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(220.dp),
+                    contentScale = ContentScale.Crop
+                )
+                Column(
+                    modifier = Modifier
+                        .background(Color.Transparent)
+                        .padding(10.dp)
+                ) {
+                    if (accommodation.accommodationId == "") {
+                        Spacer(modifier = Modifier.height(30.dp))
+                        AddHotelCard(navController)
+                        Spacer(modifier = Modifier.height(145.dp))
+                        Text(
+                            text = "Bạn chưa có khách sạn nào, hãy thêm để sử dụng đầy đủ dịch vụ",
+                            fontSize = 18.sp,
+                            textAlign = TextAlign.Center,
+                        )
+                    } else if (accommodation.status == "pending") {
+                        Spacer(modifier = Modifier.height(30.dp))
+                        HotelInfoCard(accommodation, navController)
+                        Spacer(modifier = Modifier.height(145.dp))
+                        Text(
+                            text = "Khách sạn của bạn đang được xét duyệt, vui lòng chờ trong giây lát",
+                            fontSize = 18.sp,
+                            color = Color(0xFFD6A100),
+                            textAlign = TextAlign.Center,
+                        )
+                    } else {
+                        Spacer(modifier = Modifier.height(30.dp))
+                        HotelInfoCard(accommodation, navController)
+                        Spacer(modifier = Modifier.height(115.dp))
+                        Text(
+                            text = "Tổng quan",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 18.sp,
+                        )
+                        BookingStats(bookings, navController)
+                        Spacer(modifier = Modifier.height(16.dp))
+                        RoomsListed(accommodation, viewModel, navController)
+                        Spacer(modifier = Modifier.height(16.dp))
+                        Text(
+                            text = "Đánh giá",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 18.sp,
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        TopReviewSection(topRatings)
+                    }
                 }
             }
         }

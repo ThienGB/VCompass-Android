@@ -14,7 +14,6 @@ object FirestoreHelper {
     const val FL_LATITUDE: String = "latitude"
     const val FL_CITY: String = "city"
     const val FL_TARGETID: String = "idTaget"
-    const val FL_TYPE: String = "accommodation"
     const val CL_USER: String = "users"
     const val FL_ROLE: String = "role"
     const val FL_FULLNAME : String = "fullName"
@@ -57,7 +56,9 @@ object FirestoreHelper {
     const val FL_CREATE_AT: String = "create_at"
     const val FL_ID_SENDER: String = "id_sender"
     const val FL_ID_RECEIVER: String = "id_receiver"
+    const val FL_TYPE: String = "type"
     const val FL_ISREAD: String = "isRead"
+    const val FL_TITLE: String = "title"
 
     //conversation
     const val CL_CONVERSATION: String = "conversations"

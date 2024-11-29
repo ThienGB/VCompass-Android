@@ -2,7 +2,9 @@ package com.example.gotravel.ui.module.main.partner
 
 import ProfileScreen
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.padding
@@ -36,6 +38,7 @@ import com.example.gotravel.ui.factory.ViewModelFactory
 import com.example.gotravel.ui.module.accomodation.HotelDetailsScreen
 import com.example.gotravel.ui.module.chat.ChatScreen
 import com.example.gotravel.ui.module.chat.ConversationScreen
+import com.example.gotravel.ui.module.main.login.MainLoginActivity
 import com.example.gotravel.ui.module.main.user.CustomBottomBar
 import com.example.gotravel.ui.module.notifications.NotificationDetail
 import com.example.gotravel.ui.module.notifications.NotificationScreen
@@ -56,6 +59,12 @@ class MainPartnerActivity : ComponentActivity() {
         viewModel = ViewModelProvider(this, factory)[MainPartnerViewModel::class.java]
         val sharedPreferences = getSharedPreferences(SharedPreferencesHelper.SHARED_PREFS, Context.MODE_PRIVATE)
         val user = getUserFromShareRef(sharedPreferences)
+        if (user.status == "banned"){
+            viewModel.logout()
+            val intent = Intent(this, MainLoginActivity::class.java)
+            startActivity(intent)
+            Toast.makeText(this, "Tài khoản của bạn đã bị khóa", Toast.LENGTH_SHORT).show()
+        }
         viewModel.setUser(user)
         viewModel.fetchData()
         viewModel.fetchHighPriorityData()

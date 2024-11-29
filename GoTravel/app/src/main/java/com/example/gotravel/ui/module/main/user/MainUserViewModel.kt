@@ -29,6 +29,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.Date
 import java.util.UUID
 
 class MainUserViewModel(private val realmHelper: RealmHelper) : ViewModel() {
@@ -90,11 +91,16 @@ class MainUserViewModel(private val realmHelper: RealmHelper) : ViewModel() {
             firestoreNotiManager.fetchNotifications(_user.value.userId
             ) { fetchNotificationsFromRealm() }
         }
-        firestoreNotiManager.listenToNotifications { fetchNotificationsFromRealm() }
+        firestoreNotiManager.listenToNotifications(_user.value.userId) { fetchNotificationsFromRealm() }
         viewModelScope.launch {
             firestoreConverManager.fetchConversation(_user.value.userId
             ) { fetchConversationsFromRealm()
                 listenMessage()
+            }
+        }
+        viewModelScope.launch {
+            firestoreDataManager.fetchAccommodation {
+                getListAccom()
             }
         }
     }
@@ -106,13 +112,10 @@ class MainUserViewModel(private val realmHelper: RealmHelper) : ViewModel() {
     fun fetchData(){
         _isLoading.value = true
         viewModelScope.launch {
-            firestoreDataManager.fetchAccommodation {
-                getListAccom()
-            }
+            getListAccom()
             firestoreDataManager.fetchBooking{
                 getListBooking()
             }
-
         }
     }
     fun setRoom(room: Room) {
@@ -198,9 +201,31 @@ class MainUserViewModel(private val realmHelper: RealmHelper) : ViewModel() {
             fullName = name
             email = userEmail
         }
+        val conversation = Conversation().apply {
+            id_conversation = UUID.randomUUID().toString().take(15)
+            idFirstUser = _user.value.userId
+            idSecondUser = accommodation.partnerId
+            createdAt = Date()
+        }
+        val notification = Notification().apply {
+            id_notification = UUID.randomUUID().toString().take(15)
+            id_sender = accommodation.partnerId
+            id_receiver = _user.value.userId
+            title = "Thông báo đặt phòng thành công"
+            content = "Bạn đã đặt phòng thành công tại ${accommodation.name}, yêu cầu của bạn đang được xét duyệt." +
+                    "Bạn sẽ sớm nhận được thông báo." +
+                    "Nếu có bất kỳ thắc mắc nào, hãy nhắn tin cho chúng tôi vì chúng ta đã được kết nối với nhau"
+            isRead = "false"
+            type = "booking"
+            create_at = Date()
+        }
         viewModelScope.launch {
             bookingDao.insertOrUpdateBooking(booking) {
                 firestoreDataManager.addBookingToFirestore(booking)
+            }
+            firestoreNotiManager.addNotification(notification)
+            firestoreConverManager.addConversationToFirestore(conversation){
+                fetchHighPriorityData()
             }
         }
     }
@@ -241,6 +266,7 @@ class MainUserViewModel(private val realmHelper: RealmHelper) : ViewModel() {
             val conversations = conversationDao.getAllConversations(_user.value.userId)
             if (conversations.isNotEmpty()) {
                 _conversations.value = conversations
+                _isLoading.value = false
             }
         }
     }
