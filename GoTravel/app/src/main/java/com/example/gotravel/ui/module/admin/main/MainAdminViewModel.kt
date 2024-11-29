@@ -241,6 +241,7 @@ class MainAdminViewModel (private val realmHelper: RealmHelper) : ViewModel() {
         _user.value.apply {
             this.fullName = user.fullName
             this.phone = user.phone
+            this.image = user.image
         }
     }
     fun logout() {

@@ -124,6 +124,16 @@ class FirestoreConverManager(private val scope: CoroutineScope) {
             Log.w("FirestoreNotificationManager", "Error getting documents.", exception)
         }
     }
+    fun addConversationToFirestore(conversation: Conversation){
+        val conversationMap = hashMapOf(
+            "idFirstUser" to conversation.idFirstUser,
+            "idSecondUser" to conversation.idSecondUser,
+            "createdAt" to conversation.createdAt
+        )
+        db.collection(CL_CONVERSATION)
+            .document(conversation.id_conversation)
+            .set(conversationMap)
+    }
     fun stopListening() {
         listenerRegistration?.remove()
     }

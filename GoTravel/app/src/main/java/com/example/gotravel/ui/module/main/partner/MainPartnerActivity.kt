@@ -31,7 +31,9 @@ import com.example.gotravel.MainApplication
 import com.example.gotravel.helper.CommonUtils.getUserFromShareRef
 import com.example.gotravel.helper.RealmHelper
 import com.example.gotravel.helper.SharedPreferencesHelper
+import com.example.gotravel.ui.components.Loading
 import com.example.gotravel.ui.factory.ViewModelFactory
+import com.example.gotravel.ui.module.accomodation.HotelDetailsScreen
 import com.example.gotravel.ui.module.chat.ChatScreen
 import com.example.gotravel.ui.module.chat.ConversationScreen
 import com.example.gotravel.ui.module.main.user.CustomBottomBar
@@ -69,20 +71,26 @@ fun MainPartnerScreen(
 ) {
     val isShowBottomBar by viewModel.isShowBottomBar.collectAsState()
     val navController = rememberNavController()
+    val isLoading by viewModel.isLoading.collectAsState()
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val selectedRoute = currentBackStackEntry?.destination?.route ?: "home"
-    Scaffold(
-        bottomBar = {
-            if (isShowBottomBar)
-                CustomBottomBar(navController, selectedRoute)
+    if (isLoading)
+        Loading()
+    else {
+        Scaffold(
+            bottomBar = {
+                if (isShowBottomBar)
+                    CustomBottomBar(navController, selectedRoute)
+            }
+        ) { paddingValues ->
+            NavHostPartnerGraph(
+                navController,
+                viewModel,
+                modifier = Modifier.padding(paddingValues)
+            )
         }
-    ) { paddingValues ->
-        NavHostPartnerGraph(
-            navController,
-            viewModel,
-            modifier = Modifier.padding(paddingValues)
-        )
     }
+
 }
 @Composable
 fun NavHostPartnerGraph(
@@ -101,8 +109,7 @@ fun NavHostPartnerGraph(
     val notifications by viewModel.notifications.collectAsState()
     val notification by viewModel.notification.collectAsState()
     NavHost(navController = navController, startDestination = "home", modifier = modifier){
-        composable("home") { DashboardScreen(accommodation, bookings, isLoading, navController, viewModel)
-            viewModel.setIsShowBottomBar(true)}
+        composable("home") { DashboardScreen(accommodation, bookings, isLoading, navController, viewModel) }
         composable("add_room") { AddUpdateRoomScreen(navController, accommodation, room, viewModel)
             viewModel.setIsShowBottomBar(false)}
         composable("add_accom") { AddAccomScreen(navController, accommodation, viewModel)
@@ -125,5 +132,6 @@ fun NavHostPartnerGraph(
         composable("profile") { ProfileScreen(user, navController,
             {user, context -> viewModel.updateUser(user, context)},
             {}, {viewModel.logout()}, "partner") }
+        composable("accom_infor_admin") { HotelDetailsScreen(accommodation, navController, "admin") }
     }
 }

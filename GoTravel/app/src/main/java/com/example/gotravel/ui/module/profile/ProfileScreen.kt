@@ -1,6 +1,9 @@
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -60,8 +63,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import coil.compose.rememberAsyncImagePainter
 import com.example.gotravel.R
 import com.example.gotravel.data.model.UserAccount
+import com.example.gotravel.helper.CommonUtils.upLoadImage
+import com.example.gotravel.ui.components.Loading
 import com.example.gotravel.ui.module.booking.BookingListActivity
 import com.example.gotravel.ui.module.main.login.MainLoginActivity
 
@@ -77,8 +83,14 @@ fun ProfileScreen(
 ){
     val fullName = remember { mutableStateOf(user.fullName) }
     val phone = remember { mutableStateOf(user.phone) }
+    var image = remember { mutableStateOf(user.image) }
     val context = LocalContext.current
     val editMode = remember { mutableStateOf(false) }
+    var selectedImageUri by remember { mutableStateOf<Uri?>(null) }
+    val launcher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        selectedImageUri = uri
+    }
+    var isLoading by remember { mutableStateOf(false) }
     Column (modifier = Modifier
         .background(Color.White)
         .fillMaxHeight(),
@@ -103,15 +115,43 @@ fun ProfileScreen(
                     )
                     .padding(4.dp)
             ) {
+                if (selectedImageUri != null){
+                    Image(
+                        painter = rememberAsyncImagePainter(selectedImageUri),
+                        contentScale = ContentScale.Crop,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .clip(CircleShape)
+                    )
+
+                }else {
+                    Image(
+                        painter = rememberAsyncImagePainter(user.image),
+                        contentScale = ContentScale.Crop,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .clip(CircleShape)
+                    )
+                }
+
+            }
+            if (editMode.value){
                 Image(
-                    painter = painterResource(id = R.drawable.bg_admin),
-                    contentScale = ContentScale.Crop,
+                    painter = painterResource(id = R.drawable.ic_camera),
+                    contentScale = ContentScale.FillBounds,
                     contentDescription = null,
                     modifier = Modifier
-                        .fillMaxSize()
-                        .clip(CircleShape)
+                        .padding(top = 145.dp, start = 70.dp)
+                        .width(40.dp)
+                        .height(30.dp)
+                        .clickable { launcher.launch("image/*") },
+                    colorFilter = ColorFilter.tint(Color.LightGray)
+
                 )
             }
+
             Box(modifier = Modifier.fillMaxWidth()){
                 Row {
                     IconButton(
@@ -180,7 +220,8 @@ fun ProfileScreen(
                     if (!editMode.value) {
                         if (calledBy == "user") {
                             HorizontalDivider(thickness = 0.5.dp)
-                            Row(modifier = Modifier.clickable { intentToBooking() }
+                            Row(modifier = Modifier
+                                .clickable { intentToBooking() }
                                 .padding(vertical = 16.dp),
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
@@ -207,10 +248,12 @@ fun ProfileScreen(
                             }
                         }
                         HorizontalDivider(thickness = 0.5.dp)
-                        Row(modifier = Modifier.clickable { handleLogout()
-                            val intent = Intent(context, MainLoginActivity::class.java)
-                            context.startActivity(intent)
-                        }
+                        Row(modifier = Modifier
+                            .clickable {
+                                handleLogout()
+                                val intent = Intent(context, MainLoginActivity::class.java)
+                                context.startActivity(intent)
+                            }
                             .padding(vertical = 16.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
@@ -250,19 +293,45 @@ fun ProfileScreen(
                     .clip(RoundedCornerShape(20.dp))
                     .background(colorResource(id = R.color.primary))
                     .clickable {
-                        onSaveClick(
-                            UserAccount(
-                            userId = user.userId,
-                            email = user.email,
-                            role = user.role,
-                            status = user.status,
-                            fullName = fullName.value,
-                            phone = phone.value
-                        ), context)
-                        editMode.value = false
-                        Toast
-                            .makeText(context, "Lưu thành công", Toast.LENGTH_SHORT)
-                            .show()
+                        if (selectedImageUri != null) {
+                            isLoading = true
+                            upLoadImage(selectedImageUri!!, "user") { uploadedImageUrl ->
+                                image.value = uploadedImageUrl
+                                onSaveClick(
+                                    UserAccount(
+                                        userId = user.userId,
+                                        email = user.email,
+                                        role = user.role,
+                                        image = image.value,
+                                        status = user.status,
+                                        fullName = fullName.value,
+                                        phone = phone.value
+                                    ), context
+                                )
+                                editMode.value = false
+                                isLoading = false
+                                Toast
+                                    .makeText(context, "Lưu thành công", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
+                        } else {
+                            onSaveClick(
+                                UserAccount(
+                                    userId = user.userId,
+                                    email = user.email,
+                                    role = user.role,
+                                    image = image.value,
+                                    status = user.status,
+                                    fullName = fullName.value,
+                                    phone = phone.value
+                                ), context
+                            )
+                            editMode.value = false
+                            Toast
+                                .makeText(context, "Lưu thành công", Toast.LENGTH_SHORT)
+                                .show()
+                        }
+
                     }
             ) {
                 Image(painter = painterResource(id = R.drawable.ic_check_circle),
@@ -277,6 +346,8 @@ fun ProfileScreen(
             }
         }
     }
+    if (isLoading)
+        Loading()
 }
 @Composable
 fun InforProfile(

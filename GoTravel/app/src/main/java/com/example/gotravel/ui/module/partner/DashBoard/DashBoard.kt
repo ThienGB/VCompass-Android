@@ -68,6 +68,7 @@ fun DashboardScreen(
     navController: NavController,
     viewModel: MainPartnerViewModel
 ) {
+    viewModel.setIsShowBottomBar(true)
     viewModel.setRoom(Room())
     if (isLoading) {
         Loading()
@@ -173,6 +174,7 @@ fun HotelInfoCard(
         modifier = Modifier
             .fillMaxWidth()
             .graphicsLayer(alpha = 0.9f)
+            .clickable { navController.navigate("accom_infor_admin") }
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Row(
@@ -318,60 +320,76 @@ fun RoomCard(
             .fillMaxWidth()
             .padding(start = 5.dp, end = 5.dp)
     ) {
-        Column(modifier = Modifier
-            .padding(10.dp)
-            .width(150.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            Text(text = room.name,
-                maxLines = 2,
-                textAlign = TextAlign.Center,
-                fontWeight = FontWeight.Bold,
-                fontSize = 16.sp)
-            Text(text = "Số giường: "+ room.bed.toString(),
-                modifier = Modifier.fillMaxWidth(),
-                fontWeight = FontWeight.Bold,
-                fontSize = 14.sp,
-                color = Color.Gray,
-                )
-            Text(text = "Số nguời: " + room.people.toString(),
-                modifier = Modifier.fillMaxWidth(),
-                fontWeight = FontWeight.Bold,
-                fontSize = 14.sp,
-                color = Color.Gray,
-            )
-            Text(text = "Loại phòng: " + room.roomType,
-                modifier = Modifier.fillMaxWidth(),
-                fontWeight = FontWeight.Bold,
-                fontSize = 14.sp,
-                color = Color.Gray,
-            )
-            Text(text = formatCurrency(room.price.toString()) + " đ",
-                modifier = Modifier.fillMaxWidth(),
-                fontWeight = FontWeight.Bold,
-                fontSize = 16.sp,
-                textAlign = TextAlign.Right,
-                color = colorResource(id = R.color.green),
-
-            )
-            Row(
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically,
+        Box {
+            Image(rememberAsyncImagePainter(model = room.image),
+                contentDescription = null,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(30.dp)
-                    .clip(RoundedCornerShape(5.dp))
-                    .background(colorResource(id = R.color.primary))
-                    .clickable {
-                        viewModel.setRoom(room)
-                        navController.navigate("add_room")
-                    }
+                    .height(175.dp)
+                    .width(170.dp)
+                    .clip(RoundedCornerShape(12.dp)),
+                contentScale = ContentScale.Crop)
+            Column(modifier = Modifier
+                .graphicsLayer(alpha = 0.4f)
+                .background(Color.White)
+                .height(175.dp)
+                .width(170.dp)){}
+            Column(modifier = Modifier
+                .padding(10.dp)
+                .width(150.dp)
+                .height(155.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Text(text = room.name,
+                    maxLines = 2,
+                    textAlign = TextAlign.Center,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 16.sp)
+                Text(text = "Số giường: "+ room.bed.toString(),
+                    modifier = Modifier.fillMaxWidth(),
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 14.sp,
+                    color = Color.Gray,
+                )
+                Text(text = "Số nguời: " + room.people.toString(),
+                    modifier = Modifier.fillMaxWidth(),
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 14.sp,
+                    color = Color.Gray,
+                )
+                Text(text = "Loại phòng: " + room.roomType,
+                    modifier = Modifier.fillMaxWidth(),
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 14.sp,
+                    color = Color.Gray,
+                )
+                Text(text = formatCurrency(room.price.toString()) + " đ",
+                    modifier = Modifier.fillMaxWidth(),
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 16.sp,
+                    textAlign = TextAlign.Right,
+                    color = colorResource(id = R.color.green),
 
-            ) {
-                Text(text = "Chỉnh sửa", color = Color.White,
-                    fontFamily = FontFamily(Font(R.font.proxima_nova_regular)),
-                    fontSize = 15.sp)
+                    )
+                Row(
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(30.dp)
+                        .clip(RoundedCornerShape(5.dp))
+                        .background(colorResource(id = R.color.primary))
+                        .clickable {
+                            viewModel.setRoom(room)
+                            navController.navigate("add_room")
+                        }
+
+                ) {
+                    Text(text = "Chỉnh sửa", color = Color.White,
+                        fontFamily = FontFamily(Font(R.font.proxima_nova_regular)),
+                        fontSize = 15.sp)
+                }
             }
         }
+
     }
 }
 

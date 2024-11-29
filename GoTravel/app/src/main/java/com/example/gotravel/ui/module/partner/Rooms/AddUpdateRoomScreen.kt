@@ -57,6 +57,8 @@ import coil.compose.rememberAsyncImagePainter
 import com.example.gotravel.R
 import com.example.gotravel.data.model.Accommodation
 import com.example.gotravel.data.model.Room
+import com.example.gotravel.helper.CommonUtils.upLoadImage
+import com.example.gotravel.ui.components.Loading
 import com.example.gotravel.ui.components.NavTitle
 import com.example.gotravel.ui.module.main.partner.MainPartnerViewModel
 
@@ -83,14 +85,9 @@ fun AddUpdateRoomScreen(
     val launcher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         selectedImageUri = uri
     }
-    fun upLoadImage():String{
-        if (selectedImageUri != null) {
-            return "https://cdn3.ivivu.com/2023/04/Vinpearl-Landmark-81-Autograph-Collection-ivivu-3.jpg"
-        }
-        return ""
-    }
+    var isLoading by remember { mutableStateOf(false) }
     Column {
-        NavTitle(accommodation.name) { navController.navigate("home_partner") }
+        NavTitle(accommodation.name) { navController.popBackStack() }
         Box(modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 20.dp))
         {
             Card (
@@ -220,16 +217,27 @@ fun AddUpdateRoomScreen(
                     .background(colorResource(id = R.color.primary))
                     .clickable {
                         if (selectedImageUri != null) {
-                            image = upLoadImage()
+                            isLoading = true
+                            upLoadImage(selectedImageUri!!, "room"){ uploadedImageUrl ->
+                                image = uploadedImageUrl
+                                viewModel.insertRoom(roomId, name, roomType, price, people, bed, image, area, status)
+                                isLoading = false
+                                navController.navigate("home")
+                                if (roomId == "")
+                                    Toast.makeText(context, "Thêm phòng thành công", Toast.LENGTH_SHORT).show()
+                                else
+                                    Toast.makeText(context, "Cập nhật phòng thành công", Toast.LENGTH_SHORT).show()
+                            }
+                        }else {
+                            viewModel.insertRoom(roomId, name, roomType, price, people, bed, image, area, status)
+                            navController.navigate("home")
+                            if (roomId == "")
+                                Toast.makeText(context, "Thêm phòng thành công", Toast.LENGTH_SHORT).show()
+                            else
+                                Toast.makeText(context, "Cập nhật phòng thành công", Toast.LENGTH_SHORT).show()
                         }
-                        viewModel.insertRoom(roomId, name, roomType, price, people, bed, image, area, status)
-                        navController.navigate("home_partner")
-                        if (roomId == "")
-                            Toast.makeText(context, "Thêm phòng thành công", Toast.LENGTH_SHORT).show()
-                        else
-                            Toast.makeText(context, "Cập nhật phòng thành công", Toast.LENGTH_SHORT).show()
-                    }
 
+                    }
             ) {
                 Text(text = "Xác nhận", color = Color.White,
                     fontFamily = FontFamily(Font(R.font.proxima_nova_regular)),
@@ -237,6 +245,8 @@ fun AddUpdateRoomScreen(
             }
         }
     }
+    if (isLoading)
+        Loading()
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

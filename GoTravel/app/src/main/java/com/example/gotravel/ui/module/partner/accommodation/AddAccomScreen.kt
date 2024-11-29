@@ -51,6 +51,8 @@ import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.gotravel.R
 import com.example.gotravel.data.model.Accommodation
+import com.example.gotravel.helper.CommonUtils.upLoadImage
+import com.example.gotravel.ui.components.Loading
 import com.example.gotravel.ui.components.NavTitle
 import com.example.gotravel.ui.module.main.partner.MainPartnerViewModel
 
@@ -73,12 +75,7 @@ fun AddAccomScreen(
     }
     val context = LocalContext.current
     val title = if (accommodation.accommodationId == "") "Thêm chỗ ở" else "Cập nhật chỗ ở"
-    fun upLoadImage():String{
-        if (selectedImageUri != null) {
-            return "selectedImageUri.toString()"
-        }
-        return ""
-    }
+    var isLoading by remember { mutableStateOf(false) }
     Column(modifier = Modifier
         .fillMaxSize()
         .background(Color(0xFFEDFAFC))) {
@@ -227,42 +224,41 @@ fun AddAccomScreen(
                     .clip(RoundedCornerShape(5.dp))
                     .background(colorResource(id = R.color.primary))
                     .clickable {
-                        image = upLoadImage()
-                        if (accommodation.accommodationId == "") {
-                            viewModel.insertAccom(
-                                name,
-                                image,
-                                description,
-                                address,
-                                city,
-                                amentities
-                            )
-                            Toast
-                                .makeText(
-                                    context,
-                                    "Thêm thành công, vui lòng chờ xét duyệt",
-                                    Toast.LENGTH_SHORT
+                        fun handleAccommodationAction(imageUrl: String) {
+                            if (accommodation.accommodationId.isEmpty()) {
+                                // Thêm mới
+                                viewModel.insertAccom(
+                                    name,
+                                    imageUrl,
+                                    description,
+                                    address,
+                                    city,
+                                    amentities
                                 )
-                                .show()
-                        } else {
-                            viewModel.updateAccom(
-                                accommodation.accommodationId,
-                                name,
-                                image,
-                                description,
-                                address,
-                                city,
-                                amentities
-                            )
-                            Toast
-                                .makeText(
-                                    context,
-                                    "Cập nhật  thành công, vui lòng chờ xét duyệt",
-                                    Toast.LENGTH_SHORT
+                                Toast.makeText(context, "Thêm thành công, vui lòng chờ xét duyệt", Toast.LENGTH_SHORT).show()
+                            } else {
+                                viewModel.updateAccom(
+                                    accommodation.accommodationId,
+                                    name,
+                                    imageUrl,
+                                    description,
+                                    address,
+                                    city,
+                                    amentities
                                 )
-                                .show()
+                                Toast.makeText(context, "Cập nhật thành công, vui lòng chờ xét duyệt", Toast.LENGTH_SHORT).show()
+                            }
+                            isLoading = false
+                            navController.popBackStack()
                         }
-                        navController.navigate("home_partner")
+                        selectedImageUri?.let { uri ->
+                            isLoading = true
+                            upLoadImage(uri, "accommodation") { uploadedImageUrl ->
+                                handleAccommodationAction(uploadedImageUrl)
+                            }
+                        } ?: run {
+                            handleAccommodationAction(image)
+                        }
                     }
 
             ) {
@@ -272,6 +268,8 @@ fun AddAccomScreen(
             }
         }
     }
+    if (isLoading)
+        Loading()
 }
 
 

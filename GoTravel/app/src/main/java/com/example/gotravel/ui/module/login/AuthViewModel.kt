@@ -115,6 +115,7 @@ class AuthViewModel(private val realmHelper: RealmHelper,
             userAccount.phone = phone
             userAccount.role = ""
             userAccount.email= email
+            userAccount.image = "https://i.pinimg.com/736x/b7/91/44/b79144e03dc4996ce319ff59118caf65.jpg"
 
             firestoreDataManager.addUser(userAccount);
         }else
@@ -205,6 +206,7 @@ class AuthViewModel(private val realmHelper: RealmHelper,
             editor.putString("email", userFromDb?.email)
             editor.putString("phone", userFromDb?.phone)
             editor.putString("status", userFromDb?.status)
+            editor.putString("image", userFromDb?.image)
             editor.apply()
             roleUser = userFromDb?.role;
             _authState.value = AuthState.Authenticated

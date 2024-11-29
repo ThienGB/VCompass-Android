@@ -125,6 +125,7 @@ class UserFirestoreDataManager {
                             val documentRef = document.reference
                             documentRef.update("fullName", user.fullName)
                             documentRef.update("phone", user.phone)
+                            documentRef.update("image", user.image)
                         }
                         onComplete()
                     } else {
