@@ -54,6 +54,7 @@ import com.example.gotravel.helper.SharedPreferencesHelper
 import com.example.gotravel.ui.components.Loading
 import com.example.gotravel.ui.components.NavTitle
 import com.example.gotravel.ui.factory.ViewModelFactory
+import com.example.gotravel.ui.module.accomodation.HotelDetailsScreen
 import com.example.gotravel.ui.module.main.user.MainUserActivity
 import com.example.gotravel.ui.module.review.ReviewScreen
 
@@ -90,6 +91,10 @@ class BookingListActivity: ComponentActivity() {
                 composable("rating",) {
                     val accommodation by viewModel.accommodation.collectAsState()
                     ReviewScreen(accommodation, viewModel, user, navController)
+                }
+                composable("accom_detail") {
+                    val accommodation by viewModel.accommodation.collectAsState()
+                    HotelDetailsScreen(accommodation, navController, calledBy = "admin")
                 }
             }
         }
@@ -214,6 +219,7 @@ fun BookingStatusList(
             if (bookings.isEmpty()){
                 Column(modifier = Modifier
                     .fillMaxWidth()
+                    .background(Color.White)
                     .padding(16.dp),
                     horizontalAlignment = Alignment.CenterHorizontally) {
                     Image(painter = painterResource(id = R.drawable.ic_no_booking),
@@ -227,7 +233,7 @@ fun BookingStatusList(
                         fontSize = 20.sp)
                 }
             } else {
-                LazyColumn {
+                LazyColumn (modifier =Modifier.background(Color.White)) {
                     items(bookings) { booking ->
                         BookingStatusItem(booking.status, booking.accommodationName, booking.bookingId,
                             booking.price.toString(),booking,navController, viewModel)

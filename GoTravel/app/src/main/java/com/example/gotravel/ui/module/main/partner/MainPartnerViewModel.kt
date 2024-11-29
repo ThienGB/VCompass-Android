@@ -95,7 +95,7 @@ class MainPartnerViewModel (private val realmHelper: RealmHelper) : ViewModel() 
             firestoreNotiManager.fetchNotifications(_user.value.userId
             ) { fetchNotificationsFromRealm() }
         }
-        firestoreNotiManager.listenToNotifications { fetchNotificationsFromRealm() }
+        firestoreNotiManager.listenToNotifications(_user.value.userId) { fetchNotificationsFromRealm() }
         viewModelScope.launch {
             firestoreConverManager.fetchConversation(_user.value.userId
             ) { fetchConversationsFromRealm()

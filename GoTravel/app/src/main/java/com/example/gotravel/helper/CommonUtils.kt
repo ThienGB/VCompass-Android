@@ -44,7 +44,8 @@ object CommonUtils {
             sharedPreferences.getString("image", "").toString())
     }
     @JvmStatic
-    fun formatDateToVi(date: Date): String {
+    fun formatDateToVi(date: Date?): String {
+        if (date == null) return ""
         val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
         sdf.timeZone = TimeZone.getTimeZone("Asia/Ho_Chi_Minh")
         return sdf.format(date)

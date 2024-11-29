@@ -225,7 +225,8 @@ fun NotificationScreen(
                 LazyColumn(
                     modifier = Modifier.fillMaxSize()
                 ) {
-                    items(notifications) { notification ->
+                    val sortedNotification = notifications.sortedByDescending { it.create_at }
+                    items(sortedNotification) { notification ->
                         NotificationItem(
                             notification = notification,
                             onStatusChange = onStatusChange,

@@ -96,7 +96,7 @@ fun UserItem(
             },
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Image(rememberAsyncImagePainter("https://scontent.fsgn8-3.fna.fbcdn.net/v/t39.30808-6/464155622_1188059512260875_297674526356158310_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeHxKZsoRqZfIT9epYsvGl55ad4eogWvx0Bp3h6iBa_HQKJ_l10yFyfLYqgoFhRnnssbOi42kaZiAurWnXO3DP0I&_nc_ohc=-r4h1mmadcYQ7kNvgFlrD7B&_nc_zt=23&_nc_ht=scontent.fsgn8-3.fna&_nc_gid=ARbsAeXYjviHc5FEmRJcUv_&oh=00_AYCP39wbGG_lHowyPkbw-ZOyAvQ1p4fBX1oDHs9e1X7ZBw&oe=6746F57A"),
+        Image(rememberAsyncImagePainter(user.image),
             contentDescription = null,
             modifier = Modifier
                 .size(50.dp)

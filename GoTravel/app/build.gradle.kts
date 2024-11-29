@@ -104,7 +104,7 @@ dependencies {
     implementation (libs.accompanist.permissions)
     implementation(libs.gson)
     implementation(libs.kotlinx.serialization.json)
-
+    implementation (libs.accompanist.swiperefresh)
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.0") {
         because("androidx.compose.ui:ui-test-junit4:1.7.2 requires 3.5.0")
     }

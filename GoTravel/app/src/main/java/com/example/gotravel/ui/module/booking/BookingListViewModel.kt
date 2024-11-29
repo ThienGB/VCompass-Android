@@ -46,7 +46,7 @@ class BookingListViewModel(private val realmHelper: RealmHelper) : ViewModel() {
             firestoreDataManager.fetchBooking{
                 getBookingsByUser()
             }
-            firestoreDataManager.fetchAccommodation {  }
+            firestoreDataManager.fetchAccommodation {}
         }
     }
     private fun getBookingsByUser() {
@@ -74,5 +74,12 @@ class BookingListViewModel(private val realmHelper: RealmHelper) : ViewModel() {
     fun insertReview(rating: Rating){
         firestoreDataManager.updateRatingsInFirestore(booking.value.accommodationId, rating)
         accomDao.insertRating(booking.value.accommodationId, rating)
+    }
+    fun setAccommodation(accommodationId: String){
+        val accom = accomDao.getAccommById(accommodationId)
+        if (accom != null) {
+            _accommodation.value = accom.copy()
+        }
+
     }
 }

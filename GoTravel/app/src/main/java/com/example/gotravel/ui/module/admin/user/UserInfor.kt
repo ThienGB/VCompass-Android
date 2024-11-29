@@ -40,6 +40,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import coil.compose.rememberAsyncImagePainter
 import com.example.gotravel.R
 import com.example.gotravel.data.model.User
 
@@ -54,6 +55,7 @@ fun UserInfor(
     val context = LocalContext.current
     Column (modifier = Modifier
         .verticalScroll(rememberScrollState())
+        .background(Color.White)
         .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally)
     {
@@ -77,7 +79,7 @@ fun UserInfor(
                     .padding(4.dp)
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.bg_admin),
+                    painter = rememberAsyncImagePainter(user.image),
                     contentScale = ContentScale.Crop,
                     contentDescription = null,
                     modifier = Modifier

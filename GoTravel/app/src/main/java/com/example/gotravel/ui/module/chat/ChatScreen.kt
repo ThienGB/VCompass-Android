@@ -45,48 +45,12 @@ import com.example.gotravel.R
 import com.example.gotravel.data.model.Conversation
 import com.example.gotravel.data.model.Message
 import com.example.gotravel.data.model.UserAccount
+import com.example.gotravel.helper.CommonUtils.formatDateToVi
 import com.example.gotravel.ui.components.NavTitle
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.UUID
-
-@Composable
-fun Chat_Header() {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(colorResource(id = R.color.primary))
-            .height(60.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Button(
-            onClick = { /*TODO*/ },
-            colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.primary))
-        ) {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_arrow_back),
-                modifier = Modifier.size(30.dp),
-                tint = Color.Unspecified,
-                contentDescription = "Setting"
-            )
-        }
-        Text(
-            text = "Chats",
-            style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color.White),
-            modifier = Modifier.height(20.dp),
-            textAlign = TextAlign.Center
-
-        )
-        Button(
-            onClick = { /*TODO*/ },
-            colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.primary)),
-        ) {
-
-        }
-    }
-}
 
 @Composable
 fun ChatItem(
@@ -95,6 +59,11 @@ fun ChatItem(
     onItemClick: (Conversation) -> Unit,
 ) {
     val sortedMessage = conversation.messages.sortedByDescending { it.createdAt }
+    val fullName = if (conversation.idFirstUser == user.userId) {
+        conversation.userSecond?.fullName
+    } else {
+        conversation.userFirst?.fullName
+    }
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -105,7 +74,11 @@ fun ChatItem(
             verticalAlignment = Alignment.CenterVertically
         ) {
             AsyncImage(
-                model =  R.drawable.beach,
+                model =  (if (conversation.idFirstUser == user.userId) {
+                    conversation.userSecond?.image
+                } else {
+                    conversation.userFirst?.image
+                }),
                 contentDescription = "Avatar",
                 modifier = Modifier
                     .size(48.dp)
@@ -140,7 +113,7 @@ fun ChatItem(
             Spacer(modifier = Modifier.width(8.dp))
 
             Text(
-                text = formatDate(sortedMessage.firstOrNull()?.createdAt.toString()),
+                text = formatDateToVi(sortedMessage.firstOrNull()?.createdAt),
                 style = MaterialTheme.typography.bodySmall.copy(color = Color.Gray),
                 textAlign = TextAlign.End,
                 modifier = Modifier.padding(start = 8.dp)
@@ -151,18 +124,6 @@ fun ChatItem(
             thickness = 0.5.dp,
             color = Color.LightGray.copy(alpha = 0.5f)
         )
-    }
-}
-
-fun formatDate(dateString: String?): String {
-    return try {
-        val inputFormatter = SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH)
-        val date: Date = inputFormatter.parse(dateString)
-        val outputFormatter = SimpleDateFormat("MMM dd, hh:mm a", Locale.ENGLISH)
-        outputFormatter.format(date)
-    } catch (e: Exception) {
-        e.printStackTrace()
-        ""
     }
 }
 
@@ -196,7 +157,10 @@ fun ConversationScreen(
             LazyColumn (
                 modifier = Modifier.padding(10.dp)
             ) {
-                items(conversations) { item ->
+                val sortedConversation =conversations.sortedByDescending { conversation ->
+                    conversation.messages.maxByOrNull { it.createdAt!! }?.createdAt
+                }
+                items(sortedConversation) { item ->
                     ChatItem(item, user
                     ) {
                         onItemClick(item)
@@ -220,7 +184,12 @@ fun ChatScreen(
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
-        conversation.userSecond?.let { NavTitle(it.fullName){ navController.popBackStack() } }
+        val fullName = if (conversation.idFirstUser == user.userId) {
+            conversation.userSecond?.fullName
+        } else {
+            conversation.userFirst?.fullName
+        }
+        NavTitle(fullName.toString()){ navController.popBackStack()}
         ChatList(conversation.messages ,user, Modifier.weight(1f))
         ChatInput(onSendClick = { message ->
             sendMessage(Message().apply{

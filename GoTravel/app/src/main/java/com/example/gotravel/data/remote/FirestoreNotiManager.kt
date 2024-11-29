@@ -8,7 +8,10 @@ import com.example.gotravel.helper.FirestoreHelper.FL_CONTENT
 import com.example.gotravel.helper.FirestoreHelper.FL_CREATE_AT
 import com.example.gotravel.helper.FirestoreHelper.FL_ID_RECEIVER
 import com.example.gotravel.helper.FirestoreHelper.FL_ID_SENDER
+import com.example.gotravel.helper.FirestoreHelper.FL_ISREAD
 import com.example.gotravel.helper.FirestoreHelper.FL_NOTIFICATION_ID
+import com.example.gotravel.helper.FirestoreHelper.FL_TITLE
+import com.example.gotravel.helper.FirestoreHelper.FL_TYPE
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.ktx.firestore
@@ -21,8 +24,9 @@ class FirestoreNotiManager {
     private var listenerRegistration: ListenerRegistration? = null
     private val db = Firebase.firestore
 
-    fun listenToNotifications(onDataUpdated: () -> Unit) {
+    fun listenToNotifications(receiverId: String ,onDataUpdated: () -> Unit) {
         listenerRegistration = db.collection(CL_NOTIFICATION)
+            .whereEqualTo("id_receiver", receiverId)
             .addSnapshotListener { snapshot, e ->
                 if (e != null) {
                     return@addSnapshotListener
@@ -131,11 +135,14 @@ class FirestoreNotiManager {
     fun addNotification(notification: Notification) {
         val data: MutableMap<String, Any> = HashMap()
         data[FL_NOTIFICATION_ID] = notification.id_notification.toString()
+        data[FL_TYPE] = notification.type.toString()
+        data[FL_TITLE] = notification.title.toString()
         data[FL_CONTENT] = notification.content.toString()
-        data[FL_CREATE_AT] = notification.create_at.toString()
+        data[FL_CREATE_AT] = notification.create_at
         data[FL_ID_SENDER] = notification.id_sender.toString()
         data[FL_ID_RECEIVER] = notification.id_receiver.toString()
-        db.collection(CL_NOTIFICATION).document(notification.id_notification.toString()).set(data)
+        data[FL_ISREAD] = "false"
+        db.collection(CL_NOTIFICATION).document(notification.id_notification).set(data)
     }
     fun removeListener() {
         listenerRegistration?.remove()

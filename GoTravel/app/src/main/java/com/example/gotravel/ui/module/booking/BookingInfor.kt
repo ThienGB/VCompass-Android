@@ -53,7 +53,7 @@ import com.example.gotravel.ui.components.NavTitle
 fun BookingInformation(
     booking: Booking = Booking(),
     viewModel: BookingListViewModel,
-    navController: NavController = NavController(LocalContext.current)
+    navController: NavController = NavController(LocalContext.current),
 ) {
     val statusString = when (booking.status) {
         "pending" -> "Đang xử lý"
@@ -72,6 +72,7 @@ fun BookingInformation(
     Column(
         modifier = Modifier
             .fillMaxWidth()
+            .background(Color.White)
             .padding(16.dp)
             .background(Color.White, shape = RoundedCornerShape(8.dp))
             .border(1.dp, Color.LightGray, shape = RoundedCornerShape(8.dp))
@@ -91,6 +92,9 @@ fun BookingInformation(
                 .fillMaxWidth()
                 .background(Color(0xFFE3F2FD))
                 .padding(16.dp)
+                .clickable { viewModel.setAccommodation(booking.accommodationId)
+                    navController.navigate("accom_detail")
+                }
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_accommodation),
@@ -242,7 +246,7 @@ fun PolicyItem(text: String, icon: ImageVector, iconColor: Color) {
 fun BookingInforScreen(
     booking: Booking,
     viewModel: BookingListViewModel,
-    navController: NavController
+    navController: NavController,
 ){
     Column {
         NavTitle("Thông tin đặt phòng"){navController.navigate("booking_list")}

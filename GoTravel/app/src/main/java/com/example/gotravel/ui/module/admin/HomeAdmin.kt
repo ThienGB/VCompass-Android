@@ -21,6 +21,10 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -42,6 +46,8 @@ import com.example.gotravel.data.model.User
 import com.example.gotravel.data.model.UserAccount
 import com.example.gotravel.ui.components.Loading
 import com.example.gotravel.ui.module.admin.main.MainAdminViewModel
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 @Composable
 fun HomeAdmin(
@@ -51,39 +57,49 @@ fun HomeAdmin(
     navController: NavController = NavController(LocalContext.current),
     viewModel: MainAdminViewModel
 ) {
+    val isResfreshing by viewModel.isLoading.collectAsState()
     viewModel.setIsShowBottomBar(true)
-    if (isLoading) {
-        Loading()
-    } else {
-        Box(modifier = Modifier.verticalScroll(rememberScrollState())) {
-            Image(painter = painterResource(id = R.drawable.bg_admin),
-                contentDescription = null,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(220.dp),
-                contentScale = ContentScale.Crop
-            )
-            Column(
-                modifier = Modifier
-                    .background(Color.Transparent)
-                    .padding(10.dp)
-            ) {
-                Spacer(modifier = Modifier.height(30.dp))
-                AdminInforCard()
-                Spacer(modifier = Modifier.height(115.dp))
-                Text(
-                    text = "Tổng quan",
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 18.sp,
+    SwipeRefresh(
+        state = rememberSwipeRefreshState(isResfreshing),
+        onRefresh = {
+            viewModel.fetchData()
+        }
+    ) {
+        if (isLoading) {
+            Loading()
+        } else {
+            Box(modifier = Modifier.verticalScroll(rememberScrollState())) {
+                Image(
+                    painter = painterResource(id = R.drawable.bg_admin),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(220.dp),
+                    contentScale = ContentScale.Crop
                 )
-                Spacer(modifier = Modifier.height(8.dp))
-                BookingStats(accommodations, users, navController)
-                Spacer(modifier = Modifier.height(8.dp))
+                Column(
+                    modifier = Modifier
+                        .background(Color.Transparent)
+                        .padding(10.dp)
+                ) {
+                    Spacer(modifier = Modifier.height(30.dp))
+                    AdminInforCard()
+                    Spacer(modifier = Modifier.height(115.dp))
+                    Text(
+                        text = "Tổng quan",
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 18.sp,
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    BookingStats(accommodations, users, navController)
+                    Spacer(modifier = Modifier.height(8.dp))
+                }
             }
         }
     }
-
 }
+
+
 
 @Composable
 fun BookingStats(
@@ -220,7 +236,7 @@ fun AdminInforCard() {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Image(
-                    painter = rememberAsyncImagePainter("https://scontent.fsgn8-3.fna.fbcdn.net/v/t39.30808-6/464155622_1188059512260875_297674526356158310_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeHxKZsoRqZfIT9epYsvGl55ad4eogWvx0Bp3h6iBa_HQKJ_l10yFyfLYqgoFhRnnssbOi42kaZiAurWnXO3DP0I&_nc_ohc=-r4h1mmadcYQ7kNvgFlrD7B&_nc_zt=23&_nc_ht=scontent.fsgn8-3.fna&_nc_gid=ARbsAeXYjviHc5FEmRJcUv_&oh=00_AYCP39wbGG_lHowyPkbw-ZOyAvQ1p4fBX1oDHs9e1X7ZBw&oe=6746F57A"),
+                    painter = rememberAsyncImagePainter("https://citibella.net/wp-content/uploads/2024/09/hinh-anh-avatar-nu-co-gai-1.jpg"),
                     contentDescription = null,
                     modifier = Modifier
                         .size(48.dp)
