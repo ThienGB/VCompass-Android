@@ -11,6 +11,7 @@ open class User: RealmObject() {
     var role: String = ""
     var phone: String = ""
     var status: String = ""
+    var image: String = ""
 
     fun copy(): User {
         val copy = User()
@@ -20,6 +21,7 @@ open class User: RealmObject() {
         copy.role = this.role
         copy.phone = this.phone
         copy.status = this.status
+        copy.image = this.image
         return copy
     }
 }

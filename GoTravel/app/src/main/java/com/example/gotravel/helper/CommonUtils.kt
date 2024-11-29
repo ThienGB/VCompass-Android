@@ -1,7 +1,11 @@
 package com.example.gotravel.helper
 
 import android.content.SharedPreferences
+import android.net.Uri
 import com.example.gotravel.data.model.UserAccount
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.UploadTask
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -32,9 +36,32 @@ object CommonUtils {
     fun getUserFromShareRef(sharedPreferences: SharedPreferences): UserAccount {
         return UserAccount(
             sharedPreferences.getString("userId", "").toString(),
-            sharedPreferences.getString("fullname", "").toString(),
+            sharedPreferences.getString("fullName", "").toString(),
             sharedPreferences.getString("email", "").toString(),
+            sharedPreferences.getString("role", "").toString(),
             sharedPreferences.getString("phone", "").toString(),
-            sharedPreferences.getString("role", "").toString())
+            sharedPreferences.getString("status", "").toString(),
+            sharedPreferences.getString("image", "").toString())
+    }
+    @JvmStatic
+    fun formatDateToVi(date: Date): String {
+        val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
+        sdf.timeZone = TimeZone.getTimeZone("Asia/Ho_Chi_Minh")
+        return sdf.format(date)
+    }
+    @JvmStatic
+    fun upLoadImage(uri: Uri, path: String, onSuccess: (String) -> Unit = {}) {
+        val storage = FirebaseStorage.getInstance()
+        val imageUrl = uri.toString()
+        val storageRef: StorageReference = storage.reference
+        val imageRef = storageRef.child("${path}/${System.currentTimeMillis()}.jpg")
+        val uploadTask: UploadTask = imageRef.putFile(uri)
+        uploadTask.addOnSuccessListener {
+            imageRef.downloadUrl.addOnSuccessListener { uri ->
+                onSuccess(uri.toString())
+            }
+        }.addOnFailureListener { exception ->
+            println("Image upload failed: ${exception.message}")
+        }
     }
 }

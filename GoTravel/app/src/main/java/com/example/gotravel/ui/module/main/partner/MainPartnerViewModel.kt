@@ -2,26 +2,45 @@ package com.example.gotravel.ui.module.main.partner
 
 import AccommodationDao
 import BookingDao
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.gotravel.data.local.ConversationDao
+import com.example.gotravel.data.local.dao.NotificationDao
 import com.example.gotravel.data.model.Accommodation
 import com.example.gotravel.data.model.Booking
+import com.example.gotravel.data.model.Conversation
+import com.example.gotravel.data.model.Message
+import com.example.gotravel.data.model.Notification
 import com.example.gotravel.data.model.Rating
 import com.example.gotravel.data.model.Room
 import com.example.gotravel.data.model.Search
 import com.example.gotravel.data.model.UserAccount
+import com.example.gotravel.data.remote.FirestoreConverManager
 import com.example.gotravel.data.remote.FirestoreDataManager
+import com.example.gotravel.data.remote.FirestoreNotiManager
+import com.example.gotravel.data.remote.UserFirestoreDataManager
 import com.example.gotravel.helper.RealmHelper
+import com.example.gotravel.helper.SharedPreferencesHelper
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.UUID
 
 class MainPartnerViewModel (private val realmHelper: RealmHelper) : ViewModel() {
     private val firestoreDataManager = FirestoreDataManager()
+    private val firestoreNotiManager = FirestoreNotiManager()
+    private val firestoreUserManager = UserFirestoreDataManager()
+    private val firestoreConverManager = FirestoreConverManager(viewModelScope)
     private var accomDao: AccommodationDao = AccommodationDao()
     private var bookingDao: BookingDao = BookingDao()
+    private var notificationDao: NotificationDao = NotificationDao()
+    private var conversationDao: ConversationDao = ConversationDao()
+    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
     private val _accommodation = MutableStateFlow(Accommodation())
     val accommodation: StateFlow<Accommodation> get() = _accommodation
@@ -38,7 +57,23 @@ class MainPartnerViewModel (private val realmHelper: RealmHelper) : ViewModel() 
     private val _room = MutableStateFlow(Room())
     val room: StateFlow<Room> get() = _room
 
-    private var user: UserAccount = UserAccount()
+    private val _conversations = MutableStateFlow<List<Conversation>>(emptyList())
+    val conversations: StateFlow<List<Conversation>> get() = _conversations
+
+    private val _conversation = MutableStateFlow(Conversation())
+    val conversation: StateFlow<Conversation> get() = _conversation
+
+    private val _notifications = MutableStateFlow<List<Notification>>(emptyList())
+    val notifications: StateFlow<List<Notification>> get() = _notifications
+
+    private val _notification = MutableStateFlow(Notification())
+    val notification: StateFlow<Notification> get() = _notification
+
+    private val _isShowBottomBar = MutableStateFlow(true)
+    val isShowBottomBar : StateFlow<Boolean> get() = _isShowBottomBar
+
+    private val _user = MutableStateFlow(UserAccount())
+    val user: StateFlow<UserAccount> get() = _user
     fun fetchData(){
         _isLoading.value = true
         viewModelScope.launch {
@@ -50,8 +85,26 @@ class MainPartnerViewModel (private val realmHelper: RealmHelper) : ViewModel() 
             }
         }
     }
+    private fun listenMessage(){
+        firestoreConverManager.listenToConversation (conversations.value) {
+            fetchConversationsFromRealm()
+            setConversation(conversation.value)}
+    }
+    fun fetchHighPriorityData(){
+        viewModelScope.launch {
+            firestoreNotiManager.fetchNotifications(_user.value.userId
+            ) { fetchNotificationsFromRealm() }
+        }
+        firestoreNotiManager.listenToNotifications { fetchNotificationsFromRealm() }
+        viewModelScope.launch {
+            firestoreConverManager.fetchConversation(_user.value.userId
+            ) { fetchConversationsFromRealm()
+                listenMessage()
+            }
+        }
+    }
     fun setUser(user: UserAccount) {
-        this.user = user
+        _user.value = user
     }
     fun setRoom(room: Room) {
         _room.value = room.copy()
@@ -59,9 +112,18 @@ class MainPartnerViewModel (private val realmHelper: RealmHelper) : ViewModel() 
     fun setBooking(booking: Booking){
         _booking.value = booking.copy()
     }
+    fun setConversation(conversation: Conversation) {
+        _conversation.value = conversation.copy()
+    }
+    fun setIsShowBottomBar(isShow: Boolean) {
+        _isShowBottomBar.value = isShow
+    }
+    fun setNotification(notification: Notification) {
+        _notification.value = notification.copy()
+    }
     private fun getAccomByPartner() {
         viewModelScope.launch {
-            val accom: Accommodation? = accomDao.getAccommByPartner(user.userId)
+            val accom: Accommodation? = accomDao.getAccommByPartner(_user.value.userId)
             if (accom != null) {
                 _accommodation.value = accom.copy()
                 getBookingsByPartner()
@@ -85,7 +147,7 @@ class MainPartnerViewModel (private val realmHelper: RealmHelper) : ViewModel() 
     fun insertAccom(name: String, image: String, description: String, address: String, city: String, amentities: String){
         val accom = Accommodation().apply {
             accommodationId = UUID.randomUUID().toString()
-            partnerId = user.userId
+            partnerId = _user.value.userId
             this.name = name
             this.image = image
             this.description = description
@@ -100,7 +162,7 @@ class MainPartnerViewModel (private val realmHelper: RealmHelper) : ViewModel() 
     fun updateAccom(accommodationId: String,name: String, image: String, description: String, address: String, city: String, amentities: String){
         val accom = Accommodation().apply {
             this.accommodationId = accommodationId
-            partnerId = user.userId
+            partnerId = _user.value.userId
             this.name = name
             this.image = image
             this.description = description
@@ -144,5 +206,75 @@ class MainPartnerViewModel (private val realmHelper: RealmHelper) : ViewModel() 
         }
         firestoreDataManager.addBookingToFirestore(newBooking)
         bookingDao.insertOrUpdateBooking(newBooking) {fetchData()}
+    }
+    // Notification
+    private fun fetchNotificationsFromRealm() {
+        viewModelScope.launch {
+            val notifications = notificationDao.getAllNotifications()
+            if (notifications.isNotEmpty()) {
+                _notifications.value = notifications
+            } else {
+                _notifications.value = emptyList()
+            }
+        }
+    }
+    fun deleteAllNotifications() {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                firestoreNotiManager.deleteAllNotifications(_user.value.userId)
+            }
+            Log.d("AccommodationDetail", "All notifications deleted.")
+            fetchNotificationsFromRealm()
+
+        }
+    }
+    fun changeNotificationStatus(id: String) {
+        Log.d("AccommodationDetail", "All notifications update.")
+        viewModelScope.launch {
+            firestoreNotiManager.changeStatus(id)
+            Log.d("AccommodationDetail", "All notifications update.")
+            fetchNotificationsFromRealm()
+        }
+    }
+
+    // Conversation
+    private fun fetchConversationsFromRealm() {
+        viewModelScope.launch {
+            val conversations = conversationDao.getAllConversations(_user.value.userId)
+            if (conversations.isNotEmpty()) {
+                _conversations.value = conversations
+            }
+        }
+    }
+    fun sendMessage(message: Message) {
+        viewModelScope.launch {
+            firestoreConverManager.sendMessage(conversation.value.id_conversation,message)
+        }
+    }
+
+    // Profile
+    fun updateUser(user: UserAccount, context: Context) {
+        viewModelScope.launch {
+            firestoreUserManager.editProfile(user)
+        }
+        val sharedPreferences = context.getSharedPreferences(SharedPreferencesHelper.SHARED_PREFS, Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString("fullName", user.fullName)
+        editor.putString("phone", user.phone)
+        editor.apply()
+        _user.value.apply {
+            this.fullName = user.fullName
+            this.phone = user.phone
+            this.image = user.image
+        }
+    }
+    fun logout() {
+        auth.signOut()
+        _user.value = UserAccount()
+    }
+    override fun onCleared() {
+        super.onCleared()
+        realmHelper.closeRealm()
+        firestoreNotiManager.removeListener()
     }
 }

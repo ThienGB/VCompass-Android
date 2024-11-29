@@ -36,7 +36,6 @@ class MainLoginActivity : ComponentActivity() {
         val sharedPreferences = getSharedPreferences(SharedPreferencesHelper.SHARED_PREFS, Context.MODE_PRIVATE)
         viewModel = AuthViewModel(realmHelper, sharedPreferences)
 
-        // Configure Google Sign-In
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken("129815532000-87hv6rracdu16grijets62jp2tu7r9g9.apps.googleusercontent.com") // Replace with your Firebase Web Client ID
             .requestEmail()

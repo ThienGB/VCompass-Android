@@ -1,11 +1,23 @@
 package com.example.gotravel.ui.module.main.user
 
+import ProfileScreen
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Email
@@ -19,14 +31,26 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.gotravel.MainApplication
+import com.example.gotravel.R
 import com.example.gotravel.data.model.UserAccount
 import com.example.gotravel.helper.CommonUtils.getUserFromShareRef
 import com.example.gotravel.helper.RealmHelper
@@ -35,10 +59,11 @@ import com.example.gotravel.ui.factory.ViewModelFactory
 import com.example.gotravel.ui.module.accomodation.HotelDetailsScreen
 import com.example.gotravel.ui.module.booking.BookingDetailScreen
 import com.example.gotravel.ui.module.booking.BookingListActivity
-import com.example.gotravel.ui.module.chat.ChatComponentScreen
+import com.example.gotravel.ui.module.chat.ChatScreen
+import com.example.gotravel.ui.module.chat.ConversationScreen
 import com.example.gotravel.ui.module.home.user.HomeUserScreen
-import com.example.gotravel.ui.module.home.user.NotificationScreen
-import com.example.gotravel.ui.module.home.user.ProfileScreen
+import com.example.gotravel.ui.module.notifications.NotificationDetail
+import com.example.gotravel.ui.module.notifications.NotificationScreen
 import com.example.gotravel.ui.module.review.ListReviewScreen
 import com.example.gotravel.ui.module.room.RoomDetailScreen
 import com.example.gotravel.ui.module.search.SearchAccommodation
@@ -54,8 +79,10 @@ class MainUserActivity : ComponentActivity() {
         viewModel = ViewModelProvider(this, factory)[MainUserViewModel::class.java]
         val sharedPreferences = getSharedPreferences(SharedPreferencesHelper.SHARED_PREFS, Context.MODE_PRIVATE)
         val user = getUserFromShareRef(sharedPreferences)
+        viewModel.setUser(user)
+        viewModel.fetchHighPriorityData()
         setContent {
-            MainScreen(viewModel, user, this, { intentToBooking() })
+            MainScreen(viewModel,this) { intentToBooking() }
         }
     }
     private fun intentToBooking() {
@@ -67,22 +94,22 @@ class MainUserActivity : ComponentActivity() {
 @Composable
 fun MainScreen(
     viewModel: MainUserViewModel,
-    user: UserAccount,
     context: Context,
     intentToBooking: () -> Unit
 ) {
     val isShowBottomBar by viewModel.isShowBottomBar.collectAsState()
     val navController = rememberNavController()
+    val currentBackStackEntry by navController.currentBackStackEntryAsState()
+    val selectedRoute = currentBackStackEntry?.destination?.route ?: "home"
     Scaffold(
         bottomBar = {
             if (isShowBottomBar)
-                CustomBottomBar(navController){intentToBooking()}
+                CustomBottomBar(navController, selectedRoute )
         }
     ) { paddingValues ->
         NavHostGraph(
             navController = navController,
             viewModel = viewModel,
-            user = user,
             modifier = Modifier.padding(paddingValues),
             context = context,
             intentToBooking = intentToBooking
@@ -92,41 +119,74 @@ fun MainScreen(
 @Composable
 fun CustomBottomBar(
     navController: NavController,
-    intentToBooking: () -> Unit
+    selectedRoute: String
 ) {
-    NavigationBar {
-        NavigationBarItem(
-            icon = { Icon(Icons.Filled.Home, contentDescription = "Home") },
-            label = { Text("Home") },
-            selected = false,
-            onClick = { navController.navigate("home") }
-        )
-        NavigationBarItem(
-            icon = { Icon(Icons.Filled.Email, contentDescription = "Chat") },
-            label = { Text("Chat") },
-            selected = false,
-            onClick = { navController.navigate("chat")
-                intentToBooking()}
-        )
-        NavigationBarItem(
-            icon = { Icon(Icons.Filled.Notifications, contentDescription = "Notification") },
-            label = { Text("Notification") },
-            selected = false,
-            onClick = { navController.navigate("notification") }
-        )
-        NavigationBarItem(
-            icon = { Icon(Icons.Filled.AccountCircle, contentDescription = "Profile") },
-            label = { Text("Profile") },
-            selected = false,
-            onClick = { navController.navigate("profile") }
-        )
+    val gradient = Brush.horizontalGradient(
+        colors = listOf(colorResource(id = R.color.primary), Color(0xFF4900EE))
+    )
+
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(gradient)
+            .height(60.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            val items = listOf(
+                BottomBarItem("home", Icons.Filled.Home, "Home"),
+                BottomBarItem("chat", Icons.Filled.Email, "Chat"),
+                BottomBarItem("notification", Icons.Filled.Notifications, "Notification"),
+                BottomBarItem("profile", Icons.Filled.AccountCircle, "Profile")
+            )
+
+            items.forEach { item ->
+                val isSelected = selectedRoute == item.route
+
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier
+                        .padding(4.dp)
+                        .weight(1f)
+                        .clip(RoundedCornerShape(12.dp))
+                        .background(
+                            color = if (isSelected) Color.White.copy(alpha = 0.2f) else Color.Transparent
+                        )
+                        .clickable { navController.navigate(item.route) }
+                        .padding(vertical = 6.dp)
+                ) {
+                    Icon(
+                        imageVector = item.icon,
+                        contentDescription = item.label,
+                        tint = if (isSelected) Color.White else Color.Black,
+                        modifier = Modifier.size(24.dp)
+                    )
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text = item.label,
+                        fontSize = 12.sp,
+                        color = if (isSelected) Color.White else Color.Black
+                    )
+                }
+            }
+        }
     }
 }
+
+data class BottomBarItem(
+    val route: String,
+    val icon: ImageVector,
+    val label: String
+)
+
 @Composable
 fun NavHostGraph(
     navController: NavHostController,
     modifier: Modifier = Modifier,
-    user: UserAccount,
     viewModel: MainUserViewModel,
     context: Context,
     intentToBooking: () -> Unit
@@ -134,14 +194,31 @@ fun NavHostGraph(
 {
     val accommodations by viewModel.accommodations.collectAsState()
     val accommodation by viewModel.accommodation.collectAsState()
+    val conversation by viewModel.conversation.collectAsState()
+    val conversations by viewModel.conversations.collectAsState()
+    val notifications by viewModel.notifications.collectAsState()
+    val notification by viewModel.notification.collectAsState()
     val room by viewModel.room.collectAsState()
+    val user by viewModel.user.collectAsState()
     val searchData by viewModel.searchData.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
     NavHost(navController = navController, startDestination = "home", modifier = modifier){
         composable("home") { HomeUserScreen(navController, viewModel, context) }
-        composable("chat") { ChatComponentScreen() }
-        composable("notification") { NotificationScreen() }
-        composable("profile") { ProfileScreen() }
+        composable("chat") { ConversationScreen(conversations, navController, user)
+        { conversation -> viewModel.setConversation(conversation) }
+        viewModel.setIsShowBottomBar(true)}
+        composable("chat_room") { ChatScreen(conversation,user, navController)
+        { message -> viewModel.sendMessage(message)}
+            viewModel.setIsShowBottomBar(false)}
+        composable("notification") { NotificationScreen(notifications, navController,
+            { viewModel.deleteAllNotifications()},
+            { id -> viewModel.changeNotificationStatus(id)},
+            {notification -> viewModel.setNotification(notification)}) }
+        composable("notification_detail") { NotificationDetail(notification, navController)
+            viewModel.setIsShowBottomBar(false)}
+        composable("profile") { ProfileScreen(user, navController,
+            {user, context -> viewModel.updateUser(user, context)},
+            {intentToBooking()}, {viewModel.logout()}) }
         composable("search") { SearchAccommodation(navController, accommodations, searchData, isLoading, viewModel) }
         composable("accom_detail") { HotelDetailsScreen(accommodation, navController) }
         composable("room_detail") { RoomDetailScreen(accommodation,searchData, viewModel, navController) }

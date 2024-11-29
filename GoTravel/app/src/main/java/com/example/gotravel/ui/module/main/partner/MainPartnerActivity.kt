@@ -1,5 +1,6 @@
 package com.example.gotravel.ui.module.main.partner
 
+import ProfileScreen
 import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -24,15 +25,20 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.gotravel.MainApplication
 import com.example.gotravel.helper.CommonUtils.getUserFromShareRef
 import com.example.gotravel.helper.RealmHelper
 import com.example.gotravel.helper.SharedPreferencesHelper
+import com.example.gotravel.ui.components.Loading
 import com.example.gotravel.ui.factory.ViewModelFactory
-import com.example.gotravel.ui.module.chat.ChatComponentScreen
-import com.example.gotravel.ui.module.home.user.NotificationScreen
-import com.example.gotravel.ui.module.home.user.ProfileScreen
+import com.example.gotravel.ui.module.accomodation.HotelDetailsScreen
+import com.example.gotravel.ui.module.chat.ChatScreen
+import com.example.gotravel.ui.module.chat.ConversationScreen
+import com.example.gotravel.ui.module.main.user.CustomBottomBar
+import com.example.gotravel.ui.module.notifications.NotificationDetail
+import com.example.gotravel.ui.module.notifications.NotificationScreen
 import com.example.gotravel.ui.module.partner.Booking.BookingInforPartner
 import com.example.gotravel.ui.module.partner.Booking.BookingListPartner
 import com.example.gotravel.ui.module.partner.DashBoard.DashboardScreen
@@ -52,6 +58,7 @@ class MainPartnerActivity : ComponentActivity() {
         val user = getUserFromShareRef(sharedPreferences)
         viewModel.setUser(user)
         viewModel.fetchData()
+        viewModel.fetchHighPriorityData()
         setContent {
             MainPartnerScreen(viewModel)
         }
@@ -62,47 +69,28 @@ class MainPartnerActivity : ComponentActivity() {
 fun MainPartnerScreen(
     viewModel: MainPartnerViewModel
 ) {
+    val isShowBottomBar by viewModel.isShowBottomBar.collectAsState()
     val navController = rememberNavController()
-    Scaffold(
-        bottomBar = {
-            CustomBottomBar(navController = navController)
+    val isLoading by viewModel.isLoading.collectAsState()
+    val currentBackStackEntry by navController.currentBackStackEntryAsState()
+    val selectedRoute = currentBackStackEntry?.destination?.route ?: "home"
+    if (isLoading)
+        Loading()
+    else {
+        Scaffold(
+            bottomBar = {
+                if (isShowBottomBar)
+                    CustomBottomBar(navController, selectedRoute)
+            }
+        ) { paddingValues ->
+            NavHostPartnerGraph(
+                navController,
+                viewModel,
+                modifier = Modifier.padding(paddingValues)
+            )
         }
-    ) { paddingValues ->
-        NavHostPartnerGraph(
-            navController,
-            viewModel,
-            modifier = Modifier.padding(paddingValues)
-        )
     }
-}
-@Composable
-fun CustomBottomBar(navController: NavController) {
-    NavigationBar {
-        NavigationBarItem(
-            icon = { Icon(Icons.Filled.Home, contentDescription = "Home") },
-            label = { Text("Home") },
-            selected = false,
-            onClick = { navController.navigate("home_partner") }
-        )
-        NavigationBarItem(
-            icon = { Icon(Icons.Filled.Email, contentDescription = "Chat") },
-            label = { Text("Chat") },
-            selected = false,
-            onClick = { navController.navigate("chat") }
-        )
-        NavigationBarItem(
-            icon = { Icon(Icons.Filled.Notifications, contentDescription = "Notification") },
-            label = { Text("Notification") },
-            selected = false,
-            onClick = { navController.navigate("notification") }
-        )
-        NavigationBarItem(
-            icon = { Icon(Icons.Filled.AccountCircle, contentDescription = "Profile") },
-            label = { Text("Profile") },
-            selected = false,
-            onClick = { navController.navigate("profile") }
-        )
-    }
+
 }
 @Composable
 fun NavHostPartnerGraph(
@@ -115,14 +103,35 @@ fun NavHostPartnerGraph(
     val isLoading by viewModel.isLoading.collectAsState()
     val booking by viewModel.booking.collectAsState()
     val room by viewModel.room.collectAsState()
-    NavHost(navController = navController, startDestination = "home_partner", modifier = modifier){
-        composable("home_partner") { DashboardScreen(accommodation, bookings, isLoading, navController, viewModel) }
-        composable("add_room") { AddUpdateRoomScreen(navController, accommodation, room, viewModel) }
-        composable("add_accom") { AddAccomScreen(navController, accommodation, viewModel) }
-        composable("booking_partner") { BookingListPartner(bookings, viewModel, navController) }
+    val user by viewModel.user.collectAsState()
+    val conversations by viewModel.conversations.collectAsState()
+    val conversation by viewModel.conversation.collectAsState()
+    val notifications by viewModel.notifications.collectAsState()
+    val notification by viewModel.notification.collectAsState()
+    NavHost(navController = navController, startDestination = "home", modifier = modifier){
+        composable("home") { DashboardScreen(accommodation, bookings, isLoading, navController, viewModel) }
+        composable("add_room") { AddUpdateRoomScreen(navController, accommodation, room, viewModel)
+            viewModel.setIsShowBottomBar(false)}
+        composable("add_accom") { AddAccomScreen(navController, accommodation, viewModel)
+            viewModel.setIsShowBottomBar(false)}
+        composable("booking_partner") { BookingListPartner(bookings, viewModel, navController)
+            viewModel.setIsShowBottomBar(false)}
         composable("booking_infor_partner") { BookingInforPartner(booking,isLoading, viewModel, navController) }
-        composable("chat") { ChatComponentScreen() }
-        composable("notification") { NotificationScreen() }
-        composable("profile") { ProfileScreen() }
+        composable("chat") { ConversationScreen(conversations, navController, user)
+        { conversation -> viewModel.setConversation(conversation) }
+            viewModel.setIsShowBottomBar(true)}
+        composable("chat_room") { ChatScreen(conversation,user, navController)
+        { message -> viewModel.sendMessage(message)}
+            viewModel.setIsShowBottomBar(false)}
+        composable("notification") { NotificationScreen(notifications, navController,
+            { viewModel.deleteAllNotifications()},
+            { id -> viewModel.changeNotificationStatus(id)},
+            {notification -> viewModel.setNotification(notification)}) }
+        composable("notification_detail") { NotificationDetail(notification, navController)
+            viewModel.setIsShowBottomBar(false)}
+        composable("profile") { ProfileScreen(user, navController,
+            {user, context -> viewModel.updateUser(user, context)},
+            {}, {viewModel.logout()}, "partner") }
+        composable("accom_infor_admin") { HotelDetailsScreen(accommodation, navController, "admin") }
     }
 }
