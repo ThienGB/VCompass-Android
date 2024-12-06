@@ -64,6 +64,26 @@ class AccommodationDao() {
             }
         )
     }
+    fun updateRatingResponse(accommodationId: String, ratingId: String, newResponse: String, responseTime: Long,  onSuccess: () -> Unit) {
+        realm.executeTransactionAsync(
+            { transactionRealm ->
+                val accommodation = transactionRealm.where(Accommodation::class.java)
+                    .equalTo("accommodationId", accommodationId)
+                    .findFirst()
+
+                accommodation?.ratings?.find { it.ratingId == ratingId }?.let { rating ->
+                    rating.response = newResponse
+                    rating.responseTime = responseTime
+                }
+            },
+            {
+                onSuccess()
+            },
+            { error ->
+                Log.e("RealmNotification", "Error updating Rating: $error")
+            }
+        )
+    }
     fun insertRoom(accommodationId: String, room: Room, onSuccess: () -> Unit = {}) {
         realm.executeTransactionAsync(
             { transactionRealm ->

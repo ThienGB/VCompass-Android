@@ -52,6 +52,9 @@ class MainPartnerViewModel (private val realmHelper: RealmHelper) : ViewModel() 
     private val _booking = MutableStateFlow(Booking())
     val booking: StateFlow<Booking> get() = _booking
 
+    private val _rating = MutableStateFlow(Rating())
+    val rating: StateFlow<Rating> get() = _rating
+
     private val _isLoading = MutableStateFlow(true)
     val isLoading: StateFlow<Boolean> get() = _isLoading
 
@@ -110,6 +113,9 @@ class MainPartnerViewModel (private val realmHelper: RealmHelper) : ViewModel() 
     fun setRoom(room: Room) {
         _room.value = room.copy()
     }
+    fun setRating(rating: Rating){
+        _rating.value = rating.copy()
+    }
     fun setBooking(booking: Booking){
         _booking.value = booking.copy()
     }
@@ -157,6 +163,17 @@ class MainPartnerViewModel (private val realmHelper: RealmHelper) : ViewModel() 
             this.amentities = amentities
             this.status = "pending"
         }
+        val notificationToAdmin = Notification().apply {
+            id_notification = UUID.randomUUID().toString().take(15)
+            id_sender = _user.value.userId
+            id_receiver = "La6jQlWcRWa49726l5MwsXLLJ4x1"
+            title = "Thông báo có nhà cung cấp mới"
+            content = "Bạn có một yêu  cầu mới, vui loòng xem xét và duyệt"
+            isRead = "false"
+            type = "accom"
+            create_at = Date()
+        }
+        firestoreNotiManager.addNotification(notificationToAdmin)
         firestoreDataManager.addAccommodationToFirestore(accom)
         accomDao.insertOrUpdateAccomm(accom){fetchData()}
     }
@@ -172,6 +189,17 @@ class MainPartnerViewModel (private val realmHelper: RealmHelper) : ViewModel() 
             this.amentities = amentities
             this.status = "pending"
         }
+        val notificationToAdmin = Notification().apply {
+            id_notification = UUID.randomUUID().toString().take(15)
+            id_sender = _user.value.userId
+            id_receiver = "La6jQlWcRWa49726l5MwsXLLJ4x1"
+            title = "Thông báo có nhà cung cấp cập nhật thông tin"
+            content = "Bạn có một yêu  cầu mới, vui lòng xem xét và duyệt"
+            isRead = "false"
+            type = "accom"
+            create_at = Date()
+        }
+        firestoreNotiManager.addNotification(notificationToAdmin)
         firestoreDataManager.addAccommodationToFirestore(accom)
         accomDao.insertOrUpdateAccomm(accom){fetchData()}
     }
@@ -221,6 +249,7 @@ class MainPartnerViewModel (private val realmHelper: RealmHelper) : ViewModel() 
             type = "booking"
             create_at = Date()
         }
+
         firestoreNotiManager.addNotification(notification)
         firestoreDataManager.addBookingToFirestore(newBooking)
         bookingDao.insertOrUpdateBooking(newBooking) {fetchData()}
@@ -286,6 +315,15 @@ class MainPartnerViewModel (private val realmHelper: RealmHelper) : ViewModel() 
             this.image = user.image
         }
     }
+    // Rating
+    fun addResponseRating(accommodationId: String, ratingId:String, response: String){
+        val responseTime = System.currentTimeMillis()
+        firestoreDataManager.updateResponseRating(accommodationId, ratingId, response, responseTime)
+        accomDao.updateRatingResponse(accommodationId, ratingId, response, responseTime) {
+            getAccomByPartner()
+        }
+    }
+
     fun logout() {
         auth.signOut()
         _user.value = UserAccount()

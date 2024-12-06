@@ -19,6 +19,8 @@ open class Rating : RealmObject() {
         copy.ratingId = this.ratingId
         copy.userId = this.userId
         copy.content = this.content
+        copy.response = this.response
+        copy.responseTime = this.responseTime
         copy.rate = this.rate
         copy.userName= this.userName
         copy.createdAt = this.createdAt

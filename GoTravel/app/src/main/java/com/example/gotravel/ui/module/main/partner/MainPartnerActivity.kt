@@ -49,6 +49,7 @@ import com.example.gotravel.ui.module.partner.DashBoard.DashboardScreen
 import com.example.gotravel.ui.module.partner.Rooms.AddUpdateRoomScreen
 import com.example.gotravel.ui.module.partner.accommodation.AddAccomScreen
 import com.example.gotravel.ui.module.review.ListReviewScreen
+import com.example.gotravel.ui.module.review.ResponseReviewScreen
 
 
 class MainPartnerActivity : ComponentActivity() {
@@ -111,6 +112,7 @@ fun NavHostPartnerGraph(
 ) {
     val accommodation by viewModel.accommodation.collectAsState()
     val bookings by viewModel.bookings.collectAsState()
+    val rating by viewModel.rating.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
     val booking by viewModel.booking.collectAsState()
     val room by viewModel.room.collectAsState()
@@ -145,6 +147,9 @@ fun NavHostPartnerGraph(
             {}, {viewModel.logout()}, "partner") }
         composable("accom_infor_admin") { HotelDetailsScreen(accommodation, navController, "admin") }
         composable("dashboard_detail") { DashboardDetail(bookings, navController) }
-        composable("list_rating") { ListReviewScreen(accommodation, navController) }
+        composable("response_rating") { ResponseReviewScreen(accommodation, viewModel, rating, navController) }
+        composable("list_rating") { ListReviewScreen(accommodation, navController, "partner"
+        ) { rating -> viewModel.setRating(rating) }
+        }
     }
 }

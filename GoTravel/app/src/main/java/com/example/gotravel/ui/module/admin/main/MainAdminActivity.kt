@@ -92,7 +92,7 @@ fun NavHostAdminGraph(
     val notifications by viewModel.notifications.collectAsState()
     val notification by viewModel.notification.collectAsState()
     NavHost(navController = navController, startDestination = "home", modifier = modifier){
-        composable("home") { HomeAdmin(accommodations, users, isLoading, navController, viewModel) }
+        composable("home") { HomeAdmin(user ,accommodations, users, isLoading, navController, viewModel) }
         composable("list_user") { ListUser(users, navController, viewModel, isLoading, "user") }
         composable("list_partner") { ListUser(users, navController, viewModel, isLoading, "partner") }
         composable("user_infor") { UserInfor(currentUser, navController,

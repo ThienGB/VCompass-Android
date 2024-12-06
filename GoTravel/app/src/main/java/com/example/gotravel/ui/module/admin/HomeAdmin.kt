@@ -51,6 +51,7 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 @Composable
 fun HomeAdmin(
+    user: UserAccount,
     accommodations: List<Accommodation> = listOf(),
     users: List<User>,
     isLoading: Boolean = false,
@@ -70,7 +71,7 @@ fun HomeAdmin(
         } else {
             Box(modifier = Modifier.verticalScroll(rememberScrollState())) {
                 Image(
-                    painter = painterResource(id = R.drawable.bg_admin),
+                    painter = rememberAsyncImagePainter(R.drawable.bg_admin),
                     contentDescription = null,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -83,7 +84,7 @@ fun HomeAdmin(
                         .padding(10.dp)
                 ) {
                     Spacer(modifier = Modifier.height(30.dp))
-                    AdminInforCard()
+                    AdminInforCard(user)
                     Spacer(modifier = Modifier.height(115.dp))
                     Text(
                         text = "Tổng quan",
@@ -223,7 +224,9 @@ fun BookingStats(
 }
 
 @Composable
-fun AdminInforCard() {
+fun AdminInforCard(
+    user: UserAccount
+) {
     Card(
         shape = RoundedCornerShape(12.dp),
         elevation = CardDefaults.cardElevation(8.dp),
@@ -236,7 +239,7 @@ fun AdminInforCard() {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Image(
-                    painter = rememberAsyncImagePainter("https://citibella.net/wp-content/uploads/2024/09/hinh-anh-avatar-nu-co-gai-1.jpg"),
+                    painter = rememberAsyncImagePainter(user.image),
                     contentDescription = null,
                     modifier = Modifier
                         .size(48.dp)
