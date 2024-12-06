@@ -2,12 +2,14 @@ package com.example.gotravel.ui.module.review
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -27,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
@@ -122,8 +125,6 @@ fun ListReviewScreen(
                             accommodation.ratings.forEach{rating ->
                                 ReviewItem(rating)
                             }
-
-
                         }
                     }
                 }
@@ -132,16 +133,19 @@ fun ListReviewScreen(
         }
     }
 }
+@Preview(showSystemUi = true)
 @Composable
 fun ReviewItem(
-    rating: Rating
+    rating: Rating = Rating(),
+    calledBy: String = "user"
 ){
     Column {
         Row(modifier = Modifier
             .padding(top = 16.dp, bottom = 5.dp)
             .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween) {
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
             Row(verticalAlignment = Alignment.CenterVertically,) {
                 Image(painter = painterResource(id = R.drawable.ic_user),
                     contentDescription = null,
@@ -172,6 +176,60 @@ fun ReviewItem(
             color = Color.Gray,
             modifier = Modifier.padding(start = 30.dp, top = 5.dp)
         )
+        if (rating.response != ""){
+            Row(modifier = Modifier
+                .padding(start = 16.dp,top = 16.dp, bottom = 5.dp)
+                .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Row(verticalAlignment = Alignment.CenterVertically,) {
+                    Image(painter = painterResource(id = R.drawable.ic_user),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(30.dp)
+                            .padding(end = 8.dp),
+                        contentScale = ContentScale.Crop
+                    )
+                    Text(
+                        text = rating.userName,
+                        fontWeight = Bold,
+                        fontSize = 18.sp,
+                    )
+                }
+                Text(
+                    text = CommonUtils.formatDate(rating.responseTime)   ,
+                    color = Color.Gray,
+                )
+            }
+            Text(
+                text = rating.response,
+                color = Color.Gray,
+                modifier = Modifier.padding(start = 30.dp, top = 5.dp, bottom = 5.dp)
+            )
+        }else if (calledBy == "partner"){
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 40.dp, end = 40.dp, bottom = 8.dp)
+                    .height(40.dp)
+                    .clip(RoundedCornerShape(99.dp))
+                    .background(colorResource(id = R.color.primary))
+                    .clickable {}
+            ) {
+                Image(painter = painterResource(id = R.drawable.ic_rating),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .padding(start = 20.dp)
+                        .size(25.dp),
+                    colorFilter = ColorFilter.tint(Color.White))
+                Text(text = "Phản hồi", color = Color.White,
+                    fontFamily = FontFamily(Font(R.font.proxima_nova_regular)),
+                    fontSize = 18.sp, modifier = Modifier.padding(end = 70.dp))
+            }
+        }
         HorizontalDivider(thickness = 1.dp, modifier = Modifier.padding(vertical = 16.dp))
     }
 }

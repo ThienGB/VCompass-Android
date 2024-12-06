@@ -2,6 +2,7 @@
 accompanistPermissions = "0.30.0"
 accompanistSwiperefresh = "0.30.1"
 agp = "8.5.2"
+charty = "1.0.0-alpha01"
 cloudinaryAndroid = "3.0.2"
 coilCompose = "2.4.0"
 converterGson = "2.9.0"
@@ -49,6 +50,7 @@ firebaseAuth = "23.1.0"
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanistPermissions" }
 accompanist-swiperefresh = { module = "com.google.accompanist:accompanist-swiperefresh", version.ref = "accompanistSwiperefresh" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+charty = { module = "com.himanshoe:charty", version.ref = "charty" }
 cloudinary-android = { module = "com.cloudinary:cloudinary-android", version.ref = "cloudinaryAndroid" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }

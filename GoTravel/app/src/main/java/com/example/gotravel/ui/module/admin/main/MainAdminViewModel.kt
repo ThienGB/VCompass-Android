@@ -101,7 +101,6 @@ class MainAdminViewModel (private val realmHelper: RealmHelper) : ViewModel() {
             setConversation(conversation.value)}
     }
     fun fetchHighPriorityData(){
-        _isLoading.value = true
         viewModelScope.launch {
             firestoreNotiManager.fetchNotifications(_user.value.userId
             ) { fetchNotificationsFromRealm() }
@@ -109,10 +108,12 @@ class MainAdminViewModel (private val realmHelper: RealmHelper) : ViewModel() {
         firestoreNotiManager.listenToNotifications(_user.value.userId) { fetchNotificationsFromRealm() }
         viewModelScope.launch {
             firestoreConverManager.fetchConversation(_user.value.userId
-            ) { fetchConversationsFromRealm()
-                listenMessage()
-            }
+            ) {
+                _conversations.value = emptyList()
+                fetchConversationsFromRealm()
+                listenMessage()}
         }
+
     }
     fun setUser(user: UserAccount) {
         _user.value = user.copy()
@@ -148,8 +149,9 @@ class MainAdminViewModel (private val realmHelper: RealmHelper) : ViewModel() {
         viewModelScope.launch {
             val userList = userDao.getAllUsers()
             if (userList.isNotEmpty()) {
-                _isLoading.value = false
                 _users.value = userList
+                fetchHighPriorityData()
+                _isLoading.value = false
             } else {
                 _isLoading.value = false
                 Log.d("AccommodationDetail", "No booking found")
@@ -183,7 +185,7 @@ class MainAdminViewModel (private val realmHelper: RealmHelper) : ViewModel() {
             title = "Thông báo duyệt chỗ ở" + if (status == "accept") " thành công" else " thất bại"
             content = if (status == "accept") acceptContent else rejectContent
             isRead = "false"
-            type = "booking"
+            type = "accom"
             create_at = Date()
         }
         val conversation = Conversation().apply {
@@ -249,6 +251,8 @@ class MainAdminViewModel (private val realmHelper: RealmHelper) : ViewModel() {
             val conversations = conversationDao.getAllConversations(_user.value.userId)
             if (conversations.isNotEmpty()) {
                 _conversations.value = conversations
+            }else{
+                _conversations.value = emptyList()
             }
         }
     }
@@ -277,6 +281,8 @@ class MainAdminViewModel (private val realmHelper: RealmHelper) : ViewModel() {
     fun logout() {
         auth.signOut()
         _user.value = UserAccount()
+        _conversations.value = emptyList()
+        conversationDao.deleteAllConversations()
     }
     override fun onCleared() {
         super.onCleared()

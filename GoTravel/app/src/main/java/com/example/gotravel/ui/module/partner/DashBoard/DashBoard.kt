@@ -6,18 +6,21 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
@@ -29,6 +32,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -61,6 +65,7 @@ import com.example.gotravel.helper.CommonUtils.formatCurrency
 import com.example.gotravel.ui.components.Loading
 import com.example.gotravel.ui.module.accomodation.TopReviewSection
 import com.example.gotravel.ui.module.main.partner.MainPartnerViewModel
+import com.example.gotravel.ui.module.main.user.MainUserViewModel
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
@@ -137,7 +142,7 @@ fun DashboardScreen(
                             fontSize = 18.sp,
                         )
                         Spacer(modifier = Modifier.height(8.dp))
-                        TopReviewSection(topRatings)
+                        TopReviewSection(topRatings, navController)
                     }
                 }
             }
@@ -236,6 +241,7 @@ fun BookingStats(
             modifier = Modifier
                 .padding(8.dp)
                 .weight(1f)
+                .clickable { navController.navigate("dashboard_detail") }
         ) {
             Column(
                 modifier = Modifier
@@ -246,10 +252,10 @@ fun BookingStats(
                 Text(text = "DOANH THU", color = Color.Gray, fontSize = 14.sp)
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(text = formatCurrency(revenue.toString())+ " đ", color = colorResource(id = R.color.green),
-                    fontWeight = FontWeight.Bold, fontSize = 24.sp)
+                    fontWeight = FontWeight.Bold, fontSize = 22.sp)
                 Spacer(modifier = Modifier.height(8.dp))
-                Text(text = "Tổng doanh thu",color = colorResource(id = R.color.primary),
-                    fontStyle = FontStyle.Italic, fontSize = 16.sp)
+                Text(text = "Xem chi tiết",color = colorResource(id = R.color.primary),
+                    fontStyle = FontStyle.Italic, fontSize = 16.sp, textDecoration = TextDecoration.Underline)
             }
         }
         Card(
@@ -270,7 +276,7 @@ fun BookingStats(
                 Text(text = "ĐẶT PHÒNG", color = Color.Gray, fontSize = 14.sp)
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(text = bookings.size.toString(),color = colorResource(id = R.color.green),
-                    fontWeight = FontWeight.Bold, fontSize = 24.sp)
+                    fontWeight = FontWeight.Bold, fontSize = 22.sp)
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(text = "Xem chi tiết",color = colorResource(id = R.color.primary),
                     fontStyle = FontStyle.Italic, fontSize = 16.sp, textDecoration = TextDecoration.Underline)
@@ -341,7 +347,7 @@ fun RoomCard(
                     .clip(RoundedCornerShape(12.dp)),
                 contentScale = ContentScale.Crop)
             Column(modifier = Modifier
-                .graphicsLayer(alpha = 0.4f)
+                .graphicsLayer(alpha = 0.5f)
                 .background(Color.White)
                 .height(175.dp)
                 .width(170.dp)){}
@@ -357,21 +363,15 @@ fun RoomCard(
                     fontSize = 16.sp)
                 Text(text = "Số giường: "+ room.bed.toString(),
                     modifier = Modifier.fillMaxWidth(),
-                    fontWeight = FontWeight.Bold,
                     fontSize = 14.sp,
-                    color = Color.Gray,
                 )
                 Text(text = "Số nguời: " + room.people.toString(),
                     modifier = Modifier.fillMaxWidth(),
-                    fontWeight = FontWeight.Bold,
                     fontSize = 14.sp,
-                    color = Color.Gray,
                 )
                 Text(text = "Loại phòng: " + room.roomType,
                     modifier = Modifier.fillMaxWidth(),
-                    fontWeight = FontWeight.Bold,
                     fontSize = 14.sp,
-                    color = Color.Gray,
                 )
                 Text(text = formatCurrency(room.price.toString()) + " đ",
                     modifier = Modifier.fillMaxWidth(),

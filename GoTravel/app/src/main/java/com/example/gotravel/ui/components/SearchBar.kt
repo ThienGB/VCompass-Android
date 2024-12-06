@@ -31,6 +31,7 @@ import com.example.gotravel.R
 @Composable
 fun CustomSearchBar(
     onTextChange: (String) -> Unit = {},
+    placeholder: String = "Tìm kiếm theo tên hoặc email",
 ){
     var message by remember {
         mutableStateOf("")
@@ -68,7 +69,7 @@ fun CustomSearchBar(
                 }
             },
             placeholder = {
-                Text(text = "Tìm theo tên hoặc email",
+                Text(text = placeholder,
                     color = colorResource(id = R.color.text_grey_hint),
                     fontSize = 17.sp)
             },

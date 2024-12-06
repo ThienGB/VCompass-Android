@@ -216,7 +216,18 @@ class MainUserViewModel(private val realmHelper: RealmHelper) : ViewModel() {
                     "Bạn sẽ sớm nhận được thông báo." +
                     "Nếu có bất kỳ thắc mắc nào, hãy nhắn tin cho chúng tôi vì chúng ta đã được kết nối với nhau"
             isRead = "false"
-            type = "booking"
+            type = "noti"
+            create_at = Date()
+        }
+        val notificationToPartner = Notification().apply {
+            id_notification = UUID.randomUUID().toString().take(15)
+            id_sender = accommodation.partnerId
+            id_receiver = accommodation.partnerId
+            title = "Thông báo có đăt phòng mới"
+            content = "Khách hàng ${_user.value.fullName} vừa đặt phòng cho ${search.vacationDays} ngày, " +
+                    "${search.guests} khách, tại ${accommodation.name}"
+            isRead = "false"
+            type = "noti"
             create_at = Date()
         }
         viewModelScope.launch {
@@ -224,6 +235,7 @@ class MainUserViewModel(private val realmHelper: RealmHelper) : ViewModel() {
                 firestoreDataManager.addBookingToFirestore(booking)
             }
             firestoreNotiManager.addNotification(notification)
+            firestoreNotiManager.addNotification(notificationToPartner)
             firestoreConverManager.addConversationToFirestore(conversation){
                 fetchHighPriorityData()
             }
@@ -295,6 +307,8 @@ class MainUserViewModel(private val realmHelper: RealmHelper) : ViewModel() {
     fun logout() {
         auth.signOut()
         _user.value = UserAccount()
+        _conversations.value = emptyList()
+        conversationDao.deleteAllConversations()
     }
 
     override fun onCleared() {

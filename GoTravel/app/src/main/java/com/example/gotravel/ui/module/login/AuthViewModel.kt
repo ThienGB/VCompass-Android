@@ -48,27 +48,43 @@ class AuthViewModel(private val realmHelper: RealmHelper,
     }
 
     //Dang nhap bang email
-    fun login(email: String, password: String)
-    {
-        if(email.isEmpty() || password.isEmpty())
-        {
+    fun login(email: String, password: String) {
+        // Kiểm tra nếu email hoặc password trống
+        if (email.isEmpty() || password.isEmpty()) {
             _authState.value = AuthState.Error("Email or password can't be empty")
             return
         }
 
-        auth.signInWithEmailAndPassword(email,password).addOnCompleteListener { task
-            -> if(task.isSuccessful){
-                getUserFromDb()
-            }
-            else
-            {
-                _authState.value = AuthState.Error(task.exception?.message?:"Something went wrong")
+        // Đặt trạng thái là Loading trong khi đang đăng nhập
+        _authState.value = AuthState.Loading
+
+        // Đăng nhập bằng email và password
+        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                // Đăng nhập thành công, lấy thông tin người dùng từ cơ sở dữ liệu
+                viewModelScope.launch {
+                    getUserFromDb()
+                }
+            } else {
+                // Xử lý các lỗi từ Firebase
+                val exception = task.exception
+                when (exception) {
+                    is FirebaseAuthInvalidUserException -> {
+                        // Tài khoản không tồn tại
+                        _authState.value = AuthState.Error("Tài khoản chưa đăng ký!")
+                    }
+                    is FirebaseAuthInvalidCredentialsException -> {
+                        // Mật khẩu không chính xác
+                        _authState.value = AuthState.Error("Mật khẩu không chính xác!")
+                    }
+                    else -> {
+                        // Lỗi chung
+                        _authState.value = AuthState.Error(exception?.message ?: "Something went wrong")
+                    }
+                }
             }
         }
     }
-    //                    Log.e(auth.uid,"Khong ton tai");
-    //                    checkIfUserExistsAndCreateIfNot()
-    //                    getUserFromDb()
 
     //Dang nhap bằng google
         fun signInWithGoogle(idToken: String) {
@@ -163,7 +179,6 @@ class AuthViewModel(private val realmHelper: RealmHelper,
         }
     }
 
-    //Kiem tra User có ton tai trong database ko
     private fun checkIfUserExistsAndCreateIfNot() {
         viewModelScope.launch {
             val currentUser = auth.currentUser
@@ -175,6 +190,7 @@ class AuthViewModel(private val realmHelper: RealmHelper,
             if (userFromDb == null) {
                 // Nếu chưa có tài khoản, tạo tài khoản mới
                 val userAccount = UserAccount()
+                userAccount.email = currentUser?.email.toString()
                 userAccount.userId = userId
                 userAccount.fullName = ""
                 userAccount.role = ""

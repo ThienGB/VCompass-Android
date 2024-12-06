@@ -8,6 +8,8 @@ open class Rating : RealmObject() {
     var ratingId: String = ""
     var userId: String = ""
     var content: String = ""
+    var response: String = ""
+    var responseTime: Long = 0
     var rate: Int = 0
     var userName: String = ""
     var createdAt: Long = System.currentTimeMillis()

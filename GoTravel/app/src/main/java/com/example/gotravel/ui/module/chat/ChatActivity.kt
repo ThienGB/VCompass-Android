@@ -13,6 +13,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Send
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -43,16 +45,14 @@ fun MessageBubble(message: Message, user1: UserAccount) {
         Column(
             horizontalAlignment = if (message.id_user == user1.userId) Alignment.End else Alignment.Start
         ) {
-            Box(
-                modifier = Modifier
-                    .background(
-                        if (message.id_user == user1.userId) Color(0xFFDCF8C6) else Color.White,
-                        shape = RoundedCornerShape(8.dp)
-                    )
-                    .padding(12.dp)
-                    .widthIn(max = 300.dp)
+            Card(
+                elevation = CardDefaults.cardElevation(8.dp),
+                modifier = Modifier.widthIn(max = 300.dp),
+                colors = CardDefaults.cardColors(
+                    if (message.id_user == user1.userId) Color(0xFFA3D5F7) else Color.White),
             ) {
-                Text(text = message.content.toString(), style = MaterialTheme.typography.bodySmall)
+                Text(text = message.content.toString(), fontSize = 16.sp,
+                    modifier = Modifier.padding(12.dp))
             }
 
             Text(

@@ -1,14 +1,19 @@
 package com.example.gotravel.ui.module.home.user
 
 import android.content.Context
+import android.support.annotation.DrawableRes
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -26,6 +31,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
@@ -36,7 +42,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
@@ -45,6 +54,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -112,7 +123,8 @@ fun HomeUserScreen(
             bottomSheetScaffoldState.bottomSheetState.expand()
         }
     }
-    Column (modifier = Modifier.background(Color.White)
+    Column (modifier = Modifier
+        .background(Color.White)
         .verticalScroll(rememberScrollState())) {
         Box(modifier = Modifier.fillMaxWidth()) {
             Image(
@@ -182,7 +194,13 @@ fun HomeUserScreen(
                                     viewModel.setIsShowBottomBar(false)
                                     navController.navigate("search")
                                 } else
-                                    Toast.makeText(context, "Vui lòng chọn đủ thông tin", Toast.LENGTH_SHORT).show()
+                                    Toast
+                                        .makeText(
+                                            context,
+                                            "Vui lòng chọn đủ thông tin",
+                                            Toast.LENGTH_SHORT
+                                        )
+                                        .show()
                             }
                             .fillMaxWidth()
                             .padding(vertical = 10.dp)
@@ -192,7 +210,8 @@ fun HomeUserScreen(
                 }
             }
         }
-        RecentSearches()
+        RecentSearches { search -> viewModel.setSearchData(search) }
+        PopularDestinations{ search -> viewModel.setSearchData(search) }
     }
     if (currentSheet.value != BottomSheetType.NONE){
         BottomSheetScaffold(
@@ -200,7 +219,9 @@ fun HomeUserScreen(
             sheetContent = {
                 if (currentSheet.value != BottomSheetType.NONE){
                     Box(
-                        modifier = Modifier.wrapContentHeight().background(Color.White)
+                        modifier = Modifier
+                            .wrapContentHeight()
+                            .background(Color.White)
                     ) {
                         when (currentSheet.value) {
                             BottomSheetType.DATE_PICKER -> DatePickerBottomSheet(searchData, viewModel, context
@@ -258,7 +279,9 @@ fun SearchInfor(
 }
 
 @Composable
-fun RecentSearches() {
+fun RecentSearches(
+    onSearchClick: (Search) -> Unit
+) {
     val searchItems = listOf(
         Search(
             "Vũng Tàu",
@@ -302,6 +325,7 @@ fun RecentSearches() {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(10.dp)
+                        .clickable { onSearchClick(item) }
                 ) {
                     Column(modifier = Modifier
                         .background(Color.White)
@@ -331,4 +355,114 @@ fun RecentSearches() {
 
     }
 }
+
+@Preview(showSystemUi = true)
+@Composable
+fun PopularDestinations(
+    onColumnClick: (Search) -> Unit = {}
+) {
+    Column(
+        modifier = Modifier
+            .background(Color.White)
+            .fillMaxWidth()
+            .padding(16.dp)
+    ) {
+        Text(
+            text = "Điểm đến phổ biến",
+            fontSize = 18.sp,
+            fontFamily = FontFamily(Font(R.font.proxima_nova_bold)),
+            modifier = Modifier.padding(top = 8.dp ,bottom = 8.dp)
+        )
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .horizontalScroll(rememberScrollState())
+        ) {
+            DestinationCard(
+                onColumnClick = onColumnClick,
+                imageRes = R.drawable.img_vung_tau,
+                title = "Vũng Tàu",
+                description = "10+ khách sạn"
+            )
+            DestinationCard(
+                onColumnClick = onColumnClick,
+                imageRes = R.drawable.img_ha_noi,
+                title = "Hà Nội",
+                description = "10+ khách sạn"
+            )
+            DestinationCard(
+                onColumnClick = onColumnClick,
+                imageRes = R.drawable.img_hue,
+                title = "Huế",
+                description = "5+ khách sạn"
+            )
+            DestinationCard(
+                onColumnClick = onColumnClick,
+                imageRes = R.drawable.img_ha_long,
+                title = "Hạ Long",
+                description = "5+ khách sạn"
+            )
+        }
+    }
+}
+@Composable
+fun DestinationCard(
+    onColumnClick: (Search) -> Unit = {},
+    @DrawableRes imageRes: Int,
+    title: String,
+    description: String
+) {
+    val search = Search(destination = title)
+    Box(
+        modifier = Modifier
+            .width(120.dp)
+            .height(180.dp)
+            .clip(RoundedCornerShape(8.dp))
+            .clickable { onColumnClick(search) }
+    ) {
+        // Hiển thị ảnh
+        Image(
+            painter = painterResource(id = imageRes),
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.fillMaxSize()
+        )
+
+        Box(
+            modifier = Modifier
+                .align(Alignment.BottomStart)
+                .fillMaxWidth()
+                .fillMaxHeight(0.6f)
+                .background(
+                    Brush.verticalGradient(
+                        colors = listOf(
+                            Color.Transparent,
+                            colorResource(id = R.color.primary).copy(alpha = 0.9f)
+                        ),
+                        startY = 50f
+                    )
+                )
+        )
+        Column(
+            modifier = Modifier
+                .align(Alignment.BottomStart)
+                .padding(8.dp)
+        ) {
+            Text(
+                text = title,
+                color = Color.White,
+                fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+            Text(
+                text = description,
+                color = Color.White,
+                modifier = Modifier.padding(top = 4.dp)
+            )
+        }
+    }
+}
+
 
