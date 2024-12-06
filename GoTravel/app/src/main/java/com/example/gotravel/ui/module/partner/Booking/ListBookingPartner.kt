@@ -12,6 +12,10 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,6 +31,7 @@ import androidx.navigation.NavController
 import com.example.gotravel.R
 import com.example.gotravel.data.model.Booking
 import com.example.gotravel.helper.CommonUtils.formatCurrency
+import com.example.gotravel.ui.components.CustomSearchBar
 import com.example.gotravel.ui.components.NavTitle
 import com.example.gotravel.ui.module.booking.BookingListViewModel
 import com.example.gotravel.ui.module.booking.BookingStatusItem
@@ -38,20 +43,32 @@ fun BookingListPartner(
     viewModel: MainPartnerViewModel,
     navController: NavController
 ) {
+    var filterBooking by remember { mutableStateOf(bookings) }
+    fun onTextChange(query: String){
+        filterBooking = bookings.filter { booking ->
+            booking.accommodationName.contains(query, ignoreCase = true) ||
+            booking.fullName.contains(query, ignoreCase = true)
+        }
+    }
     Column {
         Column {
             NavTitle("Danh sách đặt phòng") { navController.popBackStack() }
+            CustomSearchBar(onTextChange = { onTextChange(it) }, "Tìm kiếm theo mã hoặc tên")
         }
         Spacer(modifier = Modifier.height(15.dp))
         if (bookings.isEmpty()) {
             Column(
-                modifier = Modifier.fillMaxWidth().padding(16.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_no_booking),
                     contentDescription = null,
-                    modifier = Modifier.padding(bottom = 20.dp).size(150.dp)
+                    modifier = Modifier
+                        .padding(bottom = 20.dp)
+                        .size(150.dp)
                 )
                 Text(
                     text = "Chưa có khách hàng nào đặt chỗ",
@@ -61,7 +78,7 @@ fun BookingListPartner(
             }
         } else {
             LazyColumn {
-                items(bookings) { booking ->
+                items(filterBooking) { booking ->
                     BookingPartnerItem(booking, navController, viewModel)
                 }
             }

@@ -27,7 +27,6 @@ class ConversationDao {
     fun insertOrUpdateConversations(conversation: List<Conversation>, onSuccess: () -> Unit = {}) {
         realm.executeTransactionAsync(
             { transactionRealm ->
-                transactionRealm.where<Conversation>().findAll()?.deleteAllFromRealm()
                 transactionRealm.insertOrUpdate(conversation)
             },
             {
@@ -66,5 +65,10 @@ class ConversationDao {
 
     fun getAllMessages(id: String): List<Conversation> {
         return realm.where<Conversation>().equalTo("id_conversation", id).findAll()
+    }
+    fun deleteAllConversations(){
+        realm.executeTransactionAsync { transactionRealm ->
+            transactionRealm.where<Conversation>().findAll()?.deleteAllFromRealm()
+        }
     }
 }

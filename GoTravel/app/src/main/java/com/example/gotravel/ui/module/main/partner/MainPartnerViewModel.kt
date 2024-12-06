@@ -29,6 +29,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.Date
 import java.util.UUID
 
 class MainPartnerViewModel (private val realmHelper: RealmHelper) : ViewModel() {
@@ -204,6 +205,23 @@ class MainPartnerViewModel (private val realmHelper: RealmHelper) : ViewModel() 
             fullName = booking.value.fullName
             email = booking.value.email
         }
+        val acceptContent = "Chúng tôi đã xác nhận yêu cầu đặt phòng của bạn tại ${booking.value.accommodationName}," +
+                " chúc bạn có một kỳ nghỉ vui vẻ, " +
+                "đừng quên nhắn cho chúng tôi trước 15 phút checkin để chúng tôi được phục vụ bạn một cách chu đáo"
+        val rejectContent = "Chúng tôi rất tiếc khi thông báo với bạn rằng yêu cầu " +
+                "đặt phòng của bạn tại ${booking.value.accommodationName} đã bị từ chối vì một số lý do khách quan, chúng tôi" +
+                " vô cùng xin lỗi vì sự bất tiện này"
+        val notification = Notification().apply {
+            id_notification = UUID.randomUUID().toString().take(15)
+            id_sender = _user.value.userId
+            id_receiver = booking.value.userId
+            title = "Thông báo duyệt đăt phòng" + if (status == "success") " thành công" else " thất bại"
+            content = if (status == "accept") acceptContent else rejectContent
+            isRead = "false"
+            type = "booking"
+            create_at = Date()
+        }
+        firestoreNotiManager.addNotification(notification)
         firestoreDataManager.addBookingToFirestore(newBooking)
         bookingDao.insertOrUpdateBooking(newBooking) {fetchData()}
     }
@@ -271,6 +289,8 @@ class MainPartnerViewModel (private val realmHelper: RealmHelper) : ViewModel() 
     fun logout() {
         auth.signOut()
         _user.value = UserAccount()
+        _conversations.value = emptyList()
+        conversationDao.deleteAllConversations()
     }
     override fun onCleared() {
         super.onCleared()

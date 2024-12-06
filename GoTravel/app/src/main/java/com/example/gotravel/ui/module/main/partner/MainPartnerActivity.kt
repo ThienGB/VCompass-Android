@@ -44,9 +44,11 @@ import com.example.gotravel.ui.module.notifications.NotificationDetail
 import com.example.gotravel.ui.module.notifications.NotificationScreen
 import com.example.gotravel.ui.module.partner.Booking.BookingInforPartner
 import com.example.gotravel.ui.module.partner.Booking.BookingListPartner
+import com.example.gotravel.ui.module.partner.DashBoard.DashboardDetail
 import com.example.gotravel.ui.module.partner.DashBoard.DashboardScreen
 import com.example.gotravel.ui.module.partner.Rooms.AddUpdateRoomScreen
 import com.example.gotravel.ui.module.partner.accommodation.AddAccomScreen
+import com.example.gotravel.ui.module.review.ListReviewScreen
 
 
 class MainPartnerActivity : ComponentActivity() {
@@ -142,5 +144,7 @@ fun NavHostPartnerGraph(
             {user, context -> viewModel.updateUser(user, context)},
             {}, {viewModel.logout()}, "partner") }
         composable("accom_infor_admin") { HotelDetailsScreen(accommodation, navController, "admin") }
+        composable("dashboard_detail") { DashboardDetail(bookings, navController) }
+        composable("list_rating") { ListReviewScreen(accommodation, navController) }
     }
 }

@@ -323,7 +323,7 @@ fun RatingsSection(
             fontFamily = FontFamily(Font(R.font.proxima_nova_bold)),
             fontSize = 20.sp)
 
-        TopReviewSection(topRatings)
+        TopReviewSection(topRatings, navController)
     }
 }
 
@@ -348,7 +348,8 @@ fun RatingTag(text: String) {
 
 @Composable
 fun TopReviewSection(
-    topRatings: List<Rating> = listOf()
+    topRatings: List<Rating> = listOf(),
+    navController: NavController
 ) {
     LazyRow(modifier = Modifier
         .fillMaxWidth()) {
@@ -358,6 +359,9 @@ fun TopReviewSection(
                     .padding(end = 10.dp, top = 10.dp)
                     .width(250.dp)
                     .fillMaxHeight()
+                    .clickable {
+                        navController.navigate("list_rating")
+                    }
                     .clip(RoundedCornerShape(16.dp))
                     .background(colorResource(id = R.color.bgRate))) {
                 Column(Modifier.padding(10.dp),

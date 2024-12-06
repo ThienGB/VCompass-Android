@@ -48,7 +48,6 @@ class MainAdminActivity : ComponentActivity() {
         val user = getUserFromShareRef(sharedPreferences)
         viewModel.setUser(user)
         viewModel.fetchData()
-        viewModel.fetchHighPriorityData()
         setContent {
             MainAdminScreen(viewModel)
         }
@@ -122,5 +121,6 @@ fun NavHostAdminGraph(
         composable("profile") { ProfileScreen(user, navController,
             {user, context -> viewModel.updateUser(user, context)},
             {}, {viewModel.logout()},  "admin") }
+        composable("list_rating") { ListReviewScreen(accommodation, navController) }
     }
 }
