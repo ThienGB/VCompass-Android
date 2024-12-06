@@ -186,6 +186,25 @@ class FirestoreDataManager () {
                     println("Error updating rating ${rating.ratingId}: $e")
                 }
     }
+    fun updateResponseRating(accommodationId: String, ratingId: String, response: String, responseTime: Long) {
+        val ratingsCollectionRef = db.collection(CL_ACCOM)
+            .document(accommodationId)
+            .collection(CL_RATING)
+
+        val updates = mapOf(
+            "response" to response,
+            "responseTime" to responseTime
+        )
+        ratingsCollectionRef
+            .document(ratingId)
+            .update(updates)
+            .addOnSuccessListener {
+                println("Rating ${ratingId} updated successfully!")
+            }
+            .addOnFailureListener { e ->
+                println("Error updating rating ${ratingId}: $e")
+            }
+    }
     fun updateRoomsInFirestore(accommodationId: String, room: Room) {
         val ratingsCollectionRef = db.collection(CL_ACCOM)
             .document(accommodationId)

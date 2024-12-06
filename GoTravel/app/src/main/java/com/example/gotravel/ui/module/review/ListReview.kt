@@ -41,6 +41,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import coil.compose.rememberAsyncImagePainter
 import com.example.gotravel.R
 import com.example.gotravel.data.model.Accommodation
 import com.example.gotravel.data.model.Rating
@@ -54,7 +55,9 @@ import java.math.RoundingMode
 @Composable
 fun ListReviewScreen(
     accommodation: Accommodation= Accommodation(),
-    navController: NavController = NavController(LocalContext.current)
+    navController: NavController = NavController(LocalContext.current),
+    calledBy: String = "user",
+    setRating: (Rating) -> Unit = {}
 ) {
     val averageRating = if (accommodation.ratings.isNotEmpty()) {
         BigDecimal(accommodation.ratings.map { it.rate }.average())
@@ -106,11 +109,15 @@ fun ListReviewScreen(
                     HorizontalDivider(thickness = 7.dp, color = colorResource(R.color.lightGray))
 
                     if (accommodation.ratings.isEmpty()){
-                        Column(modifier = Modifier.fillMaxWidth().padding(16.dp),
+                        Column(modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
                             horizontalAlignment = Alignment.CenterHorizontally) {
                             Image(painter = painterResource(id = R.drawable.ic_no_review),
                                 contentDescription = null,
-                                modifier = Modifier.padding(bottom = 20.dp).size(150.dp)
+                                modifier = Modifier
+                                    .padding(bottom = 20.dp)
+                                    .size(150.dp)
                             )
                             Text(text = "Chưa có đánh giá",
                                 fontFamily = FontFamily(Font(R.font.proxima_nova_regular)),
@@ -123,7 +130,7 @@ fun ListReviewScreen(
                                 fontSize = 22.sp)
                             HorizontalDivider(thickness = 1.dp, modifier = Modifier.padding(top = 16.dp))
                             accommodation.ratings.forEach{rating ->
-                                ReviewItem(rating)
+                                ReviewItem(rating, accommodation,navController, calledBy, setRating)
                             }
                         }
                     }
@@ -137,7 +144,10 @@ fun ListReviewScreen(
 @Composable
 fun ReviewItem(
     rating: Rating = Rating(),
-    calledBy: String = "user"
+    accommodation: Accommodation = Accommodation(),
+    navController: NavController = NavController(LocalContext.current),
+    calledBy: String = "user",
+    setRating: (Rating) -> Unit = {},
 ){
     Column {
         Row(modifier = Modifier
@@ -151,7 +161,8 @@ fun ReviewItem(
                     contentDescription = null,
                     modifier = Modifier
                         .size(30.dp)
-                        .padding(end = 8.dp),
+                        .padding(end = 8.dp)
+                        .background(Color.Transparent, RoundedCornerShape(99.dp)),
                     contentScale = ContentScale.Crop
                 )
                 Text(
@@ -178,23 +189,24 @@ fun ReviewItem(
         )
         if (rating.response != ""){
             Row(modifier = Modifier
-                .padding(start = 16.dp,top = 16.dp, bottom = 5.dp)
+                .padding(start = 16.dp, top = 16.dp, bottom = 5.dp)
                 .fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically,) {
-                    Image(painter = painterResource(id = R.drawable.ic_user),
+                    Image(painter = rememberAsyncImagePainter(accommodation.image),
                         contentDescription = null,
                         modifier = Modifier
+                            .background(Color.Transparent, RoundedCornerShape(99.dp))
                             .size(30.dp)
                             .padding(end = 8.dp),
                         contentScale = ContentScale.Crop
                     )
                     Text(
-                        text = rating.userName,
+                        text = accommodation.name,
                         fontWeight = Bold,
-                        fontSize = 18.sp,
+                        fontSize = 15.sp,
                     )
                 }
                 Text(
@@ -205,29 +217,31 @@ fun ReviewItem(
             Text(
                 text = rating.response,
                 color = Color.Gray,
-                modifier = Modifier.padding(start = 30.dp, top = 5.dp, bottom = 5.dp)
+                modifier = Modifier.padding(start = 46.dp, top = 5.dp)
             )
         }else if (calledBy == "partner"){
             Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 40.dp, end = 40.dp, bottom = 8.dp)
+                    .padding(start = 80.dp, end = 80.dp, top = 8.dp)
                     .height(40.dp)
                     .clip(RoundedCornerShape(99.dp))
                     .background(colorResource(id = R.color.primary))
-                    .clickable {}
+                    .clickable {
+                        setRating(rating)
+                        navController.navigate("response_rating")
+                    }
             ) {
                 Image(painter = painterResource(id = R.drawable.ic_rating),
                     contentDescription = null,
                     modifier = Modifier
-                        .padding(start = 20.dp)
+                        .padding(start = 20.dp, end = 20.dp)
                         .size(25.dp),
                     colorFilter = ColorFilter.tint(Color.White))
                 Text(text = "Phản hồi", color = Color.White,
                     fontFamily = FontFamily(Font(R.font.proxima_nova_regular)),
-                    fontSize = 18.sp, modifier = Modifier.padding(end = 70.dp))
+                    fontSize = 18.sp)
             }
         }
         HorizontalDivider(thickness = 1.dp, modifier = Modifier.padding(vertical = 16.dp))

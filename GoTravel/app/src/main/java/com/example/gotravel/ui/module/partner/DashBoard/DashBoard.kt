@@ -84,6 +84,7 @@ fun DashboardScreen(
         state = rememberSwipeRefreshState(isResfreshing),
         onRefresh = {
             viewModel.fetchData()
+            viewModel.fetchHighPriorityData()
         }
     ) {
         if (isLoading) {
