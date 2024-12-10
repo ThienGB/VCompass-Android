@@ -1,8 +1,10 @@
-package com.example.gotravel.ui.module.admin.main
+package com.example.gotravel.ui.module.partner.main
 
 import ProfileScreen
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.padding
@@ -21,91 +23,103 @@ import com.example.gotravel.MainApplication
 import com.example.gotravel.helper.CommonUtils.getUserFromShareRef
 import com.example.gotravel.helper.RealmHelper
 import com.example.gotravel.helper.SharedPreferencesHelper
+import com.example.gotravel.ui.components.Loading
 import com.example.gotravel.ui.factory.ViewModelFactory
 import com.example.gotravel.ui.module.general.accomodation.HotelDetailsScreen
-import com.example.gotravel.ui.module.admin.home.HomeAdmin
-import com.example.gotravel.ui.module.admin.accommodation.AccomList
-import com.example.gotravel.ui.module.admin.accommodation.AccomRegisterList
-import com.example.gotravel.ui.module.admin.user.ListUser
-import com.example.gotravel.ui.module.admin.user.UserInfor
 import com.example.gotravel.ui.module.general.chat.ChatScreen
 import com.example.gotravel.ui.module.general.chat.ConversationScreen
+import com.example.gotravel.ui.module.general.login.MainLoginActivity
 import com.example.gotravel.ui.module.user.main.CustomBottomBar
 import com.example.gotravel.ui.module.general.notifications.NotificationDetail
 import com.example.gotravel.ui.module.general.notifications.NotificationScreen
+import com.example.gotravel.ui.module.partner.booking.BookingInforPartner
+import com.example.gotravel.ui.module.partner.booking.BookingListPartner
+import com.example.gotravel.ui.module.partner.home.DashboardDetail
+import com.example.gotravel.ui.module.partner.home.DashboardScreen
+import com.example.gotravel.ui.module.partner.room.AddUpdateRoomScreen
+import com.example.gotravel.ui.module.partner.accommodation.AddAccomScreen
 import com.example.gotravel.ui.module.general.review.ListReviewScreen
+import com.example.gotravel.ui.module.partner.review.ResponseReviewScreen
 
 
-class MainAdminActivity : ComponentActivity() {
-    private lateinit var viewModel: MainAdminViewModel
+class MainPartnerActivity : ComponentActivity() {
+    private lateinit var viewModel: MainPartnerViewModel
     private lateinit var realmHelper: RealmHelper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         realmHelper = (application as MainApplication).realmHelper
-        val factory = ViewModelFactory(MainAdminViewModel::class.java, realmHelper)
-        viewModel = ViewModelProvider(this, factory)[MainAdminViewModel::class.java]
+        val factory = ViewModelFactory(MainPartnerViewModel::class.java, realmHelper)
+        viewModel = ViewModelProvider(this, factory)[MainPartnerViewModel::class.java]
         val sharedPreferences = getSharedPreferences(SharedPreferencesHelper.SHARED_PREFS, Context.MODE_PRIVATE)
         val user = getUserFromShareRef(sharedPreferences)
+        if (user.status == "banned"){
+            viewModel.logout()
+            val intent = Intent(this, MainLoginActivity::class.java)
+            startActivity(intent)
+            Toast.makeText(this, "Tài khoản của bạn đã bị khóa", Toast.LENGTH_SHORT).show()
+        }
         viewModel.setUser(user)
         viewModel.fetchData()
+        viewModel.fetchHighPriorityData()
         setContent {
-            MainAdminScreen(viewModel)
+            MainPartnerScreen(viewModel)
         }
     }
 }
 
 @Composable
-fun MainAdminScreen(
-    viewModel: MainAdminViewModel
+fun MainPartnerScreen(
+    viewModel: MainPartnerViewModel
 ) {
     val isShowBottomBar by viewModel.isShowBottomBar.collectAsState()
     val navController = rememberNavController()
+    val isLoading by viewModel.isLoading.collectAsState()
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val selectedRoute = currentBackStackEntry?.destination?.route ?: "home"
-    Scaffold(
-        bottomBar = {
-            if(isShowBottomBar)
-                CustomBottomBar(navController, selectedRoute)
+    if (isLoading)
+        Loading()
+    else {
+        Scaffold(
+            bottomBar = {
+                if (isShowBottomBar)
+                    CustomBottomBar(navController, selectedRoute)
+            }
+        ) { paddingValues ->
+            NavHostPartnerGraph(
+                navController,
+                viewModel,
+                modifier = Modifier.padding(paddingValues)
+            )
         }
-    ) { paddingValues ->
-        NavHostAdminGraph(
-            navController,
-            viewModel,
-            modifier = Modifier.padding(paddingValues)
-        )
     }
+
 }
 @Composable
-fun NavHostAdminGraph(
+fun NavHostPartnerGraph(
     navController: NavHostController,
-    viewModel: MainAdminViewModel,
+    viewModel: MainPartnerViewModel,
     modifier: Modifier = Modifier
 ) {
-    val accommodations by viewModel.accommodations.collectAsState()
+    val accommodation by viewModel.accommodation.collectAsState()
+    val bookings by viewModel.bookings.collectAsState()
+    val rating by viewModel.rating.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
-    val accommodation  by viewModel.accommodation.collectAsState()
-    val users by viewModel.users.collectAsState()
-    val currentUser by viewModel.currentUser.collectAsState()
+    val booking by viewModel.booking.collectAsState()
+    val room by viewModel.room.collectAsState()
     val user by viewModel.user.collectAsState()
-    val conversation by viewModel.conversation.collectAsState()
     val conversations by viewModel.conversations.collectAsState()
+    val conversation by viewModel.conversation.collectAsState()
     val notifications by viewModel.notifications.collectAsState()
     val notification by viewModel.notification.collectAsState()
     NavHost(navController = navController, startDestination = "home", modifier = modifier){
-        composable("home") { HomeAdmin(user ,accommodations, users, isLoading, navController, viewModel) }
-        composable("list_user") { ListUser(users, navController, viewModel, isLoading, "user") }
-        composable("list_partner") { ListUser(users, navController, viewModel, isLoading, "partner") }
-        composable("user_infor") { UserInfor(currentUser, navController,
-            { viewModel.handleBanUser("banned") },
-            { viewModel.handleBanUser("Active") }) }
-        composable("list_accom") { AccomList(accommodations, navController, viewModel) }
-        composable("list_accom_register") { AccomRegisterList(accommodations, navController, viewModel) }
-        composable("accept_register") { HotelDetailsScreen(
-            accommodation, navController, "accept",
-            { viewModel.handleConfirmAccom("cancel") },
-            { viewModel.handleConfirmAccom("accept") }) }
-        composable("accom_infor_admin") { HotelDetailsScreen(accommodation, navController, "admin") }
-        composable("list_rating") { ListReviewScreen(accommodation, navController) }
+        composable("home") { DashboardScreen(accommodation, bookings, isLoading, navController, viewModel) }
+        composable("add_room") { AddUpdateRoomScreen(navController, accommodation, room, viewModel)
+            viewModel.setIsShowBottomBar(false)}
+        composable("add_accom") { AddAccomScreen(navController, accommodation, viewModel)
+            viewModel.setIsShowBottomBar(false)}
+        composable("booking_partner") { BookingListPartner(bookings, viewModel, navController)
+            viewModel.setIsShowBottomBar(false)}
+        composable("booking_infor_partner") { BookingInforPartner(booking,isLoading, viewModel, navController) }
         composable("chat") { ConversationScreen(conversations, navController, user)
         { conversation -> viewModel.setConversation(conversation) }
             viewModel.setIsShowBottomBar(true)}
@@ -120,7 +134,12 @@ fun NavHostAdminGraph(
             viewModel.setIsShowBottomBar(false)}
         composable("profile") { ProfileScreen(user, navController,
             {user, context -> viewModel.updateUser(user, context)},
-            {}, {viewModel.logout()},  "admin") }
-        composable("list_rating") { ListReviewScreen(accommodation, navController) }
+            {}, {viewModel.logout()}, "partner") }
+        composable("accom_infor_admin") { HotelDetailsScreen(accommodation, navController, "admin") }
+        composable("dashboard_detail") { DashboardDetail(bookings, navController) }
+        composable("response_rating") { ResponseReviewScreen(accommodation, viewModel, rating, navController) }
+        composable("list_rating") { ListReviewScreen(accommodation, navController, "partner"
+        ) { rating -> viewModel.setRating(rating) }
+        }
     }
 }
