@@ -8,6 +8,13 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="primary">#1A94FF</color>
+    <color name="timeScheduleBackground">#E7EBFA</color>
+    <color name="orangeBackground">#FDF3F0</color>
+    <color name="purpleBackground">#F5EDFF</color>
+    <color name="yellowBackground">#FFF9E9</color>
+    <color name="priceScheduleBackground">#FFF2EE</color>
+    <color name="timeScheduleText">#0024A8</color>
+    <color name="lightDarkBlue">#001CCF</color>
     <color name="darkBlue">#007A8C</color>
     <color name="lightBlack">#33415C</color>
     <color name="darkGreen">#336749</color>
@@ -18,6 +25,9 @@
     <color name="secondBlack">#808089</color>"
     <color name="ic_launcher_background">#FFFFFF</color>
     <color name="colorPrimary">#ED1C24</color>
+    <color name="colorOrange">#FF5722</color>
+    <color name="lightOrange">#FB6738</color>
+    <color name="darkOrange">#FF2E09</color>
     <color name="colorPrimaryDark">#C01219</color>
     <color name="colorAccent">#474747</color>
     <color name="textColorPrimary">#222222</color>
@@ -26,8 +36,11 @@
     <color name="onboardingColorPrimaryDark">#CCCCCC</color>
     <color name="colorBar">#C3C3C3</color>
     <color name="colorSeparator">#DCDCDC</color>
+    <color name="colorLightCyan">#affff0</color>
+    <color name="colorLightSeparator">#f9f9f9</color>
     <color name="colorSeparator80">#CCDCDCDC</color>
     <color name="colorLink">#3AA960</color>
+    <color name="lightCyan">#7bbcb0</color>
     <color name="colorGreen">#3AA960</color>
     <color name="colorWhiteGreen">#e5f7ee</color>
     <color name="colorDarkGreen">#14a25f</color>

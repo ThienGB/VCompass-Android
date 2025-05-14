@@ -1,0 +1,5 @@
+package com.example.gotravel.helper
+
+enum class BottomSheetType {
+    NONE, DATE_PICKER, GUEST_PICKER, PRICE_PICKER, DESTINATION_PICKER, TIME_PICKER, RANGE_DAY_PICKER, COMMENT, ADD_ACTIVITY, DRAG_ITEM
+}

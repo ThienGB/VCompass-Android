@@ -94,10 +94,6 @@ fun ForgetPasswordForm(authViewModel: AuthViewModel) {
             leadingIcon = {
                 Icon(Icons.Default.Email, contentDescription = "Email Icon")
             },
-            colors = TextFieldDefaults.textFieldColors(
-                disabledIndicatorColor = Color.Transparent,
-                focusedIndicatorColor = Color.Transparent,
-            ),
             shape = RoundedCornerShape(12.dp),
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Done,

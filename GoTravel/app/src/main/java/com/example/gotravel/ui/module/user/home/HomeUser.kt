@@ -59,9 +59,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.gotravel.R
 import com.example.gotravel.data.model.Search
+import com.example.gotravel.helper.BottomSheetType
 import com.example.gotravel.helper.CommonUtils.formatDate
 import com.example.gotravel.ui.module.user.main.MainUserViewModel
-import com.example.gotravel.ui.module.user.search.BottomSheetType
 import com.example.gotravel.ui.module.user.search.DatePickerBottomSheet
 import com.example.gotravel.ui.module.user.search.DestinationSelectionBottomSheet
 import com.example.gotravel.ui.module.user.search.PriceRangeBottomSheet

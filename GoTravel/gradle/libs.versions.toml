@@ -5,11 +5,12 @@ agp = "8.5.2"
 charty = "1.0.0-alpha01"
 cloudinaryAndroid = "3.0.2"
 coilCompose = "2.4.0"
-converterGson = "2.9.0"
+composecalendar = "1.1.0"
+converterGson = "2.11.0"
 dagger = "2.52"
 gson = "2.10.1"
-kotlin = "1.9.0"
-coreKtx = "1.13.1"
+kotlin = "2.0.0"
+coreKtx = "1.16.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
@@ -18,33 +19,34 @@ kotlinxSerializationCore = "1.6.3"
 kotlinxSerializationJson = "1.6.0"
 libraryBase = "2.3.0"
 material = "1.12.0"
-constraintlayout = "2.1.4"
-lifecycleLivedataKtx = "2.8.6"
-lifecycleViewmodelKtx = "2.8.6"
-navigationFragmentKtx = "2.6.0"
-navigationUiKtx = "2.6.0"
+constraintlayout = "2.2.1"
+lifecycleLivedataKtx = "2.8.7"
+lifecycleViewmodelKtx = "2.8.7"
+navigationFragmentKtx = "2.8.9"
+navigationUiKtx = "2.8.9"
 okhttp = "4.12.0"
 picasso = "2.71828"
 realmGradlePlugin = "10.18.0"
 reflections = "0.10.2"
 retrofit = "2.11.0"
 androidthings = "1.0"
-firebaseFirestoreKtx = "25.1.0"
-activity = "1.9.2"
-lifecycleRuntimeKtx = "2.8.6"
-activityCompose = "1.9.2"
-composeBom = "2024.04.01"
-foundationLayoutAndroid = "1.7.2"
-navigationCompose = "2.7.7"
+firebaseFirestoreKtx = "25.1.3"
+activity = "1.10.1"
+lifecycleRuntimeKtx = "2.8.7"
+activityCompose = "1.10.1"
+composeBom = "2025.04.00"
+foundationLayoutAndroid = "1.7.8"
+navigationCompose = "2.8.9"
 googleGmsGoogleServices = "4.4.2"
-firebaseFirestore = "25.1.1"
-retrofitVersion = "2.9.0"
+firebaseFirestore = "25.1.3"
+retrofitVersion = "2.11.0"
 rxandroid = "2.1.1"
 rxjava = "2.2.19"
-uiTestAndroid = "1.7.2"
-runtimeLivedata = "1.7.5"
+uiTestAndroid = "1.7.8"
+runtimeLivedata = "1.7.8"
 firebaseStorage = "21.0.1"
-firebaseAuth = "23.1.0"
+firebaseAuth = "23.2.0"
+composeTesting = "1.0.0-alpha03"
 
 [libraries]
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanistPermissions" }
@@ -99,10 +101,11 @@ androidx-ui-test-android = { group = "androidx.compose.ui", name = "ui-test-andr
 androidx-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "runtimeLivedata" }
 firebase-storage = { group = "com.google.firebase", name = "firebase-storage", version.ref = "firebaseStorage" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
+androidx-compose-testing = { group = "androidx.xr.compose", name = "compose-testing", version.ref = "composeTesting" }
 
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
-
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }

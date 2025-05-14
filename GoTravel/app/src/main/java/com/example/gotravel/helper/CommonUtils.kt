@@ -11,10 +11,12 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
+import java.util.concurrent.TimeUnit
 
 object CommonUtils {
     @JvmStatic
     fun formatCurrency(price: String): String {
+        if (price.isEmpty()) return "0"
         val formatter = DecimalFormat("#,###")
         return formatter.format(price.toLong())
     }
@@ -63,6 +65,39 @@ object CommonUtils {
             }
         }.addOnFailureListener { exception ->
             println("Image upload failed: ${exception.message}")
+        }
+    }
+    @JvmStatic
+    fun getTimeAgo(createdAt: String?): String {
+        if (createdAt.isNullOrEmpty()) return "Không rõ thời gian"
+
+        val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+        formatter.timeZone = TimeZone.getTimeZone("UTC")
+
+        return try {
+            val createdDate = formatter.parse(createdAt)
+            val now = Date()
+            val diffMillis = now.time - createdDate.time
+
+            val minutes = TimeUnit.MILLISECONDS.toMinutes(diffMillis)
+            val hours = TimeUnit.MILLISECONDS.toHours(diffMillis)
+            val days = TimeUnit.MILLISECONDS.toDays(diffMillis)
+            val weeks = days / 7
+            val months = days / 30
+            val years = days / 365
+
+            when {
+                years > 0 -> "$years năm trước"
+                months > 0 -> "$months tháng trước"
+                weeks > 0 -> "$weeks tuần trước"
+                days > 0 -> "$days ngày trước"
+                hours > 0 -> "$hours giờ trước"
+                minutes > 0 -> "$minutes phút trước"
+                else -> "Vừa xong"
+            }
+
+        } catch (e: Exception) {
+            "Không rõ thời gian"
         }
     }
 }
