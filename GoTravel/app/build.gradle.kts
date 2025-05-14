@@ -1,19 +1,20 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
-    id("kotlin-kapt")
+    kotlin("kapt")
     id("realm-android")
     alias(libs.plugins.google.gms.google.services)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
     namespace = "com.example.gotravel"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.gotravel"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -49,9 +50,15 @@ android {
     }
     packaging {
         resources {
+            excludes += "META-INF/versions/9/OSGI-INF/MANIFEST.MF"
+        }
+    }
+    packaging {
+        resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
 }
 
 dependencies {
@@ -81,13 +88,13 @@ dependencies {
     implementation(libs.firebase.storage)
     implementation(libs.firebase.auth)
     implementation(libs.androidx.runtime.livedata)
+    implementation(libs.androidx.compose.testing)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     implementation (libs.dagger)
     androidTestImplementation(libs.androidx.ui.test.junit4)
-    annotationProcessor (libs.dagger.compiler)
-    annotationProcessor (libs.dagger.android.processor)
+
     implementation (libs.picasso)
     implementation(libs.coil.compose)
     implementation (libs.retrofit)
@@ -120,6 +127,12 @@ dependencies {
     implementation (libs.retrofit.v290)
     implementation (libs.converter.gson.v290)
     implementation (libs.okhttp)
+    implementation ("com.google.firebase:firebase-messaging-ktx:24.1.1")
+    implementation ("androidx.work:work-runtime-ktx:2.9.1")
+    implementation ("androidx.datastore:datastore-preferences:1.1.6")
+    implementation("org.burnoutcrew.composereorderable:reorderable:0.9.6")
+    implementation("com.google.maps.android:maps-compose:6.4.1")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
 }
 configurations.all {
     resolutionStrategy {

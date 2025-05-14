@@ -4,8 +4,13 @@ import AccommodationDao
 import BookingDao
 import android.content.Context
 import android.util.Log
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.gotravel.data.api.RetrofitClient
+import com.example.gotravel.data.api.model.ScheduleResponse
 import com.example.gotravel.data.local.ConversationDao
 import com.example.gotravel.data.local.dao.NotificationDao
 import com.example.gotravel.data.model.Accommodation
@@ -309,6 +314,27 @@ class MainUserViewModel(private val realmHelper: RealmHelper) : ViewModel() {
         _conversations.value = emptyList()
         conversationDao.deleteAllConversations()
     }
+
+
+
+    var schedule by mutableStateOf<ScheduleResponse?>(null)
+    var isScheduleLoading by mutableStateOf(false)
+
+    fun fetchSchedule(id: String) {
+        val tempId = "673721fe8199a5bb3cc3c7ed"
+        viewModelScope.launch {
+            isScheduleLoading = true
+            try {
+                schedule = RetrofitClient.apiService.getScheduleById(tempId)
+            } catch (e: Exception) {
+                Log.e("API_ERROR", "Lỗi khi gọi API: ${e.message}")
+            } finally {
+                isScheduleLoading = false
+            }
+        }
+    }
+
+
 
     override fun onCleared() {
         super.onCleared()

@@ -749,6 +749,4 @@ fun DatePickerBottomSheet(
         )
     }
 }
-enum class BottomSheetType {
-    NONE, DATE_PICKER, GUEST_PICKER, PRICE_PICKER, DESTINATION_PICKER
-}
+

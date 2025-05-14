@@ -146,7 +146,6 @@ fun LoginForm(
             label = { Text("Email") },
             placeholder = { Text("Nhập email") },
             leadingIcon = { Icon(Icons.Default.Person, contentDescription = "Email Icon") },
-            colors = TextFieldDefaults.textFieldColors(),
             shape = RoundedCornerShape(12.dp),
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next)
         )

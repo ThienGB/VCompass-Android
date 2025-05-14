@@ -87,10 +87,6 @@ fun ChangePasswordForm(authViewModel: AuthViewModel) {
             leadingIcon = {
                 Icon(Icons.Default.Lock, contentDescription = "Lock Icon")
             },
-            colors = TextFieldDefaults.textFieldColors(
-                disabledIndicatorColor = Color.Transparent,
-                focusedIndicatorColor = Color.Transparent,
-            ),
             shape = RoundedCornerShape(12.dp),
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Next,
@@ -115,10 +111,6 @@ fun ChangePasswordForm(authViewModel: AuthViewModel) {
             leadingIcon = {
                 Icon(Icons.Default.Lock, contentDescription = "Lock Icon")
             },
-            colors = TextFieldDefaults.textFieldColors(
-                disabledIndicatorColor = Color.Transparent,
-                focusedIndicatorColor = Color.Transparent,
-            ),
             shape = RoundedCornerShape(12.dp),
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Next,
@@ -143,10 +135,6 @@ fun ChangePasswordForm(authViewModel: AuthViewModel) {
             leadingIcon = {
                 Icon(Icons.Default.Lock, contentDescription = "Lock Icon")
             },
-            colors = TextFieldDefaults.textFieldColors(
-                disabledIndicatorColor = Color.Transparent,
-                focusedIndicatorColor = Color.Transparent,
-            ),
             shape = RoundedCornerShape(12.dp),
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Done,

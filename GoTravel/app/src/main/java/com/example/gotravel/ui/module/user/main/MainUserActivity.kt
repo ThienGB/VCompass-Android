@@ -1,44 +1,44 @@
 package com.example.gotravel.ui.module.user.main
 
-import ProfileScreen
+import Profile
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
@@ -52,23 +52,26 @@ import com.example.gotravel.helper.CommonUtils.getUserFromShareRef
 import com.example.gotravel.helper.RealmHelper
 import com.example.gotravel.helper.SharedPreferencesHelper
 import com.example.gotravel.ui.factory.ViewModelFactory
+import com.example.gotravel.ui.font.VCompassTheme
 import com.example.gotravel.ui.module.general.accomodation.HotelDetailsScreen
 import com.example.gotravel.ui.module.user.booking.BookingDetailScreen
 import com.example.gotravel.ui.module.user.booking.BookingListActivity
 import com.example.gotravel.ui.module.general.chat.ChatScreen
-import com.example.gotravel.ui.module.general.chat.ConversationScreen
 import com.example.gotravel.ui.module.general.login.MainLoginActivity
 import com.example.gotravel.ui.module.general.notifications.NotificationDetail
-import com.example.gotravel.ui.module.general.notifications.NotificationScreen
 import com.example.gotravel.ui.module.general.review.ListReviewScreen
-import com.example.gotravel.ui.module.user.home.HomeUserScreen
+import com.example.gotravel.ui.module.user.explore.Explore
+import com.example.gotravel.ui.module.user.home.HomeScreen
 import com.example.gotravel.ui.module.user.room.RoomDetailScreen
+import com.example.gotravel.ui.module.user.schedule.Schedule
+import com.example.gotravel.ui.module.user.schedule.ScheduleActivity
 import com.example.gotravel.ui.module.user.search.SearchAccommodation
 
 
 class MainUserActivity : ComponentActivity() {
     private lateinit var viewModel: MainUserViewModel
     private lateinit var realmHelper: RealmHelper
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         realmHelper = (application as MainApplication).realmHelper
@@ -85,15 +88,24 @@ class MainUserActivity : ComponentActivity() {
         viewModel.setUser(user)
         viewModel.fetchHighPriorityData()
         setContent {
-            MainScreen(viewModel,this) { intentToBooking() }
+            VCompassTheme {
+                MainScreen(viewModel,this) { intentToBooking() }
+            }
+
         }
     }
     private fun intentToBooking() {
         val intent = Intent(this, BookingListActivity::class.java)
         startActivity(intent)
     }
+    private fun intentToSchedule(scheduleId: String) {
+        val intent = Intent(this, ScheduleActivity::class.java)
+        intent.putExtra("scheduleId", scheduleId)
+        startActivity(intent)
+    }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun MainScreen(
     viewModel: MainUserViewModel,
@@ -119,21 +131,20 @@ fun MainScreen(
         )
     }
 }
+@Preview(showSystemUi = true)
 @Composable
 fun CustomBottomBar(
-    navController: NavController,
-    selectedRoute: String
+    navController: NavController = rememberNavController(),
+    selectedRoute: String = "home"
 ) {
-    val gradient = Brush.horizontalGradient(
-        colors = listOf(colorResource(id = R.color.primary), Color(0xFF0C47F8), colorResource(id = R.color.primary))
-    )
-
+    val curentTab by remember {mutableStateOf(selectedRoute)}
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .background(gradient)
-            .height(60.dp)
+            .background(Color.White)
+            .height(40.dp)
     ) {
+        HorizontalDivider(thickness = 1.dp, color = Color.LightGray)
         Row(
             modifier = Modifier
                 .fillMaxWidth(),
@@ -141,38 +152,34 @@ fun CustomBottomBar(
             verticalAlignment = Alignment.CenterVertically
         ) {
             val items = listOf(
-                BottomBarItem("home", Icons.Filled.Home, "Home"),
-                BottomBarItem("chat", Icons.Filled.Email, "Chat"),
-                BottomBarItem("notification", Icons.Filled.Notifications, "Notification"),
-                BottomBarItem("profile", Icons.Filled.AccountCircle, "Profile")
+                BottomBarItem("home", painterResource(id = R.drawable.ic_house_solid), painterResource(id = R.drawable.ic_house), "Home"),
+                BottomBarItem("search", painterResource(id = R.drawable.ic_search_category_solid), painterResource(id = R.drawable.ic_search_category), "Search"),
+                BottomBarItem("new", painterResource(id = R.drawable.ic_add_new), painterResource(id = R.drawable.ic_add_new), "New", "main"),
+                BottomBarItem("explore", painterResource(id = R.drawable.ic_compass_solid), painterResource(id = R.drawable.ic_compass), "Explore"),
+                BottomBarItem("profile", painterResource(id = R.drawable.ic_profile_shape_solid), painterResource(id = R.drawable.ic_proflie_shape), "Profile")
             )
 
             items.forEach { item ->
-                val isSelected = selectedRoute == item.route
-
+                val isSelected = curentTab == item.route
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
-                        .padding(4.dp)
+                        .padding(2.dp)
                         .weight(1f)
-                        .clip(RoundedCornerShape(12.dp))
+                        .clip(RoundedCornerShape(6.dp))
                         .background(
                             color = if (isSelected) Color.White.copy(alpha = 0.2f) else Color.Transparent
                         )
-                        .clickable { navController.navigate(item.route) }
-                        .padding(vertical = 6.dp)
+                        .clickable {
+                            navController.navigate(item.route)
+                        }
+                        .padding(vertical = 5.dp)
                 ) {
                     Icon(
-                        imageVector = item.icon,
+                        painter = if (isSelected) item.selectedIcon else item.icon,
                         contentDescription = item.label,
-                        tint = if (isSelected) Color.White else Color.Black,
-                        modifier = Modifier.size(24.dp)
-                    )
-                    Spacer(modifier = Modifier.height(4.dp))
-                    Text(
-                        text = item.label,
-                        fontSize = 12.sp,
-                        color = if (isSelected) Color.White else Color.Black
+                        tint = if (isSelected) Color.Black else if (item.type == "main") colorResource(id = R.color.lightDarkBlue) else Color.Gray,
+                        modifier = Modifier.size(if (item.type == "main") 28.dp else 22.dp)
                     )
                 }
             }
@@ -182,10 +189,13 @@ fun CustomBottomBar(
 
 data class BottomBarItem(
     val route: String,
-    val icon: ImageVector,
-    val label: String
+    val icon: Painter,
+    val selectedIcon: Painter,
+    val label: String,
+    val type : String = "normal"
 )
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun NavHostGraph(
     navController: NavHostController,
@@ -206,22 +216,17 @@ fun NavHostGraph(
     val searchData by viewModel.searchData.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
     NavHost(navController = navController, startDestination = "home", modifier = modifier){
-        composable("home") { HomeUserScreen(navController, viewModel, context) }
-        composable("chat") { ConversationScreen(conversations, navController, user)
-        { conversation -> viewModel.setConversation(conversation) }
+        composable("home") { HomeScreen(navController)
         viewModel.setIsShowBottomBar(true)}
+        composable("explore") { Explore(navController)
+            viewModel.setIsShowBottomBar(false)}
         composable("chat_room") { ChatScreen(conversation,user, navController)
         { message -> viewModel.sendMessage(message)}
             viewModel.setIsShowBottomBar(false)}
-        composable("notification") { NotificationScreen(notifications, navController,
-            { viewModel.deleteAllNotifications()},
-            { id -> viewModel.changeNotificationStatus(id)},
-            {notification -> viewModel.setNotification(notification)}) }
+        composable("notification") { }
         composable("notification_detail") { NotificationDetail(notification, navController)
             viewModel.setIsShowBottomBar(false)}
-        composable("profile") { ProfileScreen(user, navController,
-            {user, context -> viewModel.updateUser(user, context)},
-            {intentToBooking()}, {viewModel.logout()}) }
+        composable("profile") { Profile()}
         composable("search") { SearchAccommodation(navController, accommodations, searchData, isLoading, viewModel) }
         composable("accom_detail") { HotelDetailsScreen(accommodation, navController) }
         composable("room_detail") { RoomDetailScreen(accommodation,searchData, viewModel, navController) }
