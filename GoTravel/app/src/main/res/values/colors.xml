@@ -109,4 +109,7 @@
     <color name="border_blue_light">#445c96</color>
     <color name="failure">#FF4A51</color>
     <color name="separator_dark_blue">#FF445C96</color>
+    <color name="primary2">#154b51</color>
+    <color name="primary3">#afead2</color>
+    <color name="primary4">#f0fdff</color>
 </resources>

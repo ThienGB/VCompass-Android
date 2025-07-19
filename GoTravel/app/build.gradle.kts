@@ -87,7 +87,6 @@ dependencies {
     implementation(libs.androidx.runtime.livedata)
     implementation(libs.firebase.storage)
     implementation(libs.firebase.auth)
-    implementation(libs.androidx.runtime.livedata)
     implementation(libs.androidx.compose.testing)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -118,6 +117,9 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.7.2") {
         exclude(group = "androidx.test.espresso", module = "espresso-core")
     }
+
+    implementation ("com.jakewharton:butterknife:10.2.3")
+    kapt ("com.jakewharton:butterknife-compiler:10.2.3")
 
     implementation(platform("com.google.firebase:firebase-bom:33.5.1"))
     implementation("com.google.firebase:firebase-auth")

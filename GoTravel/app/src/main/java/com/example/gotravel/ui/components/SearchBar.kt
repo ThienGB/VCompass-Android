@@ -37,7 +37,7 @@ import androidx.compose.ui.unit.sp
 import com.example.gotravel.R
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Preview(showSystemUi = true)
+@Preview(showBackground = true)
 @Composable
 fun CustomSearchBar(
     onTextChange: (String) -> Unit = {},

@@ -308,7 +308,7 @@ fun RoomsListed(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             items(accommodation.rooms){ room ->
-                RoomCard(room, viewModel, navController)
+                RoomCard(room, viewModel, navController)            
             }
         }
     }
