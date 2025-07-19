@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "GoTravel"
+rootProject.name = "VCompass"
 include(":app")
  

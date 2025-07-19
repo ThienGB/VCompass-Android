@@ -8,13 +8,13 @@ plugins {
 }
 
 android {
-    namespace = "com.example.gotravel"
-    compileSdk = 35
+    namespace = "com.example.vcompass"
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.gotravel"
         minSdk = 24
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
@@ -91,7 +91,6 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    implementation (libs.dagger)
     androidTestImplementation(libs.androidx.ui.test.junit4)
 
     implementation (libs.picasso)
@@ -118,23 +117,18 @@ dependencies {
         exclude(group = "androidx.test.espresso", module = "espresso-core")
     }
 
-    implementation ("com.jakewharton:butterknife:10.2.3")
-    kapt ("com.jakewharton:butterknife-compiler:10.2.3")
-
-    implementation(platform("com.google.firebase:firebase-bom:33.5.1"))
-    implementation("com.google.firebase:firebase-auth")
-    implementation("com.google.android.gms:play-services-auth:21.2.0")
+    implementation(libs.firebase.bom)
+    implementation(libs.google.firebase.auth)
+    implementation(libs.play.services.auth)
     implementation(libs.charty)
     implementation(libs.cloudinary.android)
-    implementation (libs.retrofit.v290)
-    implementation (libs.converter.gson.v290)
     implementation (libs.okhttp)
-    implementation ("com.google.firebase:firebase-messaging-ktx:24.1.1")
-    implementation ("androidx.work:work-runtime-ktx:2.9.1")
-    implementation ("androidx.datastore:datastore-preferences:1.1.6")
-    implementation("org.burnoutcrew.composereorderable:reorderable:0.9.6")
-    implementation("com.google.maps.android:maps-compose:6.4.1")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+    implementation (libs.firebase.messaging.ktx)
+    implementation (libs.androidx.work.runtime.ktx)
+    implementation (libs.androidx.datastore.preferences)
+    implementation(libs.reorderable)
+    implementation(libs.maps.compose)
+    implementation(libs.logging.interceptor)
 }
 configurations.all {
     resolutionStrategy {

@@ -6,8 +6,8 @@ buildscript {
     }
     dependencies {
         classpath(libs.realm.gradle.plugin)
-        classpath("com.android.tools.build:gradle:8.9.1")
-        classpath ("com.google.gms:google-services:4.4.2")
+        classpath(libs.gradle)
+        classpath (libs.google.services)
     }
 }
 
