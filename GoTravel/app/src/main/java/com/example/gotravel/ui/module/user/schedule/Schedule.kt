@@ -503,7 +503,8 @@ fun ScheduleTab(
                     max(a = 0f, b = scrollState.value - tabRowY + tabRowHeight - offsetPx)
             }
             .zIndex(1f)
-            .background(Color.White)) {
+            .background(Color.White)
+        ) {
             Spacer(modifier = Modifier.height(10.dp))
             Row (horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
@@ -1048,16 +1049,6 @@ fun ActivityCard(
                 }
             }
     }
-    YesNoPopup(
-        showDialog = showDialog,
-        onDismiss = { showDialog = false },
-        onYesClick = {
-            showDialog = false
-        },
-        onNoClick = {
-            showDialog = false
-        }
-    )
     Column(
         modifier = Modifier
             .fillMaxWidth()
