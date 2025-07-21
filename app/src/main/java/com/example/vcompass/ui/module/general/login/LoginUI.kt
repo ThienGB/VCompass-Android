@@ -32,6 +32,7 @@ import com.example.vcompass.ui.module.admin.main.MainAdminActivity
 import com.example.vcompass.ui.module.partner.main.MainPartnerActivity
 import com.example.vcompass.ui.module.user.main.MainUserActivity
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.example.vcompass.R
 
 @Composable
 fun LoginUI(

@@ -207,7 +207,7 @@ fun DashboardDetail(
 @Composable
 fun RevenueBarChart(revenueStats: List<RevenueStats>) {
     val barData = revenueStats.map { stats ->
-        BarData(stats.title, (stats.revenue / 100000).toFloat())
+        BarData(xValue = stats.title, yValue = (stats.revenue / 100000).toFloat())
     }
     Column(
         modifier = Modifier
@@ -222,14 +222,11 @@ fun RevenueBarChart(revenueStats: List<RevenueStats>) {
             modifier = Modifier.padding(bottom = 8.dp)
         )
         BarChart(
-            barData = barData,
-            onBarClick = {  },
+            data = { barData },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(20.dp)
                 .height(200.dp),
-            color = Color.Gray,
-
         )
     }
 }

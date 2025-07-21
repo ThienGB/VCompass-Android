@@ -121,7 +121,6 @@ dependencies {
     implementation(libs.google.firebase.auth)
     implementation(libs.play.services.auth)
     implementation(libs.charty)
-    implementation(libs.cloudinary.android)
     implementation (libs.okhttp)
     implementation (libs.firebase.messaging.ktx)
     implementation (libs.androidx.work.runtime.ktx)

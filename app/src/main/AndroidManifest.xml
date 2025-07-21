@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <application
-        android:name=".MainApplication"
+        android:name="com.example.vcompass.MainApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -23,24 +23,24 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAS3PJ_faqNzJOVQfNT857SfzRCucS5YMQ"/>
         <service
-            android:name=".service.ScheduleNotificationService"
+            android:name="com.example.vcompass.service.ScheduleNotificationService"
             android:exported="false"
             android:foregroundServiceType="dataSync" />
 
-        <receiver android:name=".broadcast_receiver.SnoozeReceiver" android:exported="false">
+        <receiver android:name="com.example.vcompass.broadcast_receiver.SnoozeReceiver" android:exported="false">
             <intent-filter>
                 <action android:name="com.yourpackage.SNOOZE_ACTION" />
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".broadcast_receiver.CompleteReceiver" android:exported="false">
+        <receiver android:name="com.example.vcompass.broadcast_receiver.CompleteReceiver" android:exported="false">
             <intent-filter>
                 <action android:name="com.yourpackage.COMPLETE_ACTION" />
             </intent-filter>
         </receiver>
 
         <activity
-            android:name=".ui.module.general.login.MainLoginActivity"
+            android:name="com.example.vcompass.ui.module.general.login.MainLoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -50,26 +50,26 @@
         </activity>
 
         <activity
-            android:name=".ui.module.user.booking.BookingListActivity"
+            android:name="com.example.vcompass.ui.module.user.booking.BookingListActivity"
             android:exported="true">
         </activity>
 
         <activity
-            android:name=".ui.module.user.schedule.ScheduleActivity"
+            android:name="com.example.vcompass.ui.module.user.schedule.ScheduleActivity"
             android:exported="true">
         </activity>
 
         <activity
-                android:name=".ui.module.user.main.MainUserActivity"
+                android:name="com.example.vcompass.ui.module.user.main.MainUserActivity"
                 android:exported="true">
         </activity>
         <activity
-            android:name=".ui.module.admin.main.MainAdminActivity"
+            android:name="com.example.vcompass.ui.module.admin.main.MainAdminActivity"
             android:exported="true">
 
         </activity>
         <activity
-            android:name=".ui.module.partner.main.MainPartnerActivity"
+            android:name="com.example.vcompass.ui.module.partner.main.MainPartnerActivity"
             android:exported="true">
 
         </activity>

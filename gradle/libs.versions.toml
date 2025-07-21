@@ -3,7 +3,6 @@ accompanistPermissions = "0.37.3"
 accompanistSwiperefresh = "0.36.0"
 agp = "8.11.1"
 charty = "2.0.1"
-cloudinaryAndroid = "3.1.0"
 coilCompose = "2.7.0"
 datastorePreferences = "1.1.7"
 firebaseBom = "33.16.0"
@@ -59,7 +58,6 @@ androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = 
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
 androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "workRuntimeKtx" }
 charty = { module = "com.himanshoe:charty", version.ref = "charty" }
-cloudinary-android = { module = "com.cloudinary:cloudinary-android", version.ref = "cloudinaryAndroid" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }

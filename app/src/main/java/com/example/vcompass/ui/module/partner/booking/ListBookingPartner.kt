@@ -29,6 +29,7 @@ import com.example.vcompass.helper.CommonUtils.formatCurrency
 import com.example.vcompass.ui.components.CustomSearchBar
 import com.example.vcompass.ui.components.NavTitle
 import com.example.vcompass.ui.module.partner.main.MainPartnerViewModel
+import com.example.vcompass.R
 
 @Composable
 fun BookingListPartner(

@@ -17,6 +17,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.vcompass.R
 
 @Composable
 fun ChangePasswordUI(navController: NavController, authViewModel: AuthViewModel) {

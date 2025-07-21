@@ -33,10 +33,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
@@ -84,6 +87,9 @@ class MainUserActivity : ComponentActivity() {
         }
         viewModel.setUser(user)
         viewModel.fetchHighPriorityData()
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        window.statusBarColor = Color.White.toArgb()
+        WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars = true
         setContent {
             VCompassTheme {
                 MainScreen(viewModel,this) { intentToBooking() }

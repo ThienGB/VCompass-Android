@@ -18,6 +18,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.vcompass.R
 
 @Composable
 fun ForgetPasswordUI(navController: NavController, authViewModel: AuthViewModel) {

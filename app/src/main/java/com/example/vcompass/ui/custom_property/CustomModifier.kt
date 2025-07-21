@@ -36,3 +36,14 @@ fun Modifier.clickableWithScale(
             onClick = onClick
         )
 }
+fun Modifier.clickableNoEffect(
+    onClick: () -> Unit
+): Modifier = composed {
+    val interactionSource = remember { MutableInteractionSource() }
+    this
+        .clickable(
+            interactionSource = interactionSource,
+            indication = null,
+            onClick = onClick
+        )
+}

@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.vcompass.ui.module.partner.main.MainPartnerActivity
 import com.example.vcompass.ui.module.user.main.MainUserActivity
+import com.example.vcompass.R
 
 @Composable
 fun RegisterUI(navController: NavController, authViewModel: AuthViewModel) {

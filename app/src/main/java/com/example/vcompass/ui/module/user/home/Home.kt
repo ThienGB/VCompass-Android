@@ -3,7 +3,6 @@ package com.example.vcompass.ui.module.user.home
 import android.content.Intent
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -14,9 +13,13 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.FlingBehavior
+import androidx.compose.foundation.gestures.ScrollScope
+import androidx.compose.foundation.gestures.ScrollableDefaults
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -35,16 +38,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
@@ -57,10 +61,17 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
+import coil.size.Size
 import com.example.vcompass.R
+import com.example.vcompass.ui.custom_property.clickableNoEffect
+import com.example.vcompass.ui.custom_property.clickableWithScale
 import com.example.vcompass.ui.module.user.schedule.ScheduleActivity
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
 
 @Preview(showSystemUi = true)
 @Composable
@@ -69,46 +80,56 @@ fun HomeScreen(
 ) {
     val scrollState = rememberLazyListState()
     var isHeaderVisible by remember { mutableStateOf(true) }
-
-    var previousOffset by remember { mutableStateOf(0) }
-
-    // Detect scroll direction
-    LaunchedEffect(scrollState.firstVisibleItemScrollOffset) {
-        val currentOffset = scrollState.firstVisibleItemScrollOffset
-        isHeaderVisible = currentOffset <= previousOffset
-        previousOffset = currentOffset
+    var previousOffset by remember { mutableIntStateOf(150) }
+    LaunchedEffect(scrollState) {
+        snapshotFlow { scrollState.firstVisibleItemScrollOffset }
+            .filter { it > 100 }
+            .distinctUntilChanged()
+            .debounce(100L)
+            .collect { currentOffset ->
+                isHeaderVisible = currentOffset <= previousOffset
+                previousOffset = currentOffset
+            }
     }
 
-    Box(
-        modifier = Modifier
-            .background(Color.White)
-            .fillMaxSize()
+    val defaultFling = ScrollableDefaults.flingBehavior()
+
+    val slowerFling = object : FlingBehavior {
+        override suspend fun ScrollScope.performFling(initialVelocity: Float): Float {
+            return with(defaultFling) {
+                performFling(initialVelocity * 0.55f)
+            }
+        }
+    }
+
+    val listItem = listOf(1,2,3,4,5,6,7,8,9)
+
+    Box(modifier = Modifier
+        .background(Color.White)
+        .fillMaxSize()
     ) {
-        // Content Scrollable area
         LazyColumn(
             state = scrollState,
-            modifier = Modifier.fillMaxSize() // Add padding to prevent content overlap with the header
+            flingBehavior = slowerFling,
+            contentPadding = PaddingValues(top = 40.dp),
+            modifier = Modifier.fillMaxSize()
         ) {
-            items(5) { index ->
+            items(
+                listItem.size,
+                key = { listItem.get(index = it) },
+                contentType = { "post" }) { index ->
                 Poster(navController)
             }
         }
-
-        // Header - Fixed on top with animation
         AnimatedVisibility(
             visible = isHeaderVisible,
-            enter = slideInVertically(initialOffsetY = { -it }),
-            exit = slideOutVertically(targetOffsetY = { -it })
+            enter = slideInVertically { -it },
+            exit = slideOutVertically { -it },
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .zIndex(1f)
         ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(Color.White)
-                    .align(Alignment.TopCenter)
-                    .zIndex(1f)
-            ) {
-                HomeHeader()
-            }
+            HomeHeader()
         }
     }
 }
@@ -117,7 +138,8 @@ fun HomeScreen(
 fun HomeHeader() {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.padding(end = 10.dp, top = 5.dp, bottom = 5.dp)
+        modifier = Modifier.background(Color.White)
+            .padding(end = 10.dp, top = 5.dp, bottom = 5.dp)
     ) {
         Image(
             painter = painterResource(R.drawable.logo_vcompass),
@@ -147,38 +169,11 @@ fun HomeHeader() {
 @Composable
 fun Poster(
     navController: NavController = rememberNavController()
-){
-    var iconFavorite by remember { mutableStateOf(R.drawable.ic_mark) }
-    var isLiked by remember { mutableStateOf(false) }
-    val scale = remember { Animatable(1f) }
-    val coroutineScope = rememberCoroutineScope()
-    fun onFavoriteClick() {
-        iconFavorite = if (iconFavorite == R.drawable.ic_mark) {
-            R.drawable.ic_marked
-        } else {
-            R.drawable.ic_mark
-        }
-    }
+) {
+    var isFavorited by rememberSaveable { mutableStateOf(false) }
+    var isLiked by rememberSaveable { mutableStateOf(false) }
     val context = LocalContext.current
     val scheduleId = "123"
-    var iconLike by remember { mutableStateOf(R.drawable.ic_favorite) }
-    fun onLikeClick() {
-        iconLike = if (iconLike == R.drawable.ic_favorited) {
-            R.drawable.ic_favorite
-        } else {
-            R.drawable.ic_favorited
-        }
-        coroutineScope.launch {
-            scale.animateTo(
-                targetValue = 1.2f, // Nở ra
-                animationSpec = tween(durationMillis = 150)
-            )
-            scale.animateTo(
-                targetValue = 1f, // Co lại
-                animationSpec = tween(durationMillis = 150)
-            )
-        }
-    }
     Column(
         modifier = Modifier.padding(vertical = 10.dp)
     ) {
@@ -187,7 +182,7 @@ fun Poster(
             modifier = Modifier
                 .padding(start = 10.dp)
                 .height(35.dp)
-        ){
+        ) {
             Box(
                 modifier = Modifier
                     .size(35.dp)
@@ -196,10 +191,13 @@ fun Poster(
                         shape = CircleShape
                     )
             ) {
-                Image(
-                    painter = painterResource(R.drawable.img_hue),
-                    contentScale = ContentScale.Crop,
+                AsyncImage(
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data(R.drawable.img_hue)
+                        .crossfade(true)
+                        .build(),
                     contentDescription = null,
+                    contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .fillMaxSize()
                         .clip(CircleShape)
@@ -219,19 +217,20 @@ fun Poster(
             }
 
             Spacer(modifier = Modifier.weight(1f))
-            Box(modifier = Modifier
-                .height(28.dp)
-                .wrapContentWidth()
-                .background(
-                    color = colorResource(id = R.color.colorSeparator80),
-                    shape = RoundedCornerShape(7.dp)
-                )
-                .padding(horizontal = 13.dp)
-                .clickable {
-                    val intent = Intent(context, ScheduleActivity::class.java)
-                    intent.putExtra("scheduleId", scheduleId)
-                    context.startActivity(intent)
-                },
+            Box(
+                modifier = Modifier
+                    .height(28.dp)
+                    .wrapContentWidth()
+                    .background(
+                        color = colorResource(id = R.color.colorSeparator80),
+                        shape = RoundedCornerShape(7.dp)
+                    )
+                    .padding(horizontal = 13.dp)
+                    .clickable {
+                        val intent = Intent(context, ScheduleActivity::class.java)
+                        intent.putExtra("scheduleId", scheduleId)
+                        context.startActivity(intent)
+                    },
                 contentAlignment = Alignment.Center
             ) {
                 Text(text = "Xem chi tiết", fontSize = 15.sp)
@@ -247,42 +246,39 @@ fun Poster(
             )
         }
         Spacer(modifier = Modifier.height(5.dp))
-        Image(
-            painter = painterResource(R.drawable.img_ha_noi),
-            contentScale = ContentScale.Crop,
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(R.drawable.img_food_service)
+                .crossfade(true)
+                .size(Size.ORIGINAL)
+                .build(),
             contentDescription = null,
+            contentScale = ContentScale.Crop,
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxSize()
                 .height(300.dp)
         )
-        Row(modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp),
+        Row(
+            modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Image(
-                painter = painterResource(iconLike),
+                painter = painterResource(if (isLiked) R.drawable.ic_heart_solid else R.drawable.ic_heart),
                 contentDescription = null,
-                colorFilter = if (iconLike == R.drawable.ic_favorited) {
-                    ColorFilter.tint(Color.Red)
-                } else {
-                    ColorFilter.tint(Color.Black)
-                },
+                colorFilter = if (isLiked) ColorFilter.tint(Color.Red) else ColorFilter.tint(Color.Black),
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .size(30.dp)
-                    .graphicsLayer(
-                        scaleX = scale.value,
-                        scaleY = scale.value
-                    )
-                    .clickable { onLikeClick() }
+                    .size(20.dp)
+                    .clickableWithScale(0.8f) { isLiked = !isLiked }
             )
             Spacer(modifier = Modifier.width(3.dp))
             Text(text = "19.5K", fontSize = 14.sp)
             Spacer(modifier = Modifier.width(10.dp))
             Image(
-                painter = painterResource(R.drawable.ic_comment),
+                painter = painterResource(R.drawable.ic_comment_dots),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
-                modifier = Modifier.size(28.dp)
+                modifier = Modifier.size(20.dp)
             )
             Spacer(modifier = Modifier.width(3.dp))
             Text(text = "19", fontSize = 14.sp)
@@ -291,29 +287,32 @@ fun Poster(
                 painter = painterResource(R.drawable.ic_share),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
-                modifier = Modifier.size(30.dp)
+                modifier = Modifier.size(20.dp)
             )
             Spacer(modifier = Modifier.width(3.dp))
             Text(text = "12", fontSize = 14.sp)
             Spacer(modifier = Modifier.weight(1f))
             Image(
-                painter = painterResource(iconFavorite),
+                painter = painterResource(if (isFavorited) R.drawable.ic_favorite_star_solid else R.drawable.ic_favorite_star),
                 contentDescription = null,
+                colorFilter = if (isFavorited) ColorFilter.tint(colorResource(R.color.first_ranking)) else ColorFilter.tint(Color.Black),
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .size(30.dp)
-                    .clickable { onFavoriteClick() }
+                    .size(20.dp)
+                    .clickableNoEffect { isFavorited = !isFavorited }
             )
         }
         PostContent()
     }
 }
+
 @Composable
 fun TextSwitcher(
     firstLabel: String = "",
     secondLabel: String = ""
 ) {
     var isFirstVisible by remember { mutableStateOf(true) }
+
     LaunchedEffect(Unit) {
         while (true) {
             delay(3000)
@@ -328,7 +327,7 @@ fun TextSwitcher(
                     animationSpec = tween(400)
                 )
             )
-        }, label = ""
+        }, label = "TextSwitcherAnimation"
     ) { targetState ->
         if (targetState) {
             Text(
@@ -337,7 +336,7 @@ fun TextSwitcher(
                 fontSize = 13.sp
             )
         } else {
-            Row (verticalAlignment = Alignment.CenterVertically) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
                 Image(
                     painter = painterResource(R.drawable.ic_aim),
                     contentDescription = null,
@@ -354,12 +353,13 @@ fun TextSwitcher(
         }
     }
 }
+
 @Composable
 fun PostContent(
     title: String = "Tour Ha Noi",
     description: String = "Day la tour Ha Noi 2 ngay mot dem. Tour này rất thú vị với nhiều điểm tham quan hấp dẫn. Hãy cùng khám phá những địa danh nổi tiếng tại Hà Nội cùng chúng tôi trong hành trình này."
 ) {
-    var isExpanded by remember { mutableStateOf(false) } // Trạng thái hiển thị toàn bộ nội dung hay không
+    var isExpanded by remember { mutableStateOf(false) }
 
     Column(modifier = Modifier.padding(horizontal = 10.dp)) {
         Text(
@@ -376,15 +376,15 @@ fun PostContent(
         )
 
         Spacer(modifier = Modifier.height(5.dp))
-
-        // Nút "Xem thêm" hoặc "Thu gọn"
         Text(
             text = if (isExpanded) "Thu gọn" else "Xem thêm",
             fontSize = 13.sp,
             color = colorResource(id = R.color.primary),
-            modifier = Modifier.clickable { isExpanded = !isExpanded } // Thay đổi trạng thái khi nhấn
+            modifier = Modifier.clickable {
+                isExpanded = !isExpanded
+            }
         )
-        if (isExpanded){
+        if (isExpanded) {
             Spacer(modifier = Modifier.height(10.dp))
 
             Text(
@@ -429,7 +429,7 @@ fun PostContent(
 }
 
 @Composable
-fun HotLocation(){
+fun HotLocation() {
     Box(
         modifier = Modifier
             .background(
@@ -443,7 +443,7 @@ fun HotLocation(){
             )
             .padding(horizontal = 10.dp, vertical = 5.dp)
     ) {
-        Row (verticalAlignment = Alignment.CenterVertically) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
             Image(
                 painter = painterResource(R.drawable.img_hue),
                 contentScale = ContentScale.Crop,

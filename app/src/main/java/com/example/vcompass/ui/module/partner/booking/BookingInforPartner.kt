@@ -40,6 +40,7 @@ import com.example.vcompass.ui.components.NavTitle
 import com.example.vcompass.ui.module.user.booking.BookingDetailItem
 import com.example.vcompass.ui.module.user.booking.PolicyItem
 import com.example.vcompass.ui.module.partner.main.MainPartnerViewModel
+import com.example.vcompass.R
 
 @Composable
 fun BookingInformation(
