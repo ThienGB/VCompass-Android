@@ -1,5 +1,6 @@
 package com.example.vcompass.ui.module.user.schedule
 
+import ActiveScheduleStore
 import NotificationWorker
 import android.content.Context
 import android.content.Intent
@@ -13,24 +14,21 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.work.WorkManager
-import com.example.vcompass.data.api.RetrofitClient
-import com.example.vcompass.data.api.model.Schedule
-import com.example.vcompass.helper.RealmHelper
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
 import androidx.work.*
 import com.example.vcompass.data.api.model.Accommodation
 import com.example.vcompass.data.api.model.Attraction
 import com.example.vcompass.data.api.model.FoodService
+import com.example.vcompass.data.api.model.Schedule
 import com.example.vcompass.service.ScheduleNotificationService
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class ScheduleViewModel(private val realmHelper: RealmHelper) : ViewModel() {
+class ScheduleViewModel() : ViewModel() {
     var schedule by mutableStateOf<Schedule?>(null)
         private set
     private val _activeScheduleId = MutableStateFlow<String?>(null)
@@ -169,7 +167,6 @@ class ScheduleViewModel(private val realmHelper: RealmHelper) : ViewModel() {
     }
     override fun onCleared() {
         super.onCleared()
-        realmHelper.closeRealm()
       //  firestoreNotiManager.removeListener()
     }
 }

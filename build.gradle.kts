@@ -1,20 +1,9 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        classpath(libs.realm.gradle.plugin)
-        classpath(libs.gradle)
-        classpath (libs.google.services)
-    }
-}
-
 plugins {
     alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.android.library) apply false
     alias(libs.plugins.jetbrains.kotlin.android) apply false
     alias(libs.plugins.google.gms.google.services) apply false
     alias(libs.plugins.compose.compiler) apply false
+    alias(libs.plugins.realm.kotlin) apply false
+    alias(libs.plugins.kotlin.parcelize) apply false
 }
-

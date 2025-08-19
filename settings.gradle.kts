@@ -21,4 +21,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "VCompass"
 include(":app")
- 
+include(":presentation")
+include(":domain")
+include(":data")

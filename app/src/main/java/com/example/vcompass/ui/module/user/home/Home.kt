@@ -75,42 +75,18 @@ import kotlinx.coroutines.flow.filter
 
 @Preview(showSystemUi = true)
 @Composable
-fun HomeScreen(
-    navController: NavController = rememberNavController(),
-) {
+fun HomeScreen() {
     val scrollState = rememberLazyListState()
     var isHeaderVisible by remember { mutableStateOf(true) }
-    var previousOffset by remember { mutableIntStateOf(150) }
-    LaunchedEffect(scrollState) {
-        snapshotFlow { scrollState.firstVisibleItemScrollOffset }
-            .filter { it > 100 }
-            .distinctUntilChanged()
-            .debounce(100L)
-            .collect { currentOffset ->
-                isHeaderVisible = currentOffset <= previousOffset
-                previousOffset = currentOffset
-            }
-    }
+    val listItem = remember { listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10) }
 
-    val defaultFling = ScrollableDefaults.flingBehavior()
-
-    val slowerFling = object : FlingBehavior {
-        override suspend fun ScrollScope.performFling(initialVelocity: Float): Float {
-            return with(defaultFling) {
-                performFling(initialVelocity * 0.55f)
-            }
-        }
-    }
-
-    val listItem = listOf(1,2,3,4,5,6,7,8,9)
-
-    Box(modifier = Modifier
-        .background(Color.White)
-        .fillMaxSize()
+    Box(
+        modifier = Modifier
+            .background(Color.White)
+            .fillMaxSize()
     ) {
         LazyColumn(
             state = scrollState,
-            flingBehavior = slowerFling,
             contentPadding = PaddingValues(top = 40.dp),
             modifier = Modifier.fillMaxSize()
         ) {
@@ -118,7 +94,7 @@ fun HomeScreen(
                 listItem.size,
                 key = { listItem.get(index = it) },
                 contentType = { "post" }) { index ->
-                Poster(navController)
+                Poster(index)
             }
         }
         AnimatedVisibility(
@@ -138,7 +114,8 @@ fun HomeScreen(
 fun HomeHeader() {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.background(Color.White)
+        modifier = Modifier
+            .background(Color.White)
             .padding(end = 10.dp, top = 5.dp, bottom = 5.dp)
     ) {
         Image(
@@ -168,7 +145,7 @@ fun HomeHeader() {
 
 @Composable
 fun Poster(
-    navController: NavController = rememberNavController()
+    item: Int
 ) {
     var isFavorited by rememberSaveable { mutableStateOf(false) }
     var isLiked by rememberSaveable { mutableStateOf(false) }
@@ -249,13 +226,13 @@ fun Poster(
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(R.drawable.img_food_service)
+                .memoryCacheKey("img_food_service")
                 .crossfade(true)
-                .size(Size.ORIGINAL)
                 .build(),
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxWidth()
                 .height(300.dp)
         )
         Row(
@@ -295,7 +272,9 @@ fun Poster(
             Image(
                 painter = painterResource(if (isFavorited) R.drawable.ic_favorite_star_solid else R.drawable.ic_favorite_star),
                 contentDescription = null,
-                colorFilter = if (isFavorited) ColorFilter.tint(colorResource(R.color.first_ranking)) else ColorFilter.tint(Color.Black),
+                colorFilter = if (isFavorited) ColorFilter.tint(colorResource(R.color.first_ranking)) else ColorFilter.tint(
+                    Color.Black
+                ),
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .size(20.dp)
@@ -313,12 +292,12 @@ fun TextSwitcher(
 ) {
     var isFirstVisible by remember { mutableStateOf(true) }
 
-    LaunchedEffect(Unit) {
-        while (true) {
-            delay(3000)
-            isFirstVisible = !isFirstVisible
-        }
-    }
+//    LaunchedEffect(Unit) {
+//        while (true) {
+//            delay(3000)
+//            isFirstVisible = !isFirstVisible
+//        }
+//    }
     AnimatedContent(
         targetState = isFirstVisible,
         transitionSpec = {

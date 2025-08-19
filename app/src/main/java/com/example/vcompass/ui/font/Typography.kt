@@ -2,7 +2,9 @@ package com.example.vcompass.ui.font
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Typography
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 
 val AppTypography = Typography(
@@ -25,6 +27,14 @@ val AppTypography = Typography(
 @Composable
 fun VCompassTheme(content: @Composable () -> Unit) {
     MaterialTheme(
+        colorScheme = lightColorScheme( // hoặc darkColorScheme nếu cần
+            primary = Color(0xFF184B7F), // màu chính app của bạn
+            background = Color.White,    // 💥 quan trọng: tránh trắng xoá
+            surface = Color.White,
+            onPrimary = Color.White,
+            onBackground = Color.Black,
+            onSurface = Color.Black
+        ),
         typography = AppTypography,
         content = content
     )

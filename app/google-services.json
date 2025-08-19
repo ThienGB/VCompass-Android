@@ -62,7 +62,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:1065593939332:android:bcf2273b12dc3dabf369d1",
         "android_client_info": {
-          "package_name": "com.example.gotravel"
+          "package_name": "com.example.vcompass"
         }
       },
       "oauth_client": [
@@ -70,7 +70,7 @@
           "client_id": "1065593939332-jl6q4e8k6bj5ie3rhbm3tui9ttv7qkho.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.gotravel",
+            "package_name": "com.example.vcompass",
             "certificate_hash": "ef64c90e6f884d2da6a29cd44f044e2861af0b04"
           }
         },

@@ -616,7 +616,7 @@ fun ScheduleSummaryTab(
 ){
     val schedule = viewModel.schedule
     var description by remember { mutableStateOf(schedule?.description ?: "") }
-    var isDescriptionExpanded by rememberSaveable  { mutableStateOf(false) }
+    var isDescriptionExpanded by rememberSaveable  { mutableStateOf(true) }
     var iconLike by remember { mutableStateOf(R.drawable.ic_favorite) }
     val scale = remember { Animatable(1f) }
     val coroutineScope = rememberCoroutineScope()
@@ -874,7 +874,7 @@ fun SummaryDay(
     items: String = "",
     activities: DayActivity
 ){
-    var isExpanded by rememberSaveable { mutableStateOf(false) }
+    var isExpanded by rememberSaveable { mutableStateOf(true) }
     Column (modifier = Modifier.background(Color.White)) {
         Row (modifier = Modifier
             .fillMaxWidth()
