@@ -132,7 +132,6 @@ dependencies {
     implementation (libs.okhttp)
     implementation (libs.firebase.messaging.ktx)
     implementation (libs.androidx.work.runtime.ktx)
-    implementation (libs.androidx.datastore.preferences)
     implementation(libs.reorderable)
     implementation(libs.maps.compose)
 }

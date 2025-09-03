@@ -4,21 +4,16 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
 import android.content.Intent
-import android.os.Build
 import android.os.IBinder
-import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
+import com.accessed.domain.model.response.schedule.ScheduleActivity
 import com.example.vcompass.R
-import com.example.vcompass.data.api.model.Schedule
-import com.example.vcompass.ui.module.user.main.MainUserActivity
 
 class ScheduleNotificationService : Service() {
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         createNotificationChannel()
-
-        val notificationIntent = Intent(this, MainUserActivity::class.java)
+        val notificationIntent = Intent(this, ScheduleActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(
             this,
             0,
@@ -34,17 +29,13 @@ class ScheduleNotificationService : Service() {
             .setOngoing(true) // Thông báo không thể xóa
             .build()
 
-        // Khởi động Foreground Service
         startForeground(SERVICE_NOTIFICATION_ID, notification)
-//        val schedule = fetchScheduleById(scheduleId)
-//        schedule?.let { scheduleNotifications(it, this) }
 
-        return START_STICKY // Dịch vụ sẽ khởi động lại nếu bị kill
+        return START_STICKY
     }
 
     override fun onBind(intent: Intent?): IBinder? = null
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun createNotificationChannel() {
         val channel = NotificationChannel(
             SERVICE_CHANNEL_ID,
@@ -55,12 +46,6 @@ class ScheduleNotificationService : Service() {
         }
         val notificationManager = getSystemService(NotificationManager::class.java)
         notificationManager.createNotificationChannel(channel)
-    }
-
-    private fun fetchScheduleById(scheduleId: String): Schedule? {
-        // Thay thế bằng logic lấy Schedule từ API hoặc local storage
-        // Ví dụ: Truy vấn từ ViewModel hoặc database
-        return null
     }
 
     companion object {

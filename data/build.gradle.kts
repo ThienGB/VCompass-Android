@@ -79,7 +79,7 @@ dependencies {
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.security.crypto)
-
+    implementation (libs.androidx.datastore.preferences)
     implementation(libs.coroutines.android)
     implementation(libs.coroutines.core)
 }
