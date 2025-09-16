@@ -45,6 +45,7 @@ android {
         viewBinding = true
         dataBinding = true
         compose = true
+        buildConfig = true
     }
 
     packaging {
@@ -73,6 +74,8 @@ android {
 dependencies {
     implementation(project(":presentation"))
     implementation(project(":domain"))
+    implementation(project(":data"))
+    implementation(project(":core"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -134,6 +137,10 @@ dependencies {
     implementation (libs.androidx.work.runtime.ktx)
     implementation(libs.reorderable)
     implementation(libs.maps.compose)
+    implementation(project.dependencies.platform(libs.koin.bom))
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
+    implementation(libs.koin.compose)
 }
 configurations.all {
     resolutionStrategy {

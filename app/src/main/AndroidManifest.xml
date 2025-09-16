@@ -40,38 +40,18 @@
         </receiver>
 
         <activity
-            android:name="com.example.vcompass.ui.module.general.login.MainLoginActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
-
-        <activity
-            android:name="com.example.vcompass.ui.module.user.booking.BookingListActivity"
-            android:exported="true">
-        </activity>
-
-        <activity
             android:name="com.example.vcompass.ui.module.user.schedule.ScheduleActivity"
             android:exported="true">
         </activity>
 
         <activity
-                android:name="com.example.vcompass.ui.module.user.main.MainUserActivity"
-                android:exported="true">
-        </activity>
-        <activity
-            android:name="com.example.vcompass.ui.module.admin.main.MainAdminActivity"
+            android:name=".MainActivity"
             android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-        </activity>
-        <activity
-            android:name="com.example.vcompass.ui.module.partner.main.MainPartnerActivity"
-            android:exported="true">
-
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

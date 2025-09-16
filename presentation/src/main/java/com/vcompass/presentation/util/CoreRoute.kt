@@ -1,0 +1,13 @@
+package com.vcompass.presentation.util
+
+sealed class CoreRoute(val route: String) {
+    data object Splash : CoreRoute("splash")
+    data object Introduce : CoreRoute("introduce")
+    data object Login : CoreRoute("login")
+    data object Home : CoreRoute("home")
+
+    data object HomeGraph : CoreRoute("home_graph")
+    data object JobLandingGraph : CoreRoute("job_landing_graph")
+    data object ConversationGraph : CoreRoute("chat_graph")
+    data object ConnectionGraph : CoreRoute("connection_graph")
+}

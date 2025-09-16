@@ -3,7 +3,7 @@ accompanistPermissions = "0.37.3"
 accompanistSwiperefresh = "0.36.0"
 agp = "8.12.1"
 charty = "2.0.1"
-coilCompose = "2.7.0"
+coilCompose = "2.6.0"
 datastorePreferences = "1.1.7"
 firebaseBom = "34.1.0"
 firebaseMessagingKtx = "24.1.2"
@@ -53,6 +53,8 @@ koin-bom = "4.1.0"
 coroutine = "1.10.2"
 logging = "5.1.0"
 security = "1.1.0"
+uiText = "1.9.0"
+ucrop = "2.2.8"
 
 [libraries]
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanistPermissions" }
@@ -119,7 +121,8 @@ koin-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = 
 coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutine" }
 coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutine" }
 security-crypto = { module = "androidx.security:security-crypto", version.ref = "security" }
-
+androidx-ui-text = { group = "androidx.compose.ui", name = "ui-text", version.ref = "uiText" }
+ucrop = { module = "com.github.yalantis:ucrop", version.ref = "ucrop" }
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }

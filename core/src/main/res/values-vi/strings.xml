@@ -1,0 +1,2733 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="lb_chk_set_default_payment_method">Thiết lập phương thức thanh toán này làm mặc định</string>
+    <string name="lb_add_product_upload_photo_title">Chọn Photo/Video</string>
+    <string name="lb_product_name">Tên sản phẩm</string>
+    <string name="hint_product_name">Ví dụ: Office Desk CD1400H</string>
+    <string name="lb_add_product_brand">Thương hiệu</string>
+    <string name="lb_add_product_quantity">Số lượng</string>
+    <string name="lb_add_product_list_price">Giá niêm yết</string>
+    <string name="lb_add_product_sale_price">Giá bán</string>
+    <string name="lb_add_product_original_price">Giá gốc</string>
+    <string name="lb_add_product_tags">Tags</string>
+    <string name="lb_add_product_item_variants">Các loại sản phẩm</string>
+    <string name="lb_add_product_item_location">Khu vực sản phẩm</string>
+    <string name="lb_add_product_conditions">Tình trạng sản phẩm</string>
+    <string name="lb_add_product_allow_buy_outofstock">Cho phép mua khi hết hàng</string>
+    <string name="lb_add_product_allow_return">Cho phép trả lại</string>
+    <string name="lb_add_product_category">Danh mục <font color='#ff0000'>*</font></string>
+
+    <string name="lb_product_condition_new">Mới</string>
+    <string name="lb_product_condition_openbox">Mở hộp</string>
+    <string name="lb_product_condition_like_new">Đã dùng - Như mới</string>
+    <string name="lb_product_condition_very_good">Đã dùng - Còn rất tốt</string>
+    <string name="lb_product_condition_good">Đã dùng - Còn tốt</string>
+    <string name="lb_product_condition_acceptable">Đã dùng - Chấp nhận được</string>
+    <string name="lb_product_condition_renew">Đã làm mới lại</string>
+    <string name="lb_product_condition_asis">Có nào bán ấy</string>
+
+    <string name="lb_add_product_variants_title">Các lựa chọn</string>
+
+    <string name="btn_add_variant">Thêm lựa chọn</string>
+
+    <string name="lb_add_variant_popup_title">Thêm mặt hàng</string>
+    <string name="hint_item_variant_name">Chọn tên mặt hàng <font color='#ff0000'>*</font></string>
+    <string name="lb_add_variant_name_title">Tên mặt hàng <font color='#ff0000'>*</font></string>
+    <string name="lb_item_variant_options">Các lựa chọn (vd: Nhỏ, Lớn)</string>
+    <string name="lb_item_variant_options_name">Tên lựa chọn (enter để thêm mới)</string>
+    <string name="lb_must_select_category_first">Vui lòng chọn danh mục trước</string>
+    <string name="lb_upgrade_to_change_location">Nâng cấp tài khoản\nđể thay đổi khu vực</string>
+    <string name="lb_return_setting_title">Thiết lập trả hàng</string>
+    <string name="lb_not_allow_return">Không cho phép trả hàng</string>
+    <string name="lb_allow_return">Cho phép trả hàng</string>
+    <string name="lb_return_condition">Điều kiện: chưa mở hộp</string>
+    <plurals name="lb_num_of_variants">
+        <item quantity="other">%d lựa chọn sản phẩm</item>
+    </plurals>
+    <string name="lb_price_by_variant_title">Giá các tuỳ chọn sản phẩm</string>
+    <string name="lb_add_item_same_price">Đồng giá các tuỳ chọn</string>
+    <string name="lb_quantity_required">Số lượng</string>
+    <string name="lb_list_price_required">Giá niêm yết</string>
+    <string name="lb_sale_price_required">Giá bán</string>
+    <string name="lb_origin_price_required">Giá gốc</string>
+
+    <string name="lb_add_product_button_create">Hoàn thành</string>
+
+    <string name="lb_add_product_shipping_fee">Phí giao hàng</string>
+    <string name="lb_add_product_free_shipping">Miễn phí giao hàng</string>
+    <string name="lb_add_product_fix_rate_shipping">Có phí giao hàng (%s) <font color='#ff0000'>*</font></string>
+    <string name="lb_add_product_input_shipping_fee">Nhập phí giao hàng</string>
+    <string name="lb_add_product_shipping_free">Miễn phí</string>
+
+    <string name="lb_duplicated">Đã trùng lặp</string>
+    <string name="hint_profile_add_review">Viết vài điều về %s (tùy chọn)</string>
+    <string name="lb_school_review_academics">Học thuật</string>
+    <string name="lb_school_review_facilities">Cơ sở vật chất</string>
+    <string name="lb_school_review_materials">Dụng cụ học tập đầy đủ</string>
+    <string name="lb_school_review_safety">An toàn</string>
+    <string name="lb_school_review_student_progress">Tiến bộ của học viên</string>
+    <string name="lb_school_review_teach_and_staff">Giáo viên và cán bộ nhân viên</string>
+    <string name="lb_school_review_race">Chủng tộc/Dân tộc</string>
+    <string name="lb_school_review_overall">Đánh giá chung</string>
+    <string name="lb_school_review_approve_of_leader">Tán thành với ban giám hiệu</string>
+    <string name="hint_school_review_relationship">Quan hệ của bạn với trường này</string>
+
+    <string name="lb_add_school_review_default_school_name">Trường học</string>
+    <string name="lb_add_seller_review_title">Thêm bình luận</string>
+    <string name="lb_item_as_described">Hàng giống mô tả</string>
+    <string name="lb_communication">Giao tiếp</string>
+    <string name="lb_shipping_time">Thời gian giao hàng</string>
+    <string name="lb_shipping_charges">Phí giao hàng</string>
+    <string name="lb_add_seller_review_overall">Tổng quan</string>
+
+    <string name="lb_review_required">Đánh giá</string>
+    <string name="lb_review_service_title">Đánh giá dịch vụ</string>
+    <string name="lb_review_service_choose_rating_required">Xếp hạng <font color='#ff0000'>*</font></string>
+    <string name="lb_review_service_upload_photo">Đăng hình ảnh</string>
+    <string name="msg_service_has_reviewed">Bạn đã đánh giá cho dịch vụ này rồi.</string>
+    <string name="hint_review_service_note">Hãy chia sẻ cảm nhận của bạn về dịch vụ này</string>
+    <string name="lb_add_service_review_recommend">Đề xuất cho người khác</string>
+    <string name="lb_shop_sale_role_desc">Với vai trò này, Các nhân viên bán hàng có thể trả lời tin nhắn của khách hàng và hỏi thăm sản phẩm</string>
+    <string name="lb_ads_title">Thông tin liên hệ</string>
+    <string name="lb_ads_desc">Chúng tôi chỉ sử dụng thông tin của bạn cho việc đặt mua sản phẩm</string>
+    <string name="lb_ads_full_name">Họ Tên <font color="#ff0000">*</font></string>
+    <string name="lb_ads_phone_number">Số điện thoại <font color="#ff0000">*</font></string>
+    <string name="lb_ads_email">Thư điện tử <font color="#ff0000">*</font></string>
+    <string name="lb_ads_address">Địa chỉ <font color="#ff0000">*</font></string>
+    <string name="lb_ads_company">Công ty <font color="#ff0000">*</font></string>
+    <string name="lb_ads_privacy_title">Chính sách riêng tư</string>
+    <string name="lb_ads_privacy_desc">Bằng cách nhấp vào Gửi bạn đồng ý gửi thông tin của mình tới Nhà quảng cáo.\nTrang này đồng ý sử dụng thông tin đó theo chính sách quyền riêng tư của mình.\n\nAccessed cũng sẽ sử dụng thông tin đó theo Chính sách dữ liệu của chúng tôi, bao gồm điền mẫu tự động cho quảng cáo.</string>
+    <string name="lb_ads_view_privacy_link">Xem chính sách của Accessed</string>
+    <string name="lb_ads_view_more_info">Xem thêm thông tin từ</string>
+    <string name="lb_ads_signup_form_info">Thông tin liên lạc của bạn chỉ được chia sẻ với nhà quảng cáo nếu bạn gửi biểu mẫu. Thông tin liên lạc được điền sẵn có thể đến từ hồ sơ của bạn.</string>
+    <string name="hint_ads_full_name">Nhập tên của bạn</string>
+    <string name="hint_ads_phone_number">Nhập số điện thoại</string>
+    <string name="hint_ads_email">Nhập địa chỉ email</string>
+    <string name="hint_ads_address">Nhập địa chỉ thư điện tử</string>
+    <string name="hint_ads_company">Nhập tên công ty hiện tại</string>
+    <string name="lb_ads_privacy_info_title">Về thông tin điền sẵn</string>
+    <string name="lb_application_detail_applied">Đã nộp</string>
+    <string name="lb_application_detail_status_passed">Xong</string>
+    <string name="btn_view_application">Các đơn đã nộp</string>
+    <string name="lb_reason_decline_job">Thêm lý do cho quyết định của bạn</string>
+    <string name="hint_reason_decline_job">Lý do không bắt buộc</string>
+    <string name="lb_check_for_updates">Kiểm tra các cập nhật</string>
+    <string name="lb_view_event">Xem trên lịch</string>
+
+    <string name="lb_reject_app_title">Chọn vài lý do</string>
+    <string name="lb_selected_reasons">Đã chọn %d lý do</string>
+    <string name="lb_appointment_select_service">Chọn Dịch vụ</string>
+    <string name="lb_appointment_setting_title">Cài đặt lịch hẹn</string>
+    <string name="lb_appointment_setting_business_hours">Giờ hoạt động</string>
+
+    <string name="lb_appointment_setting_appointment_approval">Phê duyệt lịch hẹn</string>
+    <string name="lb_appointment_setting_appointment_approval_desc">Tất cả các lịch hẹn cần được chấp thuận bởi thành viên quản trị.</string>
+    <string name="lb_appointment_setting_appointment_double_booking">Lịch hẹn trùng lặp</string>
+    <string name="lb_appointment_setting_appointment_double_booking_approval_desc">Mọi người có thể đặt lịch hẹn lại nhiều lần mà đã từng đặt trước đó.</string>
+
+    <string name="lb_appointment_setting_appointment_reminder_notification">Thông báo nhắc nhở</string>
+    <string name="lb_appointment_select_reminder_frequency">Chọn tần suất nhắc nhở</string>
+    <string name="lb_appointment_setting_appointment_service_for_appointment">Các dịch vụ cho phép đặt lịch hẹn</string>
+
+    <string name="lb_appointment_manage_service_title">Dịch vụ</string>
+    <string name="lb_mn_update_service">Chỉnh sửa</string>
+    <string name="lb_mn_deactive_service">Dừng hoạt động</string>
+    <string name="lb_mn_active_service">Tái hoạt động</string>
+    <string name="lb_mn_add_staff_service">Thêm nhân viên</string>
+    <string name="lb_mn_add_location_service">Thêm địa điểm</string>
+    <string name="lb_confirm_delete_service">Bạn thực sự muốn xóa dịch vụ này?</string>
+
+    <string name="lb_confirm_hide_service">Bạn có muốn ẩn dịch vụ này?</string>
+    <string name="lb_confirm_hide_service_desc">Dịch vụ này sẽ không còn hiển thị khi ai đó đặt lịch hẹn</string>
+
+    <string name="lb_create_service_title">Tạo dịch vụ</string>
+    <string name="lb_update_service_title">Sửa dịch vụ</string>
+    <string name="lb_create_service_duration_time">Thời lượng <font color='#ff0000'>*</font></string>
+    <string name="lb_create_service_interval_time">Nghỉ giải lao</string>
+    <string name="lb_create_service_duration_time_title">Chọn thời lượng</string>
+    <string name="lb_service_name">Tên dịch vụ</string>
+
+    <string name="lb_description">Mô tả</string>
+    <string name="lb_price">Giá</string>
+
+    <string name="lb_appointment_menu_appointment">Lịch hẹn</string>
+    <string name="lb_appointment_requests">Các lịch hẹn</string>
+    <string name="lb_appointment_in_calendar">Xem đặt hẹn trên lịch</string>
+
+    <string name="lb_service_request_title">Các yêu cầu dịch vụ</string>
+    <string name="lb_appointment_request_tab_pending">Đang chờ</string>
+    <string name="lb_appointment_request_tab_accepted">Đã xác nhận</string>
+    <string name="lb_appointment_request_tab_completed">Lịch sử</string>
+    <string name="lb_declined">Đã từ chối</string>
+
+    <string name="lb_create_appointment_title">Đặt hẹn</string>
+
+    <string name="hint_create_appointment_select_people">Chọn người hoặc tên của họ</string>
+    <string name="lb_add_staff">Thêm nhân viên</string>
+    <string name="lb_create_appointment_select_service">Chọn dịch vụ</string>
+    <string name="lb_appointment_time">Thời gian đặt hẹn</string>
+
+    <string name="lb_create_appointment_noties">Yêu cầu đặt hẹn của bạn sẽ được gửi tới %s để xác nhận.</string>
+
+    <string name="lb_select_date_and_time">Chọn ngày và giờ</string>
+    <string name="lb_date_and_time">Ngày giờ lịch hẹn</string>
+    <string name="lb_available_slot">Khung giờ hoạt động</string>
+    <string name="lb_available_service">Các dịch vụ</string>
+    <string name="lb_product_detail_available">Sẵn sàng</string>
+    <string name="lb_services">Các dịch vụ</string>
+    <string name="lb_service">Dịch vụ</string>
+
+    <string name="lb_new_customer">Thêm khách hàng</string>
+
+    <string name="lb_first_name_required">Tên</string>
+    <string name="lb_last_name_required">Họ</string>
+    <string name="lb_job_title">Chức vụ công việc</string>
+    <string name="lb_job_level">Cấp độ công việc</string>
+    <string name="lb_customer_required">Chọn khách hàng <font color='#ff0000'>*</font></string>
+    <string name="lb_select_customer_required">Chọn khách hàng <font color='#ff0000'>*</font></string>
+    <string name="hint_choose_staff">Click để chọn nhân viên</string>
+    <string name="hint_choose_service_location">Chọn địa điểm dịch vụ</string>
+    <string name="lb_create_appointment_note">Ghi chú</string>
+    <string name="hint_create_appointment_note">Ghi chú gì đó cho lịch hẹn này</string>
+    <string name="hint_choose_a_time_slot">Chọn thời gian hợp lệ</string>
+    <string name="lb_view_all_note">Click here to view notes</string>
+    <string name="lb_appointment_notes">Các ghi chú</string>
+    <string name="lb_add_note">Viết ghi chú</string>
+    <string name="hint_write_note">Nhập ghi chú của bạn</string>
+
+    <string name="hint_search_customer">Tìm khách hàng</string>
+    <string name="hint_new_customer">Tìm kiếm bạn bè</string>
+    <string name="hint_choose_staffs">Chọn nhân viên</string>
+    <string name="lb_create_appointment_tnc">Việc tạo sự kiện này đồng nghĩa bạn đã đồng ý với các</string>
+    <string name="lb_view_customers_title">Các khách hàng</string>
+
+    <string name="lb_select_staffs">Chọn nhân viên</string>
+    <string name="lb_appointment_landing_title">Các lịch hẹn</string>
+    <string name="lb_appointment_landing_header">Đặt lịch hẹn</string>
+    <string name="lb_appointment_landing_subheader">với các nhà cung cấp</string>
+    <string name="hint_appointment_landing_search">Tìm danh mục</string>
+
+    <string name="btn_reschedule">Đổi lịch</string>
+    <string name="btn_confirm">Xác nhận</string>
+
+    <string name="lb_appointment_upcoming">Sắp tới</string>
+    <string name="lb_appointment_pass">Đã qua</string>
+
+    <string name="lb_your_appointment">Các lịch hẹn của bạn</string>
+    <string name="lb_book_again">Đặt hẹn lại</string>
+
+    <string name="lb_add_me_as_customer">Thêm tôi</string>
+    <string name="lb_select_customer">Chọn khách hàng</string>
+    <string name="hint_input_customer_email">Email của khách hàng</string>
+    <string name="hint_input_customer_phone">Số điện thoại khách hàng</string>
+
+    <string name="lb_cancel_appointment_confirm">Bạn có muốn hủy lịch hẹn này?</string>
+    <string name="ln_mn_clone_appointment">Tạo sao chép lịch hẹn mới</string>
+    <string name="lb_cancel_appointment_title">Hủy lịch hẹn</string>
+    <string name="lb_decline_appointment_title">Bạn có chắc muốn giúp khách hàng này huỷ sự kiện?</string>
+
+    <string name="lb_sort_by_appointment_time">Sắp xếp theo thời gian đặt hẹn</string>
+    <string name="lb_sort_by_request_time">Sắp xếp theo thời gian tạo lịch hẹn</string>
+
+    <string name="lb_request_time">Thời gian yêu cầu</string>
+
+    <string name="lb_closed">Đã đóng cửa</string>
+    <string name="lb_appointment_completed">Đã hoàn thành</string>
+    <string name="lb_appointment_pending">Đang chờ</string>
+    <string name="lb_appointment_cancelled">Đã hủy</string>
+    <string name="lb_appointment_add_review">+ Thêm bình luận</string>
+    <string name="lb_appointment_attendee_more_option_add_review">Thêm đánh giá</string>
+
+    <string name="lb_appointment_list_customer_title">Khách hàng</string>
+    <string name="lb_appointment_reminder">Thông báo nhắc nhở</string>
+
+    <string name="lb_mn_my_appointment">Lịch hẹn của tôi</string>
+    <string name="lb_mn_my_work">Công việc của tôi</string>
+
+    <string name="lb_appointment_email_invalid">Email không hợp lệ</string>
+    <string name="lb_appointment_phone_invalid">Số điện thoại không hợp lệ</string>
+    <string name="lb_appointment_tnc_check">Vui lòng đồng ý với điều khoản</string>
+    <string name="lb_appointment_please_choose_customer">Vui lòng chọn khách hàng</string>
+
+    <string name="lb_appointment_has_deleted_message">Lịch hẹn này đã bị xoá.</string>
+    <string name="lb_appointment_confirm_for_all_customer">Khách hàng xác nhận</string>
+    <string name="lb_appointment_no_staff_available">Không có nhân viên nào sẵn sàng với tiêu chí đã chọn</string>
+    <string name="lb_service_turned_off">Đã dừng</string>
+    <string name="lb_trending">Xu hướng:</string>
+    <string name="lb_appointment_category_section">Danh mục</string>
+    <string name="lb_appointment_near_you">Gần bạn</string>
+    <string name="lb_appointment_special_offer">Giảm giá đặc biệt</string>
+    <string name="lb_appointment_recommended">Gợi ý</string>
+    <string name="lb_appointment_top_rate">Đánh giá cao</string>
+    <string name="lb_unblocked">Đã hủy chặn</string>
+    <string name="lb_mon_short">T2</string>
+    <string name="lb_tue_short">T3</string>
+    <string name="lb_wed_short">T4</string>
+    <string name="lb_thur_short">T5</string>
+    <string name="lb_fri_short">T6</string>
+    <string name="lb_sat_short">T7</string>
+    <string name="lb_sun_short">CN</string>
+    <string name="lb_month_picker_dialog_title">Tháng - Năm</string>
+    <string name="lb_no_event">Không có sự kiện nào cho ngày này!</string>
+    <string name="btn_add_new_event">+ Thêm mới</string>
+    <string name="lb_menu_item_report_event">Báo vi phạm</string>
+    <string name="lb_list_attendee_title">Người tham gia</string>
+    <string name="lb_event_detail_link_appointment">Xem lịch hẹn</string>
+    <string name="lb_confirm_cancel_event">Chia sẻ lý do của bạn</string>
+    <string name="lb_cancel_event_title">Huỷ sự kiện</string>
+    <string name="lb_cancel_event_subtitle">Thêm lý do huỷ</string>
+    <string name="lb_cancel_event_checkbox">Xoá sự kiện sau khi huỷ</string>
+
+    <string-array name="array_day_week">
+        <item>T2</item>
+        <item>T3</item>
+        <item>T4</item>
+        <item>T5</item>
+        <item>T6</item>
+        <item>T7</item>
+        <item>CN</item>
+    </string-array>
+
+    <string name="lb_create_event_title">Tạo Sự Kiện Mới</string>
+    <string name="lb_update_event_title">Cập nhật sự kiện</string>
+    <string name="hint_calendar_input_title">Nhập tiêu đề <font color='#ff0000'>*</font></string>
+    <string name="lb_calendar_add_attendee">Thêm người tham gia</string>
+    <string name="lb_calendar_is_all_day">Cả ngày</string>
+    <string name="lb_calendar_start_date">Ngày bắt đầu</string>
+    <string name="lb_calendar_end_date">Ngày kết thúc</string>
+    <string name="lb_calendar_repeat_default">Lặp lại</string>
+    <string name="lb_calendar_add_location">Thêm vị trí</string>
+    <string name="lb_calendar_add_description">Thêm mô tả</string>
+    <string name="lb_calendar_add_phone_number">Thêm số điện thoại</string>
+    <string name="hint_calendar_add_description">Nhập mô tả cho sự kiện của bạn</string>
+    <string name="lb_calendar_online_meeting">Họp trực tuyến</string>
+    <string name="lb_calendar_reminder_notification">Thông báo nhắc nhở</string>
+    <string name="lb_calendar_permission">Quyền hạn</string>
+    <string name="lb_calendar_add_permission">Thêm quyền cho khách mời</string>
+    <string name="lb_calendar_send_invitation">Gửi lời mời tham gia</string>
+    <string name="lb_calendar_select_topic">Chọn chủ đề</string>
+    <string name="hint_event_new_topic">Tên chủ đề mới</string>
+    <string name="lb_event_date_repeat_title">Lặp lại</string>
+    <string name="hint_topic_create_new">Tạo Mới</string>
+    <string name="btn_select">Chọn</string>
+    <string name="btn_select_all">Chọn hết</string>
+
+    <string name="btn_job_event">Tham gia</string>
+    <string-array name="lb_event_day_repeats">
+        <item>Không lặp lại</item>
+        <item>Hằng ngày</item>
+        <item>Hằng tuần</item>
+        <item>Mỗi 2 tuần</item>
+        <item>Hằng tháng</item>
+    </string-array>
+
+    <string-array name="lb_reminders">
+        <item>Phút</item>
+        <item>Giờ</item>
+        <item>Ngày</item>
+        <item>Tuần</item>
+    </string-array>
+
+    <string name="lb_before">Trước đây</string>
+
+    <string-array name="list_appointment_reminder">
+        <item>Trước 5 phút</item>
+        <item>Trước 10 phút</item>
+        <item>Trước 15 phút</item>
+        <item>Trước 30 phút</item>
+        <item>Trước 1 giờ</item>
+        <item>Trước 2 giờ</item>
+        <item>Trước 1 ngày</item>
+    </string-array>
+    <string name="lb_event_detail_page_title">Chi tiết Sự kiện</string>
+    <string name="lb_event_detail_delete">Xoá Sự kiện</string>
+    <string name="lb_event_detail_cancel">Thêm lý do huỷ</string>
+    <string name="lb_event_detail_delete_note">Thêm lý do</string>
+    <string name="hint_event_detail_cancel_reason">Thêm ghi chú</string>
+    <string name="lb_event_detail_option_join">Tham gia</string>
+    <string name="lb_event_detail_option_cancel">Huỷ sự kiện</string>
+    <string name="lb_event_detail_option_delete">Xoá</string>
+    <string name="lb_event_detail_option_decline">Từ chối sự kiện</string>
+    <string name="lb_event_detail_option_copy">Sao chép</string>
+    <string name="lb_event_detail_option_share">Chia sẻ</string>
+    <string name="lb_event_desc_page_title">Mô tả sự kiện</string>
+    <string name="lb_event_attendee_option_remove">Xoá khỏi danh sách</string>
+    <string name="lb_event_attendee_option_can_modify">Được quyền sửa lịch</string>
+    <string name="lb_event_attendee_option_remove_can_modify">Bỏ quyền sửa lịch</string>
+    <string name="hint_event_detail_location">Địa chỉ</string>
+    <string name="hint_event_detail_phone">Số điện thoại</string>
+    <string name="hint_event_detail_desc">Mô tả</string>
+    <string name="hint_event_detail_meeting_url">Liên kết họp trực tuyến</string>
+    <string name="lb_unknown_attendee">Không xác định</string>
+    <string name="lb_no_any_attendee">Chưa có người tham gia</string>
+    <string name="hint_max_attendee">Giới hạn người tham gia</string>
+    <string name="lb_max_attendee">Giới hạn người tham gia: %d</string>
+    <string name="lb_message_cancel_event">Bạn có muốn huỷ tham gia sự kiện này?</string>
+    <string name="lb_message_tnc_check">Vui lòng đồng ý với các Điều khoản và Chính Sách</string>
+    <string name="lb_message_delete_event">Bạn có muốn xoá sự kiện này?</string>
+    <string name="lb_event_detail_cancelled_message">Sự kiện này đã bị huỷ hoặc xoá khỏi lịch</string>
+    <string name="lb_event_detail_view_application">Xem đơn ứng tuyển</string>
+    <string name="lb_change_button_title">Thay đổi nút</string>
+    <string name="lb_change_button_invite">Mời</string>
+    <string name="lb_change_button_appointment">Lịch hẹn</string>
+    <string name="lb_change_button_message">Tin nhắn</string>
+
+    <string name="lb_change_button_invite_desc">Mọi người sử dụng tính năng này để mời những người khác thích Trang của bạn</string>
+    <string name="lb_change_button_appointment_desc">Mọi người sử dụng tính năng này để đặt cuộc hẹn tới Trang của bạn. Bạn có thể thiết lập các cài đặt cuộc hẹn như thời gian, các dịch vụ, tự động chấp nhận hay không…</string>
+    <string name="lb_change_button_message_desc">Mọi người có thể gửi tin nhắn đến trang của bạn. Bạn có thể quản lý tất cả tin nhắn đến</string>
+
+    <string name="lb_change_button_confirm_message">Bạn có muốn thực hiện thay đổi nút <b>%s</b> thành nút <b>%s</b>?</string>
+    <string name="btn_appointment">Đặt hẹn</string>
+    <string name="btn_book_for_you">Đặt cho bạn</string>
+    <string name="btn_message">Nhắn tin</string>
+    <string name="lb_manage_services">Quản lý dịch vụ</string>
+    <string name="lb_change_button_note">Chọn nút mà bạn muốn mọi người thấy được, nó sẽ được hiển thị ở phần các nút trên trang của bạn</string>
+    <string name="lb_change_your_password">Đổi Mât Khẩu</string>
+    <string name="hint_enter_current_password">Nhập mật khẩu hiện tại</string>
+    <string name="hint_enter_new_username">Nhập tên người dùng mới</string>
+    <string name="hint_confirm_new_password">Xác nhận mật khẩu mới</string>
+    <string name="lb_confirm_password_not_match">Mật khẩu xác nhận không khớp. Vui lòng kiểm tra lại.</string>
+    <string name="lb_change_password_desc">Chúng tôi sẽ gửi cho bạn một mã xác thực.\Vui lòng kiểm tra trong email chính của bạn.</string>
+    <string name="lb_code_available_in60s">Mã này hết hạn trong 60 giây</string>
+    <string name="lb_chat_header_user_online">%d Người đang trực tuyến</string>
+    <string name="lb_chat_no_recent_thread">Không có cuộc trò chuyện nào gần đây</string>
+    <string name="lb_today">Hôm nay</string>
+    <string name="lb_yesterday">Hôm qua</string>
+    <string name="lb_leave_group_message">Bạn có chắc muốn rời khỏi nhóm?</string>
+    <string name="lb_delete_group_message">Bạn có chắc muốn xóa trò chuyện này?</string>
+    <string name="lb_archive_chat_group_desc">Sau khi bạn lưu trữ vĩnh viễn nhóm trò chuyện này, không ai trong nhóm có thể tương tác. Bạn cũng không thể hoàn tác.</string>
+    <string name="lb_archive_chat_group_title">Bạn có chắc muốn lưu trữ vĩnh viễn nhóm trò chuyện này?</string>
+    <string name="lb_chat_mn_option_remove">Xóa khỏi nhóm</string>
+    <string name="lb_chat_mn_option_block">Chặn</string>
+
+    <string name="lb_block_message">Chặn tin nhắn</string>
+    <string name="lb_block_on_chat">Chặn tin nhắn</string>
+    <string name="lb_block_on_chat_desc">%s và bạn sẽ không thể trao đổi nhắn tin với nhau. Tất cả các tin nhắn được gửi đi trong lúc đã chặn sẽ bị ẩn cho đến khi hủy chặn. Bạn vẫn có thể thấy và nhắn tin cho những người khác trong nhóm mà bạn đã tham gia.</string>
+
+    <string name="lb_block_on_system">Chặn %s</string>
+    <string name="lb_block_on_system_desc">Bạn và %s sẽ không còn kết nối với nhau nữa.\n%s cũng sẽ bị chặn nhắn tin.\n%s sẽ không thể làm các việc sau:\n- Xem bài viết của bạn\n- Tìm kiếm bạn</string>
+
+    <string name="lb_blocked_chat_message">Bạn đã chặn %s</string>
+    <string name="btn_unblock">Bỏ chặn</string>
+
+    <string name="lb_request_to_join_chat_group">%d yêu cầu tham gia nhóm</string>
+
+    <string name="lb_update_recommendation">Cập nhật lời giới thiệu</string>
+
+    <string name="lb_add_recommendation_default_chat_message">Tôi đã gửi bạn một đề xuất cho hồ sơ của bạn rồi nhé :)</string>
+    <string name="lb_accepted_recommendation_chat_message">Tôi đã chấp nhận lời đề xuất của bạn.</string>
+    <string name="lb_chat_list_empty_message">Chưa có cuộc trò chuyện nào.</string>
+    <string name="lb_tab_admin">Quản trị</string>
+    <string name="lb_tab_chat_member_request">Yêu cầu tham gia</string>
+    <string name="lb_title_select_photo">Chọn hình ảnh</string>
+    <string name="lb_choose_one_below">Hình bìa</string>
+    <string name="material_dialog_title">Chọn màu sắc</string>
+    <string name="material_dialog_positive_button">Xác nhận</string>
+    <string name="material_dialog_negative_button">Huỷ bỏ</string>
+    <string name="title_recent_colors">Các màu từng chọn</string>
+    <string name="lb_no_comment_title">Chưa có bình luận nào</string>
+    <string name="lb_no_comment_subtitle">Hãy là người đầu tiên bình luận</string>
+    <string name="lb_hint_listening">Đang lắng nghe…</string>
+    <string name="lb_reply_title">Các phản hồi</string>
+    <string name="msg_delete_comment">Bạn muốn xóa bình luận này không?</string>
+    <string name="lb_update_comment">Sửa bình luận</string>
+    <string name="msg_discard_comment">Bạn có muốn hủy sửa bình luận?</string>
+    <string name="lb_feed_reply_title">Phản hồi</string>
+    <string name="lb_see_more_reply">Xem thêm phản hồi</string>
+    <string name="lb_no_chat_message">Chưa có tin nhắn nào</string>
+    <string name="lb_no_chat_message_subtitle">Hãy bắt đầu cuộc trò chuyện nào!</string>
+    <string name="btn_ok">Đồng ý</string>
+    <string name="btn_explorer">Khám phá</string>
+    <string name="btn_view">Xem</string>
+    <string name="btn_dismiss">Bỏ qua</string>
+    <string name="btn_reply">Trả lời</string>
+    <string name="msg_cannot_connect_server">Không thể kết nối với máy chủ. Vui lòng thử lại.</string>
+    <string name="btn_skip">Bỏ qua</string>
+    <string name="btn_send">Gửi</string>
+    <string name="btn_view_message">Xem tin nhắn</string>
+    <string name="btn_done">Xong</string>
+    <string name="btn_delete">Xoá</string>
+    <string name="btn_cancel">Huỷ bỏ</string>
+    <string name="btn_pay">Thanh toán</string>
+    <string name="btn_update">Cập nhật</string>
+    <string name="btn_add">Thêm</string>
+    <string name="btn_setting">Cài đặt</string>
+    <string name="btn_clear">Xoá</string>
+    <string name="btn_save">Lưu lại</string>
+    <string name="btn_upload">Tải lên</string>
+    <string name="btn_buy_now">Mua ngay</string>
+    <string name="btn_add_to_cart">Thêm vào giỏ</string>
+    <string name="btn_book">Đặt hẹn</string>
+    <string name="btn_close">Đóng</string>
+    <string name="btn_submit">Gửi</string>
+    <string name="btn_apply">Áp dụng</string>
+    <string name="btn_apply_job">Ứng tuyển</string>
+    <string name="btn_publish">Tạo</string>
+    <string name="btn_next">Tiếp theo</string>
+    <string name="btn_back">Quay lại</string>
+    <string name="btn_decline">Từ chối</string>
+    <string name="btn_accept">Chấp nhận</string>
+    <string name="btn_approve">Duyệt</string>
+    <string name="lb_accepted">Đã chấp nhận</string>
+    <string name="btn_yes">Có</string>
+    <string name="btn_no">Không</string>
+    <string name="btn_post">Đăng</string>
+    <string name="lb_default">Mặc định</string>
+    <string name="lb_cancelled">Đã hủy</string>
+    <string name="btn_continue">Tiếp tục</string>
+    <string name="lb_confirm">Xác nhận</string>
+    <string name="txt_dialog_title_error">Lỗi!</string>
+    <string name="lb_single_image_picker_title">Vui lòng chọn hình ảnh</string>
+    <string name="msg_no_network_connection">Không có kết nối mạng.</string>
+    <string name="msg_unknown_message">Có lỗi chưa xác định.\nXin lỗi vì sự bất tiện này.</string>
+    <string name="msg_loading">Đang tải…</string>
+    <string name="txt_see_more">Xem thêm</string>
+    <string name="txt_see_less">Thu gọn</string>
+    <string name="btn_connect">Kết nối</string>
+    <string name="btn_connected">Đã kết nối</string>
+    <string name="btn_pending">Đang chờ</string>
+    <string name="btn_unfollow">Bỏ theo dõi</string>
+    <string name="btn_notifications">Nhận thông báo</string>
+    <string name="btn_leave_group">Rời nhóm</string>
+    <string name="btn_report">Báo sai phạm</string>
+    <string name="btn_join">Tham gia</string>
+    <string name="btn_joining">Đang tham gia</string>
+    <string name="btn_joined">Đã tham gia</string>
+    <string name="lb_requested">Đã yêu cầu</string>
+    <string name="btn_invitation_sent">Đã mời</string>
+    <string name="btn_follow">Theo dõi</string>
+    <string name="btn_plus_follow">+ Theo dõi</string>
+    <string name="btn_invite">Mời bạn bè</string>
+    <string name="btn_book_for_customer">Đặt cho khách hàng</string>
+    <string name="btn_following">Đang theo dõi</string>
+    <string name="lb_email_choose_title">Chọn ứng dụng gửi mail</string>
+    <string name="lb_share_choose_title">Chọn ứng dụng để chia sẻ</string>
+    <string name="btn_see_all">Xem tất cả</string>
+    <string name="lb_all">Tất cả</string>
+    <string name="msg_report_sending">Đang gửi báo cáo…</string>
+    <string name="msg_report_sent">Đã gửi báo cáo thành công. Cám ơn vì sự đóng góp của bạn!</string>
+    <string name="btn_share">Chia sẻ</string>
+    <string name="btn_request_a_review">Thêm đánh giá</string>
+    <string name="btn_add_recommendation">Tạo đề xuất</string>
+    <string name="btn_view_review">Xem nhận xét</string>
+    <string name="btn_view_recommendation">Xem đề xuất</string>
+    <string name="btn_you_have_updated_recommendation">Bạn đã chỉnh sửa đề xuất</string>
+    <string name="btn_you_have_write_recommendation">Bạn đã viết đề xuất</string>
+    <string name="btn_accepted_recommendation">Bạn đã chấp nhận đề xuất</string>
+    <string name="btn_you_have_rejected_recommendation">Bạn đã từ chối đề xuất</string>
+    <string name="btn_view_update_recommendation">Xem đề xuất đã sửa</string>
+    <string name="btn_rejected_recommendation">Đã từ chối đề xuất</string>
+    <string name="btn_request_a_recommendation">Yêu cầu đề xuất</string>
+    <string name="btn_send_email">Gửi Email</string>
+    <string name="lb_num_of_people">%s Người</string>
+    <string name="lb_num_of_members">%s Thành viên</string>
+    <string name="lb_all_with_count">Tất cả %s</string>
+    <string name="lb_title_reactions">Người Tương Tác</string>
+    <string name="lb_type_something">Bạn đang nghĩ gì?</string>
+    <string name="lb_show_more_comment">Xem thêm %s bình luận</string>
+    <string name="lb_invitation_sent">Đã mời</string>
+    <string name="lb_about">(Khoảng)</string>
+    <string name="lb_menu_copy_link">Sao chép liên kết</string>
+    <string name="lb_menu_setting">Cài đặt</string>
+    <string name="lb_menu_manage_page">Quản lý Trang</string>
+    <string name="lb_menu_save_later">Lưu lại</string>
+    <string name="lb_menu_unsave">Bỏ lưu</string>
+    <string name="lb_menu_turn_off_notification">Tắt thông báo</string>
+    <string name="lb_hide_post">Ẩn bài này</string>
+    <string name="lb_delete_post">Xóa bài viết</string>
+    <string name="lb_turn_off_comment">Tắt bình luận</string>
+    <string name="lb_turn_on_comment">Cho phép bình luận</string>
+    <string name="lb_menu_report_article">Báo vi phạm</string>
+    <string name="lb_see_all_trending">Xem tất cả xu hướng</string>
+    <string name="err_invalid_file">Tập tin không hợp lệ</string>
+
+    <string name="lb_nudity">Khoả thân</string>
+    <string name="lb_violence">Bạo lực</string>
+    <string name="lb_violate_term">Vi phạm chính sách</string>
+    <string name="lb_harassment">Quấy rối</string>
+    <string name="lb_suicide">Tự sát</string>
+    <string name="lb_fake_group">Nhóm giả mạo</string>
+    <string name="lb_fake_account">Tài khoản giả</string>
+    <string name="lb_spam">Tin rác</string>
+    <string name="lb_false_news">Tin thất thiệt</string>
+    <string name="lb_terrorism">Khủng bố</string>
+    <string name="lb_new">Mới</string>
+    <string name="hint_search_place">Tìm địa điểm</string>
+    <string name="hint_search_job_title">Tìm công việc</string>
+    <string name="hint_search_skill">Tìm kĩ năng</string>
+
+    <string name="btn_personalize_invite">Mời kết nối cá nhân</string>
+    <string name="btn_share_in_new_post">Chia sẻ vào bài viết mới</string>
+    <string name="btn_turn_off_notification">Tắt thông báo</string>
+    <string name="btn_turn_on_notification">Bật thông báo</string>
+    <string name="btn_copy_link">Sao chép liên kết</string>
+    <string name="btn_remove_connection">Hủy kết nối</string>
+    <string name="btn_block_connection">Chặn kết nối</string>
+    <string name="btn_report_connection">Báo cáo kết nối</string>
+    <string name="btn_report_company">Báo cáo công ty</string>
+    <string name="btn_report_school">Báo cáo trường học</string>
+    <string name="btn_report_page">Báo cáo trang</string>
+    <string name="btn_leave_company">Rời Công ty</string>
+    <string name="btn_leave_school">Rời Trường học</string>
+    <string name="btn_manage_school">Quản lý trường học</string>
+    <string name="btn_manage_company">Quản lý công ty</string>
+
+    <string name="btn_report_group">Báo cáo nhóm</string>
+    <string name="mn_item_upload_cover_photo">Tải hình ảnh từ thiết bị</string>
+    <string name="mn_item_choose_from_category">Chọn hình nền mặc định</string>
+    <string name="lb_num_of_following">%s Người theo dõi</string>
+
+    <string name="lb_mutual_connection_list_sub_title_many"><b>%s</b> kết nối chung gồm <b>%s</b> và <b>%s</b></string>
+    <string name="lb_mutual_connection_list_sub_title_one"><b>%s</b> kết nối chung gồm <b>%s</b></string>
+
+    <string name="lb_input_keyword_to_search">Nhập từ khóa để bắt đầu tìm kiếm</string>
+    <string name="lb_activities">Các hoạt động</string>
+
+    <string name="lb_location_off_message">Dịch vụ xác định vị trí đang tắt. Vui lòng mở lại dịch vụ trong cài đặt để sử dụng tính năng này.</string>
+    <string name="lb_already_recommended">Đã đề xuất rồi</string>
+    <string name="lb_address2">Toà nhà, căn hộ</string>
+    <string name="lb_address1_required">Số nhà, đường, xóm <font color='#ff0000'>*</font></string>
+    <string name="lb_district">Quận/Huyện</string>
+    <string name="lb_district_required">Quận/Huyện <font color='#ff0000'>*</font></string>
+    <string name="lb_city_required">Thành phố/Tỉnh <font color='#ff0000'>*</font></string>
+    <string name="lb_state">Tiểu bang</string>
+    <string name="lb_country_required">Quốc gia <font color='#ff0000'>*</font></string>
+    <string name="lb_state_required">Tiểu bang <font color='#ff0000'>*</font></string>
+
+    <string name="lb_address1">Số nhà, đường, xóm</string>
+    <string name="lb_city">Tỉnh/Thành phố</string>
+    <string name="lb_country">Quốc gia</string>
+
+    <string name="lb_calculating">Đang thống kê…</string>
+    <string name="lb_upgrade">Nâng cấp</string>
+
+    <string name="lb_tnc_not_checked_message">Vui lòng xem Chính sách và Điều khoản của chúng tôi.</string>
+    <string name="litmit_images_videos">Tối đa 20 ảnh. Xoá ảnh/video trước khi thêm vào</string>
+
+    <plurals name="lb_num_other_connection">
+        <item quantity="other"> %s kết nối khác</item>
+    </plurals>
+
+    <string name="company_not_available">Công ty không tồn tại</string>
+    <string name="job_not_available">Công việc không tồn tại</string>
+    <plurals name="lb_num_of_connections">
+        <item quantity="other">%s Kết nối</item>
+    </plurals>
+
+    <plurals name="lb_num_of_mutual_connections">
+        <item quantity="other">%s Kết nối chung</item>
+    </plurals>
+
+    <plurals name="lb_num_of_comment">
+        <item quantity="other">%s Bình luận</item>
+    </plurals>
+
+    <plurals name="lb_num_of_share">
+        <item quantity="other">%s Chia sẻ</item>
+    </plurals>
+
+    <plurals name="lb_number_of_employee">
+        <item quantity="other">%s Nhân viên</item>
+    </plurals>
+
+    <plurals name="lb_number_of_member">
+        <item quantity="other">%s Thành viên</item>
+    </plurals>
+
+    <plurals name="lb_num_of_review">
+        <item quantity="other">%s Đánh giá</item>
+    </plurals>
+
+    <plurals name="lb_number_of_follower">
+        <item quantity="other">%s Theo dõi</item>
+    </plurals>
+
+    <plurals name="lb_number_of_mutual_connection">
+        <item quantity="other">%s Kết nối với nhau</item>
+    </plurals>
+
+    <plurals name="lb_number_of_used">
+        <item quantity="other">%s Người sử dụng</item>
+    </plurals>
+
+    <plurals name="lb_follower">
+        <item quantity="other">Theo dõi</item>
+    </plurals>
+
+    <plurals name="lb_num_of_company">
+        <item quantity="other">%s Công ty</item>
+    </plurals>
+
+    <plurals name="lb_num_of_job">
+        <item quantity="other">%s Công việc</item>
+    </plurals>
+
+    <plurals name="lb_num_of_post">
+        <item quantity="other">%s Bài đăng</item>
+    </plurals>
+
+    <plurals name="lb_num_of_group">
+        <item quantity="other">%s Nhóm</item>
+    </plurals>
+
+    <plurals name="lb_num_of_school">
+        <item quantity="other">%s Trường học</item>
+    </plurals>
+
+    <plurals name="lb_num_of_page">
+        <item quantity="other">%s Trang</item>
+    </plurals>
+
+    <plurals name="lb_num_of_location">
+        <item quantity="zero">Địa điểm</item>
+        <item quantity="other">Địa điểm</item>
+        <item quantity="many">%s Địa điểm</item>
+    </plurals>
+
+    <plurals name="lb_num_of_like">
+        <item quantity="zero">Thích</item>
+        <item quantity="one">Thích</item>
+        <item quantity="other">%s Thích</item>
+    </plurals>
+
+    <plurals name="lb_num_of_reply">
+        <item quantity="zero">Trả lời</item>
+        <item quantity="one">Trả lời</item>
+        <item quantity="other">%s Trả lời</item>
+    </plurals>
+
+    <string-array name="lb_month_short">
+        <item>Thg 1</item>
+        <item>Thg 2</item>
+        <item>Thg 3</item>
+        <item>Thg 4</item>
+        <item>Thg 5</item>
+        <item>Thg 6</item>
+        <item>Thg 7</item>
+        <item>Thg 8</item>
+        <item>Thg 9</item>
+        <item>Thg 10</item>
+        <item>Thg 11</item>
+        <item>Thg 12</item>
+    </string-array>
+    <string name="lb_company_detail_tab_about">Giới thiệu</string>
+    <string name="lb_company_detail_tab_review">Đánh giá</string>
+    <string name="lb_company_detail_tab_job">Công việc</string>
+    <string name="lb_company_detail_tab_salaries">Lương</string>
+    <string name="lb_company_detail_btn_following">Đang theo dõi</string>
+    <string name="lb_company_detail_info">Thông tin</string>
+    <string name="lb_company_detail_headquarters">Trụ sở chính</string>
+    <string name="lb_company_detail_founded">Ngày thành lập</string>
+    <string name="lb_company_detail_size">Tổng nhân sự</string>
+    <string name="lb_company_detail_type">Loại hình</string>
+    <string name="lb_company_detail_industry">Lĩnh vực</string>
+    <string name="lb_company_detail_company_picture">Hình ảnh công ty</string>
+    <string name="lb_school_detail_picture">Hình ảnh trường</string>
+    <string name="lb_company_detail_mission">Sứ mệnh:&#160;</string>
+    <string name="lb_company_detail_see_more">Xem thêm</string>
+    <string name="lb_company_detail_see_less">Thu lại</string>
+    <string name="lb_company_detail_job_add_review">Đánh Giá</string>
+    <string name="lb_company_detail_add_salary">Thêm lương</string>
+    <string name="lb_company_detail_num_of_company">%s Công ty</string>
+    <string name="lb_company_detail_salary_label">Lương</string>
+    <string name="lb_company_detail_num_of_salary">%s lương</string>
+    <string name="lb_company_review_check_recommend">Đề cử %s</string>
+    <string name="lb_company_review_check_approve_ceo">Phê duyệt của CEO</string>
+    <string name="lb_company_review_employment_type">Loại hình công việc</string>
+
+    <!--  Company detail tab review  -->
+    <string name="lb_company_detail_review_reviews">Đánh giá</string>
+    <string name="lb_company_detail_review_highlight">Nổi bật</string>
+    <string name="lb_company_detail_review_employees_review">Nhân viên đánh giá %s</string>
+    <string name="lb_company_detail_review_pros"><![CDATA[<font color="#0184D6"><b>Ưu điểm:</b></font>&#160;%s]]></string>
+    <string name="lb_company_detail_review_cons"><![CDATA[<font color="#BF0016"><b>Nhược điểm:</b></font>&#160;%s]]></string>
+    <string name="lb_company_detail_recommend_company">Giới thiệu %s</string>
+    <string name="lb_company_detail_approve_of_ceo">Tán thành CEO</string>
+    <string name="lb_company_detail_employee_salary">Lương nhân viên</string>
+    <string name="lb_pros">Ưu điểm</string>
+    <string name="lb_cons">Cons</string>
+    <string name="lb_advice">Lời khuyên</string>
+    <string name="lb_ratings">Đánh giá xếp hạng</string>
+    <string name="lb_add_salary">Thêm Lương</string>
+    <string name="lb_driver">Xe hơi</string>
+    <string name="lb_bus">Xe Bus</string>
+    <string name="lb_walk">Đi bộ</string>
+    <string name="lb_more_option_company_review_share">Chia sẻ bình luận</string>
+    <string name="lb_more_option_company_review_report">Báo vi phạm</string>
+
+    <string name="lb_company_detail_review_importance_notice">Niềm tin của bạn là sự quan tâm hàng đầu của chúng tôi. Vì thế các công ty không thể thay đổi hay gỡ bỏ bình luận.</string>
+    <string name="lb_be_the_first_review">Hãy là người đầu tiên bình luận.</string>
+    <string name="lb_be_the_first_share">Hãy là người đầu tiên chia sẻ.</string>
+    <string name="lb_be_the_first_add_salary">Hãy bắt đầu chia sẻ mức lương ở đây</string>
+    <string name="lb_be_the_first_share_new_feed">Hãy là người đầu tiên chia sẻ cảm nghĩ</string>
+    <string name="lb_short_item_rating">Đánh giá</string>
+
+    <string name="lb_company_about_suggest_an_edit">Gợi ý sửa</string>
+    <string name="lb_company_about_manage_company">Quản lý công ty này</string>
+    <string name="lb_company_about_manage_school">Quản lý trường học này</string>
+
+    <string name="lb_address">Các địa chỉ khác</string>
+    <string name="lb_employees">Các nhân viên</string>
+    <string name="lb_your_connections">Các kết nối của bạn</string>
+    <string name="lb_connected">Đã kết bạn</string>
+
+    <string name="lb_company_detail_salary_importance_notice">Lương của bạn hoàn toàn được ẩn danh.</string>
+
+    <string name="lb_add_company_review_recommend">Giới thiệu công ty này cho người khác</string>
+
+    <string-array name="lb_array_salary_sort_name">
+        <item>Mức lương phổ biến nhất</item>
+        <item>Mức lương đăng nhiều nhất</item>
+        <item>Mức lương cao nhất</item>
+    </string-array>
+
+    <string-array name="lb_array_filter_year_experience_name">
+        <item>1 năm</item>
+        <item>2 – 3 năm</item>
+        <item>4 – 5 năm</item>
+        <item>5 – 8 năm</item>
+        <item>9 – 10 năm</item>
+        <item>10 – 15 năm</item>
+        <item>15+ năm</item>
+    </string-array>
+    <string name="btn_add_job">Thêm công việc</string>
+    <string name="lb_message_install_recruiting_app">Vui lòng cài đặt ứng dụng dành riêng cho nhà tuyển dụng chuyên nghiệp để tạo công việc và nhiều tính năng khác. Bạn có muốn cài đặt ngay?</string>
+    <string name="lb_search_company_indicator">Vui lòng nhập tên công ty để tìm kiếm</string>
+    <string name="hint_search_connections">Tìm bạn bè</string>
+    <string name="hint_search_staffs">Tìm nhân viên</string>
+    <string name="hint_search_country">Tìm quốc gia</string>
+    <string name="hint_search_city">Tìm thành phố</string>
+    <string name="hint_search_district">Tìm quận/huyện</string>
+    <string name="hint_search_language">Tìm ngôn ngữ</string>
+    <string name="hint_search_group">Tìm nhóm</string>
+    <string name="hint_search_industry">Tìm lĩnh vực</string>
+    <string name="hint_search_currency">Tìm loại tiền tệ</string>
+    <string name="hint_search_job_function">Tìm loại công việc</string>
+    <string name="hint_search_category">Tìm danh mục</string>
+    <string name="hint_search_providers">Tìm nhà cung cấp</string>
+    <string name="hint_search_location">Tìm địa điểm</string>
+    <string name="hint_search_field_of_study">Tìm ngành học</string>
+    <string name="hint_search_page">Tìm Trang</string>
+    <string name="hint_search_school">Tìm trường học</string>
+    <string name="hint_search_company">Tìm công ty</string>
+    <string name="lb_report_reasons">Vui lòng chọn các lý do để tiếp tục</string>
+    <string name="hint_other_reasons">Viết thêm gì đó về lý do của bạn</string>
+    <string name="hint_search_keyword">Tìm kiếm</string>
+
+    <string name="lb_tab_connected">Bạn bè</string>
+    <string name="lb_tab_followings">Đang theo dõi</string>
+    <string name="lb_tab_managing">Quản lý</string>
+    <string name="lb_tab_followers">Được theo dõi</string>
+    <string name="lb_tab_received">Mời kết bạn</string>
+    <string name="lb_tab_sent">Gửi kết bạn</string>
+    <string name="lb_tab_joined">Đã tham gia</string>
+    <string name="lb_tab_liked">Đã thích</string>
+    <string name="lb_invited_you_to_join">Đã mời bạn tham gia</string>
+    <string name="lb_invited_you_to_follow">Đã mời bạn theo dõi</string>
+
+    <string name="lb_group_tab_received">Mời vào nhóm</string>
+    <string name="lb_group_tab_sent">Xin vào nhóm</string>
+    <string name="lb_connection_settings_title">Cài đặt kết nối</string>
+    <string name="lb_create_company_title">Tạo tổ chức</string>
+    <string name="lb_update_company_title">Sửa tổ chức</string>
+    <string name="lb_create_company_welcome">Xin chào</string>
+    <string name="lb_create_company_desc">Hãy bắt đầu tạo tổ chức của bạn</string>
+    <string name="lb_create_company_name">Tên đầy đủ</string>
+    <string name="lb_create_company_display_name">Tên hiển thị</string>
+    <string name="lb_create_company_about">Giới thiệu</string>
+    <string name="lb_create_company_mission">Sứ mệnh</string>
+    <string name="lb_create_company_size">Số lượng nhân viên</string>
+    <string name="lb_create_company_founded">Năm thành lập</string>
+    <string name="lb_create_company_job_industry">Lĩnh vực kinh doanh</string>
+    <string name="lb_create_company_media_of_company">Hình ảnh tổ chức</string>
+    <string name="lb_create_company_type">Loại tổ chức</string>
+    <string name="lb_create_organization_type_company">Công ty</string>
+    <string name="lb_create_organization_type_school">Trường học</string>
+
+    <string name="lb_company_type_public">Công ty đại chúng</string>
+    <string name="lb_company_type_education">Tổ chức giáo dục</string>
+    <string name="lb_company_type_government">Cơ quan chính phủ</string>
+    <string name="lb_company_type_non_profit">Phi lợi nhuận</string>
+    <string name="lb_company_type_privately_held">Công ty TNHH</string>
+    <string name="lb_company_type_sole">Doanh nghiệp tư nhân</string>
+    <string name="lb_company_type_partnership">Công ty hợp danh</string>
+    <string name="lb_company_type_self_employed">Hộ kinh doanh</string>
+
+    <string name="lb_school_type_preschool">Trường Mầm non</string>
+    <string name="lb_school_type_primaryschool">Tiểu học</string>
+    <string name="lb_school_type_highschool">Trung học cơ sở</string>
+    <string name="lb_school_type_middleschool">Trung học phổ thông</string>
+    <string name="lb_school_type_vocational">Trung cấp</string>
+    <string name="lb_school_type_college">Cao đẳng</string>
+    <string name="lb_school_type_university">Đại học</string>
+
+    <string name="lb_company_select_video">Video (tối đa 100Mb)</string>
+    <string name="lb_company_select_image">Photos (tối đa 20 hình .png, .jpeg)</string>
+    <string name="lb_company_section_information">Thông tin</string>
+
+    <string name="lb_company_size1">1 - 50 nhân viên</string>
+    <string name="lb_company_size51">51 - 100 nhân viên</string>
+    <string name="lb_company_size101">101 - 200 nhân viên</string>
+    <string name="lb_company_size201">201 - 500 nhân viên</string>
+    <string name="lb_company_size501">501 - 1000 nhân viên</string>
+    <string name="lb_company_size1001">1001 - 2000 nhân viên</string>
+    <string name="lb_company_size2001">2001 - 5000 nhân viên</string>
+    <string name="lb_company_size50001">5000+ nhân viên</string>
+    <string name="lb_company_size100001">10000+ nhân viên</string>
+
+    <string name="lb_choose_new_stage_title">Chọn giai đoạn</string>
+    <string name="lb_filter_no_selected">%d đã chọn</string>
+
+    <string name="lb_address_name">Tòa nhà. Vd: Viettel Complex Bulding</string>
+    <string name="lb_required_field">This field is required</string>
+
+    <plurals name="lb_selected_images">
+        <item quantity="one">Đã chọn 1 hình ảnh</item>
+        <item quantity="other">Đã chọn %d hình ảnh</item>
+    </plurals>
+    <string name="lb_create_group_title">Tạo nhóm</string>
+    <string name="lb_update_group_title">Sửa nhóm</string>
+    <string name="lb_group_name">Tên nhóm</string>
+    <string name="lb_group_name_required">Tên nhóm</string>
+    <string name="lb_name">Tên</string>
+    <string name="lb_branch_name">Tên chi nhánh</string>
+    <string name="lb_group_about">Giới thiệu nhóm</string>
+    <string name="hint_group_about">Giới thiệu ngắn gọn về nhóm của bạn</string>
+    <string name="hint_group_privacy">Mọi người có thể thấy các thành viên và bài viết của nhóm</string>
+    <string name="lb_group_industry">Lĩnh vực</string>
+    <string name="lb_group_about_location">Khu vực <font color='#ff0000'>*</font></string>
+    <string name="lb_group_privacy">Nhóm công khai</string>
+    <string name="lb_anyone_can_search_group">Mọi người có thể tìm thấy nhóm</string>
+    <string name="lb_add_member">Thêm thành viên</string>
+    <string name="lb_plus_add_member">+ Thêm thành viên</string>
+    <string name="lb_add_chat_member">Thêm thành viên <font color='#ff0000'>*</font></string>
+    <string name="lb_add_more_chat_member">Thêm thành viên</string>
+    <string name="lb_link_page">Liên kết trang</string>
+    <string name="lb_link_group">Liên kết nhóm</string>
+    <string name="lb_group">Nhóm</string>
+    <string name="lb_private">Riêng tư</string>
+    <string name="lb_public">Công khai</string>
+
+    <string name="lb_manage_members">Quản lý thành viên</string>
+    <string name="lb_admin_approve_members">Quản trị viên duyệt yêu cầu thành viên</string>
+    <string name="lb_tab_manage_member">Thành viên</string>
+    <string name="lb_tab_manage_request">Yêu cầu</string>
+    <string name="lb_create_group_chat">Trò chuyện mới</string>
+    <string name="btn_create_group_chat">Bắt đầu trò chuyện</string>
+    <string name="hint_search_chat_user">Tìm kiếm bạn bè để liên hệ</string>
+    <string name="lb_members">Thành viên</string>
+    <string name="lb_notifications">Các thông báo</string>
+    <string name="lb_delete_conversation">Xóa hội thoại</string>
+    <string name="lb_report_group">Báo vi phạm</string>
+    <string name="lb_update_group">Sửa nhóm Chat</string>
+    <string name="lb_select_user_to_start_conversation">Chọn bạn bè để trò chuyện</string>
+    <plurals name="lb_selected_friends">
+        <item quantity="other">Bạn đã chọn %d bạn bè</item>
+    </plurals>
+
+    <!--    Chat Group Settings-->
+    <string-array name="lb_chat_group_setting_options">
+        <item>Quản lý các thành viên</item>
+        <item>Quản trị viên duyệt yêu cầu thành viên</item>
+        <item>Lưu trữ nhóm</item>
+    </string-array>
+
+    <string name="lb_anyone_can_approve">Mọi người có quyền chấp nhận yêu cầu</string>
+    <string name="lb_only_admin_approve">Chỉ quản trị có quyền chấp nhận yêu cầu</string>
+    <string name="lb_turn_off_member_request_approve">Tắt yêu cầu thành viên</string>
+
+    <string name="lb_manage_group">Quản lý nhóm trò chuyện</string>
+    <string name="lb_add_group_chat_member_setting_confirm">Những người mới cần được chấp nhận bởi quản trị của nhóm.</string>
+    <string name="lb_customer_detail_tab_history">Lịch sử</string>
+    <string name="lb_customer_detail_contacts">Liên hệ</string>
+    <string name="lb_customer_detail_addresses">Địa chỉ</string>
+    <string name="lb_new_update">Cập nhật mới</string>
+    <string name="lb_new_update_desc">Thông báo cập nhật của sản phẩm, cửa hàng, thương hiệu bạn đang quan tâm</string>
+
+    <string name="lb_search_match">Phù hợp thông tin bạn đã tìm kiếm</string>
+    <string name="lb_search_match_desc">Thông báo những gì phù hợp với thông tin bạn tìm kiếm</string>
+
+    <string name="lb_recommend_for_you">Gợi ý cho bạn</string>
+
+    <string name="lb_similar_products">Các sản phẩm tương tự</string>
+    <string name="lb_similar_products_desc">Thông báo các sản phẩm tương tự bạn đã lưu, thích, xem</string>
+
+    <string name="lb_similar_shop">Các cửa hàng tương tự</string>
+    <string name="lb_similar_shop_desc">Thông báo các cửa hàng tương tự cửa hàng đang theo dõi</string>
+    <string name="lb_product_near_you">Các sản phẩm phổ biến gần bạn</string>
+    <string name="lb_product_interested_in">Các sản phẩm có thể bạn quan tâm</string>
+
+    <string name="lb_reduced_price">Giảm giá</string>
+    <string name="lb_reduced_price_desc">Thông báo các sản phẩm bạn quan tâm vừa giảm giá</string>
+
+    <string name="lb_new_product_from_shop">Các sản phẩm mới từ cửa hàng bạn đang theo dõi</string>
+
+    <string name="lb_best_sellers">Cửa hàng bán chạy nhất</string>
+    <string name="lb_best_sellers_desc">Các cửa hàng bạn đang theo dõi trở thành cửa hàng bán chạy nhất</string>
+
+    <string name="lb_best_selling">Thương hiệu bán tốt nhất</string>
+    <string name="lb_best_selling_desc">Các thương hiệu bạn đang theo dõi trở thành thương hiệu phổ biến nhất</string>
+
+    <string name="lb_new_product_in_category">Các sản phẩm mới trong danh mục bạn đã tìm kiếm</string>
+    <string name="lb_new_product_in_category_desc">Thông báo các sản phẩm mới trong danh mục bạn đã tìm kiếm</string>
+
+    <string name="lb_shop_manage_notification_title">Thông báo</string>
+    <string name="lb_shop_manage_notification_message_from_buyer">Các tin nhắn từ người mua</string>
+    <string name="lb_shop_manage_notification_message_from_buyer_desc">Thông báo các cập nhật sản phẩm, người bán, thương hiệu bạn quan tâm</string>
+
+    <string name="lb_shop_manage_notification_unread_message_from_buyer">Tin nhắn chưa đọc từ người mua</string>
+    <string name="lb_shop_manage_notification_unread_message_from_buyer_desc">Thông báo các tin nhắn bạn chưa phản hồi các khách hàng</string>
+
+    <string name="lb_shop_manage_notification_new_follower">Người theo dõi mới</string>
+    <string name="lb_shop_manage_notification_new_follower_desc">Thông báo những khách hàng theo dõi cửa hàng của bạn</string>
+
+    <string name="lb_shop_manage_notification_creating_listing">Kết thúc tạo danh sách của bạn</string>
+    <string name="lb_shop_manage_notification_creating_listing_desc">Nhắc nhở các sản phẩm bạn chưa hoàn thành</string>
+    <string name="lb_email_compose_title">Kết nối</string>
+    <string name="lb_tab_favorite_post">Bài đăng</string>
+    <string name="lb_tab_favorite_articles">Bài báo</string>
+    <string name="lb_tab_favorite_products">Sản phẩm</string>
+    <string name="lb_title_favorite">Các yêu thích</string>
+    <string name="lb_default_favorite_title">Bài viết của %s</string>
+    <string name="lb_view_on_external_browser">Mở trình duyệt</string>
+    <string name="lb_saved_a_ago">Đã lưu %s trước</string>
+    <string name="lb_no_of_bought">%s Đã mua</string>
+    <string name="lb_feed_detail_header">Bài viết của %s</string>
+    <string name="txt_feed_one_person_following">&#160;đang theo dõi</string>
+    <string name="txt_feed_many_person_following">&#160;và %s người khác đang theo dõi&#160;</string>
+    <string name="txt_feed_one_person_curious">&#160;đã quan tâm</string>
+    <string name="txt_feed_many_person_curious">&#160;và %s người khác đã xem</string>
+    <string name="lb_tagged_people">Người đã tag</string>
+    <string name="lb_feed_comment_edit">Sửa bình luận</string>
+    <string name="lb_feed_comment_delete">Xóa bình luận</string>
+    <string name="lb_feed_comment_report">Báo vi phạm</string>
+    <string name="lb_delete_feed_confirm_message">Bạn muốn xóa bình luận này không?</string>
+    <string name="lb_private_post_message">Bài viết này đã tắt bình luận</string>
+    <string name="lb_about_this_content">Về nội dung này</string>
+    <string name="lb_user_reacted_on_this">đã tương tác</string>
+    <string name="lb_user_commented_on_this">đã bình luận</string>
+    <string name="lb_report_hashtag">Báo vi phạm HashTag</string>
+    <string name="lb_mn_option_hide">Ẩn gợi ý</string>
+    <string name="lb_will_you_recommend">Bạn muốn giới thiệu %s không?</string>
+    <string name="lb_add_to_your_feed">Có thể bạn muốn theo dõi</string>
+    <string name="lb_home_group_suggestion_title">Nhóm có thể bạn quan tâm</string>
+    <string name="lb_people_you_may_know">Có thể bạn biết</string>
+    <string name="lb_suitable_job_title">Việc làm phù hợp</string>
+    <string name="btn_new_post">Xem bài mới</string>
+    <string name="btn_ad_signup">Đăng nhập</string>
+    <string name="btn_ad_messenger">Nhắn tin</string>
+    <string name="lb_feed_top_news">Tin tức nổi bật</string>
+    <string name="lb_feed_content_not_available">Nội dung này không còn hiệu lực</string>
+
+    <plurals name="lb_level_friend">
+        <item quantity="one"> - %dst</item>
+        <item quantity="two"> - %dnd</item>
+        <item quantity="few"> - %drd</item>
+        <item quantity="other"> - %dth</item>
+    </plurals>
+
+    <string name="lb_filter_title">Bộ lọc</string>
+    <string name="lb_filter_sort">Sắp xếp theo</string>
+    <string name="lb_filter_date_posted">Ngày đăng</string>
+    <string name="lb_filter_company">Công ty</string>
+    <string name="lb_filter_company_rating">Đánh giá công ty</string>
+    <string name="lb_filter_shop_rating">Đánh giá cửa hàng</string>
+    <string name="lb_filter_page_rating">Đánh giá Trang</string>
+    <string name="lb_filter_school_rating">Đánh giá trường học</string>
+    <string name="lb_filter_group_rating">Đánh giá nhóm</string>
+    <string name="lb_filter_company_size">Số lượng nhân viên</string>
+    <string name="lb_filter_school_size">Số lượng nhân viên</string>
+    <string name="lb_filter_distance">Khoảng cách</string>
+    <string name="lb_filter_location">Khu vực</string>
+    <string name="lb_filter_category">Danh mục</string>
+    <string name="lb_filter_industry">Lĩnh vực</string>
+    <string name="lb_filter_job_function">Chức năng công việc</string>
+    <string name="lb_filter_job_title">Chức danh công việc</string>
+    <string name="lb_filter_experience_level">Năng lực chuyên môn</string>
+    <string name="lb_filter_year_of_experience">Năm kinh nghiệm</string>
+    <string name="lb_filter_job_types">Loại công việc</string>
+    <string name="txt_any">Bất kì</string>
+    <string name="lb_filter_has_selected">%d đã chọn</string>
+    <string name="lb_search_industry_init_page_indicator">Vui lòng nhập lĩnh vực bạn muốn tìm</string>
+    <string name="lb_search_job_function_init_page_indicator">Vui lòng nhập chức năng công việc cần tìm</string>
+    <string name="lb_search_skill_type_init_page_indicator">Vui lòng nhập kĩ năng của bạn để tìm kiếm</string>
+    <string name="lb_search_language_init_page_indicator">Vui lòng nhập ngôn ngữ tìm kiếm</string>
+    <string name="lb_search_location_init_page_indicator">Vui lòng nhập khu vực cần tìm kiếm</string>
+    <string name="lb_search_job_init_page_indicator">Nhập tên công việc để bắt đầu tìm kiếm</string>
+    <string name="lb_search_school_init_page_indicator">Vui lòng nhập tên trường để tìm kiếm</string>
+    <string name="lb_no_result_search">Không tìm thấy dữ liệu.</string>
+    <string name="lb_no_data">Chưa có dữ liệu.</string>
+    <string name="lb_init_search_text">Nhập từ khoá để tìm kiếm.</string>
+    <string name="lb_forgot_password_header">Quên mật khẩu</string>
+    <string name="lb_forgot_username">Quên tên đăng nhập</string>
+    <string name="lb_forgot_password_sub_title">Chúng tôi cần email hợp lệ của bạn\nđể gửi mã xác thực</string>
+    <string name="lb_forgot_password_dont_have_account">Chưa có tài khoản?</string>
+    <string name="lb_forgot_password_button_login">Đăng nhập</string>
+    <string name="lb_forgot_password_have_trouble">Có vấn đề?</string>
+    <string name="lb_forgot_password_button_get_help">Hỗ trợ</string>
+    <string name="lb_group_tab_home">Trang chủ</string>
+    <string name="lb_group_tab_about">Giới thiệu</string>
+    <string name="lb_group_tab_member">Thành viên</string>
+    <string name="lb_group_tab_photo">Hình ảnh</string>
+    <string name="lb_group_tab_file">Tập tin</string>
+    <string name="lb_group_action_post">Đăng bài</string>
+    <string name="lb_group_tab_pages">Trang</string>
+    <string name="lb_group_tab_people">Người</string>
+    <string name="lb_group_action_invite">Mời</string>
+    <string name="lb_group_action_page">Trang mới</string>
+    <string name="lb_group_action_join">Tham gia</string>
+    <string name="lb_option_leave_group">Rời nhóm</string>
+    <string name="lb_group_info">Thông tin nhóm</string>
+    <string name="lb_group_manage_member">Quản lý thành viên</string>
+
+    <string name="lb_group_admin_title">Quản trị viên (%s)</string>
+    <string name="lb_group_your_connection_title">Các kết nối của bạn (%s)</string>
+    <string name="lb_group_member_have_thing_in_common">Những thành viên có điểm chung (%s)</string>
+    <string name="lb_group_member_other_member">Thành viên khác (%s)</string>
+
+    <string name="lb_tab_requests">Yêu cầu</string>
+    <string name="lb_tab_members">Thành viên</string>
+
+    <string name="lb_total_members">%s Thành viên</string>
+    <string name="lb_total_requests">%s Yêu cầu</string>
+    <string name="lb_total_results">%s Kết quả</string>
+    <string name="lb_total_staffs">%s Nhân viên</string>
+
+    <string name="lb_option_make_admin">Cho quyền quản trị</string>
+    <string name="lb_option_remove_admin">Hủy quyền quản trị</string>
+    <string name="lb_option_make_moderator">Cho quyền điều hành</string>
+    <string name="lb_option_remove_moderator">Bỏ quyền điều hành</string>
+    <string name="lb_option_remove_member">Gỡ bỏ thành viên</string>
+    <string name="lb_option_block_member">Chặn thành viên</string>
+    <string name="lb_option_turn_on_post_approval">Cho phép duyệt bài</string>
+    <string name="lb_option_turn_off_post_approval">Bỏ duyệt bài</string>
+    <string name="lb_no_any_member">Không có thành viên nào</string>
+    <string name="lb_group_settings">Cài đặt nhóm</string>
+    <string name="lb_private_group_noties">Đây là nhóm riêng tư.\nHãy tham gia nhóm để xem các thông tin và\nthảo luận những điều bạn quan tâm.</string>
+
+    <string name="lb_lack_of_activity">Thiếu các hoạt động</string>
+    <string name="lb_conflict_in_group">Xung đột trong nhóm</string>
+    <string name="lb_hard_to_manage">Khó quản lý</string>
+    <string name="lb_not_interest_anymore">Không còn thú vị nữa</string>
+    <string name="lb_temporary_pausing">Tạm thời đóng</string>
+    <string name="lb_other">Khác</string>
+    <string name="lb_requested_by">Được yêu cầu bởi</string>
+
+    <string name="lb_group_archive">Nhóm này đã đóng</string>
+    <string name="btn_unarchive">Mở lại</string>
+
+    <string name="lb_conversation_archived">Cuộc trò chuyện này đã bị lưu trữ</string>
+    <string name="lb_error_size_image">Kích thước tệp tối đa 10Mb</string>
+    <string name="lb_error_list_size_image">Tối đa là 20 hình ảnh</string>
+
+    <string name="hint_input_keyword_search">Nhập từ khoá để tìm kiếm…</string>
+    <string name="lb_loading">Đang tải…</string>
+    <string name="mn_notification_off">Tắt thông báo</string>
+    <string name="mn_notification_on">Mở thông báo</string>
+    <string name="mn_delete_conversation">Xoá trò chuyện</string>
+    <string name="lb_chat_mn_opt_block_member">Khóa thành viên</string>
+
+    <string name="lb_chat_mn_opt_make_admin">Đặt làm quản trị viên</string>
+    <string name="lb_chat_mn_opt_remove_admin">Xóa quản trị viên</string>
+    <string name="lb_chat_mn_opt_remove">Bỏ khỏi nhóm</string>
+    <string name="lb_delete_member">Bạn có muốn xoá thành viên này?</string>
+    <string name="lb_block_member">Bạn có muốn khóa thành viên này?</string>
+    <string name="lb_member_request_approvals">Yêu cầu phê duyệt thành viên</string>
+    <string name="lb_member_post_approval">Phê duyệt bài viết</string>
+    <string name="lb_group_settings_notification">Thông báo</string>
+    <string name="lb_group_settings_manage_pages">Quản lý Trang</string>
+    <string name="lb_group_settings_post_request">Các yêu cầu duyệt bài viết</string>
+    <string name="lb_group_settings_archive">Lữu trữ nhóm</string>
+    <string name="lb_group_settings_unarchive">Mở nhóm</string>
+
+    <string name="lb_group_setting_public">Công khai</string>
+    <string name="lb_group_setting_option1">Mọi người có thể phê duyệt</string>
+    <string name="lb_group_setting_option2">Chỉ quản trị &amp; thành viên quản trị được duyệt</string>
+    <string name="lb_group_setting_option_admin_only">Chỉ quản trị viên được duyệt</string>
+    <string name="lb_group_setting_option3">tắt phê duyệt yêu cầu thành viên</string>
+    <string name="lb_group_setting_option5">Tắt phê duyệt bài</string>
+    <string name="lb_group_setting_option_notification_and_email">Thông báo &amp; Email</string>
+    <string name="lb_group_setting_reason_title">Bạn có thể chọn lý do đóng nhóm này:</string>
+    <string name="lb_group_setting_reason_explain">Sau khi đóng nhóm, các thành viên vẫn có thể xem, nhung họ không thể tương tác. Bạn có thể kích hoạt lại group để thực hiện các hoạt động trợ lại bất cứ lúc nào.</string>
+    <string name="lb_home_feeds_tab_all">Tất cả</string>
+    <string name="lb_home_feeds_tab_jobs">Công việc</string>
+    <string name="lb_home_feeds_tab_posts">Tin đăng</string>
+    <string name="lb_home_feeds_tab_company">Công ty</string>
+    <string name="lb_home_tab_people">Người</string>
+    <string name="lb_home_tab_group">Nhóm</string>
+    <string name="lb_home_tab_page">Trang</string>
+    <string name="lb_home_tab_school">Trường học</string>
+    <string name="lb_home_tab_suggestion">Gợi ý</string>
+    <string name="lb_home_feeds_tab_salary">Lương</string>
+    <string name="hint_home_search_box">Tìm kiếm</string>
+    <string name="lb_liked">Đã thích</string>
+    <string name="lb_like">Thích</string>
+    <string name="lb_support">Ủng hộ</string>
+    <string name="lb_funny">Haha</string>
+    <string name="lb_clap">Vỗ tay</string>
+    <string name="lb_love">Thích</string>
+    <string name="lb_comment">Bình luận</string>
+    <string name="lb_share">Chia sẻ</string>
+    <string name="lb_download">Tải về</string>
+    <string name="lb_job_status_hot">Hot!</string>
+    <string name="lb_job_status_new">Mới!</string>
+    <string name="lb_job_header_text">Thông báo công việc mới</string>
+    <string name="lb_thinking">Suy nghĩ</string>
+    <string name="lb_sponsored">Được tài trợ</string>
+    <string name="lb_promoted">Promoted</string>
+
+    <string name="lb_menu_text_share_now">Chia sẻ ngay</string>
+    <string name="lb_menu_text_share_in_new_post">Chia sẻ vào bài viết mới</string>
+    <string name="lb_menu_text_send_in_message">Gửi tin nhắn</string>
+    <string name="lb_menu_text_share_in_message">Chia sẻ qua tin nhắn</string>
+    <string name="lb_menu_text_send_in_email">Gửi Email</string>
+    <string name="lb_menu_text_share_more">Xem các chia sẻ khác</string>
+    <string name="lb_menu_text_manage_link">Quản lý liên kết</string>
+    <string name="msg_clear_cache">Tất cả các tìm kiếm gần đây và hình ảnh tạm sẽ được xóa khoi bộ nhớ. Bạn có muốn tiếp tục?</string>
+
+    <string name="lb_popular_industry">Ngành phổ biến</string>
+    <string name="lb_popular_job_functions">Công việc phổ biến</string>
+
+    <string name="payment_text_error_mm_yy">Tháng/năm không hợp lệ</string>
+    <string name="lb_error_card_exist">Số thẻ đã tồn tại</string>
+    <string name="lb_phone_number">Số điện thoại</string>
+    <string name="lb_error_image">Chọn sai loại hình ảnh</string>
+    <string name="report_sucess">Báo cáo thành công</string>
+    <string name="similar_jobs">Các công việc tương tự</string>
+    <string name="lb_menu_poll">Khảo sát</string>
+    <string name="lb_menu_interview">Phỏng vấn</string>
+    <string name="lb_menu_salary">Tiền lương</string>
+    <string name="lb_menu_review">Đánh giá</string>
+    <string name="lb_menu_post">Đăng bài</string>
+    <string name="lb_menu_resume">Hồ sơ</string>
+    <string name="lb_menu_connection">Kết nối</string>
+    <string name="lb_menu_group">Tạo nhóm</string>
+    <string name="lb_menu_page">Tạo trang</string>
+    <string name="lb_menu_product">Sản phẩm</string>
+    <string name="lb_menu_company">Công ty</string>
+    <string name="lb_menu_Job">Công việc</string>
+    <string name="lb_menu_scan">Quét mã</string>
+    <string-array name="array_day_of_week">
+        <item>T2</item>
+        <item>T3</item>
+        <item>T4</item>
+        <item>T5</item>
+        <item>T6</item>
+        <item>T7</item>
+        <item>CN</item>
+    </string-array>
+    <string name="lb_crop_image_title">Chọn Hình ảnh</string>
+    <string name="imagePickerEmpty">Không tìm thấy hình ảnh</string>
+    <string name="imagePickerLoading">Đang tải…</string>
+    <string name="toastImagePickerNoWritePermission">Quyền lưu vào bộ nhớ không được cho phép :(</string>
+    <string name="imagePickerSingle">Vui lòng chọn một hình ảnh</string>
+    <string name="imagePickerMultiLimit">Bạn không thể chọn nhiều hơn %1$d hình ảnh</string>
+
+    <plurals name="imagePickerMulti">
+        <item quantity="one">Bạn đã chọn một hình ảnh</item>
+        <item quantity="other">Bạn đã chọn %1$d hình ảnh</item>
+    </plurals>
+    <plurals name="imagePickerMultiMore">
+        <item quantity="one">Bạn phải chọn nhiều hơn một hình ảnh</item>
+        <item quantity="other">Bạn phải chọn nhiều hơn %1$d hình ảnh</item>
+    </plurals>
+    <string name="lb_page1_header">Xin chào</string>
+    <string name="lb_page2_header">Bạn đang tìm kiếm việc làm?</string>
+    <string name="lb_page3_header">Bạn đã sẵn sàng?</string>
+
+    <string name="lb_page1_desc">Hãy bắt đầu khám phá các việc làm với <b>Accessed.</b></string>
+    <string name="lb_page2_desc">Chúng tôi sẽ giúp bạn kết nối với các công ty, bạn bè và mạng lưới công việc trên toàn cầu.</string>
+    <string name="lb_page3_desc">Hãy bắt đầu xem những công việc phù hợp nhất dành cho bạn nào.</string>
+
+    <string name="lb_scroll_right">Kéo qua phải</string>
+    <string name="btn_lets_go">Bắt đầu!</string>
+    <string name="hint_search">Tìm kiếm</string>
+    <string name="lb_invite_contacts_title">Có thể bạn biết</string>
+    <string name="lb_state_email_sent">Đã Gửi Email</string>
+    <string name="lb_no_contact_to_invite">Bây giờ bạn chưa có liên hệ nào để kết nối. Hãy thử lại khi bạn có thêm liên hệ nhé!</string>
+    <string name="lb_job_apply_cover_letter">Thư xin việc</string>
+    <string name="hint_job_apply_cover_letter">Thư xin việc của bạn</string>
+
+    <string name="lb_job_apply_phone_number">Số điện thoại</string>
+    <string name="hint_job_apply_enter_number">Vui lòng nhập số điện thoại của bạn</string>
+
+    <string name="lb_job_apply_photo">Hình ảnh của bạn</string>
+
+    <string name="hint_job_apply_email_id">Vui lòng nhập email của bạn</string>
+
+    <string name="lb_job_apply_start_date">Ngày bạn có thể bắt đầu đi làm</string>
+    <string name="hint_job_apply_available_date">Vui lòng chọn một ngày phù hợp với bạn</string>
+
+    <string name="lb_job_apply_resume">Resume</string>
+    <string name="hint_job_apply_attach_resume">Chọn CV mới</string>
+
+    <string name="lb_job_apply_note">Ứng tuyển vào công việc này sẽ không thay đổi profile của bạn.</string>
+    <string name="lb_job_apply_follow_checkbox">Theo dõi %s để dễ thấy các công việc khác.</string>
+
+    <string name="lb_job_apply_date_validate">Vui lòng chọn ngày hợp lệ.</string>
+    <string name="lb_job_apply_attachment_validate">Vui lòng đính kèm CV của bạn.</string>
+    <string name="lb_err_file_exceed_3mb">Tệp không được vượt quá 3 MB</string>
+    <string name="hint_desired_salary">Lương mong muốn</string>
+    <string name="lb_job_apply_question_title">Câu hỏi ứng tuyển</string>
+    <string name="lb_job_apply_required_text">Đây là thông tin bắt buộc <font color='#ff0000'>*</font></string>
+    <string name="hint_input_your_answer">Nhập câu trả lời của bạn</string>
+    <string name="lb_job_description">Mô tả công việc</string>
+    <string name="lb_job_responsibilities">Trách nhiệm</string>
+    <string name="lb_job_requirements">Yêu cầu</string>
+    <string name="lb_job_preferred_requirements">Yêu cầu bắt buộc</string>
+    <string name="lb_job_min_qualification">Tóm tắt yêu cầu</string>
+    <string name="lb_job_details_title">Chi tiết công việc</string>
+    <string name="lb_employment">Loại hình công việc</string>
+    <string name="lb_salary">Mức lương</string>
+    <string name="lb_job_function">Chức năng công việc</string>
+    <string name="lb_job_des_detail_category">Danh mục</string>
+    <string name="lb_industry">Lĩnh vực  (tối đa 5 item)</string>
+    <string name="lb_category">Danh mục <font color='#ff0000'>*</font> (tối đa 5 item)</string>
+    <string name="lb_job_detail_industry">Ngành công nghiệp</string>
+    <string name="lb_job_id">Mã công việc</string>
+    <string name="btn_follow_company">Theo dõi</string>
+    <string name="btn_job_detail_save">Lưu</string>
+    <string name="btn_job_detail_apply">Ứng tuyển</string>
+    <string name="btn_job_detail_applied">Đã nộp</string>
+    <string name="lb_job_detail_description">Mô tả</string>
+    <string name="btn_job_detail_see_more_job_desc">Xem thêm</string>
+    <string name="lb_job_detail_required_skills">Yêu cầu các kĩ năng</string>
+    <string name="lb_job_detail_featured_benefit">Quyền lợi</string>
+    <string name="lb_job_detail_expected_salary">Mức lương mong đợi</string>
+    <string name="lb_job_detail_connection_title">Kết nối chung tại</string>
+    <string name="lb_job_detail_hiring_manager_title">Quản lý tuyển dụng</string>
+    <string name="lb_job_detail_learn_more_about_title">Tìm hiểu thêm về %s</string>
+    <string name="btn_view_job">Xem việc làm</string>
+    <string name="lb_job_detail_title">Chi tiết công việc</string>
+    <string name="lb_job_detail_experience">Kinh nghiệm</string>
+    <string name="lb_job_detail_education">Bằng cấp</string>
+    <string name="lb_job_detail_seniority_level">Cấp bậc kinh nghiệm</string>
+    <string name="lb_add_skill_header">Thêm kĩ năng</string>
+    <string name="lb_year_experience">Số năm kinh nghiệm:</string>
+    <string name="hint_input_skill_month_experience">Vui lòng nhập</string>
+    <string name="lb_saved">Đã lưu</string>
+    <string name="error_cannot_apply_your_job">Không thể đăng ký công việc của bạn</string>
+    <string name="lb_job_recommend_tab_recommendation">Giới thiệu</string>
+    <string name="lb_job_recommend_tab_reviews">Đánh giá</string>
+    <string name="lb_job_recommend_tab_givens">Đã cho</string>
+
+    <string name="lb_no_recommends">Chưa có gợi ý nào</string>
+    <string name="lb_no_reviews">Chưa có đánh giá nào</string>
+    <string name="lb_no_givens">Hãy giới thiệu/đánh giá cho %s</string>
+
+    <string name="lb_job_recommend_section_title">Giới thiệu &amp; Đánh giá</string>
+    <string name="lb_job_percent_match">phù hợp</string>
+
+    <plurals name="lb_job_detail_num_of_applicants">
+        <item quantity="other">%s Ứng viên</item>
+    </plurals>
+    <plurals name="lb_job_detail_num_of_connections">
+        <item quantity="one">%s làm việc tại đây</item>
+    </plurals>
+    <plurals name="lb_job_detail_similar_company_title">
+        <item quantity="other">Đang tuyển %s từ các công ty này</item>
+        <item quantity="one">Đang tuyển %s từ công ty này</item>
+    </plurals>
+    <string name="lb_no_company_hiring">Không có công ty nào đang tuyển</string>
+    <string name="lb_see_your_rank">Xem hạng của bạn</string>
+    <string name="lb_job_applicants">Người xin việc</string>
+    <string name="lb_see_your_rank_desc">So sánh thông minh giữa các ứng viên.\nDựa trên dữ liệu của Accessed.</string>
+    <string name="lb_job_applicant_desc">Bạn nằm trong top %s của %d ứng viên.\nDựa trên hồ sơ của bạn</string>
+    <string name="lb_match_base_on_your_profile">Độ phù hợp dựa trên hồ sơ của bạn</string>
+    <string name="lb_current_role">Vai trò hiện tại</string>
+    <string name="lb_match_profile_skills">Kĩ năng</string>
+    <string name="lb_match_profile_past_experience">Kinh nghiệm trước đây</string>
+
+    <string name="lb_job_detail_top_skills">Kĩ năng nổi bật</string>
+    <string name="lb_job_detail_top_skills_desc">Bạn có %d trong %d kĩ năng nổi bật so với những người khác</string>
+    <string name="lb_applicants_by_seniority_level">Ứng viên theo cấp độ thâm niên</string>
+
+    <string name="lb_job_detail_education_matching">Cấp bậc đào tạo</string>
+    <string name="lb_job_detail_education_degree">có bằng %s</string>
+    <string name="lb_job_detail_upgrade_account_desc">Hãy nâng cấp tài khoản để so sánh công việc nào phù hợp nhất dành riêng cho bạn</string>
+    <string name="lb_try_premium_for_free">Dùng thử miễn phí</string>
+    <string name="lb_upgrade_premium">Nâng cấp</string>
+    <string name="lb_lot_of_user_premium">Rất nhiều người dùng sử dụng Premium</string>
+    <string name="lb_my_job_page_title">Các Việc làm</string>
+
+    <string name="lb_tab_my_job_applied">Đã nộp</string>
+    <string name="lb_tab_my_job_saved">Đã lưu</string>
+    <string name="lb_tab_my_job_viewed">Đã xem</string>
+    <string name="lb_tab_my_job_alerts">Thông báo</string>
+    <string name="lb_job_applied_date">Đã apply ngày %s</string>
+    <string name="lb_start_looking_next_career">Bắt đầu tìm kiếm cho các công việc mới</string>
+    <string name="lb_job_alert_notification">Thông báo</string>
+    <string name="lb_job_alert_no_jobs">%d Công việc</string>
+
+    <string name="lb_menu_edit_alert">Sửa thông báo</string>
+    <string name="lb_menu_delete_alert">Xoá thông báo</string>
+
+    <string name="lb_job_alert_edit_reminder_title">Nhắc nhở</string>
+    <string name="lb_job_alert_edit_notification_title">Thông báo</string>
+
+    <string name="lb_repeat_type_anytime">Mọi lúc qua</string>
+    <string name="lb_repeat_type_daily">Hằng ngày qua</string>
+    <string name="lb_repeat_type_weekly">Hằng tuần qua</string>
+    <string name="lb_repeat_type_and">và</string>
+
+    <string name="lb_job_category">Danh mục công việc</string>
+    <string name="lb_job_near_me">Việc gần tôi</string>
+    <string name="lb_job_parttime">Việc bán thời gian</string>
+    <string name="lb_job_from_home">Việc làm tại nhà</string>
+    <string name="lb_job_freelance">Việc làm tự do</string>
+    <string name="lb_job_fresher">Thực tập sinh</string>
+    <string name="lb_job_type_section_title">Tìm loại công việc</string>
+    <string name="lb_job_highlight_no_applicants_message">Hãy là ứng viên đầu tiên</string>
+    <string name="lb_job_preference_title">Tham chiếu công việc</string>
+    <string name="lb_open_to_relocate">Sẵn sàng chuyển khu vực làm việc</string>
+    <string name="lb_job_preferences_locations">Khu vực</string>
+    <string name="lb_open_to_job">Sẵn sàng cho công việc mới</string>
+    <string name="lb_job_preference_job_title">Tiêu đề công việc (tối đa 3 lựa chọn)</string>
+    <string name="lb_job_preference_job_type">Loại công việc</string>
+    <string name="lb_job_preference_start_date">Ngày bắt đầu</string>
+    <string name="lb_job_preference_immediatly">Ngay lập tức, Tôi sẵn sàng đi làm ngay</string>
+    <string name="lb_job_preference_flexible">Linh hoạt, tuỳ từng thời điểm</string>
+    <string name="lb_search_keyword_init_page_empty">Nhập từ khoá để tìm kiếm</string>
+    <string name="lb_recent_keyword_title">Tìm kiếm gần đây</string>
+    <string name="lb_search_suggestion_title">Gợi ý</string>
+    <string name="lb_login_instantly">Đăng nhập nhanh</string>
+    <string name="lb_login_with_account">--- Hoặc với tên đăng nhập ---</string>
+    <string name="btn_login">Đăng nhập</string>
+    <string name="btn_forgot_password">Quên mật khẩu?</string>
+    <string name="btn_join_now">Đăng kí ngay</string>
+    <string name="lb_dont_have_account">Bạn chưa có tài khoản?</string>
+    <string name="hint_login_password">Nhập mật khẩu của bạn</string>
+    <string name="lb_remember_me">Nhớ cho lần sau</string>
+    <string name="lb_make_payment_title">Thanh toán</string>
+    <string name="lb_subtotal">Tổng</string>
+    <string name="lb_promotion_trial">Khuyến mãi (14 ngày dùng thử)</string>
+    <string name="lb_fee">Phí</string>
+    <string name="lb_tax">Thuế</string>
+    <string name="lb_app_fee">Phí sử dụng</string>
+    <string name="lb_payment_fee">Phí thanh toán</string>
+    <string name="lb_payment">Thanh toán</string>
+    <string name="lb_total_pay">Tổng tiền</string>
+    <string name="lb_customer_address_default">Mặc định</string>
+    <string name="lb_manage_customer_title">Quản lý địa chỉ</string>
+    <string name="lb_manage_customer_mn_option_default">Đặt mặc định</string>
+    <string name="lb_manage_customer_mn_option_edit">Sửa</string>
+    <string name="lb_manage_customer_mn_option_delete">Xoá</string>
+
+    <string name="lb_add_customer_address_title">Thêm địa chỉ</string>
+    <string name="hint_add_customer_location_name">Tên</string>
+
+    <string name="lb_update_customer_address_title">Sửa địa chỉ</string>
+
+    <string name="hint_manage_address_email">Địa chỉ Email</string>
+
+    <string name="lb_manage_customer_mn_option_cannot_delete_default">Xoá (Không thể xoá địa chỉ mặc định)</string>
+    <string name="lb_manage_organization_notification">Thông báo</string>
+    <string name="lb_manage_organization_change_owner">Đổi chủ sở hữu</string>
+    <string name="lb_item_notification">Thông báo</string>
+    <string name="lb_item_noti_and_email">Thông báo và Email</string>
+    <string name="lb_manage_pages">Quản lý Trang</string>
+    <string name="lb_manage_page_tab_link_requests">Đã yêu cầu</string>
+    <string name="lb_manage_page_tab_linked">Đã liên kết</string>
+    <string name="lb_manage_product_tab_available">Đang bán</string>
+    <string name="lb_manage_product_tab_out_of_stock">Hết hàng</string>
+    <string name="lb_manage_product_tab_out_of_sold">Đã bán</string>
+    <string name="lb_manage_product_tab_inactive">Đang ẩn</string>
+
+    <string name="lb_manage_product_mark_as">Đánh dấu</string>
+    <string name="lb_manage_product_mark_as_active">Đăng bán lại</string>
+    <string name="lb_manage_product_mark_as_sold">Đã bán</string>
+    <string name="lb_manage_product_mark_as_inactive">Ẩn sản phẩm</string>
+    <string name="lb_manage_product_mark_as_delete">Xoá</string>
+
+    <string name="lb_manage_product_empty_message">Chưa có sản phẩm nào</string>
+    <string name="lb_manage_product_confirm_sold_message">Bạn có chắc muốn đánh dấu các sản phẩm đã chọn là đã được bán?</string>
+    <string name="lb_manage_product_confirm_inactive_message">Bạn có chắc muốn ẩn (các) sản phẩm này?</string>
+    <string name="lb_manage_product_confirm_delete_message">Bạn có chắc muốn xóa (các) sản phẩm này?</string>
+    <string name="lb_manage_product_confirm_active_message">Bạn có chắc muốn bán tiếp (các) sản phẩm này?</string>
+    <string name="lb_manage_social_account_title">Quản lý tài khoản mạng xã hội</string>
+    <string name="lb_account_google" translatable="false">Google</string>
+    <string name="lb_account_facebook" translatable="false">Facebook</string>
+    <string name="lb_account_linkedin" translatable="false">Linkedin</string>
+    <string name="lb_account_pinterest" translatable="false">Pinterest</string>
+    <string name="lb_account_twitter" translatable="false">Twitter</string>
+    <string name="lb_account_instagram" translatable="false">Instagram</string>
+    <string name="lb_manage_social_account_unlink_message">Sau khi hủy liên kết với tài khoản %s, bạn sẽ không thể đăng nhập bằng %s nữa. Bạn chắc chắn muốn hủy liên kết?</string>
+    <string name="lb_subscriptions">Gói đăng kí</string>
+    <string name="lb_upgrade_plan">Nâng cấp gói</string>
+    <string name="btn_reactive">Tái kích hoạt</string>
+    <string name="lb_package_limit_desc">Hãy nâng cấp tài khoản để trải nghiệm nhiều tính năng</string>
+    <string name="lb_see_all_packages">Xem tất cả các gói</string>
+    <string name="lb_post_write_somethings">Chia sẻ suy nghĩ của bạn…</string>
+    <string name="lb_post_option_take_photo">Chụp hình</string>
+    <string name="lb_post_option_upload_photo">Đăng hình</string>
+    <string name="lb_post_option_take_a_video">Quay Video</string>
+    <string name="lb_post_option_upload_document">Đăng tài liệu</string>
+    <string name="lb_post_option_tag_people">Tag ai đó</string>
+    <string name="lb_discard_confirm_message">Bạn có muốn hủy bài đăng?</string>
+    <string name="lb_create_post_title">Đăng bài</string>
+    <string name="lb_update_post_title">Sửa bài</string>
+
+    <plurals name="lb_image_picker_multiple">
+        <item quantity="other">Bạn đã chọn %d ảnh</item>
+    </plurals>
+
+    <plurals name="lb_image_picker_multiple_more">
+        <item quantity="other">Chọn ảnh</item>
+    </plurals>
+    <string name="lb_confirm_override_document">Tất cả lựa chọn của bạn hiện tại sẽ bị thay thế bởi các lựa chọn mới. Bạn có muốn thực hiện tay đổi này không?</string>
+
+    <string name="lb_image_picker_multiple_limit">Bạn đã chọn nhiều hơn %1$d hình ảnh…</string>
+    <string name="lb_file_size">Kích thước: %s</string>
+
+    <string name="lb_tagged_2_people">&lt;b>%s&lt;/b> cùng với &lt;b>%s&lt;/b></string>
+    <string name="lb_tagged_3_people">&lt;b>%s&lt;/b> cùng với &lt;b>%s&lt;/b> và &lt;b>%s&lt;/b></string>
+    <string name="lb_tagged_many_people">&lt;b>%s&lt;/b> cùng với &lt;b>%s&lt;/b> và &lt;b>%d người khác&lt;/b></string>
+    <string name="lb_edit">Chỉnh sửa</string>
+    <string name="lb_mark_as_closed">Đánh dấu đã đóng</string>
+    <string name="lb_mark_as_primary_address">Làm địa chỉ chính</string>
+    <string name="lb_mark_as_opening">Đánh dấu đang mở</string>
+    <string name="lb_edit_post">Chỉnh sửa bài viết</string>
+    <string name="lb_with">với</string>
+    <string name="lb_and">và</string>
+    <string name="lb_other_tags">những người khác</string>
+    <string name="lb_other_tag">người khác</string>
+    <string name="lb_num_of_applied">%s Đơn </string>
+    <string name="lb_mn_add_staff_to_location">Thêm nhân viên</string>
+    <string name="lb_mn_add_service_to_location">Thêm dịch vụ</string>
+
+    <string-array name="lb_create_post_privacy_options">
+        <item>Công khai</item>
+        <item>Tất cả bạn bè</item>
+        <item>Riêng tư</item>
+        <item>Nhóm</item>
+        <item>Công ty</item>
+        <item>Trường học</item>
+        <item>Trang</item>
+    </string-array>
+    <string name="hint_search_news">Tìm tin tức</string>
+
+    <string name="lb_tab_all_news">Tất cả</string>
+    <string name="lb_tab_all_for_you">Dành cho bạn</string>
+    <string name="lb_tab_all_health">Sức khỏe</string>
+    <string name="lb_news_title">Tin tức</string>
+    <string name="lb_more">Xem thêm</string>
+    <string name="lb_mn_option_unsave">Bỏ lưu lại</string>
+    <string name="lb_event_cancellation_note">Ghi chú hủy</string>
+    <string name="lb_event_cancellation_title">Hủy sự kiện</string>
+    <string name="lb_notification_setting_title">Cài đặt thông báo</string>
+    <string name="lb_notification_setting_manage_notification">Quản lý các thông báo</string>
+    <string name="lb_notification_on">Bật</string>
+    <string name="lb_notification_off">Tắt</string>
+    <string name="lb_notification_mute">Dừng nhận thông báo</string>
+    <string name="lb_notification_setting_section_detail_title">Loại thông báo bạn muốn nhận</string>
+
+    <string name="lb_notification_profile">Hồ sơ</string>
+    <string name="lb_notification_profile_desc">Những người đã xác nhận kĩ năng của bạn, đã xem hồ sơ của bạn.</string>
+
+    <string name="lb_notification_job">Công việc</string>
+    <string name="lb_notification_job_desc">Các tương tác công việc, nhắc nhở</string>
+
+    <string name="lb_notification_schedulers">Kế hoạch</string>
+    <string name="lb_notification_schedulers_desc">Nhắc nhở sự kiện</string>
+
+    <string name="lb_notification_network">Các Kết nối</string>
+    <string name="lb_notification_network_desc">Công ty, Nhóm,…</string>
+
+    <string name="lb_notification_feed">Nguồn tin</string>
+    <string name="lb_notification_feed_desc">Tin tức, Bài viết</string>
+
+    <!--Profile notification-->
+    <string name="lb_profile_notification_title">Thông báo Hồ sơ</string>
+    <string name="lb_profile_notification_header">Đây là những thông báo để nhắc nhở bạn khi có ai đó thừa nhận kĩ năng hoặc xem hồ sơ của bạn.</string>
+    <string name="lb_profile_notification_endorsements">Các xác nhận</string>
+    <string name="lb_profile_notification_who_follow">Người theo dõi bạn</string>
+    <string name="lb_profile_notification_who_viewed">Người xem hồ sơ bạn</string>
+
+    <!--    Job Notification-->
+    <string name="lb_job_notification_title">Thông báo công việc</string>
+    <string name="lb_job_notification_header">Bạn sẽ nhận được thông báo về công việc mà bạn quan tâm hoặc bạn đã nộp hồ sơ.</string>
+    <string name="lb_job_notification_alert">Các thông báo công việc</string>
+    <string name="lb_job_notification_suggestion">Các công việc gợi ý</string>
+    <string name="lb_job_notification_application">Cập nhật đơn</string>
+    <string name="lb_job_notification_apply">Các công việc đã nộp</string>
+
+    <!--    Schedule Notification-->
+    <string name="lb_schedule_notification_title">Thông báo kế hoạch</string>
+    <string name="lb_schedule_notification_header">Đây là những thông báo để nhắc nhở bạn về các sự kiện sắp tới, giúp bạn biết các cập nhật sự kiện hoặc lời mời…</string>
+    <string name="lb_schedule_notification_event_invitation">Các lời mời sự kiện</string>
+    <string name="lb_schedule_notification_event_cancellation">Hủy sự kiện</string>
+    <string name="lb_schedule_notification_attendee_declined">Người tham dự từ chối</string>
+    <string name="lb_schedule_notification_attendee_accepted">Người tham dự chấp nhận</string>
+    <string name="lb_schedule_notification_event_update">Sự kiện được cập nhật</string>
+    <string name="lb_schedule_notification_event_interest">Sự kiện mà bạn quan tâm</string>
+
+    <!--    Network Notification-->
+    <string name="lb_network_notification_title">Thông báo kết nối</string>
+    <string name="lb_network_notification_header">Để thông báo với bạn về những người muốn kết nối, mời bạn theo dõi hoặc tham gia nhóm mà bạn thích,…</string>
+    <string name="lb_network_notification_who_sent">Khi ai đó gửi bạn lời mời kết nối</string>
+    <string name="lb_network_notification_who_follow">Khi ai đó theo dõi bạn</string>
+    <string name="lb_network_notification_who_invited">Khi ai đó mời bạn theo dõi/tham gia</string>
+    <string name="lb_network_notification_you_are">Khi ai đó chấp nhận lời mời của bạn</string>
+    <string name="lb_network_notification_suggestion">Gợi ý cho bạn những gì bạn có thể quan tâm</string>
+    <string name="lb_network_notification_update_from">Khi có cập nhật từ các kết nối của bạn</string>
+
+    <!--    Feed Notification-->
+    <string name="lb_feed_notification_title">Thông báo bài đăng</string>
+    <string name="lb_feed_notification_header">Đây là những thông báo để bạn biết về các hoạt động như bài viết, bình luận,… từ các kết nối của bạn</string>
+    <string name="lb_feed_notification_notify_to">Thông báo các thay đổi từ các kết nối của bạn</string>
+    <string name="lb_feed_notification_who_reacted">Khi ai đó tương tác với bài viết và bình luận của bạn</string>
+    <string name="lb_feed_notification_who_wrote">Khi ai đó đã phản hồi bình luận của bạn</string>
+    <string name="lb_feed_notification_who_share">Khi ai đó đã chia sẻ bạn lên trang cá nhân của họ</string>
+    <string name="lb_feed_notification_you_are">Bạn bị báo cáo</string>
+
+    <string name="lb_1_viewed_profile">1 người ẩn danh đã xem hồ sơ của bạn</string>
+    <string name="lb_many_viewed_profile">%s người ẩn danh đã xem hồ sơ của bạn</string>
+    <string name="lb_person_many_followed_me">&lt;b>%s&lt;/b> và &lt;b>%d người khác&lt;/b> đã theo dõi bạn</string>
+    <string name="lb_person_1_followed_me">&lt;b>%s&lt;/b> đã theo dõi bạn</string>
+    <string name="lb_person_sent_connect_invitation_many">&lt;b>%s&lt;/b> và &lt;b>%d người khác&lt;/b> đã mời kết nối</string>
+    <string name="lb_person_sent_connect_invitation_1">&lt;b>%s&lt;/b> đã mời bạn kết nối</string>
+    <string name="lb_person_invited_to_join_group">&lt;b>%s&lt;/b> đã mời bạn tham gia &lt;b>%s&lt;/b></string>
+    <string name="lb_person_invited_to_follow">&lt;b>%s&lt;/b> đã mời bạn theo dõi &lt;b>%s&lt;/b></string>
+    <string name="lb_person_added_into_company">&lt;b>%s&lt;/b> đã thêm bạn vào &lt;b>%s&lt;/b></string>
+    <string name="lb_person_approved_you_to_join_group">&lt;b>%s&lt;/b> đã chấp nhận bạn tham gia &lt;b>%s&lt;/b></string>
+    <string name="lb_person_accepted_connect_invitation">&lt;b>%s&lt;/b> đã chấp nhận mời kết nối của bạn</string>
+    <string name="lb_job_interest_at_single_company">Công việc tại &lt;b>%s&lt;/b> mà bạn có thể quan tâm</string>
+    <string name="lb_job_interest_at_many_company">Công việc tại &lt;b>%s&lt;/b> và &lt;b>%s&lt;/b> mà bạn có thể quan tâm</string>
+    <string name="lb_job_good_fit_at_company">Bạn có thể phù hợp với &lt;b>%s&lt;/b> tại &lt;b>%s&lt;/b></string>
+    <string name="lb_person_invited_to_join_test_scheduler">&lt;b>%s&lt;/b> đã mời bạn tham gia &lt;b>[%s] - kiểm tra - %s&lt;/b></string>
+    <string name="lb_person_canceled_test_scheduler">&lt;b>%s&lt;/b> đã hủy &lt;b>[%s] - kiểm tra - %s&lt;/b>: %s</string>
+    <string name="lb_person_reject_invitation_join_event">&lt;b>%s&lt;/b> đã từ chối mời tham gia sự kiện &lt;b>%s&lt;/b></string>
+    <string name="lb_person_invited_to_join_event">&lt;b>%s&lt;/b> đã mời bạn tham gia sự kiện &lt;b>%s&lt;/b></string>
+    <string name="lb_person_sent_an_offer">&lt;b>%s&lt;/b> đã gửi bạn một đề nghị công việc &lt;b>%s&lt;/b></string>
+    <string name="lb_job_alert_1_new_job">&lt;b>Thông báo công việc:&lt;/b> Có một công việc mới cho &lt;b>%s&lt;/b> ở &lt;b>%s&lt;/b></string>
+    <string name="lb_job_alert_many_new_job">&lt;b>Thông báo công việc:&lt;/b> Có một số công việc mới &lt;b>%s&lt;/b> ở &lt;b>%s&lt;/b></string>
+    <string name="lb_many_people_may_know">&lt;b>%s&lt;/b> và &lt;b>%s những người khác&lt;/b> bạn có thể biết từ &lt;b>%s&lt;/b></string>
+    <string name="lb_2_people_may_know">&lt;b>%s&lt;/b> và &lt;b>%s&lt;/b> bạn có thể biết từ &lt;b>%s&lt;/b></string>
+    <string name="lb_1_people_may_know">Có thể bạn biêt &lt;b>%s&lt;/b> từ &lt;b>%s&lt;/b></string>
+    <string name="lb_person_endorsed_for_a_skill">&lt;b>%s&lt;/b> đã xác nhận cho bạn kĩ năng &lt;b>%s&lt;/b></string>
+    <string name="lb_many_person_endorsed_for_a_skill">&lt;b>%s&lt;/b> và &lt;b>%d người khác&lt;/b> đã xác nhận cho bạn kĩ năng &lt;b>%s&lt;/b></string>
+    <string name="lb_notification_new_for_you">Tin mới</string>
+    <string name="lb_skill_endorsement_title">Xác nhận kĩ năng</string>
+    <string name="lb_skill_endorsement_desc">&lt;b>%s&lt;/b> và &lt;b>%d người khác&lt;/b> đã xác nhận cho bạn kĩ năng: &lt;b>%s&lt;/b> và %d kĩ năng khác</string>
+    <string name="lb_endorse_other_people_in_your_network">Xác nhận kĩ anwng của những người khác trong mạng</string>
+    <string name="btn_endorse">Xác nhận</string>
+    <string name="lb_company_offer_attachment_title">Đề nghị của bạn</string>
+    <string name="lb_company_offer_signed_attachment_title">Kí đề nghị &amp; Tải lên</string>
+    <string name="lb_company_offer_signed_attachment_hint">Tải lên đề nghị đã kí</string>
+    <string name="lb_company_offer_uploaded_on">Đã tải lên vào %s</string>
+    <string name="lb_company_offer_download_message">Đã lưu vào thư mục / Tải thành công.</string>
+    <string name="lb_company_offer_download_message_failed">Xin lỗi! Có vài vấn đề trong quá trình tải file này.</string>
+    <string name="lb_select_decline_offer">Chọn lý do từ chối:</string>
+    <string name="lb_comment_decline_offer">Phản hồi:</string>
+    <string name="lb_decline_offer_title">Từ chối đề nghị</string>
+    <string name="lb_declined_reasons">Lý do từ chối:</string>
+    <string name="lb_onboarding_interest_title">Bạn đang quan tâm gì?</string>
+    <string name="lb_onboarding_interest_header">Chọn ít nhất 5 chủ đề quan tâm:</string>
+    <string name="lb_package_detail_title">Gói đăng kí</string>
+    <string name="lb_monthly">Hàng tháng</string>
+    <string name="lb_yearly">Hàng năm</string>
+    <string name="lb_plan_lite_desc">Phù hợp nhất cho người mới sử dụng</string>
+    <string name="lb_plan_pro_desc">Phù hợp nhất cho nhóm cộng tác và tuyển dụng theo quy trình</string>
+    <string name="lb_plan_monthly_desc">Trả theo tháng, huỷ bất kì lúc nào</string>
+    <string name="lb_plan_yearly_desc">Trả nguyên năm</string>
+    <string name="lb_plan_save_percent">Tiết kiệm %s</string>
+    <string name="lb_plan_current">Đang sử dụng</string>
+    <string name="lb_benefit_of_plan">Lợi ích khi nâng cấp</string>
+    <string name="btn_make_payment">Thanh toán</string>
+    <string name="lb_cancel_subscription">Huỷ gói này</string>
+    <string name="lb_active_subscription">Tái kích hoạt gói</string>
+    <string name="lb_confirm_cancel_plan">Bạn có chắc muốn huỷ gói đăng kí này?</string>
+    <string name="lb_confirm_payment">Xác nhận thanh toán</string>
+    <string name="lb_transfer_now">Thanh toán</string>
+    <string name="lb_change_plan_confirm_message"><![CDATA[Bạn sẽ không thể chọn lại gói <b>%s</b> sau khi được nâng cấp lên gói <b>%s</b>. Bạn có muốn thực hiện thay đổi này không?]]></string>
+
+    <string name="lb_add_card_address_title">Địa chỉ</string>
+    <string name="lb_add_new_payment_method">Thêm phương thức thanh toán mới</string>
+
+    <string name="lb_add_address">Thêm địa chỉ</string>
+
+    <string name="lb_payment_method">Phương thức thanh toán</string>
+    <string name="lb_card_info">Thông tin thẻ</string>
+    <string name="lb_add_new">Thêm mới</string>
+
+    <string name="lb_card_number">Số thẻ</string>
+    <string name="lb_valid_until">Hiệu lực đến ngày</string>
+    <string name="lb_card_cvv">CVV</string>
+    <string name="lb_card_holder">Tên chủ thẻ</string>
+    <string name="lb_card_holder_hint">Họ tên ghi trên thẻ</string>
+    <string name="lb_payment_address">Địa chỉ</string>
+    <string name="lb_payment_address_hint">Địa chỉ của bạn</string>
+    <string name="lb_save_card_data">Lưu dữ liệu thẻ cho lần sau</string>
+
+    <string name="lb_payment_country">Quốc gia</string>
+    <string name="lb_payment_city">Thành phố</string>
+    <string name="lb_payment_state">Bang</string>
+
+    <string name="lb_payment_country_hint">Nhập tên quốc gia</string>
+    <string name="lb_payment_city_hint">Thành phố hiện tại của bạn</string>
+    <string name="lb_payment_state_hint">Bang hiện tại bạn đang sống</string>
+    <string name="hint_select_address">--Tìm địa chỉ--</string>
+    <string name="lb_verify_your_card">Xác thực thẻ</string>
+    <string name="lb_verification_code">Mã xác thực</string>
+    <string name="lb_error_verification">Xác thực không thành công. Hãy thử lại!</string>
+
+    <string name="lb_page_info">Thông tin</string>
+    <string name="lb_page_hours">Giờ hoạt động</string>
+    <string name="lb_page_website">Địa chỉ trang web</string>
+    <string name="lb_page_phone_number">Số điện thoại</string>
+    <string name="lb_page_about">Giới thiệu</string>
+    <string name="lb_page_category">Danh mục</string>
+    <string name="lb_page_location">Địa chỉ</string>
+    <string name="lb_delete_page">Xóa Trang</string>
+    <string name="lb_page_tab_links">Liên kết</string>
+
+    <!--    Create page form-->
+    <string name="lb_page_name_input_not_required">Tên trang</string>
+    <string name="lb_page_name_input">Tên <font color='#ff0000'>*</font></string>
+    <string name="lb_page_about_input">Mô tả </string>
+    <string name="lb_page_about_hint">Mô tả ngắn về Trang của bạn</string>
+    <string name="lb_update_page_title">Sửa Trang</string>
+    <string name="lb_create_page_title">Tạo Trang</string>
+    <string name="lb_create_shop_title">Tạo cửa hàng</string>
+    <string name="lb_page_settings">Cài đặt Trang</string>
+    <string name="lb_page_primary_address">Đây là địa chỉ chính</string>
+    <string name="lb_page_close_location">Đóng địa điểm này</string>
+    <string name="lb_location_primary">Trụ sở chính</string>
+    <string name="lb_create_page_type_required">Loại <font color='#ff0000'>*</font></string>
+    <string name="lb_create_page_type_popular">Phổ biến</string>
+
+    <!--    Manage groups-->
+    <string name="lb_manage_group_title">Quản lý nhóm</string>
+
+    <string name="lb_unlink_page_confirm_message">Bạn chắc chắn muốn gỡ liên kết Trang này?</string>
+    <string name="lb_delete_page_confirm_message">Bạn chắc chắn muốn xóa Trang này?</string>
+
+    <string name="lb_change_owner_header">Thay đổi chủ sở hữu</string>
+    <string name="lb_cancel_change_owner_header">Hủy thay đổi chủ sở hữu</string>
+    <string name="hint_input_new_owner_name">Vui lòng nhập tên chủ sở hữu mới</string>
+    <string name="lb_change_page_owner_title">Chọn chủ sở hữu mới</string>
+    <string name="lb_cancel_change_page_owner_request1">Bạn đã gửi yêu cầu tới</string>
+    <string name="lb_cancel_change_page_owner_title">Huỷ thay đổi người sở hữu</string>
+    <string name="lb_cancel_change_page_owner_request2">để làm chủ mới của trang</string>
+    <string name="lb_change_page_owner_desc">Với thay đổi này, bạn sẽ không còn quyền quản lý trang này nữa. Vui lòng xác nhận thay đổi của bạn ở bước tiếp theo.</string>
+
+    <string name="lb_manage_linked">Quản lý liên kết</string>
+    <string name="lb_page_members">Thành viên</string>
+    <string name="lb_page_option_make_owner">Chọn làm chủ sở hữu Trang</string>
+    <string name="lb_page_option_make_admin">Chọn làm quản trị Trang</string>
+
+    <string name="lb_page_member_role">Vai trò thành viên</string>
+    <string name="lb_page_search_people">Nhập tên thành viên để tìm</string>
+    <string name="hint_alias">Tên đại diện (Không bắt buộc)</string>
+    <string name="lb_role_admin">Quản trị viên</string>
+    <string name="lb_role_manager">Quản lý</string>
+    <string name="lb_role_sale">Người bán hàng</string>
+    <string name="lb_role_owner">Người tạo</string>
+    <string name="lb_role_staff">Nhân viên</string>
+    <string name="lb_role_member">Thành viên</string>
+    <string name="lb_page_role_title">Thêm thành viên</string>
+    <string name="lb_add_page_staff_title">Thêm nhân viên Trang</string>
+    <string name="lb_page_update_role_title">Sửa vai trò thành viên</string>
+    <string name="lb_page_manager_role_desc">Với vai trò này, người này được xem là quản lý khu vực. Có thể quản lý được các dịch vụ, nhân viên, khách hàng và các lịch hẹn cho tất cả khu vực trên.</string>
+    <string name="lb_page_member_role_noties">Chọn vai trò mà bạn muốn chia sẻ quyền quản lý cho họ</string>
+    <string name="lb_page_staff_role_desc">Với vai trò này, thành viên được xem như nhân viên của Trang. Họ sẽ có trong danh sách các nhân viên được đặt hẹn</string>
+    <string name="lb_page_remove_member">Hủy bỏ thành viên</string>
+    <string name="lb_page_change_role">Sửa thành viên</string>
+
+    <string name="lb_page_remove_staff">Xoá nhân viên</string>
+    <string name="lb_page_update_staff">Sửa nhân viên</string>
+    <string name="lb_staff_role">Vai trò nhân viên</string>
+
+    <string name="lb_confirm_remove_person">Bạn có muốn xoá %s?</string>
+
+    <!--    Create Page link-->
+    <string name="lb_create_page_link_title">Tạo liên kết</string>
+    <string name="lb_select_page">Chọn Trang</string>
+    <string name="lb_create_page_link_desc">Với thay đổi này, Các quản trị của Trang %s sẽ có thể viết bài, xóa bài viết. Trang của bạn cũng sẽ được nằm trong danh sách liên kết của %s.\nTuy nhiên, bạn có thể gỡ bỏ liên kết bất cứ lúc nào.</string>
+
+    <string name="lb_other_location">Các khu vực khác</string>
+    <string name="lb_remove_location_msg">Bạn có muốn xóa địa điểm này?</string>
+    <string name="lb_add_location_title">Thêm địa điểm</string>
+    <string name="hint_input_address">Địa chỉ (số nhà, tên đường)</string>
+    <string name="hint_postal_code">Mã bưu chính</string>
+    <string name="lb_update_location_title">Sửa địa điểm</string>
+    <string name="hint_page_location_phone">Số điện thoại</string>
+
+    <!--    Page Setting-->
+    <string name="lb_page_setting_notification">Thông báo</string>
+    <string name="lb_page_setting_member">Quản lý thành viên</string>
+    <string name="lb_page_setting_manage_links">Quản lý Liên kết</string>
+    <string name="lb_page_setting_change_button">Thay đổi nút</string>
+    <string name="lb_page_setting_appointment">Quản lý đặt hẹn</string>
+    <string name="lb_page_setting_manage_customer">Quản lý khách hàng</string>
+    <string name="lb_page_setting_manage_staffs">Quản lý nhân viên</string>
+    <string name="lb_page_setting_manage_products">Quản lý sản phẩm</string>
+    <string name="lb_page_setting_manage_messages">Quản lý tin nhắn</string>
+    <string name="lb_page_setting_change_owner">Đổi người sở hữu Trang</string>
+    <string name="lb_page_setting_delete_page">Xóa trang</string>
+    <string name="lb_page_setting_message">Tin nhắn</string>
+    <string name="lb_page_setting_manage_locations">Quản lý địa điểm</string>
+    <string name="lb_page_setting_manage_locations_desc">Quản lý nhiều hơn 1 địa điểm</string>
+    <string name="lb_page_setting_appointment_settings">Cài đặt lịch hẹn</string>
+
+    <string name="lb_page_setting_appointment_analytics">Các phân tích về lịch hẹn</string>
+
+    <string-array name="lb_day_of_week">
+        <item>Chủ nhật</item>
+        <item>Thứ 2</item>
+        <item>Thứ 3</item>
+        <item>Thứ 4</item>
+        <item>Thứ 5</item>
+        <item>Thứ 6</item>
+        <item>Thứ 7</item>
+    </string-array>
+    <plurals name="lb_num_of_customer">
+        <item quantity="other">%s Khách hàng</item>
+    </plurals>
+    <string name="lb_mn_add_appointment">Tạo lịch hẹn</string>
+    <string name="lb_add_customer">Thêm khách hàng</string>
+    <string name="lb_add_new_customer">Thêm khách hàng mới</string>
+    <string name="lb_update_customer_title">Sửa thông tin khách hàng</string>
+    <string name="lb_leave_page">Rời trang</string>
+
+    <string name="msg_no_available_slot">Không có nhân viên cho thời gian này.</string>
+    <string name="msg_page_no_location_service">Không tìm thấy khu vực nào.</string>
+
+    <!--    Step page-->
+    <string name="lb_step_manage_staffs">Quản lý nhân viên</string>
+    <string name="lb_step_manage_staffs_desc">Với tính năng này, bạn có thể quản lý cửa hàng của bạn với nhiều nhân viên cho 1 dịch vụ, và nhiều địa điểm cung cấp.</string>
+
+    <string name="lb_step_manage_services">Quản lý dịch vụ</string>
+    <string name="lb_step_manage_services_desc">Bước thiết lập này rất quan trọng để đưa dịch vụ của bạn ra thị trường. Mọi người có thể thấy danh sách dịch vụ của bạn để tiến hành đặt hẹn.</string>
+
+    <string name="lb_step_appointment_setting">Thiết lập lịch hẹn</string>
+    <string name="lb_step_appointment_setting_desc">Để vận hành với dịch vụ đặt hẹn, bạn cần hoàn thành cài đặt lịch hẹn cho thông báo, thời gian nghỉ giữa ca, cho phép đặt hẹn cùng giờ,…</string>
+
+    <string name="lb_message_no_customer_available_in">Chưa có khách hàng nào.</string>
+    <string name="lb_message_no_staff_available_in">Chưa có nhân viên nào sẵn sàng.</string>
+    <string name="lb_message_customer_fname_empty">Tên không được để trống</string>
+    <string name="lb_message_customer_lname_empty">Họ không được để trống</string>
+    <string name="lb_message_customer_email_empty">Email không được để trống</string>
+    <string name="lb_message_customer_email_invalid">Email không đúng định dạng</string>
+    <string name="lb_message_customer_location_invalid">Khu vực được yêu cầu</string>
+    <string name="lb_request_send_desc"><![CDATA[Bạn đã gửi yêu cầu <b>%s</b> để trở thành <b>chủ sở hữu</b> mới của <b>%s</b>]]></string>
+    <string name="btn_change">Thay đổi</string>
+    <string name="btn_cancel_request">Hủy yêu cầu</string>
+    <string name="lb_choose_payment_method">Chọn phương thức thanh toán</string>
+    <string name="lb_set_default">Đặt mặc định</string>
+    <string name="lb_confirm_remove_payment_method_title">Bạn có chắc chắn muốn xóa phương thức thanh toán?</string>
+    <string name="lb_confirm_remove_payment_method_desc">Gói đăng ký hiện tại của bạn sẽ không thể tiếp tục thanh toán qua phương thức thanh toán này.</string>
+    <string name="lb_confirm_delete_payment_method">Thiết lập phương thức khác làm mặc định trước khi bạn xóa phương thức này</string>
+    <string name="lb_confirm_set_default_payment_method">Bạn chắc chắn muốn phương thức thanh toán này là mặc định?</string>
+    <string name="lb_viewed_profile_title">Người đã xem hồ sơ của bạn</string>
+    <string name="lb_viewed_profile_header">Những người đã xem hồ sơ của bạn</string>
+    <string name="btn_upgrade_premium">Upgrade Tài khoản</string>
+    <string name="lb_create_poll_titlebar">Tạo thăm dò</string>
+    <string name="lb_create_poll_title">Tiêu đề <font color='#ff0000'>*</font></string>
+    <string name="hint_create_poll_title">Mô tả về chủ đề khảo sát?</string>
+    <string name="lb_create_poll_answer_title">Các kết quả thăm dò bạn muốn nhận được</string>
+    <string name="lb_create_poll_duration_title">Thời hạn khảo sát</string>
+    <string name="lb_create_poll_max_day">(tối đa 14 ngày)</string>
+    <string name="hint_create_poll_duration_title">Nhập số ngày <font color='#ff0000'>*</font></string>
+    <string name="lb_create_poll_allow_others">Cho phép thêm lựa chọn khác</string>
+    <string name="lb_create_poll_multiple_option_title">Số lựa chọn tối đa <font color='#ff0000'>*</font></string>
+    <string name="hint_create_poll_limit_answer">Input max number of answer can be choose</string>
+    <string name="lb_create_poll_note">Chúng tôi không cho phép khảo sát cho các nội dung về quan điểm chính trị, y tế hoặc các dũ liệu nhạy cảm.</string>
+    <string name="lb_create_poll_add_more">Thêm lựa chọn</string>
+    <string name="lb_create_poll_option1">Lựa chọn 1 <font color='#ff0000'>*</font></string>
+    <string name="lb_create_poll_option2">Lựa chọn 2 <font color='#ff0000'>*</font></string>
+    <string name="lb_create_poll_option">Lựa chọn %d</string>
+    <string name="msg_create_poll_confirm_back">Bạn có muốn hủy thăm dò ý kiến?</string>
+    <string name="hint_create_poll_another_option">Nhập ý kiến khác của bạn</string>
+    <string name="lb_share_poll_in_new_post">Chia sẻ khảo sát này vào bài viết mới</string>
+    <string name="hint_change_poll_owner">Chọn Trang</string>
+    <string name="lb_i_agreed">Tôi đồng ý với</string>
+    <string name="lb_from_access">từ %s</string>
+    <string name="lb_create_poll_tnc">Điều khoản &amp; Điều kiện</string>
+    <string name="lb_create_poll_required_answer">Vui lòng nhập lựa chọn</string>
+    <string name="lb_add_text_for_post">Hãy chia sẻ suy nghĩ của bạn</string>
+    <string name="hint_write_something">Viết thêm gì đó…</string>
+    <string name="lb_create_poll_public_poll">Khảo sát công khai</string>
+    <string name="lb_allow_voter_view_result">Người tham gia khảo sát được xem kết quả</string>
+    <string name="lb_create_poll_public_poll_desc">Tất cả đều có thể nhìn thấy khảo sát này.</string>
+    <string name="lb_create_poll_public_final_result">Công khai kết quả cuối cùng</string>
+    <string name="lb_create_poll_public_final_result_desc">Mọi người có thể xem kết quả cuối cùng của khảo sát này.</string>
+    <string name="lb_categories">Chọn danh mục <font color='#ff0000'>*</font></string>
+    <string name="lb_delete_poll">Kết thúc khảo sát</string>
+    <string name="lb_poll_detail_be_the_first_vote">Hãy là người đầu tiên bình chọn</string>
+    <string name="lb_poll_others">Bình chọn khác</string>
+
+    <!--    poll landing page-->
+    <string name="lb_poll_landing_title">Khảo sát</string>
+    <string name="lb_poll_landing_popular">Khảo sát phổ biến</string>
+    <string name="lb_poll_landing_recently">Gần đây</string>
+    <string name="lb_poll_landing_your_poll">Khảo sát của bạn</string>
+    <string name="lb_poll_landing_poll_voted">Khảo sát đã bình chọn</string>
+    <string name="lb_poll_landing_welcome">Xin chào %s</string>
+    <string name="lb_poll_landing_desc">Hãy bắt đầu tạo khảo sát và hỏi những người khác\nvề ý kiến của họ</string>
+    <string name="btn_create">Tạo</string>
+    <string name="lb_goto_search">Tìm kiếm</string>
+
+    <string name="lb_end_poll_confirm_title">Bạn có chắc muốn kết thúc khảo sát này?</string>
+    <string name="lb_end_poll_confirm_message">Mọi người sẽ không thể vote sau khi kết thúc khảo sát.</string>
+    <string name="lb_poll_voted_title">Khảo sát đã bình chọn</string>
+    <string name="lb_my_poll_title">Quản lý khảo sát</string>
+
+    <string name="hint_search_poll">Tìm khảo sát</string>
+    <string name="lb_poll_status_expired">Đã hết hạn</string>
+    <string name="lb_poll_status_end">Đã kết thúc</string>
+    <string name="lb_poll_no_voted">Không có bình chọn</string>
+
+    <string name="lb_poll_others_title">Các lựa chọn khác</string>
+
+    <string name="lb_poll_detail_mn_view_poll_feed">Xem viết về khảo sát này</string>
+    <string name="lb_poll_choose_category_msg">Vui lòng chọn danh mục</string>
+
+    <plurals name="lb_poll_num_of_vote">
+        <item quantity="other">bình chọn •</item>
+    </plurals>
+
+    <plurals name="lb_poll_votes">
+        <item quantity="other">%d bình chọn</item>
+    </plurals>
+    <string name="lb_poll_detail_coming_soon">Sắp ra mắt trong %s</string>
+    <string-array name="lb_privacy_options">
+        <item>Cho phép tìm kiếm</item>
+        <item>Cho phép xem hồ sơ</item>
+        <item>Cho phép người khác kết bạn</item>
+        <item>Cho phép người khác gửi tin nhắn</item>
+        <item>Ai có thể theo dõi bạn</item>
+        <item>Ai có thể thấy bạn trực tuyến</item>
+        <item>Cho phép xem email</item>
+        <item>Cho phép xem số điện thoại</item>
+        <item>Hiển thị danh tính khi xem hồ sơ người khác</item>
+        <item>Người dùng đã chặn</item>
+    </string-array>
+    <string name="lb_privacy_title">Cài đặt chính sách</string>
+    <string name="lb_privacy_option_connection_of_connection">Bạn bè của bạn</string>
+    <string name="lb_privacy_option_dont_allow">Không cho phép</string>
+    <string name="lb_privacy_option_who_know_my_email">Người nào biết email của tôi</string>
+    <string name="lb_privacy_option_my_connections">Bạn bè của tôi</string>
+    <string name="lb_privacy_option_my_connections_and_their_connection">Bạn bè của tôi và của người khác</string>
+
+    <string name="lb_select_viewing_other_profile_popup_title">Lựa chọn danh tính khi xem hồ sơ người khác</string>
+    <string name="lb_popup_view_other_profile_item_1">Họ có thể thấy bạn</string>
+    <string name="lb_popup_view_other_profile_item_2">Ẩn danh (họ không biết bạn là ai)</string>
+    <string name="lb_product_brand_promotion">Khuyến mãi</string>
+    <string name="lb_product_brand_top_ranking">Xếp hạng cao nhất</string>
+    <string name="lb_product_brand_new_product">Các sản phẩm mới</string>
+    <string name="lb_product_brand_category">Các danh mục</string>
+    <string name="lb_product_detail_flash_sale">Flash Sale</string>
+    <string name="lb_product_detail_ending_soon">Ending soon</string>
+    <string name="lb_product_detail_percent_off">(<font color='#ff0000'>%s</font>)</string>
+    <string name="lb_product_detail_header_desc">Mô tả</string>
+    <string name="lb_product_detail_seller">Người bán</string>
+    <string name="lb_product_detail_shipping">Giao hàng</string>
+    <string name="lb_seller_other_product">Các sản phẩm cùng người bán</string>
+
+    <string name="lb_sponsor_product">Các sản phẩm được tài trợ</string>
+    <string name="lb_interest_product">Có thể bạn quan tâm</string>
+    <string name="lb_recent_product">Đã xem gần đây</string>
+    <string name="lb_landing_title">Mua sắm</string>
+
+    <string name="lb_product_detail_color">Màu sắc</string>
+    <string name="lb_product_detail_size">Kích thước</string>
+
+    <string name="lb_product_detail_no_of_bought">%s Sản phẩm đã được mua</string>
+    <string name="lb_product_detail_no_of_review">%s Bình luận</string>
+    <plurals name="lb_product_detail_no_of_remain">
+        <item quantity="other">Còn %s sản phẩm</item>
+    </plurals>
+
+    <string name="lb_product_specification_title">Thông số kĩ thuật</string>
+    <string name="lb_product_detail_options">Tuỳ chọn</string>
+    <string name="lb_product_detail_tags">Tags</string>
+
+    <string name="lb_product_detail_shipping_free">Miễn phí</string>
+    <string name="lb_product_detail_shipping_fee">Phí giao hàng:</string>
+    <string name="lb_product_detail_free">Miễn phí</string>
+
+    <string name="lb_product_detail_pickup_available">Pickup available</string>
+    <string name="lb_product_detail_pickup_not_available">Pickup not available</string>
+
+    <string name="lb_product_detail_out_of_stock">Hết hàng</string>
+
+    <string name="lb_category_search_shop_by_category">Shop by category</string>
+    <string name="lb_product_shipping_delivery_by">Giao bởi: </string>
+    <string name="lb_product_shipping_delivery_arrives">Sẽ giao vào ngày: %s</string>
+    <string name="lb_product_detail_header_review">Bình luận (%s)</string>
+
+    <string name="lb_product_detail_see_feature_ratings">Xem chi tiết đánh giá</string>
+    <string name="lb_product_detail_rating_comfort">Thoải mái</string>
+    <string name="lb_product_detail_rating_light_weight">Gọn nhẹ</string>
+    <string name="lb_product_detail_rating_softness">Mềm mại</string>
+    <string name="lb_product_detail_rating_warmth">Ấm áp</string>
+    <string name="lb_product_detail_rating_stretch">Diện tích</string>
+
+    <string name="lb_product_allow_return_privacy">Bạn có thể trả lại sản phẩm này nếu chưa mở hộp</string>
+    <string name="lb_search_product">Bạn muốn tìm kiếm sản phẩm gì?</string>
+    <string name="btn_add_review">+ Đánh giá</string>
+    <string name="lb_add_review">Đánh giá</string>
+    <plurals name="lb_num_of_product">
+        <item quantity="other">%s Sản phẩm</item>
+    </plurals>
+
+    <string name="lb_product_landing_popular_category">Danh mục phổ biến</string>
+    <string name="lb_product_landing_shop_by_brand">Thương hiệu</string>
+    <string name="lb_product_landing_flash_deal">Mua nhanh trong ngày</string>
+    <string name="lb_product_landing_featured_product">Sản phẩm nổi bật</string>
+    <string name="lb_product_landing_suggest_for_you">Gợi ý cho bạn</string>
+    <string name="lb_product_landing_popular">Phổ biến</string>
+    <string name="lb_product_landing_most_viewed">Xem nhiều nhất</string>
+
+    <string name="lb_ecommerce_landing_side_menu_header">Tài khoản của tôi</string>
+    <string name="lb_ecommerce_landing_side_menu_purchase_history">Lịch sử mua hàng</string>
+    <string name="lb_ecommerce_landing_side_menu_manage_account">Quản lý tài khoản</string>
+    <string name="lb_ecommerce_landing_side_menu_manage_address">Quản lý địa chỉ</string>
+    <string name="lb_ecommerce_landing_side_menu_payments">Thanh toán</string>
+    <string name="lb_ecommerce_landing_side_menu_notifications">Thông báo</string>
+    <string name="lb_ecommerce_landing_side_menu_subscription">Gói đăng ký</string>
+    <string name="lb_ecommerce_landing_side_menu_other_account">Tài khoản khác</string>
+    <string name="lb_ecommerce_landing_side_menu_customer_service">Dịch vụ khách hàng</string>
+    <string name="lb_ecommerce_landing_side_menu_faqs">Các câu hỏi phổ biến</string>
+    <string name="lb_ecommerce_landing_side_menu_feedback">Phản hồi</string>
+    <string name="lb_ecommerce_landing_side_menu_seller_account">Tài khoản người bán</string>
+    <string name="lb_review_product_title">Đánh giá sản phẩm</string>
+    <string name="hint_review_product_note">Hãy chia sẻ trải nghiệm của bạn về sản phẩm này.</string>
+    <string name="lb_add_product_review_recommend">Giới thiệu sản phẩm này cho người khác</string>
+    <string name="lb_product_review_verified_purchase">Đã xác nhận mua hàng</string>
+    <string name="lb_product_filter_brand">Thương hiệu</string>
+    <string name="lb_product_filter_promotion">Khuyến mãi</string>
+    <string name="lb_product_filter_free_ship">Miễn phí vận chuyển</string>
+    <string name="lb_product_filter_price">Khoảng giá (%s)</string>
+
+    <string name="btn_profile_message">Tin nhắn</string>
+    <string name="lb_profile_unavailable">Không khả dụng</string>
+    <string name="lb_profile_highlight">Nổi bật</string>
+    <string name="lb_profile_about">Giới thiệu</string>
+    <string name="lb_profile_article">Các bài viết &amp; hoạt động</string>
+    <string name="lb_profile_experience">Kinh nghiệm</string>
+    <string name="lb_profile_experience_and_edu">Kinh nghiệm &amp; Giáo dục</string>
+    <string name="lb_profile_education">Giáo dục</string>
+    <string name="lb_profile_skill">Các kĩ năng &amp; Xác nhận</string>
+    <string name="lb_profile_accomplishments">Các thành tựu</string>
+    <string name="lb_profile_contact">Liên hệ</string>
+    <string name="lb_profile_interests">Đang quan tâm</string>
+    <string name="lb_profile_work_at">Công việc tại %s</string>
+    <string name="lb_profile_people_viewed">Những người đã xem</string>
+    <string name="lb_profile_similar_users">Người dùng tương tự</string>
+    <string name="lb_profile_ads">Quảng cáo</string>
+    <string name="lb_profile_title">Hồ sơ</string>
+    <string name="lb_publications">Ấn phẩm</string>
+    <string name="lb_languages">Ngôn ngữ</string>
+    <string name="lb_certification">Chứng chỉ</string>
+    <string name="lb_profile_link_title">Hồ sơ của %s</string>
+    <string name="lb_profile_phone_title">Số điện thoại</string>
+    <string name="lb_profile_completion_title">Hãy hoàn thành profile của bạn</string>
+    <string name="lb_profile_completion_subtitle">Để trải nghiệm các tính năng:</string>
+    <string name="lb_profile_completion_item1">• Tìm kiếm cơ hội phù hợp</string>
+    <string name="lb_profile_completion_item2">• Mở rộng các kết nối</string>
+    <string name="lb_profile_completion_item3">• Có thêm người theo dõi</string>
+    <string name="lb_profile_action_update">Cập nhật Profile</string>
+    <string name="lb_incoming_pending_recommend_alert">Bạn có %s nhận xét đang chờ duyệt</string>
+    <string name="lb_pending_given_alert">Bạn có %s nhận xét đã gửi đang chờ duyệt</string>
+
+    <!--    Pending recommendations page-->
+    <string name="lb_pending_recommendation_title">Duyệt các nhận xét</string>
+
+    <string name="lb_mn_request_revision">Yêu cầu sửa đổi</string>
+    <string name="lb_mn_hide_recommendation">Ẩn đề xuất này</string>
+    <string name="lb_mn_reject_recommendation">Từ chối lời nhận xét này</string>
+    <string name="lb_confirm_accept_recommend">Việc nhấn vào nút Chấp nhận, nhận xét này sẽ xuất hiện trên trang hồ sơ của bạn.</string>
+    <string name="lb_confirm_cancel_outgoing_recommend">Bạn có muốn xóa yêu cầu nhận xét này?</string>
+    <string name="lb_empty_given_question">Viết đánh giá hoặc nhận xét cho bạn bè</string>
+    <string name="btn_recommend">Nhận xét</string>
+    <string name="btn_review">Đánh giá</string>
+    <string name="lb_tab_incoming">Gửi đến</string>
+    <string name="lb_tab_outgoing">Gửi đi</string>
+    <string name="lb_revise_recommendation">Sửa đổi đề xuất</string>
+    <string name="lb_delete_recommendation">Xóa</string>
+
+    <string name="lb_mutual_connection_title">Bạn bè chung</string>
+
+    <plurals name="lb_you_and_other_know">
+        <item quantity="zero">%s</item>
+        <item quantity="one">%s</item>
+        <item quantity="other">%s và %s người khác</item>
+    </plurals>
+    <string name="lb_many_mutual_connection">%s và %d người khác</string>
+
+    <string name="lb_tab_all_activities">Tất cả</string>
+    <string name="lb_tab_posts">Bài đăng</string>
+    <string name="lb_tab_articles">Bài báo</string>
+    <string name="lb_tab_interests">Quan tâm</string>
+    <string name="lb_tab_documents">Tài liệu</string>
+    <string name="lb_influencers_title">Những người ảnh hưởng</string>
+
+    <string name="lb_recommend_has_added">Bạn đã giới thiệu cho người ngày rồi!</string>
+    <string name="lb_be_the_first_recommend_to">Hãy là người đầu tiên đề xuất cho %s</string>
+    <string name="lb_be_the_first_review_to">Hãy là người đầu tiên đánh giá cho %s</string>
+    <string name="lb_no_recommendation">Không có đề xuất nào</string>
+    <string name="lb_no_review">Không có đánh giá nào</string>
+    <string name="lb_no_given">Chưa có đánh giá nào</string>
+    <string name="lb_be_the_first_to_endorse">Hãy trở thành người đầu tiên xác thực skill này</string>
+    <string name="lb_request_revision_title">Yêu cầu sửa đổi</string>
+    <string name="lb_confirm_discard_request_revision">Bạn có muốn hủy yêu cầu này?</string>
+    <string name="lb_request_revision_header">Hãy viết một tin nhắn về những điểm bạn muốn hỏi cho việc sửa đổi nội dung giới thiệu.</string>
+    <string name="hint_request_revision">Hi %s\n\nBạn có thể vui lòng xem lại nhận xét của bạn về tôi không? Cám ơn nhiều nhé!</string>
+
+    <string name="lb_request_review_title">Yêu cầu đánh giá</string>
+    <string name="lb_request_review_header">Viết một tin nhắn cho người bạn cần có đánh giá.</string>
+    <string name="hint_request_review">Chào %s\n\n.Bạn có thể giúp đánh giá hồ sơ của mình?</string>
+
+    <string name="lb_request_recommend_title">Yêu cầu nhận xét</string>
+    <string name="hint_request_recommend">Chào %s\n\n.Bạn có thể vui lòng viết một nhận xét cho hồ sơ của tôi? Cám ơn rất nhiều!</string>
+
+    <string name="lb_requested_revision">Đã yêu cầu chỉnh sửa</string>
+    <string name="lb_outgoing_item_requested_revision">Đã yêu cầu chỉnh sửa</string>
+    <string name="lb_requested_recommendation">Đã yêu cầu đề xuất</string>
+    <string name="lb_just_now">Vừa mới sửa</string>
+    <string name="btn_find_account">Tìm tài khoản</string>
+    <string name="lb_recover_password">Đặt lại mật khẩu</string>
+    <string name="lb_reset_password_desc">Nhập mật khẩu mới</string>
+    <string name="hint_enter_new_password">Nhập mật khẩu mới</string>
+    <string name="lb_review_customer_title">Nhận xét khách hàng</string>
+    <string name="lb_review_customer_your_comment">Lời chú thích của bạn</string>
+    <string name="hint_review_customer_comment">Chú thích của bạn…</string>
+    <string name="lb_add_salary_yearly">Hàng Năm</string>
+    <string name="lb_add_salary_monthly">Hàng Tháng</string>
+    <string name="lb_add_salary_weekly">Hàng Tuần</string>
+    <string name="lb_add_salary_bi_weekly">Hai tuần một lần</string>
+    <string name="lb_add_salary_job_function">Nhập chức năng công việc</string>
+    <string name="lb_add_salary_job_type">Nhập loại công việc</string>
+    <string name="lb_add_salary_year_experience">Tháng kinh nghiệm</string>
+    <string name="lb_add_salary_location">Khu vực</string>
+    <string name="hint_add_salary_base_salary">Lương cơ bản</string>
+    <string name="hint_add_salary_additional_income">Thu nhập thêm</string>
+    <string name="hint_add_salary_cash_bonus">Thưởng tiền mặt</string>
+    <string name="hint_add_salary_stock_bonus">Thưởng chứng khoán</string>
+    <string name="hint_add_salary_profit_sharing">Chia sẻ lợi nhuận</string>
+    <string name="hint_add_salary_tips">Tiền thưởng</string>
+    <string name="hint_add_salary_commission">Tiền hoa hồng</string>
+    <string name="lb_add_salary_gender">Giới tính</string>
+    <string name="lb_add_salary_pay_frequency">Chu kỳ chi trả</string>
+    <string name="lb_add_salary_optional">(Tùy chọn)</string>
+    <string name="lb_add_salary_male">Nam</string>
+    <string name="lb_add_salary_female">Nữ</string>
+    <string name="lb_add_salary_title">Thêm Salary</string>
+    <string name="lb_add_salary_currency">Loại tiền tệ</string>
+    <string name="error_please_choose_year_experience">Vui lòng chọn số năm kinh nghiệm của bạn tại %1$s.</string>
+    <string name="error_please_choose_job_function">Vui lòng chọn chức năng công việc của bạn tại %1$s.</string>
+    <string name="error_please_choose_location">Vui lòng chọn khu vực công ty.</string>
+    <string name="error_please_choose_base_salary">Vui lòng nhập lương cơ bản.</string>
+    <string name="error_please_choose_currency">Vui lòng chọn loại tiền tệ.</string>
+    <string name="lb_avg_total_pay">Lương trung bình</string>
+    <string name="lb_avg_base_pay">Lương cơ bản trung bình</string>
+    <string name="lb_avg_additional_pay">Khoản bổ sung trung bình</string>
+    <string name="lb_additional_compensation">Khoản đền bù bổ sung</string>
+    <string name="lb_cash_bonus">Tiền thưởng (%s)</string>
+    <string name="lb_stock_bonus">Thưởng cổ phiếu (%s)</string>
+    <string name="lb_profit_sharing">Lợi nhuận chia sẻ (%s)</string>
+    <string name="lb_tip">Tiền thưởng thêm (%s)</string>
+    <string name="lb_commission">Hoa hồng (%s)</string>
+    <string name="lb_salary_detail_notied">Tiền lương và quyền lợi có thể dựa trên các khu vực khác nhau, số năm kinh nghiệm, và/hoặc các yếu tố khác.</string>
+    <string name="lb_salary_detail_base_on_salary">Dựa trên %1$s mức lương</string>
+    <string name="lb_salary_detail_updated_date">Đã cập nhật %1$s</string>
+    <string name="lb_salary_detail_currency">Tiền tệ: %1$s</string>
+    <string name="lb_confirm_leave_school">Bạn có chắc chắn muốn rời trường học này?</string>
+    <string name="lb_confirm_leave_company">Bạn có chắc chắn muốn rời công ty này?</string>
+    <string name="lb_search_connection_empty_indicator">Vui lòng nhập tên người dùng hợp lệ để bắt đầu tìm kiếm.</string>
+    <string name="lb_search_connection_no_result">Không tìm thấy người nào!</string>
+    <string name="lb_search_init_text">Nhập từ khoá để bắt đầu tìm kiếm</string>
+    <string name="lb_seller_detail_product">Sản phẩm</string>
+    <string name="lb_seller_detail_add_new">Mới</string>
+
+    <string name="lb_shop_detail_tab_home">Trang chủ</string>
+    <string name="lb_shop_detail_tab_products">Sản phẩm</string>
+    <string name="lb_shop_detail_tab_reviews">Đánh giá</string>
+    <string name="lb_shop_detail_tab_about">Giới thiệu</string>
+    <string name="lb_shop_detail_tab_link">Liên kết</string>
+
+    <string name="lb_shop_detail_section_new_product_title">Sản phẩm mới</string>
+    <string name="lb_shop_detail_section_brand_title">Thương hiệu</string>
+    <string name="lb_shop_detail_section_category_title">Danh mục</string>
+
+    <string name="lb_shop_detail_no_product_message">Chưa có sản phẩm nào</string>
+    <string name="hint_input_valid_email">Vui lòng nhập email của %s để gửi lời mời</string>
+    <string name="hint_send_invite_message">Tin nhắn gửi đến %s (tùy chọn)</string>
+    <string name="lb_tab_service_about">Giới thiệu</string>
+    <string name="lb_tab_service_reviews">Nhận xét</string>
+
+    <string name="lb_service_detail_category">Danh mục:</string>
+    <string name="lb_service_detail_price">Giá:</string>
+    <string name="lb_service_detail_duration">Thời gian:</string>
+    <string name="lb_service_detail_desc">Mô tả</string>
+    <string name="lb_report_review">Báo cáo bình luận</string>
+    <string name="lb_service_detail_staffs">Nhân viên</string>
+    <string name="lb_service_detail_unavailable">Dịch vụ này hiện không còn hiệu lực.</string>
+    <string name="lb_service_review_recommend">Giới thiệu</string>
+    <string name="lb_add_review_service_title">Nhập tiêu đề bình luận</string>
+    <string name="lb_add_review_service_desc">Nhập bình luận của bạn về dịch vụ này</string>
+    <string name="lb_add_new_service">Thêm dịch vụ mới</string>
+    <string name="lb_message_choose_category">Chưa chọn danh mục dịch vụ</string>
+    <string name="lb_message_duration_invalid">Khoảng thời gian không hợp lệ</string>
+    <string name="lb_message_service_name_empty">Chưa nhập tên dịch vụ</string>
+    <string name="lb_message_no_available_service">Chưa có dịch vụ nào</string>
+    <string name="lb_message_no_available_time_slot">Dịch vụ không có sẵn trong ngày này.\nHãy thử chọn một ngày khác.</string>
+    <string name="lb_message_no_location_provide">Chưa có khu vực nào cung cấp dịch vụ này.</string>
+
+    <string name="lb_category_landing_feature_cat">Danh mục tính năng</string>
+    <string name="lb_category_landing_shop_by_brand">Mua sắm theo thương hiệu</string>
+    <string name="lb_category_landing_flash_deals">Ưu đãi chớp nhoáng</string>
+    <string name="lb_category_landing_features_deal">Tính năng ưu đãi</string>
+    <string name="lb_category_landing_best_sale">Bán chạy nhất</string>
+    <string name="lb_category_landing_new_release">Mới phát hnh</string>
+    <string name="lb_category_landing_saving">Dưới</string>
+    <string name="lb_category_landing_most_visited">Được truy cập nhiều nhất</string>
+    <string name="lb_category_landing_top_rate">Được đánh giá cao nhất</string>
+    <string name="lb_category_landing_recommend">Đề xuất cho bạn</string>
+    <string name="lb_shop_custom_message_title">Thiết lập tin nhắn cho người mua</string>
+    <string name="btn_add_product">Thêm sản phẩm</string>
+    <string name="lb_item_invite_people">Mời bạn bè</string>
+    <string name="lb_item_manage_page">Quản lý trang</string>
+    <string name="lb_shop_detail_custom_message_title">Tuỳ chỉnh tin nhắn cho người mua</string>
+    <string name="lb_shop_detail_custom_message_desc">Người mua có thể các câu hỏi gợi ý nhanh cho các sản phẩm mà họ quan tâm.</string>
+
+    <string name="lb_shop_quick_message_title">Chọn một tin nhắn để gửi</string>
+    <string name="lb_shop_message_to_seller">Tin nhắn cho người bán</string>
+
+    <string name="lb_shop_detail_step_manage_product_desc">Bước này là quan trọng để triển khai dịch vụ của bạn ra thị trường. Mọi người sẽ thấy các sản phẩm của bạn trên marketplace.</string>
+    <string name="lb_shop_detail_step_manage_shop_link_text">Quản lý cửa hàng</string>
+    <string name="lb_shop_detail_step_manage_shop_desc">Nâng cấp cửa hàng để quản lý nhiều thông tin và nội dung (ảnh bìa, tìm sản phẩm, đăng tin) để khách hàng có thể thấy thông tin các sản phẩm khi bạn công bố sản phẩm mới.</string>
+    <string name="lb_shop_detail_step_manage_message">Quản lý tin nhắn</string>
+
+    <string name="lb_manage_shop_title">Quản lý của hàng</string>
+    <string name="lb_manage_shop_item_notifications">Thông báo</string>
+    <string name="lb_manage_shop_item_members">Thành viên</string>
+    <string name="lb_manage_shop_item_messages">Quản lý tin nhắn</string>
+    <string name="lb_manage_shop_item_products">Quản lý sản phẩm</string>
+    <string name="lb_manage_shop_item_past_orders">Lịch sử đơn hàng</string>
+    <string name="lb_manage_shop_item_payments">Quản lý thanh toán</string>
+    <string name="lb_manage_shop_item_subscription">Quản lý Subscription</string>
+    <string name="lb_manage_shop_item_archive_shop">Lưu trữ cửa hàng</string>
+    <string name="lb_manage_shop_archive_message_confirm">Bạn có lưu trữ cửa hàng này?</string>
+    <string name="lb_manage_shop_archive_message_confirm_desc">Sau khi bạn lưu trữ cửa hàng này, bạn và khách hàng sẽ không thể tương tác. Bạn cũng không thể khôi phục lại</string>
+
+    <string name="lb_update_product_title">Cập nhật sản phẩm</string>
+    <string name="lb_recommend">Giới thiệu</string>
+    <string name="lb_buy_again">Mua tiếp</string>
+    <string name="lb_product">Sản phẩm:</string>
+    <string name="lb_total_review">Bình luận</string>
+    <string name="lb_features_rating">Các điểm đánh giá khác</string>
+    <string name="lb_see_detail_ratings">Xem chi tiết đánh giá</string>
+    <string name="lb_see_feature_ratings">Xem đánh giá đặc điểm</string>
+
+    <string name="lb_action_try_it_now">Thử ngay</string>
+    <string name="lb_shop_manage_account_empty">Tạo Cửa hàng để bán sản phẩm của bạn</string>
+    <string name="lb_shop_manage_account_tier_free_desc">Quản lý nhiều thông tin cửa hàng hơn bằng cách tạo hình nền cửa hàng, đăng tin, quản lý nhiều khu vực.</string>
+
+    <string name="side_nav_manage_subscription">Quản lý gói sử dụng</string>
+    <string name="side_nav_manage_payment_method">Quản lý phương thức thanh toán</string>
+    <string name="side_nav_update_contact">Cập nhật hồ sơ</string>
+    <string name="side_nav_update_exp_edu">Cập nhật kinh nghiệm &amp; Đào tạo</string>
+    <string name="side_nav_update_accomp">Cập nhật các thành tựu</string>
+    <string name="side_nav_change_pass">Đổi mật khẩu</string>
+    <string name="side_nav_change_user">Đổi tên người dùng</string>
+    <string name="side_nav_sync_contact">Đồng bộ danh bạ</string>
+    <string name="side_nav_feed_preferences">Tuỳ chọn nguồn cấp dữ liệu</string>
+    <string name="side_nav_job_preferences">Công việc tham chiếu</string>
+    <string name="side_nav_privacy">Chính sách</string>
+    <string name="side_nav_notification">Thông báo</string>
+    <string name="side_nav_clear_cache">Xóa dữ liệu tạm</string>
+    <string name="side_nav_feedback">Góp ý của bạn</string>
+    <string name="side_nav_manage_social">Quản lý tài khoản mạng xã hội</string>
+    <string name="side_nav_logout">Đăng xuất</string>
+
+    <string name="lb_feed_preferences">Nguồn dữ liệu gợi ý</string>
+    <string name="lb_feed_my_category">Danh mục của tôi</string>
+    <string name="lb_clear_cache_message">Bộ nhớ đệm của ứng dụng sẽ bị xoá bao gồm phiên đăng nhập của bạn. Bạn có chắc chắn không?</string>
+
+    <string name="lb_side_nav_favorite">Yêu thích</string>
+    <string name="lb_side_nav_connections">Kết nối</string>
+    <string name="lb_side_nav_job">Công việc</string>
+    <string name="lb_side_nav_activities">Hoạt động</string>
+    <string name="lb_side_nav_schedules">Lịch</string>
+    <string name="lb_side_nav_polls">Khảo sát</string>
+    <string name="lb_side_nav_suggestions">Gợi ý</string>
+    <string name="lb_side_nav_appointments">Đặt hẹn</string>
+    <string name="lb_side_nav_shop">Mua sắm</string>
+
+    <string name="lb_recent_conversation">Các trò chuyện gần đây</string>
+    <string name="lb_archive_conversation">Danh sách đã lưu trữ</string>
+    <string name="lb_archive_conversation_single">Lưu trữ cuộc trò chuyện</string>
+
+    <string name="lb_sign_up_header">Đăng kí</string>
+    <string name="hint_sign_up_first_name">Họ</string>
+    <string name="hint_sign_up_last_name">Tên</string>
+    <string name="hint_sign_up_phone">Số điện thoại</string>
+    <string name="hint_sign_up_email">Email</string>
+    <string name="hint_sign_up_password">Mật khẩu</string>
+    <string name="btn_register">Đăng kí</string>
+    <string name="btn_register_now">Đăng kí ngay</string>
+    <string name="lb_tnc">Tạo tài khoản đồng nghĩa bạn đồng ý với</string>
+    <string name="lb_tnc_bottom">Chính sách &amp; Điều khoản của chúng tôi.</string>
+    <string name="dialog_filter_country_title">Chọn quốc gia của bạn</string>
+    <string name="error_field_is_empty">Vui lòng nhập.</string>
+    <string name="error_field_is_zero">Vui lòng nhập giá trị lớn hơn 0.</string>
+    <string name="error_email_invalid">Email không hợp lệ.</string>
+    <string name="error_email_existed">Email này đã được đăng kí.</string>
+    <string name="error_phone_invalid">Số điện thoại không hợp lệ.</string>
+    <string name="error_password_invalid">Mật khẩu phải nhiều hơn 6 kí tự.</string>
+    <string name="error_not_existing_account_message">Tài khoản không tồn tại.</string>
+    <string name="lb_password_rule">Ít nhất 8 kí tự, 1 chữ hoa, 1 chữ thường, 1 chữ số và 1 kí tự đặc biệt.</string>
+    <string name="lb_already_joined">Tôi đã có tài khoản?</string>
+    <string name="lb_src_login_button_login">Đăng nhập</string>
+    <string name="btn_sign_up_with_email">Đăng kí bằng Email</string>
+    <string name="lb_endorse_skill_title">Xác nhận kĩ năng</string>
+
+    <plurals name="lb_num_of_endorses">
+        <item quantity="one">%s Chứng thực</item>
+        <item quantity="other">%s Chứng thực</item>
+    </plurals>
+
+    <string name="lb_endorse_skill_desc">Vui lòng giúp chúng tôi biết về kĩ năng <b>%2$s</b> của <b>%1$s</b> (Optional)</string>
+    <string name="lb_endorse_skill_question">Làm thế nào bạn biết được kĩ năng <b>%2$s</b> của <b>%1$s</b>?</string>
+    <string name="lb_endorse_skill_answer1">Đã làm việc cùng nhau</string>
+    <string name="lb_endorse_skill_answer2">Đã quản lý <b>%1$s</b> trực tiếp</string>
+    <string name="lb_endorse_skill_answer3">Từng báo cáo trực tiếp cho <b>%1$s</b></string>
+    <string name="lb_endorse_skill_answer4">Làm việc gián tiếp</string>
+    <string name="lb_endorse_skill_answer5">Nghe người khác nói về kĩ năng <b>%1$s</b></string>
+    <string name="lb_endorse_skill_answer6">Không phải những điều trên</string>
+    <string name="lb_skill_detail_top_skills">Kĩ năng nổi bật</string>
+    <string name="lb_skill_detail_industry_knowledge">Kiến thức ngành</string>
+    <string name="lb_skill_detail_tool_and_tech">Công cụ &amp; Công nghệ</string>
+    <string name="lb_skill_detail_interpersonal">Kĩ năng giao tiếp</string>
+    <string name="lb_skill_detail_other_skills">Kĩ năng khác</string>
+    <string name="lb_cancel_subscription_title">Hủy gói đăng kí?</string>
+    <string name="lb_cancel_subscription_desc">Gói đăng kí hiện tại của bạn sẽ tiếp tục hiệu lực cho đến ngày cuối cùng của chu kì thanh toán. Bạn sẽ không được hoàn trả lại tiền sau khi đã hủy.</string>
+    <string name="lb_subscription_detail">Chi tiết gói đăng ký</string>
+    <string name="lb_payment_inactive_desc">Vui lòng cập nhật phương thức thanh toán nếu không thanh toán tự động cho đăng ký có thể bị gián đoạn từ %s</string>
+    <string name="lb_payment_cancel_desc">Vui lòng cập nhật phương thức thanh toán nếu không thanh toán tự động cho đăng ký có thể bị gián đoạn từ %s</string>
+    <string name="lb_people_you_may_know_from">Người bạn biết từ %s</string>
+    <string name="lb_invitations">Các lời mời</string>
+    <string name="lb_added">Đã chấp nhận</string>
+    <string name="lb_people_suggestion_title">Gợi ý bạn bè</string>
+    <string name="lb_group_suggestion_title">Gợi ý các nhóm</string>
+    <string name="lb_organization_suggestion_title">Gợi ý các tổ chức</string>
+    <string name="lb_no_any_suggestion">Chưa có gợi ý nào</string>
+    <string name="lb_people_you_may_know_title">People you may know</string>
+    <string name="btn_add_from_contacts">Thêm từ danh bạ</string>
+    <string name="lb_syn_contact_title">Đồng bộ danh bạ</string>
+    <string name="lb_sync_contact_desc">Hãy mời bạn bè dùng ứng dụng này, họ sẽ nhận được tin nhắn của bạn nhanh hơn</string>
+    <string name="lb_num_of_friend_joined">Nhiều người đã tham gia với chúng tôi</string>
+    <string name="lb_personal_info_section_header">Thông tin cá nhân</string>
+    <string name="lb_contact_info_section_header">Thông tin liên hệ</string>
+
+    <string name="lb_no_message_yet">Chưa có tin nhắn nào</string>
+    <string name="lb_associated">%s thành viên liên kết</string>
+
+    <string name="chat_action_retry">Thử lại</string>
+    <string name="chat_action_edited">(đã chỉnh sửa)</string>
+
+    <string name="btn_see_more">Xem thêm</string>
+    <string name="btn_see_less">Thu gọn</string>
+
+    <string name="lb_upload_file_error">Tải lên thất bại</string>
+    <string name="delete_message">Xóa tin nhắn</string>
+    <string name="edit_message">Sửa tin nhắn</string>
+    <string name="lb_create_profile_phone">Điện thoại</string>
+    <string name="lb_create_profile_address">Địa chỉ (Tên đường)</string>
+    <string name="lb_create_profile_address_home">Địa chỉ (Nhà, căn hộ, building)</string>
+    <string name="lb_create_profile_about">Giới thiệu</string>
+    <string name="lb_create_profile_social_link">Liên kết mạng xã hội</string>
+    <string name="lb_create_profile_enter_url">Nhập URL</string>
+    <string name="lb_create_profile_step1_title">Thông tin liên hệ</string>
+    <string name="lb_create_profile_step2_title">Kinh nghiệm và Đào tạo</string>
+    <string name="lb_create_profile_step3_title">Kĩ năng và Chứng chỉ</string>
+    <string name="lb_create_profile_write_something_about_yourself">Hãy viết điều gì đó về bạn.</string>
+    <string name="lb_create_profile_final_step_title">Chỉ còn một bước nữa.</string>
+    <string name="lb_create_profile_step_1_desc">Thông tin liên hệ của bạn được nhà tuyển dụng dùng khi bạn ứng tuyển</string>
+    <string name="lb_create_profile_step_2_desc">Nổi bật kinh nghiệm và kiến thức nghiên cứu của bạn</string>
+    <string name="lb_create_profile_step_3_desc">Cập nhật các kĩ năng của bạn để tìm thấy nhiều công việc hơn</string>
+    <string name="lb_create_profile_import_your_cv">Đính kèm CV của bạn</string>
+    <string name="lb_create_profile_upload_your_cv">Chọn CV Tải lên</string>
+    <string name="lb_create_profile_new_attachment_cv_desc">Đã cập nhật lúc %s</string>
+    <string name="lb_create_profile_experiences">Kinh nghiệm</string>
+    <string name="lb_create_profile_education">Giáo dục</string>
+
+    <string name="btn_apply_changes">Lưu thay đổi</string>
+    <string name="lb_remove_education_message">Bạn có muốn xoá trường học này?</string>
+    <string name="lb_remove_experience_message">Bạn có muốn xoá kinh nghiệm này?</string>
+    <string name="lb_remove_certificate_message">Bạn có muốn xoá chứng chỉ này?</string>
+
+    <string name="hint_create_profile_company_name">Tên tổ chức <font color='#ff0000'>*</font></string>
+    <string name="hint_create_profile_job_title">Tên công việc <font color='#ff0000'>*</font></string>
+    <string name="hint_create_profile_job_function">Chức năng công việc <font color='#ff0000'>*</font></string>
+    <string name="hint_create_profile_location">Địa điểm <font color='#ff0000'>*</font></string>
+    <string name="hint_create_profile_postcode">Mã bưu điện <font color='#ff0000'>*</font></string>
+    <string name="hint_create_profile_is_my_current_work">Đây là công việc hiện tại của tôi</string>
+    <string name="hint_create_profile_start_time">Bắt đầu </string>
+    <string name="hint_create_profile_end_time">Kết thúc </string>
+    <string name="hint_create_profile_salary">Mức lương/Năm</string>
+    <string name="hint_create_profile_job_type">Loại công việc <font color='#ff0000'>*</font></string>
+    <string name="hint_create_profile_salary_notice"><i>Mức lương sẽ được ẩn danh</i></string>
+    <string name="lb_create_profile_job_desc">Mô tả công việc</string>
+    <string name="hint_create_profile_job_desc">Mô tả</string>
+    <string name="msg_confirm_save_jd_editor">Bạn có muốn lưu lại không?</string>
+    <string name="lb_create_profile_start_time_picker_title">Chọn thời gian bắt đầu</string>
+    <string name="lb_create_profile_end_time_picker_title">Chọn thời gian kết thúc</string>
+    <string name="hint_create_profile_certificate_issue_date">Ngày cấp <font color='#ff0000'>*</font></string>
+    <string name="hint_create_profile_certificate_expiration_date">Ngày hết hạn <font color='#ff0000'>*</font></string>
+
+    <string name="hint_create_profile_first_name">Họ <font color='#ff0000'>*</font></string>
+    <string name="hint_create_profile_middle_name">Tên lót</string>
+    <string name="hint_create_profile_last_name">Tên <font color='#ff0000'>*</font></string>
+    <string name="hint_create_profile_headline">Tiêu đề</string>
+    <string name="hint_create_profile_dob">Ngày sinh</string>
+    <string name="lb_create_profile_gender">Giới tính</string>
+    <string name="lb_create_profile_gender_male">Nam</string>
+    <string name="lb_create_profile_gender_female">Nữ</string>
+    <string name="lb_create_profile_gender_other">Khác</string>
+    <string name="lb_create_profile_marial_status">Trạng thái hôn nhân</string>
+    <string name="lb_create_profile_marital_status_single">Độc thân</string>
+    <string name="lb_create_profile_marital_status_married">Đã kết hôn</string>
+    <string name="lb_create_profile_marital_status_divorced">Đã ly hôn</string>
+    <string name="lb_create_profile_upload_resume_confirm_title">Bạn có muốn đổi tên file</string>
+    <string name="lb_create_profile_upload_resume_file_name_hint">Tên tập tin hồ sơ của bạn</string>
+
+    <string name="hint_create_profile_school_name">Tên trường <font color='#ff0000'>*</font></string>
+    <string name="hint_create_profile_field_of_study">Ngành học </string>
+    <string name="hint_create_profile_degree">Trình dộ </string>
+    <string name="hint_create_profile_graduated">Đã tốt nghiệp</string>
+    <string name="hint_create_profile_grade">Điểm tốt nghiệp</string>
+
+    <string name="lb_user_accomplishment_title">Hãy cho chúng tôi biết bạn đã sử dụng kỹ năng này ở đâu</string>
+    <string name="lb_user_accomplishment_description">75% nhà tuyển dụng đánh giá cao bối cảnh áp dụng kỹ năng. Chọn ít nhất một mục để chỉ ra nơi bạn đã sử dụng kỹ năng này.</string>
+    <string name="lb_create_profile_skill">Kĩ năng</string>
+    <string name="lb_create_profile_language">Ngôn ngữ</string>
+    <string name="lb_create_profile_certification">Chứng chỉ</string>
+    <string name="lb_create_profile_publications">Ấn phẩm</string>
+
+    <string name="lb_create_profile_published_title">Tiêu đề ấn phẩm <font color='#ff0000'>*</font></string>
+    <string name="lb_create_profile_publisher_name">Nhà xuất bản <font color='#ff0000'>*</font></string>
+    <string name="lb_create_profile_publisher_author">Tác giả <font color='#ff0000'>*</font></string>
+    <string name="lb_create_profile_publication_url">Liên kết ấn phẩm</string>
+    <string name="lb_create_profile_published_time">Thời gian công bố <font color='#ff0000'>*</font></string>
+
+    <string name="lb_create_profile_certificate_name">Tên chứng chỉ</string>
+    <string name="lb_create_profile_organization_name">Tên tổ chức </string>
+    <string name="lb_create_profile_certificate_number">Số chứng chỉ </string>
+    <string name="lb_create_profile_certificate_url">Liên kết của chứng chỉ </string>
+    <string name="lb_create_profile_chk_certificate_not_expire">Chứng chỉ này vô thời hạn</string>
+    <string name="lb_create_profile_more_description">Mô tả thêm</string>
+
+    <string name="hint_create_profile_skill_month_exp">Tháng kinh nghiệm <font color='#ff0000'>*</font></string>
+    <string name="lb_create_profile_choose_proficiency">Chọn năng lực <font color='#ff0000'>*</font></string>
+
+    <string name="hint_create_profile_add_skill">+ Thêm kĩ năng <font color='#ff0000'>*</font></string>
+    <string name="hint_create_profile_add_language">+ Thêm ngôn ngữ <font color='#ff0000'>*</font></string>
+
+    <string name="lb_create_profile_add_new_button">+ Thêm mới</string>
+    <string name="lb_skill_existed_already">Kĩ năng đã tồn tại rồi!</string>
+
+    <string name="lb_job_type_bottom_sheet_header">Loại công việc</string>
+    <string name="lb_position_bottom_sheet_header">Chọn vai trò</string>
+    <string name="lb_relationship_bottom_sheet_header">Chọn mối quan hệ</string>
+
+    <string name="err_endtime_invalid">Thời gian không hợp lệ.</string>
+
+    <string name="txt_guide_recommendation">Chào %s, Bạn có thể vui lòng viết vài dòng nhận xét về hồ sơ của tôi được không? Cám ơn bạn nhiều nhé!</string>
+    <string name="lb_confirm_discard_message">Bạn có muốn hủy bình luận về %s?</string>
+    <string name="lb_add_recommend_title">Thêm giới thiệu</string>
+    <string name="lb_update_recommend_title">Sửa lời giới thiệu</string>
+    <string name="lb_select_relationship">Chọn mối quan hệ <font color='#ff0000'>*</font></string>
+    <string name="lb_select_position">Chọn vai trò của %s vào thời gian này <font color='#ff0000'>*</font></string>
+    <string name="lb_select_project">Chọn dự án</string>
+    <string name="lb_select_rating">Chọn đánh giá</string>
+
+    <string name="lb_give_recommendation">Viết nhận xét của bạn về %s</string>
+    <string name="lb_request_recommendation">Nhờ ai đó nhận xét về bạn</string>
+    <string name="lb_give_review">Viết đánh giá cho %s</string>
+    <string name="lb_request_review">Nhờ ai đó đánh giá</string>
+    <string name="hint_write_a_recommendation">Viết một nhận xét về %s (bắt buộc)</string>
+    <string name="lb_update_profile_set_default">Đặt mặc định</string>
+    <string name="lb_update_profile_default">Mặc định</string>
+    <string name="lb_update_shop_title">Sửa thông tin cửa hàng</string>
+    <string name="lb_update_shop_upgrade_text1">Để sử dụng chức năng này, bấm vào</string>
+    <string name="lb_update_shop_upgrade_text2">nâng cấp cửa hàng</string>
+    <string name="lb_update_shop_section_title_shop_info">Thông tin cửa hàng</string>
+    <string name="hint_input_shop_name">Tên cửa hàng</string>
+    <string name="hint_input_shop_about">Giới thiệu về cửa hàng của bạn</string>
+
+    <string name="lb_update_shop_category_title">Danh mục (tối đa 5 items)</string>
+    <string name="lb_upgrade_account_title">Nâng cấp tài khoản</string>
+    <string name="btn_purchase">Thanh toán</string>
+    <string name="lb_verification_header">Xác thực</string>
+    <string name="lb_verification_sub_header">Vui lòng nhập mã xác thực\nmà bạn nhận được trong email.</string>
+    <string name="lb_verification_input_code_title">Enter Code here</string>
+    <string name="lb_verification_resend_code_question">Nếu bạn chưa nhận được code?</string>
+    <string name="lb_verification_button_resend">Gửi lại</string>
+    <string name="lb_add_review_title">Thêm bình luận</string>
+    <string name="lb_add_review_indicator">Bình luận của bạn hoàn toàn ẩn danh</string>
+    <string name="lb_add_review_choose_rating">Đánh giá</string>
+    <string name="lb_add_review_career_opportunity">Cơ hội nghề nghiệp</string>
+    <string name="lb_add_review_benefit">Bù trừ và phúc lợi</string>
+    <string name="lb_add_review_value">Văn hoá &amp; Giá trị</string>
+    <string name="lb_add_review_inclusion">Đa dạng và hội nhập</string>
+    <string name="lb_add_review_senior_manager">Quản lý cấp cao</string>
+    <string name="lb_add_review_work">Cân bằng cuộc sống/công việc</string>
+    <string name="lb_add_review_overall">Đánh giá chung</string>
+    <string name="lb_add_review_recommend_company">Đề xuất %1$s</string>
+    <string name="lb_add_review_month_of_employment">Nhập số tháng làm việc</string>
+    <string name="lb_rate_company">Đánh giá %s</string>
+
+    <string name="lb_yes_am_sure">Vâng tôi chắc chắn</string>
+    <string name="lb_not_recommend">Không đề xuất</string>
+    <string name="lb_not_approval">Không bằng lòng</string>
+    <string name="lb_add_review_approve_of_ceo">Phê duyệt CEO</string>
+    <string name="hint_add_review_job_title">Chức danh công việc</string>
+    <string name="hint_add_review_job_level">Cấp độ công việc</string>
+    <string name="hint_add_review_job_type">Loại công việc</string>
+    <string name="lb_add_review_employee_status">Trạng thái nhân viên</string>
+    <string name="lb_review_title">Tiêu đề đánh giá <font color='#ff0000'>*</font></string>
+    <string name="hint_input_review_title">Trong một dòng, Hãy mô tả kinh nghiệm của bạn tại %1$s.</string>
+    <string name="lb_title_pro">Ưu điểm</string>
+    <string name="hint_input_pro">Những lý do hàng đầu mà bạn muốn làm việc ở đây?\nMô tả những thứ bạn thích ở %1$s.</string>
+    <string name="lb_title_cons">Nhược điểm</string>
+    <string name="hint_input_cons">Một vài thử thách khi bạn làm việc ỏ đây?</string>
+    <string name="lb_add_review_advice_to_management">Lời khuyên</string>
+    <string name="hint_input_advice_with_upper_management">Chia sẻ một vài lời khuyên của bạn tới bộ phận quản lý.</string>
+
+    <string name="lb_add_review_tnc">Tôi đồng ý với các điều khoản sử dụng của Accessed. Bình luận này tại thời điểm tôi làm việc là trung thực.</string>
+    <string name="lb_add_review_tnc_1">Tôi đồng ý với</string>
+    <string name="lb_add_review_tnc_2">điều khoản sử dụng của %s</string>
+    <string name="lb_add_review_tnc_3">. Bình luận này tại thời điểm tôi làm việc là trung thực.</string>
+
+    <string name="lb_generic_tnc_1">Nhấn vào nút %s, đồng nghĩa với việc bạn đã đồng ý với</string>
+    <string name="lb_generic_tnc_2">các Chính sách &amp; Điều khoản của %s</string>
+
+    <string name="lb_add_review_defaut_company_name">Công ty</string>
+    <string name="error_please_choose_company">Vui lòng chọn công ty cho đánh giá.</string>
+    <string name="error_please_choose_job_title">Vui lòng chọn vị trí của bạn tại %1$s.</string>
+    <string name="error_please_choose_job_type">Vui lòng chọn chức danh của bạn tại %1$s.</string>
+    <string name="error_please_choose_job_location">Vui lòng chọn khu vực công việc.</string>
+    <string name="hint_add_review_company">Vui lòng chọn công ty để đánh giá </string>
+    <string name="error_please_input_review_title">Vui lòng nhập tiêu đề đánh giá</string>
+    <string name="lb_add_review_location">Khu vực <font color='#ff0000'>*</font></string>
+    <string name="lb_add_review_enter_to_add_new_item">(Xuống dòng để thêm mới)</string>
+    <string name="lb_invalid_pin">PIN không hợp lệ</string>
+    <string name="forgot_user_name_success">Đã gửi tên người dùng đến email của bạn. Vui lòng kiểm tra email của bạn!</string>
+    <string name="lb_change_user_name_success">Đổi tên người dùng thành công</string>
+    <string name="lb_change_password_success">Đổi mật khẩu thành công</string>
+    <string name="lb_change_your_user">Đổi tên người dùng</string>
+    <string name="limit_file_warning_text">Kích thước tập tin phải nhỏ hơn 3Mb</string>
+    <string name="limit_cv_file_warning_text">Kích thước CV phải nhỏ hơn 20Mb</string>
+    <string name="lb_create_feed_success">Tạo bài đăng thành công</string>
+    <string name="lb_start_time_error">Giờ bắt đầu phải nhỏ hơn giờ kết thúc</string>
+    <string name="end_time_invalid">Giờ kết thúc không hợp lệ</string>
+    <string name="lb_validate_grade">Điểm phải nhỏ hơn 10</string>
+    <string name="lb_invalid_founded_year">Năm thành lập không hợp lệ</string>
+    <string name="update_resume_successfully">Cập nhật sơ yếu lý lịch thành công</string>
+    <string name="update_success">Cập nhật thành công</string>
+    <string name="save_unsuccessful">Lưu thành công</string>
+    <string name="delete_success">Xoá thành công</string>
+    <string name="delete_unsuccess">Xoá không thành công</string>
+    <string name="add_success">Thêm thành công</string>
+    <string name="lb_register_success">Đăng ký thành công</string>
+    <string name="error_name_space">Không được để khoảng trắng</string>
+    <string name="upload_resume_failed">Tải lên thất bại</string>
+    <string name="invalid_file_name">Tên không hợp lệ</string>
+    <string name="lb_filter_notifications">Thông báo</string>
+    <string name="lb_home_tab_shop">Cửa hàng</string>
+    <string name="uwmediapicker_toolbar_title_image_library">Thư viện ảnh</string>
+    <string name="uwmediapicker_toolbar_title_video_library">Thư viện video</string>
+    <string name="uwmediapicker_toolbar_title_image_and_video_library">Thư viện hình ảnh&amp;video</string>
+    <string name="uwmediapicker_toolbar_text_uw_media_picker_selected_media_count">%d/%d đã chọn</string>
+    <string name="uwmediapicker_snackbar_error_gallery_open_failed">Không thể mở thư viện ảnh.</string>
+    <string name="uwmediapicker_snackbar_action_retry">Thử lại</string>
+    <string name="uwmediapicker_toast_error_media_bucket_open_failed">Không thể mở album.</string>
+    <string name="uwmediapicker_toast_error_media_select_failed">Không thể chọn tệp.</string>
+    <string name="uwmediapicker_toast_error_max_media_selected">Bạn không thể chọn thêm</string>
+    <string name="uwmediapicker_toast_error_some_media_select_failed">Một vài tệp tin không thể chọn</string>
+    <string name="lb_product_detail_5stars">5 sao</string>
+    <string name="lb_product_detail_4stars">4 sao</string>
+    <string name="lb_product_detail_3stars">3 sao</string>
+    <string name="lb_product_detail_2stars">2 sao</string>
+    <string name="lb_product_detail_1stars">1 sao</string>
+    <string name="lb_change_username">Thay đổi tên người dùng của bạn</string>
+    <string name="lb_change_username_desc">Nhập tên người dùng mới</string>
+    <string name="lb_language_existed_already">Ngôn ngữ đã tồn tại !</string>
+    <string name="lb_job_title_existed_already">Công việc đã tồn tại!</string>
+    <string name="open_to_work">Tôi đang tìm việc</string>
+    <string name="lb_username">Tên người dùng</string>
+    <string name="set_alert_for_similar_jobs">Đặt thông báo cho các công việc tương tự</string>
+    <string name="have_applied_job">Bạn đã nộp đơn xin việc này chưa?</string>
+    <string name="did_you_apply">Bạn đã nộp đơn chưa?</string>
+    <string name="easy_apply">Ứng tuyển nhanh</string>
+    <string name="error_app_id_exist">Tài khoản xã hội đã tồn tại</string>
+
+    <string name="lb_message_logout_confirm">Bạn có muốn đăng xuất?</string>
+    <string name="lb_error_other">Xin lỗi vì sự bất tiện này! Chúng tôi đang cố gắng khắc phục.</string>
+    <string name="lb_error_unauthorized">Vui lòng đăng nhập lại</string>
+    <string name="lb_error_forbidden">Vui lòng liên hệ quản trị viên để được cấp quyền</string>
+    <string name="lb_error_internal_server">Dịch vụ bất khả dụng</string>
+    <string name="lb_no_connection">Không có kết nối mạng</string>
+    <string name="google_maps_is_disabled">Google Maps chưa được cài đặt hoặc đã bị vô hiệu hóa.</string>
+    <plurals name="lb_num_of_shop">
+        <item quantity="other">%s Cửa hàng</item>
+    </plurals>
+    <string name="lb_expired_on">%sHết hạn vào %s</string>
+    <string name="lb_cancel_on">%sHủy bỏ vào %s</string>
+    <string name="lb_subscriber_on">Đăng ký lúc %s</string>
+    <string name="lb_trialing_end_on">%sThử nghiệm kết thúc vào %s</string>
+    <string name="lb_renew_on">%sGia hạn vào %s</string>
+    <string name="btn_activate">Kích hoạt</string>
+    <string name="lb_notice_exist_app">Bấm lần nữa để thoát ứng dụng.</string>
+
+    <string-array name="password_regex_validation_invalid_message">
+        <item>Tối thiểu 8 ký tự, ít nhất 1 chữ hoa, 1 số và 1 ký tự đặc biệt!</item>
+    </string-array>
+
+    <string-array name="username_regex_validation_invalid_message">
+        <item>Không được sử dụng kí tự đặc biệt!</item>
+    </string-array>
+
+    <string-array name="email_regex_validation_invalid_message">
+        <item>Email không hợp lệ!</item>
+    </string-array>
+
+    <string name="lb_limit_min_max_char">Độ dài phải từ %d cho đến %d ký tự.</string>
+    <string name="lb_limit_min_char">Phải có ít nhất %d ký tự.</string>
+    <string name="lb_confirm_password">Nhập lại mật khẩu</string>
+    <string name="lb_payment_method_please_wait">Đang tải...</string>v
+    <string name="lb_set_payment_method">Chọn phương thức thanh toán</string>
+    <string name="lb_payment_method_no_card">Chưa chọn thẻ</string>
+    <string name="lb_payment_method_click_to_add">Thêm thẻ mới</string>
+    <string name="lb_account_exists">Tài khoản đã tồn tại</string>
+    <string name="lb_no_space_allowed">Không được có khoảng trống</string>
+    <string name="followed">Người theo dõi</string>
+    <string name="lb_portal">Mã bưu điện</string>
+    <string name="lb_building_name">Tên toà nhà. Vd: Toà nhà Chiến Thắng</string>
+    <string name="lb_chat_not_available">Trò chuyện hiện không khả dụng</string>
+    <string name="coming_soon">Sắp ra mắt</string>
+    <string name="lb_warning_input_content">Vui lòng nhập nội dung!</string>
+    <string name="lb_warning_input_name">Vui lòng nhập họ tên</string>
+    <string name="lb_warning_input_email">Vui lòng nhập email hợp lệ</string>
+    <string name="lb_warning_input_phone">Vui lòng nhập số điện thoại hợp lệ</string>
+    <string name="lb_warning_input_address">Vui lòng nhập địa chỉ hợp lệ</string>
+    <string name="lb_warning_input_job_title">Vui lòng chọn vị trí công việc</string>
+    <string name="lb_warning_input_job_function">Vui lòng chọn chức danh công việc</string>
+    <string name="open_document">Mở tài liệu</string>
+    <string name="form_invalid">Biểu mẫu không hợp lệ</string>
+    <string name="lb_find_jobs_by_job_functions">Tìm vệc làm theo chức danh công việc</string>
+    <string name="limited_items">Tối đa %1$d lựa chọn</string>
+    <string name="add_card_failed">Thêm thẻ thất bại</string>
+    <string name="lb_error_user_name_exist">Tên người dùng đã tồn tại</string>
+    <string name="lb_error_confirm_password_not_match">Mật khẩu không trùng khớp</string>
+    <string name="limit_size_video">Video không được vượt quá 100Mb</string>
+    <string name="copied_to_clipboard">Đã sao chép vào bộ nhớ tạm</string>
+    <string name="lb_company_detail_salary_notice">Niềm tin của bạn là sự quan tâm hàng đầu của chúng tôi. Vì thế các công ty không thể thay đổi hoặc cắt giảm lương.</string>
+    <string name="lb_deactivate_account">Hủy kích hoạt tài khoản</string>
+    <string name="lb_deactivate_title"><![CDATA[<b>%s</b>, chúng tôi rất tiếc khi thấy bạn rời đi. Chúng tôi sẽ nhớ những đóng góp của bạn cho cộng đồng. Chúng tôi hy vọng sẽ gặp lại bạn]]></string>
+    <string name="lb_deactivate_title_survey">Hãy cho chúng tôi biết lý do hủy kích hoạt tài khoản của bạn</string>
+    <string name="lb_warning_check_email">Hãy kiểm tra email của bạn</string>
+    <string name="lb_your_reason">Hãy nhập lý do của bạn</string>
+    <string name="lb_page_type">Loại trang</string>
+
+    <string name="lb_compose_email_title">Soạn thư</string>
+    <string name="subject_email">Chủ đề</string>
+    <string name="lb_track_email">Theo dõi email</string>
+    <string name="lb_body_email">Nhập nội dung</string>
+    <string name="lb_attachments">Tệp đính kèm</string>
+    <string name="lb_cant_remove_person">Không thể xóa người này</string>
+    <string name="lb_enter_email">Nhập email</string>
+    <string name="lb_error_email_added">Email: %s đã được thêm</string>
+
+    <string name="compose_email_from">Từ</string>
+    <string name="compose_email_to">Đến</string>
+    <string name="compose_email_cc">Cc</string>
+    <string name="compose_email_bcc">Bcc</string>
+    <string name="lb_confirm_delete">Bạn có muốn xóa không?</string>
+    <string name="lb_confirm_change_infor_appointment">Bạn có chắc muốn tiếp tục? Những thay đổi từ sau bước này sẽ được thiết lập lại.</string>
+    <string name="lb_mn_attach_photos">Đính kèm hình ảnh  (.png, .jpeg)</string>
+    <string name="lb_mn_attach_document">Đính kèm tài liệu</string>
+    <string name="lb_mn_compose_email_discard">Huỷ bỏ</string>
+    <string name="validate_email_compose_receiver">Vui lòng chọn người nhận</string>
+    <string name="validate_email_compose_subject">Vui lòng nhập chủ đề</string>
+    <string name="validate_email_compose_body">Nội dung không thể bỏ trống</string>
+    <string name="validate_email_compose_job_invite">Vui lòng chọn công việc để mời</string>
+    <string name="sent_email_success">Gửi email thành công</string>
+    <string name="lb_date_upload_offer">Tải lên ngày %s</string>
+    <string name="lb_offer_signed">Hợp đồng đã ký tên</string>
+    <string name="lb_item_offer_signed">Đính kèm hợp đồng đã ký</string>
+    <string name="lb_network_connection_followed">Kết nối đã theo dõi</string>
+    <string name="lb_network_request_to_join">Khi ai đó yêu cầu tham gia</string>
+    <string name="lb_feed_notification_connection_update">Thông báo cho bạn những cập nhật mới từ các kết nối</string>
+    <string name="lb_feed_notification_who_tag_or_mention">Bạn được gắn thẻ, được nhắc đến</string>
+    <string name="lb_feed_notification_who_connection_update_status">Kết nối của bạn đã cập nhật</string>
+    <string name="lb_warning_security">Cảnh báo bảo mật</string>
+    <string name="lb_notification_error_ssl_cert_invalid">Trang web này có vấn đề với chứng chỉ bảo mật.</string>
+    <string name="limit_size_photo">Hình ảnh không được vượt quá 5Mb</string>
+    <string name="lb_resend_emnail_title">Xác nhận email của bạn</string>
+    <string name="lb_resend_emnail_sub_title">Chúng tôi đã gửi email xác nhận đến %s. Vui lòng làm theo hướng dẫn để hoàn tất đăng ký.</string>
+    <string name="lb_user_name">Tên người dùng</string>
+    <string name="lb_resend_emnail_title_note">Nếu bạn chưa nhận được email, hãy kiểm thư mục rác của bạn.</string>
+    <string name="lb_resend_emnail_timer">Gửi lại Email (%02d)</string>
+    <string name="lb_resend_emnail_text">Gửi lại Email</string>
+    <string name="lb_resend_emnail_already_confirm">Đã xác nhận</string>
+    <string name="warning_read_contact_permission">Vui lòng cấp quyền đọc danh bạ để đồng bộ liên hệ</string>
+    <string name="lb_valid_state_or_city">Tiểu bang hoặc thành phố không được bỏ trống.</string>
+    <string name="lb_prorated_on_payment">Được tính từ %s.</string>
+    <string name="lb_add_page">Tạo trang</string>
+    <string name="lb_error_empty_staff">Xin vui lòng chọn nhân viên cho dịch vụ của bạn</string>
+    <string name="error_months_of_exp">Vui lòng nhập số tháng không lớn hơn 720.</string>
+    <string name="lb_add_certificate">Thêm chứng chỉ</string>
+    <string name="lb_add_salary_indicator">Lương của bạn hoàn toàn ẩn danh</string>
+    <string name="lb_error_not_found_service">Không tìm thấy dịch vụ.</string>
+    <string name="lb_manage_appointment_not_available">Không khả dụng</string>
+    <string name="lb_manage_organization">Quản lý tổ chức</string>
+    <string name="lb_add_member_message">Tin nhắn <font color='#ff0000'>*</font></string>
+    <string name="lb_add_member_message_des">Thêm tin nhắn</string>
+    <string name="lb_manage_link_pending">Quản lý liên kết chờ duyệt</string>
+    <string name="lb_manage_link_accept">Chấp nhận liên kết</string>
+    <string name="lb_manage_link_reject">Từ chối liên kết</string>
+    <string name="lb_manage_link_unlink">Huỷ liên kết</string>
+    <string name="lb_releated_your_self">Bạn</string>
+    <string name="lb_releated_other"> và %s kết nối khác</string>
+    <string name="lb_releated_other_comment"> đã bình luận</string>
+    <string name="lb_releated_other_share"> đã chia sẻ</string>
+    <string name="lb_releated_other_react"> tương tác</string>
+    <string name="lb_des_camera">Xin vui lòng di chuyển camera để quét mã QR</string>
+    <string name="lb_my_qr_code">Mã QR của bạn</string>
+    <string name="lb_generate_new_qr_code">Làm mới mã QR</string>
+    <string name="lb_my_business_card">Danh thiếp của bạn</string>
+    <string name="lb_scan_qr_code">Quét mã QR</string>
+    <string name="warning_deny_permission">Xin vui lòng cấp quyền để tính năng này hoạt động tốt</string>
+    <string name="lb_error_qr_valid">Mã QR không hợp lệ</string>
+    <string name="lb_my_qr_code_des">Tất cả mọi người dễ dàng tìm và kết nối\nvới bạn bằng mã QR này</string>
+    <string name="lb_download_success">Tải thành công</string>
+    <string name="lb_download_error">Tải thất bại</string>
+    <string name="lb_celebrate_new_position">Vị trí mới</string>
+    <string name="lb_celebrate_new_position_sub">Bắt đầu một vị trí mới</string>
+    <string name="lb_celebrate_new_position_text_feed">Tôi rất háo hức được bắt đầu công việc mới của mình!</string>
+    <string name="lb_celebrate_new_position_with_party_text_feed">Tôi rất háo hức được bắt đầu công việc %s ở %s</string>
+    <string name="lb_celebrate_new_cer">Chứng chỉ mới</string>
+    <string name="lb_celebrate_new_cer_sub">Chúc mừng bạn đã đạt được chứng chỉ mới!</string>
+    <string name="lb_celebrate_new_cer_text_feed">Xin chúc mừng chứng chỉ mới của tôi!</string>
+    <string name="lb_celebrate_new_milestone">Cột mốc mới trong giáo dục</string>
+    <string name="lb_celebrate_new_milestone_sub">Chúc mừng cột mốc mới trong giáo dục</string>
+    <string name="lb_celebrate_new_milestone_text_feed">Tôi rất vui khi được chia sẻ cột mốc giáo dục của mình! %s</string>
+    <string name="lb_select_an_option">Chọn 1 trong các lựa chọn</string>
+    <string name="lb_celebrate_add_photo">Thêm 1 ảnh</string>
+    <string name="lb_celebrate_image_default">hoặc chọn hình có sẵn</string>
+    <string name="lb_title_suggest_celebrate">Bạn có muốn tạo bảng tin cho sự kiện này không?</string>
+    <string name="lb_invitation_type_prefix">%s đã mời bạn %s</string>
+    <string name="lb_someone">Có người</string>
+    <string name="lb_upload_qr_image">Chọn QR từ ảnh</string>
+    <string name="lb_scan_qr_not_found">Không tìm thấy mã QR</string>
+    <string name="lb_and_connection">%s và %s</string>
+    <string name="lb_where_they_live">Where they live</string>
+    <string name="lb_what_they_do">What they do</string>
+    <string name="lb_where_worked_before">Where they worked before</string>
+    <string name="lb_where_they_studied">Where they studied</string>
+</resources>
