@@ -14,18 +14,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
-import com.example.vcompass.ui.core.BaseScaffold
-import com.vcompass.core.compose_view.snack_bar.CustomSnackBarVisuals
-import com.vcompass.core.enums.SnackBarType
-import com.vcompass.data.model.response.BaseResponse
-import com.vcompass.presentation.state.ViewUIState
-import com.vcompass.presentation.viewmodel.BaseViewModel
 import com.example.vcompass.R
 import com.example.vcompass.model.common.ErrorUiModel
 import com.example.vcompass.model.common.getErrorResId
 import com.example.vcompass.util.handleErrorCode
 import com.example.vcompass.util.ifDebug
 import com.example.vcompass.util.isExpiredToken
+import com.vcompass.core.compose_view.snack_bar.CustomSnackBarVisuals
+import com.vcompass.core.enums.SnackBarType
+import com.vcompass.data.model.response.BaseResponse
+import com.vcompass.presentation.state.ViewUIState
+import com.vcompass.presentation.viewmodel.BaseViewModel
 
 @Composable
 fun ScreenWithBottomBar(

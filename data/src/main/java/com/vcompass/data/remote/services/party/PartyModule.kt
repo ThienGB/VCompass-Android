@@ -7,9 +7,9 @@ import org.koin.dsl.module
 
 val partyModule = module {
     single {
-        provideService<AuthService>(get(named(DataConstants.AUTH_SERVICE)))
+        provideService<AuthService>(get())
     }
     single {
-        provideService<UserInfoService>(get(named(DataConstants.AUTH_SERVICE)))
+        provideService<UserInfoService>(get())
     }
 }

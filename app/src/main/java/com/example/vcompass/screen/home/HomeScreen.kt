@@ -1,6 +1,8 @@
 package com.example.vcompass.screen.home
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
@@ -11,6 +13,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import com.vcompass.presentation.viewmodel.home.HomeViewModel
 import com.example.vcompass.screen.connection.ConnectionScreen
@@ -31,14 +35,10 @@ fun HomeScreen(
     navController: NavController,
     viewModel: HomeViewModel = koinViewModel()
 ) {
-
     val listTabs = remember { bottomDestinations }
-
     val pagerState = rememberPagerState(initialPage = 0) { listTabs.size }
     val scope = rememberCoroutineScope()
-
     val showMoreMenu = remember { mutableStateOf(false) }
-
     val state by viewModel.stateUI.collectAsState()
 
     LaunchedEffect(Unit) {

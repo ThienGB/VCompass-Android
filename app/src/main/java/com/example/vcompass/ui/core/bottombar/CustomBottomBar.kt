@@ -1,5 +1,6 @@
 package com.example.vcompass.ui.core.bottombar
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -7,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -14,42 +16,42 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.vcompass.core.dimen.MyDimen
 import com.example.vcompass.ui.theme.MyColor
 import com.example.vcompass.util.AppConstants
 
+@Preview(showBackground = true, showSystemUi = true, backgroundColor = 0xFFFF5555)
 @Composable
 fun CustomBottomBar(
-    onClickItemBottomBar: (Int) -> Unit,
-    onClickMenu: () -> Unit
+    onClickItemBottomBar: (Int) -> Unit = {},
+    onClickMenu: () -> Unit = {}
 ) {
     val heightBottomBar = 56.dp
     var selectedIndex by remember { mutableIntStateOf(0) }
 
     Box(Modifier.fillMaxSize()) {
         CurvedBottomBar(
-            modifier = Modifier
-                .align(Alignment.BottomCenter),
+            modifier = Modifier.align(Alignment.BottomCenter),
             barHeight = heightBottomBar,
-            cornerRadius = MyDimen.zero,
             containerColor = MyColor.White,
-            contentColor = MyColor.Primary
         ) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(heightBottomBar)
+                    .background(Color.Transparent)
                     .padding(horizontal = MyDimen.p8),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 bottomDestinations.forEachIndexed { index, item ->
                     if (index == AppConstants.HOME_FLOAT_BUTTON_INDEX) {
-                        Spacer(Modifier.weight(1f))
+                        Spacer(Modifier.weight(3f))
                         return@forEachIndexed
                     }
                     NavButton(
-                        modifier = Modifier.weight(1f),
+                        modifier = Modifier.weight(2f),
                         item = item,
                         height = heightBottomBar,
                         selected = selectedIndex == index,
