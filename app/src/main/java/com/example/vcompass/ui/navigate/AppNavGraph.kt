@@ -1,6 +1,11 @@
 package com.example.vcompass.ui.navigate
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -14,10 +19,11 @@ import com.example.vcompass.screen.introduce.IntroduceScreen
 import com.example.vcompass.screen.job.JobLandingScreen
 import com.example.vcompass.screen.login.LoginScreen
 import com.example.vcompass.screen.splash.SplashScreen
+import com.example.vcompass.ui.core.bottombar.CustomBottomBar
 
 @Composable
 fun AppNavGraph(navController: NavHostController = rememberNavController()) {
-    NavHost(navController, startDestination = CoreRoute.Splash.route) {
+    NavHost(navController, startDestination = CoreRoute.Home.route) {
         composable(CoreRoute.Splash.route) {
             SplashScreen(navController = navController)
         }
