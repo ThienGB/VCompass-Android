@@ -118,7 +118,7 @@
 //import com.example.vcompass.ui.components.sheet.DraggableBottomSheet
 //import com.example.vcompass.ui.components.sheet.PriceBottomSheet
 //import com.example.vcompass.ui.components.sheet.TimePickerBottomSheet
-//import com.example.vcompass.ui.custom_property.clickableWithScale
+//import com.example.vcompass.util.clickableWithScale
 //import com.google.android.gms.maps.model.CameraPosition
 //import com.google.android.gms.maps.model.LatLng
 //import com.google.maps.android.compose.GoogleMap

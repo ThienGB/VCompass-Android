@@ -18,6 +18,8 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Create
@@ -178,7 +180,7 @@ fun CustomDateRangePicker(
             verticalAlignment = Alignment.CenterVertically
         ) {
             IconButton(onClick = { displayedMonth = displayedMonth.minusMonths(1) }) {
-                Icon(Icons.Default.ArrowBack, contentDescription = "Previous Month")
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Previous Month")
             }
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(
@@ -200,7 +202,7 @@ fun CustomDateRangePicker(
                 )
             }
             IconButton(onClick = { displayedMonth = displayedMonth.plusMonths(1) }) {
-                Icon(Icons.Default.ArrowForward, contentDescription = "Next Month")
+                Icon(Icons.AutoMirrored.Filled.ArrowForward, contentDescription = "Next Month")
             }
         }
 

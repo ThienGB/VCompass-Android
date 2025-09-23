@@ -1,4 +1,4 @@
-package com.example.vcompass.ui.custom_property
+package com.example.vcompass.util
 
 import androidx.compose.animation.core.FiniteAnimationSpec
 import androidx.compose.animation.core.animateFloatAsState
@@ -6,11 +6,15 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
+import androidx.compose.material.ripple.rememberRipple
+import androidx.compose.material3.ripple
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 
 fun Modifier.clickableWithScale(
     scaleDown: Float = 0.95f,
@@ -36,6 +40,7 @@ fun Modifier.clickableWithScale(
             onClick = onClick
         )
 }
+
 fun Modifier.clickableNoEffect(
     onClick: () -> Unit
 ): Modifier = composed {
@@ -46,4 +51,16 @@ fun Modifier.clickableNoEffect(
             indication = null,
             onClick = onClick
         )
+}
+
+fun Modifier.rippleClickable(
+    radius: Dp = 24.dp,
+    bounded: Boolean = false,
+    onClick: () -> Unit
+): Modifier = composed {
+    this.clickable(
+        interactionSource = remember { MutableInteractionSource() },
+        indication = ripple(bounded = bounded, radius = radius),
+        onClick = onClick
+    )
 }

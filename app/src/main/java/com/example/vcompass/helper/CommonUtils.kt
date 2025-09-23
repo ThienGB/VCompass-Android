@@ -26,14 +26,7 @@ object CommonUtils {
         val date = Date(millis)
         return dateFormat.format(date)
     }
-    @JvmStatic
-    fun formatDateHaveDay(timeMillis: Long): String {
-        val dayFormat = SimpleDateFormat("EEEE, dd/MM/yyyy", Locale("vi", "VN"))
-        dayFormat.timeZone = TimeZone.getTimeZone("Asia/Ho_Chi_Minh")
 
-        val date = Date(timeMillis)
-        return dayFormat.format(date)
-    }
     @JvmStatic
     fun getUserFromShareRef(sharedPreferences: SharedPreferences): UserAccount {
         return UserAccount(
@@ -67,37 +60,5 @@ object CommonUtils {
             println("Image upload failed: ${exception.message}")
         }
     }
-    @JvmStatic
-    fun getTimeAgo(createdAt: String?): String {
-        if (createdAt.isNullOrEmpty()) return "Không rõ thời gian"
 
-        val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
-        formatter.timeZone = TimeZone.getTimeZone("UTC")
-
-        return try {
-            val createdDate = formatter.parse(createdAt)
-            val now = Date()
-            val diffMillis = now.time - createdDate.time
-
-            val minutes = TimeUnit.MILLISECONDS.toMinutes(diffMillis)
-            val hours = TimeUnit.MILLISECONDS.toHours(diffMillis)
-            val days = TimeUnit.MILLISECONDS.toDays(diffMillis)
-            val weeks = days / 7
-            val months = days / 30
-            val years = days / 365
-
-            when {
-                years > 0 -> "$years năm trước"
-                months > 0 -> "$months tháng trước"
-                weeks > 0 -> "$weeks tuần trước"
-                days > 0 -> "$days ngày trước"
-                hours > 0 -> "$hours giờ trước"
-                minutes > 0 -> "$minutes phút trước"
-                else -> "Vừa xong"
-            }
-
-        } catch (e: Exception) {
-            "Không rõ thời gian"
-        }
-    }
 }

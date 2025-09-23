@@ -54,7 +54,7 @@ import androidx.compose.ui.unit.sp
 import com.example.vcompass.R
 import com.example.vcompass.helper.CommonUtils.formatCurrency
 import com.example.vcompass.ui.components.CustomSearchBar
-import com.example.vcompass.ui.custom_property.clickableWithScale
+import com.example.vcompass.util.clickableWithScale
 
 @Preview(showSystemUi = true)
 @Composable
