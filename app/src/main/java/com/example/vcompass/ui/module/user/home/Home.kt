@@ -3,7 +3,6 @@ package com.example.vcompass.ui.module.user.home
 import android.content.Intent
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateIntAsState
 import androidx.compose.animation.core.spring
@@ -53,13 +52,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -77,10 +74,9 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.vcompass.R
 import com.example.vcompass.ui.module.user.schedule.ScheduleActivity
-import com.example.vcompass.util.clickableNoEffect
 import com.example.vcompass.util.rippleClickable
+import com.example.vcompass.util.scaleOnClick
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 @Preview(showSystemUi = true)
 @Composable
@@ -207,35 +203,12 @@ fun TravelPost(
     var isFavorited by rememberSaveable { mutableStateOf(false) }
     var isLiked by rememberSaveable { mutableStateOf(false) }
     var likeCount by rememberSaveable { mutableIntStateOf(19500) }
-    val scope = rememberCoroutineScope()
-    val scaleAnim = remember { Animatable(1f) }
     val context = LocalContext.current
     val scheduleId = "123"
-
-    // Animate like count changes
     val animatedLikeCount by animateIntAsState(
         targetValue = likeCount,
         animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy)
     )
-
-    fun handleScale() {
-        scope.launch {
-            scaleAnim.snapTo(1f)
-            scaleAnim.animateTo(
-                0.85f,
-                animationSpec = tween(100)
-            )
-            scaleAnim.animateTo(
-                1.2f,
-                animationSpec = tween(100)
-            )
-            scaleAnim.animateTo(
-                1f,
-                animationSpec = tween(200)
-            )
-        }
-    }
-
     Column(modifier = modifier.padding(vertical = 12.dp)) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -364,13 +337,11 @@ fun TravelPost(
                     contentDescription = "Like",
                     tint = if (isLiked) Color(0xFFE91E63) else Color(0xFF666666),
                     modifier = Modifier
-                        .clickableNoEffect {
+                        .scaleOnClick() {
                             isLiked = !isLiked
                             likeCount += if (isLiked) 1 else -1
-                            handleScale()
                         }
                         .size(24.dp)
-                        .scale(scaleAnim.value)
                 )
                 Spacer(modifier = Modifier.width(6.dp))
                 Text(

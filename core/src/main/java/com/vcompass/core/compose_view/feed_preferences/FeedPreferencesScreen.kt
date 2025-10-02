@@ -3,6 +3,7 @@ package com.vcompass.core.compose_view.feed_preferences
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -43,10 +44,10 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.vcompass.core.R
-import com.vcompass.core.utils.extension.clickNoRipple
 import com.vcompass.core.utils.extension.randomColor
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+
 
 data class FeedCategory(
     val id: String? = null,
@@ -133,7 +134,7 @@ fun FeedCategoryItem(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .clickNoRipple {
+            .clickable() {
                 onCategoryClick(category)
             },
         horizontalAlignment = Alignment.CenterHorizontally,

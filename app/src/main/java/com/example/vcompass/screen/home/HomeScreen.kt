@@ -19,6 +19,7 @@ import androidx.navigation.NavController
 import com.vcompass.presentation.viewmodel.home.HomeViewModel
 import com.example.vcompass.screen.connection.ConnectionScreen
 import com.example.vcompass.screen.conversation.ConversationScreen
+import com.example.vcompass.screen.explore.ExploreScreen
 import com.example.vcompass.screen.feed.HomeFeedScreen
 import com.example.vcompass.screen.job.JobLandingScreen
 import com.example.vcompass.ui.core.ScreenWithBottomBar
@@ -80,7 +81,7 @@ fun HomeScreen(
         ) { page ->
             when (page) {
                 AppConstants.HOME_FEED_INDEX -> HomeFeedScreen(navController)
-                AppConstants.HOME_JOB_LANDING_INDEX -> JobLandingScreen(navController)
+                AppConstants.HOME_JOB_LANDING_INDEX -> ExploreScreen(navController)
                 AppConstants.HOME_CONVERSATION_INDEX -> ConversationScreen(navController)
                 AppConstants.HOME_CONNECTION_INDEX -> ConnectionScreen(navController)
             }
