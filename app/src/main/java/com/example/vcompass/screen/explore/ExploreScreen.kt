@@ -71,8 +71,6 @@ import com.vcompass.core.resource.MyColor
 import com.example.vcompass.util.clickNoRipple
 import com.example.vcompass.util.scaleOnClick
 import com.vcompass.core.compose_view.AccessedBottomSheet
-import com.vcompass.core.compose_view.SettingItem
-import com.vcompass.core.compose_view.TitleSearchBarAction
 import com.vcompass.core.compose_view.image.CoreIcon
 import com.vcompass.core.compose_view.image.CoreImage
 import com.vcompass.core.compose_view.image.CoreImageSource
@@ -231,12 +229,7 @@ fun ExploreScreen(
         bottomSheetState = bottomSheetState,
         sheetContent = {
             Column {
-                repeat(5) {
-                    SettingItem(
-                        title = "Setting",
-                        onClick = {}
-                    )
-                }
+
             }
         }
     )

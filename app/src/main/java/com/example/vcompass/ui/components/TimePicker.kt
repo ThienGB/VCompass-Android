@@ -235,11 +235,11 @@ fun CustomDateRangePicker(
                 val isSunday = date.dayOfWeek == DayOfWeek.SUNDAY
                 val isOutOfMonth = date.month != displayedMonth.month
 
-                val backgroundColor = when {
-                    isStartDate || isEndDate -> colorResource(id = R.color.blue)
-                    isInRange -> colorResource(id = R.color.colorBar)
-                    else -> Color.Transparent
-                }
+//                val backgroundColor = when {
+//                    isStartDate || isEndDate -> colorResource(id = R.color.blue)
+//                    isInRange -> colorResource(id = R.color.colorBar)
+//                    else -> Color.Transparent
+//                }
 
                 val shape = when {
                     isStartDate -> RoundedCornerShape(topStart = 99.dp, bottomStart = 99.dp)
@@ -259,7 +259,6 @@ fun CustomDateRangePicker(
                     modifier = Modifier
                         .size(40.dp)
                         .clip(shape)
-                        .background(backgroundColor)
                         .clickable {
                             when {
                                 selectedStartDate == null || selectedEndDate != null -> {

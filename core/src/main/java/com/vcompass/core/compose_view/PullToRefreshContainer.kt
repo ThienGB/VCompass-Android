@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import com.vcompass.core.R
+import com.vcompass.core.resource.MyColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -32,7 +33,7 @@ fun PullToRefreshContainer(
                 isRefreshing = isRefreshing,
                 state = state,
                 containerColor = Color.White,
-                color = colorResource(R.color.colorSecondary)
+                color = MyColor.Primary
             )
         }
     ) {

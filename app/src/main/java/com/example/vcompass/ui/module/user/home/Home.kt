@@ -38,6 +38,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -76,6 +78,9 @@ import com.example.vcompass.R
 import com.example.vcompass.ui.module.user.schedule.ScheduleActivity
 import com.example.vcompass.util.rippleClickable
 import com.example.vcompass.util.scaleOnClick
+import com.vcompass.core.compose_view.image.CoreIcon
+import com.vcompass.core.compose_view.image.CoreImage
+import com.vcompass.core.compose_view.image.CoreImageSource
 import kotlinx.coroutines.delay
 
 @Preview(showSystemUi = true)
@@ -166,7 +171,7 @@ fun HomeHeader() {
                         )
                 ) {
                     Icon(
-                        painter = painterResource(R.drawable.ic_noti),
+                        painter = painterResource(R.drawable.ic_notifications_black_24dp),
                         contentDescription = "Notifications",
                         modifier = Modifier.size(20.dp),
                         tint = Color(0xFF333333)
@@ -184,7 +189,7 @@ fun HomeHeader() {
                         )
                 ) {
                     Icon(
-                        painter = painterResource(R.drawable.ic_chat),
+                        painter = painterResource(R.drawable.ic_home_conversation_fill),
                         contentDescription = "Messages",
                         modifier = Modifier.size(20.dp),
                         tint = Color(0xFF333333)
@@ -218,12 +223,8 @@ fun TravelPost(
         ) {
             // Profile picture with online indicator
             Box {
-                AsyncImage(
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(R.drawable.img_hue)
-                        .crossfade(400)
-                        .build(),
-                    contentDescription = "Profile picture",
+                CoreImage(
+                    source = CoreImageSource.Url("https://tourhue.vn/wp-content/uploads/2024/07/di-hue-mac-gi-chup-anh-dep-2.jpg"),
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .size(36.dp)
@@ -294,10 +295,9 @@ fun TravelPost(
                 onClick = { /* Handle more options */ },
                 modifier = Modifier.size(36.dp)
             ) {
-                Icon(
-                    painter = painterResource(R.drawable.ic_vertical_dot),
-                    contentDescription = "More options",
-                    tint = Color(0xFF666666)
+                CoreIcon (
+                    imageVector = Icons.Default.MoreVert,
+                    iconModifier = Modifier.size(24.dp)
                 )
             }
         }
@@ -307,21 +307,14 @@ fun TravelPost(
             modifier = Modifier.fillMaxWidth(),
             shape = RectangleShape
         ) {
-            AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(R.drawable.img_food_service)
-                    .memoryCacheKey("img_food_service_$postId")
-                    .crossfade(400)
-                    .build(),
-                contentDescription = "Travel destination",
+            CoreImage(
+                source = CoreImageSource.Url("https://tourhue.vn/wp-content/uploads/2024/07/di-hue-mac-gi-chup-anh-dep-2.jpg"),
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(280.dp)
             )
         }
-
-        // Enhanced interaction row
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -447,7 +440,7 @@ fun EnhancedTextSwitcher(
         } else {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
-                    painter = painterResource(R.drawable.ic_aim),
+                    painter = painterResource(R.drawable.ic_location_outline_24dp),
                     contentDescription = "Location",
                     tint = Color(0xFF1976D2),
                     modifier = Modifier.size(14.dp)
@@ -592,13 +585,9 @@ fun EnhancedHotLocation(locationName: String = "Hồ Hoàn Kiếm") {
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
         ) {
-            AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(R.drawable.img_hue)
-                    .crossfade(true)
-                    .build(),
+            CoreImage(
+                source = CoreImageSource.Url("https://tourhue.vn/wp-content/uploads/2024/07/di-hue-mac-gi-chup-anh-dep-2.jpg"),
                 contentScale = ContentScale.Crop,
-                contentDescription = "Location image",
                 modifier = Modifier
                     .size(28.dp)
                     .clip(CircleShape)

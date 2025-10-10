@@ -21,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.vcompass.R
+import com.vcompass.core.resource.MyColor
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
@@ -28,7 +29,7 @@ fun NavTitle(title: String = "Tìm kiếm khách sạn",
              onBackClick: () -> Unit = {}){
     Box(modifier = Modifier
         .fillMaxWidth()
-        .background(colorResource(id = R.color.primary))){
+        .background(MyColor.Primary)){
         Row(verticalAlignment = Alignment.CenterVertically,) {
             Icon(imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft, contentDescription = null,
                 modifier = Modifier.padding(12.dp).size(30.dp)

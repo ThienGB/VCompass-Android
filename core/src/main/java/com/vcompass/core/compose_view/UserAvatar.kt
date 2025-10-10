@@ -42,8 +42,6 @@ fun UserAvatar(
         contentDescription = null,
         contentScale = ContentScale.Crop,
         modifier = modifier.clip(CircleShape),
-        placeholder = painterResource(R.drawable.img_placeholder),
-        error = painterResource(R.drawable.ic_user_avatar)
     )
 }
 
@@ -54,11 +52,6 @@ fun UserAvatarPreview() {
         UserAvatar(
             modifier = Modifier.size(48.dp),
             avatar = AvatarModel.Url("https://example.com/avatar.jpg")
-        )
-
-        UserAvatar(
-            modifier = Modifier.size(48.dp),
-            avatar = AvatarModel.Resource(R.drawable.img_header_forgot_pasword)
         )
     }
 }

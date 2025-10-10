@@ -21,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.vcompass.core.R
+import com.vcompass.core.resource.MyColor
 import com.vcompass.core.typography.CoreTypography
 
 @Composable
@@ -29,10 +30,10 @@ fun ButtonNoIcon(
     text: String,
     enabled: Boolean = true,
     isFilled: Boolean = true,
-    fillColor: Color = colorResource(R.color.colorSecondary),
-    borderColor: Color = colorResource(R.color.colorSecondary),
+    fillColor: Color = MyColor.Primary,
+    borderColor: Color = MyColor.Primary,
     contentColor: Color = Color.White,
-    disabledFillColor: Color = colorResource(R.color.btnDisableColor),
+    disabledFillColor: Color = MyColor.Gray999,
     disabledBorderColor: Color = Color.LightGray,
     disabledContentColor: Color = Color.DarkGray,
     onClick: () -> Unit

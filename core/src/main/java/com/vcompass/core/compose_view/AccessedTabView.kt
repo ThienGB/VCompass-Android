@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.lerp
 import androidx.compose.ui.unit.sp
 import com.vcompass.core.R
+import com.vcompass.core.resource.MyColor
 import com.vcompass.core.typography.CoreTypography
 import kotlinx.coroutines.launch
 
@@ -86,7 +87,7 @@ fun <T> AccessedTabView(
                     .offset(x = indicatorOffset)
                     .width(indicatorWidth)
                     .height(2.dp)
-                    .background(colorResource(R.color.colorSecondary))
+                    .background(MyColor.Primary)
             )
         }
 
@@ -113,9 +114,9 @@ fun <T> AccessedTabView(
                             fontWeight = W500,
                             style = CoreTypography.displayMedium,
                             color = if (currentPage == index)
-                                colorResource(R.color.colorSecondary)
+                                MyColor.Primary
                             else
-                                colorResource(R.color.textColorLight)
+                                MyColor.Primary
                         )
                     },
                     modifier = Modifier.height(45.dp)
@@ -171,7 +172,6 @@ fun SampleTabScreenPreview() {
             tabTitle = { it },
             content = { tab ->
                 if (tab == tabs[0]){
-                    MediaPicker()
                 } else {
                     Text(tab)
                 }

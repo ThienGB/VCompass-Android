@@ -22,6 +22,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.vcompass.core.R
+import com.vcompass.core.resource.MyColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -53,7 +54,7 @@ fun AccessedBottomSheet(
                         .clip(RoundedCornerShape(99.dp))
                         .height(4.dp)
                         .width(28.dp)
-                        .background(colorResource(R.color.backgroundDark))
+                        .background(MyColor.Gray666)
                         .align(Alignment.Center)
                 )
             }
@@ -72,12 +73,7 @@ fun AccessedBottomSheetPreview() {
         bottomSheetState = bottomSheetState,
         sheetContent = {
             Column {
-                repeat(5) {
-                    SettingItem(
-                        title = "Setting",
-                        onClick = {}
-                    )
-                }
+
             }
         }
     )

@@ -28,6 +28,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.vcompass.core.R
+import com.vcompass.core.resource.MyColor
 
 
 internal const val switchButtonWidth = 38
@@ -47,9 +48,9 @@ fun SwitchButton(
         label = "SwitchAnimation"
     )
     val currentColor = if (isChecked)
-        colorResource(R.color.colorSecondaryLight)
+        MyColor.Primary
     else
-        colorResource(R.color.textColorLightWhite)
+        MyColor.White
     val animatedTrackColor by animateColorAsState(
         targetValue = currentColor,
         animationSpec = tween(durationMillis = 250, easing = LinearOutSlowInEasing),

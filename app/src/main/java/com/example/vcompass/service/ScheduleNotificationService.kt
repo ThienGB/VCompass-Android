@@ -24,7 +24,7 @@ class ScheduleNotificationService : Service() {
         val notification = NotificationCompat.Builder(this, SERVICE_CHANNEL_ID)
             .setContentTitle("Lịch trình đang diễn ra")
             .setContentText("Lịch trình đang được theo dõi, bạn sẽ nhận được thông báo về hoạt động sắp tới")
-            .setSmallIcon(R.drawable.ic_launcher)
+            .setSmallIcon(R.drawable.logo_no_cap)
             .setContentIntent(pendingIntent)
             .setOngoing(true) // Thông báo không thể xóa
             .build()

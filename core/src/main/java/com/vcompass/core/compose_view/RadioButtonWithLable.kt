@@ -24,6 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.vcompass.core.R
+import com.vcompass.core.resource.MyColor
 import com.vcompass.core.typography.CoreTypography
 
 @Composable
@@ -33,8 +34,8 @@ fun RadioButtonWithLabel(
     selected: Boolean,
     onClick: () -> Unit
 ) {
-    val selectedBaseColor = colorResource(id = R.color.colorSecondaryDark)
-    val unselectedBaseColor = colorResource(id = R.color.textColorDark)
+    val selectedBaseColor = MyColor.TextColorGray
+    val unselectedBaseColor = MyColor.TextColorPrimary
     val disabledColor = Color.Gray
 
     val radioColor by animateColorAsState(
@@ -59,7 +60,7 @@ fun RadioButtonWithLabel(
             text = label,
             style = CoreTypography.displayMedium,
             fontSize = 15.sp,
-            color = colorResource(id = R.color.textColorDark),
+            color = MyColor.TextColorPrimary,
             fontWeight = FontWeight.W500
         )
     }
