@@ -8,6 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.vcompass.screen.connection.ConnectionScreen
 import com.example.vcompass.screen.conversation.ConversationScreen
 import com.example.vcompass.screen.explore.ExploreScreen
+import com.example.vcompass.screen.explore.ExploreSearchScreen
 import com.example.vcompass.screen.feed.HomeFeedScreen
 import com.example.vcompass.screen.home.HomeScreen
 import com.example.vcompass.screen.introduce.IntroduceScreen
@@ -38,8 +39,12 @@ fun AppNavGraph(navController: NavHostController = rememberNavController()) {
             HomeFeedScreen(navController = navController)
         }
 
-        composable(CoreRoute.JobLandingGraph.route) {
+        composable(CoreRoute.ExploreGraph.route) {
             ExploreScreen(navController = navController)
+        }
+
+        composable(CoreRoute.ExploreSearchGraph.route) {
+            ExploreSearchScreen(navController = navController)
         }
 
         composable(CoreRoute.ConversationGraph.route) {

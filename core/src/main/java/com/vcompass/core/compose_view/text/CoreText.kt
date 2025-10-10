@@ -30,8 +30,9 @@ fun CoreText(
     minLines: Int = 1,
     letterSpacing: TextUnit = TextUnit.Unspecified,
     overflow: TextOverflow = TextOverflow.Clip,
-    textAlign: TextAlign = TextAlign.Center,
+    textAlign: TextAlign = TextAlign.Start,
     textDecoration: TextDecoration? = null,
+    lineHeight: TextUnit = TextUnit.Unspecified,
     onClick: (() -> Unit)? = null,
     onTextLayout: (TextLayoutResult) -> Unit = {},
 ) {
@@ -52,6 +53,7 @@ fun CoreText(
         minLines = minLines,
         overflow = overflow,
         modifier = newModifier,
+        lineHeight = lineHeight,
         letterSpacing = letterSpacing,
         textDecoration = textDecoration,
         onTextLayout = onTextLayout

@@ -7,7 +7,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.vcompass.core.dimen.MyDimen
+import com.vcompass.core.resource.MyDimen
 
 @Composable
 fun <T> GridList(

@@ -12,7 +12,7 @@ import com.vcompass.core.typography.CoreTypography
 import com.vcompass.presentation.util.CoreRoute
 import com.vcompass.presentation.viewmodel.splash.IntroduceViewModel
 import com.example.vcompass.ui.core.ScreenNormal
-import com.example.vcompass.util.clearAllStackAndAdd
+import com.example.vcompass.util.clearAllStackAndGo
 import kotlinx.coroutines.delay
 import org.koin.androidx.compose.koinViewModel
 
@@ -36,7 +36,7 @@ fun IntroduceScreen(
         TextButton(
             onClick = {
                 viewModel.setOpenedApp()
-                navController.clearAllStackAndAdd(CoreRoute.Login.route)
+                navController.clearAllStackAndGo(CoreRoute.Login.route)
             },
         ) {
             Text(

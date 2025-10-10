@@ -6,9 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -19,8 +17,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.vcompass.core.dimen.MyDimen
-import com.example.vcompass.ui.theme.MyColor
+import com.vcompass.core.resource.MyDimen
+import com.vcompass.core.resource.MyColor
 import com.example.vcompass.util.AppConstants
 
 @Preview(showBackground = true, showSystemUi = true, backgroundColor = 0xFFFF5555)

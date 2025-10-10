@@ -7,7 +7,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.vcompass.core.R
-import com.vcompass.core.dimen.MyDimen
+import com.vcompass.core.resource.MyDimen
 
 val CoreFontFamily = FontFamily(
     Font(R.font.inter_light, FontWeight.Light),

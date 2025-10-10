@@ -26,8 +26,8 @@ import com.example.vcompass.ui.core.ScreenWithBottomBar
 import com.example.vcompass.ui.core.bottombar.CustomBottomBar
 import com.example.vcompass.ui.core.bottombar.bottomDestinations
 import com.example.vcompass.util.AppConstants
-import com.example.vcompass.util.goBack
-import com.example.vcompass.util.navigateWithState
+import com.example.vcompass.util.back
+import com.example.vcompass.util.goWithState
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
@@ -44,12 +44,12 @@ fun HomeScreen(
 
     LaunchedEffect(Unit) {
         viewModel.navigate.collect {
-            navController.navigateWithState(it)
+            navController.goWithState(it)
         }
     }
 
     fun onBack() {
-        navController.goBack()
+        navController.back()
     }
 
     ScreenWithBottomBar(

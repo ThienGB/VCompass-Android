@@ -7,7 +7,8 @@ sealed class CoreRoute(val route: String) {
     data object Home : CoreRoute("home")
 
     data object HomeGraph : CoreRoute("home_graph")
-    data object JobLandingGraph : CoreRoute("job_landing_graph")
+    data object ExploreGraph : CoreRoute("explore_graph")
+    data object ExploreSearchGraph : CoreRoute("explore_search_graph")
     data object ConversationGraph : CoreRoute("chat_graph")
     data object ConnectionGraph : CoreRoute("connection_graph")
 }

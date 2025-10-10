@@ -5,10 +5,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.flowWithLifecycle
 import androidx.navigation.NavController
+import com.example.vcompass.util.clearAllStackAndGo
 import com.vcompass.presentation.event.global.GlobalEvent
 import com.vcompass.presentation.util.CoreRoute
 import com.vcompass.presentation.viewmodel.BaseViewModel
-import com.example.vcompass.util.clearAllStackAndAdd
 
 @Composable
 fun ObserveGlobalEvents(
@@ -24,7 +24,7 @@ fun ObserveGlobalEvents(
                 when (event) {
                     is GlobalEvent.Logout -> {
                         viewModel.globalConfig.clearSessionData()
-                        navController.clearAllStackAndAdd(CoreRoute.Login.route)
+                        navController.clearAllStackAndGo(CoreRoute.Login.route)
                     }
 
                     is GlobalEvent.Forbidden -> {

@@ -7,7 +7,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.vcompass.core.dimen.MyDimen
+import com.vcompass.core.resource.MyDimen
 
 enum class ListOrientation { Vertical, Horizontal }
 

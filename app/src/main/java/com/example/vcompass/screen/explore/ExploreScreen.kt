@@ -17,24 +17,28 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.VerticalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -47,38 +51,45 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.compose.ui.zIndex
 import androidx.media3.common.MediaItem
 import androidx.media3.common.PlaybackException
 import androidx.media3.common.Player
-import androidx.media3.common.util.Log
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import coil.compose.AsyncImage
+import com.accessed.core.compose_view.text.CoreText
 import com.example.vcompass.R
+import com.example.vcompass.util.add
+import com.vcompass.core.resource.MyColor
 import com.example.vcompass.util.clickNoRipple
 import com.example.vcompass.util.scaleOnClick
 import com.vcompass.core.compose_view.AccessedBottomSheet
 import com.vcompass.core.compose_view.SettingItem
 import com.vcompass.core.compose_view.TitleSearchBarAction
+import com.vcompass.core.compose_view.image.CoreIcon
+import com.vcompass.core.compose_view.image.CoreImage
+import com.vcompass.core.compose_view.image.CoreImageSource
+import com.vcompass.core.resource.MyDimen
+import com.vcompass.core.typography.CoreTypography
+import com.vcompass.core.typography.CoreTypographyBold
+import com.vcompass.core.typography.CoreTypographySemiBold
+import com.vcompass.presentation.util.CoreRoute
+
 
 @Preview(showSystemUi = true)
 @Composable
 fun ExploreScreen(
     navController: NavController = rememberNavController(),
 ) {
-    val bottomSheetState = remember { mutableStateOf(true) }
-
+    val bottomSheetState = remember { mutableStateOf(false) }
+    var selectedTab by remember { mutableIntStateOf(0) }
     val videos = remember {
         listOf(
             VideoItem(
@@ -135,35 +146,91 @@ fun ExploreScreen(
     }
 
     val pagerState = rememberPagerState(pageCount = { videos.size })
-
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
-            .padding(bottom = 56.dp)
+            .padding(bottom = MyDimen.p56)
+            .statusBarsPadding()
     ) {
-        Row {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .zIndex(1f)
+                .padding(horizontal = MyDimen.p8),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            CoreIcon(
+                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
+                tintColor = MyColor.White,
+                iconModifier = Modifier.size(MyDimen.p32)
+            )
 
-        }
-        VerticalPager(
-            state = pagerState,
-            modifier = Modifier.fillMaxSize()
-        ) { page ->
-            VideoPlayerScreen(
-                video = videos[page],
-                isActive = pagerState.currentPage == page,
-                onLikeClick = { /* Handle like */ },
-                onCommentClick = { bottomSheetState.value = true },
-                onShareClick = { /* Handle share */ },
-                onProfileClick = { /* Handle profile click */ }
+            Row(
+                modifier = Modifier
+                    .padding(horizontal = MyDimen.p16)
+                    .weight(1f),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                TransparentTabItem(
+                    text = "Đang theo dõi",
+                    selected = selectedTab == 0,
+                    onClick = { selectedTab = 0 }
+                )
+                Spacer(modifier = Modifier.width(MyDimen.p24))
+                TransparentTabItem(
+                    text = "Đề xuất",
+                    selected = selectedTab == 1,
+                    onClick = { selectedTab = 1 }
+                )
+            }
+
+            CoreIcon(
+                imageVector = Icons.Default.Search,
+                tintColor = MyColor.White,
+                iconModifier = Modifier.size(MyDimen.p28),
+                onClick = {navController.add(CoreRoute.ExploreSearchGraph.route)}
             )
         }
+        when (selectedTab) {
+            0 -> {
+                VerticalPager(
+                    state = pagerState,
+                    modifier = Modifier.fillMaxSize()
+                ) { page ->
+                    VideoPlayerScreen(
+                        video = videos[page],
+                        isActive = pagerState.currentPage == page,
+                        onLikeClick = { /* Handle like */ },
+                        onCommentClick = { bottomSheetState.value = true },
+                        onShareClick = { /* Handle share */ },
+                        onProfileClick = { /* Handle profile click */ }
+                    )
+                }
+            }
+
+            1 -> {
+                VerticalPager(
+                    state = pagerState,
+                    modifier = Modifier.fillMaxSize()
+                ) { page ->
+                    VideoPlayerScreen(
+                        video = videos[page],
+                        isActive = pagerState.currentPage == page,
+                        onLikeClick = { /* Handle like */ },
+                        onCommentClick = { bottomSheetState.value = true },
+                        onShareClick = { /* Handle share */ },
+                        onProfileClick = { /* Handle profile click */ }
+                    )
+                }
+            }
+        }
     }
+
     AccessedBottomSheet(
         bottomSheetState = bottomSheetState,
         sheetContent = {
             Column {
-                TitleSearchBarAction(isHaveActionRight = false)
                 repeat(5) {
                     SettingItem(
                         title = "Setting",
@@ -174,6 +241,32 @@ fun ExploreScreen(
         }
     )
 }
+
+@Composable
+fun TransparentTabItem(text: String, selected: Boolean, onClick: () -> Unit) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        CoreText (
+            text = text,
+            style = if (selected) CoreTypographySemiBold.labelLarge else CoreTypography.labelLarge,
+            color = if (selected) MyColor.White else MyColor.Gray999,
+            modifier = Modifier
+                .clip(RoundedCornerShape(MyDimen.p6))
+                .clickable { onClick() }
+                .padding(horizontal = MyDimen.p12, vertical = MyDimen.p6)
+        )
+        if (selected) {
+            HorizontalDivider(
+                thickness = MyDimen.p2,
+                color = MyColor.White,
+                modifier = Modifier
+                    .width(MyDimen.p80)
+                    .padding(top = MyDimen.p4)
+            )
+        }
+
+    }
+}
+
 
 @OptIn(UnstableApi::class, ExperimentalMaterial3Api::class)
 @Composable
@@ -200,7 +293,6 @@ fun VideoPlayerScreen(
                 prepare()
                 playWhenReady = isActive
                 repeatMode = Player.REPEAT_MODE_ONE
-                volume = 0.8f
             }
         }
     }
@@ -228,7 +320,6 @@ fun VideoPlayerScreen(
             }
 
             override fun onPlayerError(error: PlaybackException) {
-                Log.e("VideoPlayer", "Error: ${error.message}")
                 isLoading = false
             }
         }
@@ -265,15 +356,13 @@ fun VideoPlayerScreen(
             )
         }
         if (isLoading || exoPlayer == null) {
-            AsyncImage(
-                model = video.thumbnailUrl,
-                contentDescription = null,
+            CoreImage(
+                source = CoreImageSource.Url(video.thumbnailUrl),
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop
             )
         }
 
-        // Dark overlay for better text readability
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -291,13 +380,12 @@ fun VideoPlayerScreen(
         )
 
         if (!isPlaying) {
-            Icon(
+            CoreIcon(
                 imageVector = Icons.Filled.PlayArrow,
-                contentDescription = "Play",
-                modifier = Modifier
+                boxModifier = Modifier
                     .align(Alignment.Center)
-                    .size(80.dp),
-                tint = Color.White.copy(alpha = 0.8f)
+                    .size(MyDimen.p80),
+                tintColor = MyColor.White.copy(alpha = 0.8f)
             )
         }
 
@@ -327,12 +415,17 @@ fun VideoPlayerScreen(
                     },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(start = 16.dp, end = 16.dp, bottom = 16.dp, top = 12.dp)
-                        .height(4.dp),
+                        .padding(
+                            start = MyDimen.p16,
+                            end = MyDimen.p16,
+                            bottom = MyDimen.p16,
+                            top = MyDimen.p12
+                        )
+                        .height(MyDimen.p4),
                     colors = SliderDefaults.colors(
-                        thumbColor = Color.White,
-                        activeTrackColor = Color.White,
-                        inactiveTrackColor = Color.Gray.copy(alpha = 0.5f)
+                        thumbColor = MyColor.White,
+                        activeTrackColor = MyColor.White,
+                        inactiveTrackColor = MyColor.Gray666.copy(alpha = 0.5f)
                     ),
                 )
             }
@@ -355,40 +448,38 @@ fun ExploreRightActionSection(
     var isLiked by remember { mutableStateOf(false) }
     Column(
         modifier = modifier
-            .padding(bottom = 120.dp)
-            .padding(16.dp),
+            .padding(bottom = MyDimen.p120)
+            .padding(MyDimen.p16),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(MyDimen.p16)
     )
     {
         Box(
             modifier = Modifier
-                .size(50.dp)
+                .size(MyDimen.p50)
                 .clickable { }
         ) {
-            AsyncImage(
-                model = "https://picsum.photos/100/100?random=${video.id}",
-                contentDescription = "Profile",
+            CoreImage(
+                source = CoreImageSource.Url( "https://picsum.photos/100/100?random=${video.id}"),
                 modifier = Modifier
                     .fillMaxSize()
                     .clip(CircleShape)
-                    .border(2.dp, Color.White, CircleShape),
+                    .border(MyDimen.p2, Color.White, CircleShape),
                 contentScale = ContentScale.Crop
             )
 
-            Icon(
+            CoreIcon (
                 imageVector = Icons.Default.Add,
-                contentDescription = "Follow",
-                modifier = Modifier
+                boxModifier = Modifier
                     .align(Alignment.BottomCenter)
-                    .offset(y = 8.dp)
-                    .size(20.dp)
-                    .background(Color.Red, CircleShape)
-                    .padding(2.dp),
-                tint = Color.White
+                    .offset(y = MyDimen.p8)
+                    .size(MyDimen.p20)
+                    .background(MyColor.Red, CircleShape)
+                    .padding(MyDimen.p2),
+                tintColor = MyColor.White
             )
         }
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(MyDimen.p8))
         ActionButton(
             icon = R.drawable.ic_heart_solid,
             count = video.likes + if (isLiked) 1 else 0,
@@ -420,46 +511,45 @@ fun ExploreBottomInforSection(
 ) {
     Column(
         modifier = modifier
-            .padding(16.dp)
+            .padding(MyDimen.p16)
             .fillMaxWidth()
     )
     {
-        Text(
+        CoreText(
             text = "@${video.username}",
-            color = Color.White,
-            fontSize = 16.sp,
-            fontWeight = FontWeight.Bold
+            color = MyColor.White,
+            style = CoreTypographyBold.displayMedium
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(MyDimen.p8))
 
-        Text(
+        CoreText(
             text = video.description,
-            color = Color.White,
-            fontSize = 14.sp,
-            lineHeight = 20.sp,
+            color = MyColor.White,
+            style = CoreTypographyBold.labelMedium,
+            lineHeight = MyDimen.s20,
             maxLines = 3,
-            overflow = TextOverflow.Ellipsis
+            overflow = TextOverflow.Ellipsis,
+            textAlign = TextAlign.Start
         )
 
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(MyDimen.p12))
 
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Icon(
+            CoreIcon (
                 imageVector = Icons.Default.LocationOn,
-                contentDescription = "Music",
-                tint = Color.White,
-                modifier = Modifier.size(16.dp)
+                tintColor = MyColor.White,
+                iconModifier = Modifier.size(MyDimen.p16)
             )
 
-            Spacer(modifier = Modifier.width(8.dp))
+            Spacer(modifier = Modifier.width(MyDimen.p8))
 
-            Text(
+            CoreText (
                 text = "Original sound - ${video.username}",
-                color = Color.White,
-                fontSize = 12.sp
+                color = MyColor.White,
+                style = CoreTypography.displaySmall,
             )
         }
     }
@@ -469,32 +559,30 @@ fun ExploreBottomInforSection(
 fun ActionButton(
     icon: Int,
     count: Int,
-    tint: Color = Color.White,
+    tint: Color = MyColor.White,
     isScale: Boolean = false,
     onClick: () -> Unit
 ) {
     Column(
-        modifier = Modifier.padding(2.dp),
+        modifier = Modifier.padding(MyDimen.p2),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(MyDimen.p8)
     ) {
-        Icon(
-            painter = painterResource(icon),
-            contentDescription = null,
-            tint = tint,
-            modifier = Modifier
-                .size(32.dp)
+        CoreIcon (
+            resDrawable = icon,
+            tintColor = tint,
+            iconModifier = Modifier
+                .size(MyDimen.p32)
                 .then(
                     if (isScale) Modifier.scaleOnClick(onClick)
                     else Modifier.clickable(onClick = onClick)
                 )
         )
 
-        Text(
+        CoreText (
             text = formatCount(count),
-            color = Color.White,
-            fontSize = 13.sp,
-            textAlign = TextAlign.Center
+            color = MyColor.White,
+            style = CoreTypography.labelSmall,
         )
     }
 }

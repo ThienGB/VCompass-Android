@@ -72,7 +72,6 @@ fun AccessedBottomSheetPreview() {
         bottomSheetState = bottomSheetState,
         sheetContent = {
             Column {
-                TitleSearchBarAction(isHaveActionRight = false)
                 repeat(5) {
                     SettingItem(
                         title = "Setting",

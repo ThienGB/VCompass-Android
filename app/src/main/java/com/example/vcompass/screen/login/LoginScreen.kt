@@ -21,13 +21,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.navigation.NavController
-import com.vcompass.core.dimen.MyDimen
-import com.vcompass.core.typography.CoreTypography
-import com.vcompass.presentation.viewmodel.login.LoginViewModel
 import com.example.vcompass.R
 import com.example.vcompass.ui.core.ScreenNormal
-import com.example.vcompass.util.goBack
-import com.example.vcompass.util.navigateWithState
+import com.example.vcompass.util.back
+import com.example.vcompass.util.goWithState
+import com.vcompass.core.resource.MyDimen
+import com.vcompass.core.typography.CoreTypography
+import com.vcompass.presentation.viewmodel.login.LoginViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -41,14 +41,14 @@ fun LoginScreen(
 
     LaunchedEffect(Unit) {
         viewModel.navigate.collect {
-            navController.navigateWithState(it)
+            navController.goWithState(it)
         }
     }
 
     ScreenNormal(
         state = state,
         textRetry = stringResource(R.string.app_name),
-        onBackPress = { navController.goBack() },
+        onBackPress = { navController.back() },
         viewModel = viewModel,
         navController = navController,
         onRetry = { viewModel.login(email, password) },

@@ -6,7 +6,7 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import com.vcompass.core.typography.CoreTypography
-import com.example.vcompass.ui.theme.MyColor
+import com.vcompass.core.resource.MyColor
 
 val DarkColorScheme = darkColorScheme(
     primary = MyColor.Primary,

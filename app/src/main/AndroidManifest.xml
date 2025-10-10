@@ -10,8 +10,6 @@
     <application
         android:name="com.example.vcompass.MainApplication"
         android:allowBackup="true"
-        android:dataExtractionRules="@xml/data_extraction_rules"
-        android:fullBackupContent="@xml/backup_rules"
         android:icon="@drawable/logo_no_cap"
         android:label="@string/app_name"
         android:roundIcon="@drawable/logo_no_cap"
