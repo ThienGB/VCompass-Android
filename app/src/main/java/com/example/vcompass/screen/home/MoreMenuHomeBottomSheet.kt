@@ -20,8 +20,6 @@ fun MoreMenuHomeBottomSheet(
     showSheet: Boolean = false,
     onDismiss: () -> Unit
 ) {
-
-    // Hiển thị sheet khi showSheet = true
     if (showSheet) {
         ModalBottomSheet(
             onDismissRequest = { onDismiss.invoke() }

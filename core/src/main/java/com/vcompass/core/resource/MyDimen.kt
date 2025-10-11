@@ -12,11 +12,13 @@ object MyDimen {
     val p8 = 8.dp
     val p10 = 10.dp
     val p12 = 12.dp
+    val p14 = 14.dp
     val p16 = 16.dp
     val p18 = 18.dp
     val p20 = 20.dp
     val p24 = 24.dp
     val p28 = 28.dp
+    val p30 = 30.dp
     val p32 = 32.dp
     val p36 = 36.dp
     val p40 = 40.dp
@@ -34,6 +36,11 @@ object MyDimen {
     val p100 = 100.dp
     val p120 = 120.dp
     val p150 = 150.dp
+    val p160 = 160.dp
+    val p180 = 180.dp
+    val p200 = 200.dp
+    val p240 = 240.dp
+    val p280 = 280.dp
     val p5000 = 5000.dp
 
     val sHalf = 0.5.sp

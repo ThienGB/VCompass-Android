@@ -27,7 +27,7 @@ fun CustomBottomBar(
     onClickItemBottomBar: (Int) -> Unit = {},
     onClickMenu: () -> Unit = {}
 ) {
-    val heightBottomBar = 56.dp
+    val heightBottomBar = 48.dp
     var selectedIndex by remember { mutableIntStateOf(0) }
 
     Box(Modifier.fillMaxSize()) {
@@ -45,11 +45,11 @@ fun CustomBottomBar(
             ) {
                 bottomDestinations.forEachIndexed { index, item ->
                     if (index == AppConstants.HOME_FLOAT_BUTTON_INDEX) {
-                        Spacer(Modifier.weight(3f))
+                        Spacer(Modifier.weight(4f))
                         return@forEachIndexed
                     }
                     NavButton(
-                        modifier = Modifier.weight(2f),
+                        modifier = Modifier.weight(3f),
                         item = item,
                         height = heightBottomBar,
                         selected = selectedIndex == index,
@@ -68,7 +68,7 @@ fun CustomBottomBar(
         CenterDockedFab(
             modifier = Modifier.align(Alignment.BottomCenter),
             barHeight = heightBottomBar,
-            cutoutRadius = MyDimen.p36,
+            cutoutRadius = MyDimen.p24,
             onClick = {
                 onClickMenu.invoke()
             }

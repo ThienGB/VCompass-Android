@@ -42,7 +42,7 @@ fun SpaceWidth8() = SpaceWidth(MyDimen.p8)
 fun SpaceWidth4() = SpaceWidth(MyDimen.p4)
 
 @Composable
-fun RowScope.ExpandableSpacer(weight: Float = 1f, fillMaxHeight: Boolean = true) {
+fun RowScope.ExpandableSpacer(weight: Float = 1f, fillMaxHeight: Boolean = false) {
     Spacer(
         Modifier
             .weight(weight)
@@ -51,10 +51,10 @@ fun RowScope.ExpandableSpacer(weight: Float = 1f, fillMaxHeight: Boolean = true)
 }
 
 @Composable
-fun ColumnScope.ExpandableSpacer(weight: Float = 1f) {
+fun ColumnScope.ExpandableSpacer(weight: Float = 1f, fillMaxWith: Boolean = false) {
     Spacer(
         Modifier
             .weight(weight)
-            .fillMaxWidth()
+            .conditional(fillMaxWith) { fillMaxWidth() }
     )
 }

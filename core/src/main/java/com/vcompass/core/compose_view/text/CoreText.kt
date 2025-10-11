@@ -16,6 +16,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
 import com.vcompass.core.extensions.conditional
 import com.vcompass.core.extensions.optional
+import com.vcompass.core.resource.MyColor
 import com.vcompass.core.typography.CoreTypography
 
 @Composable
@@ -25,7 +26,7 @@ fun CoreText(
     @StringRes resString: Int? = null,
     isFullWidth: Boolean = false,
     style: TextStyle = CoreTypography.labelMedium,
-    color: Color = Color.Unspecified,
+    color: Color = MyColor.TextColorPrimary,
     maxLines: Int = Int.MAX_VALUE,
     minLines: Int = 1,
     letterSpacing: TextUnit = TextUnit.Unspecified,

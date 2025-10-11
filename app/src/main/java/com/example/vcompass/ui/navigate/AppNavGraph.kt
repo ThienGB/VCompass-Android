@@ -8,7 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.vcompass.screen.connection.ConnectionScreen
 import com.example.vcompass.screen.conversation.ConversationScreen
 import com.example.vcompass.screen.explore.ExploreScreen
-import com.example.vcompass.screen.explore.ExploreSearchScreen
+import com.example.vcompass.screen.explore.search.ExploreSearchScreen
 import com.example.vcompass.screen.feed.HomeFeedScreen
 import com.example.vcompass.screen.home.HomeScreen
 import com.example.vcompass.screen.introduce.IntroduceScreen

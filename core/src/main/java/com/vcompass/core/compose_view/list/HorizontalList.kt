@@ -7,15 +7,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.vcompass.core.resource.MyDimen
 
+
 @Composable
 fun <T> HorizontalList(
     modifier: Modifier = Modifier,
     items: List<T>,
-    key: (T) -> Any? = { it.hashCode() },
+    key: ((T) -> Any?)? = null,
     contentType: (T) -> Any? = { null },
     contentPadding: PaddingValues = PaddingValues(MyDimen.zero),
     horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
     verticalAlignment: Alignment.Vertical = Alignment.Top,
+    userScrollEnabled: Boolean = true,
     itemContent: @Composable (T) -> Unit
 ) {
     CoreList(
@@ -27,6 +29,7 @@ fun <T> HorizontalList(
         contentPadding = contentPadding,
         horizontalArrangement = horizontalArrangement,
         verticalAlignment = verticalAlignment,
+        userScrollEnabled = userScrollEnabled,
         itemContent = itemContent
     )
 }

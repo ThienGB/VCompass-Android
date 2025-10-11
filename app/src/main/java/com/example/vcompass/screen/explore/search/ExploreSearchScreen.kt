@@ -1,4 +1,4 @@
-package com.example.vcompass.screen.explore
+package com.example.vcompass.screen.explore.search
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Arrangement
@@ -58,7 +58,9 @@ fun ExploreSearchScreen(
             .padding(bottom = 56.dp)
             .statusBarsPadding()
     ) {
-        TitleSearchBarAction()
+        TitleSearchBarAction(
+            placeholder = "Search any things..."
+        )
         SearchHistorySection()
         CategorySection()
     }
@@ -166,7 +168,7 @@ fun SearchHistoryItem(
     onClick: () -> Unit = {},
     onClearClick: () -> Unit = {}
 ) {
-    Row(verticalAlignment = Alignment.CenterVertically,) {
+    Row(verticalAlignment = Alignment.CenterVertically) {
         CoreIcon(
             resDrawable = R.drawable.ic_history_search_24dp,
             onClick = onClick

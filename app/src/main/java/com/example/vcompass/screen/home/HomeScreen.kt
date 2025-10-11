@@ -1,8 +1,6 @@
 package com.example.vcompass.screen.home
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
@@ -13,15 +11,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import com.vcompass.presentation.viewmodel.home.HomeViewModel
 import com.example.vcompass.screen.connection.ConnectionScreen
 import com.example.vcompass.screen.conversation.ConversationScreen
 import com.example.vcompass.screen.explore.ExploreScreen
 import com.example.vcompass.screen.feed.HomeFeedScreen
-import com.example.vcompass.screen.job.JobLandingScreen
 import com.example.vcompass.ui.core.ScreenWithBottomBar
 import com.example.vcompass.ui.core.bottombar.CustomBottomBar
 import com.example.vcompass.ui.core.bottombar.bottomDestinations
@@ -81,9 +76,9 @@ fun HomeScreen(
         ) { page ->
             when (page) {
                 AppConstants.HOME_FEED_INDEX -> HomeFeedScreen(navController)
-                AppConstants.HOME_JOB_LANDING_INDEX -> ExploreScreen(navController)
-                AppConstants.HOME_CONVERSATION_INDEX -> ConversationScreen(navController)
-                AppConstants.HOME_CONNECTION_INDEX -> ConnectionScreen(navController)
+                AppConstants.HOME_EXPLORE_INDEX -> ExploreScreen(navController)
+                AppConstants.HOME_SEARCH_INDEX -> ConversationScreen(navController)
+                AppConstants.HOME_PROFILE_INDEX -> ConnectionScreen(navController)
             }
         }
 

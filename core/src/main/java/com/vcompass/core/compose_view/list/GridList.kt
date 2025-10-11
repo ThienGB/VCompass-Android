@@ -13,7 +13,7 @@ import com.vcompass.core.resource.MyDimen
 fun <T> GridList(
     modifier: Modifier = Modifier,
     items: List<T>,
-    key: (T) -> Any? = { it.hashCode() },
+    key: ((T) -> Any?)? = null,
     contentType: (T) -> Any? = { null },
     columns: GridCells,
     contentPadding: PaddingValues = PaddingValues(MyDimen.zero),
@@ -29,11 +29,22 @@ fun <T> GridList(
         verticalArrangement = verticalArrangement
     ) {
         items(
-            items = items,
-            key = { key(it) ?: it.hashCode() },
-            contentType = contentType
-        ) {
-            itemContent(it)
+            count = items.size,
+            key = if (key != null) {
+                { index ->
+                    val itemKey = key(items[index])
+                    if (itemKey == null || (itemKey is String && itemKey.isBlank())) {
+                        index
+                    } else {
+                        "$itemKey-$index"
+                    }
+                }
+            } else {
+                { index -> index }
+            },
+            contentType = { index -> contentType(items[index]) }
+        ) { index ->
+            itemContent(items[index])
         }
     }
 }

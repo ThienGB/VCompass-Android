@@ -60,7 +60,7 @@
 //import com.example.vcompass.ui.module.general.notifications.NotificationDetail
 //import com.example.vcompass.ui.module.general.review.ListReviewScreen
 //import com.example.vcompass.ui.module.user.explore.Explore
-//import com.example.vcompass.ui.module.user.home.HomeScreen
+//import com.example.vcompass.screen.feed.HomeScreen
 //import com.example.vcompass.ui.module.user.room.RoomDetailScreen
 //import com.example.vcompass.ui.module.user.search.SearchAccommodation
 //

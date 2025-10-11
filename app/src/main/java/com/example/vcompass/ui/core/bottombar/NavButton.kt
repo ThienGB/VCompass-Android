@@ -40,7 +40,6 @@ fun NavButton(
         Icon(
             painter = painterResource(if (selected) item.selectedIcon else item.unselectedIcon),
             contentDescription = item.label,
-            modifier = Modifier.size(MyDimen.p18),
             tint = color
         )
     }
