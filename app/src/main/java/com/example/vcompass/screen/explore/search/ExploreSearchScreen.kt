@@ -46,7 +46,6 @@ import com.vcompass.core.resource.MyColor
 import com.vcompass.core.resource.MyDimen
 import com.vcompass.core.typography.CoreTypographySemiBold
 
-
 @Preview(showSystemUi = true)
 @Composable
 fun ExploreSearchScreen(
@@ -59,7 +58,8 @@ fun ExploreSearchScreen(
             .statusBarsPadding()
     ) {
         TitleSearchBarAction(
-            placeholder = "Search any things..."
+            placeholder = "Search any things...",
+            onBack = { navController.popBackStack() }
         )
         SearchHistorySection()
         CategorySection()

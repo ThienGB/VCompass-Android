@@ -35,11 +35,17 @@ object MyDimen {
     val p86 = 86.dp
     val p100 = 100.dp
     val p120 = 120.dp
+    val p128 = 128.dp
+    val p140 = 140.dp
     val p150 = 150.dp
     val p160 = 160.dp
+    val p170 = 170.dp
     val p180 = 180.dp
     val p200 = 200.dp
+    val p220 = 220.dp
+    val p235 = 235.dp
     val p240 = 240.dp
+    val p250 = 250.dp
     val p280 = 280.dp
     val p5000 = 5000.dp
 

@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.vcompass.core.resource.MyDimen
+import java.util.concurrent.atomic.AtomicLong
 
 enum class ListOrientation { Vertical, Horizontal }
 
@@ -18,7 +19,6 @@ enum class ListOrientation { Vertical, Horizontal }
 fun <T> CoreList(
     modifier: Modifier = Modifier,
     items: List<T>,
-    key: ((T) -> Any?)? = null,
     contentType: (T) -> Any? = { null },
     state: LazyListState = rememberLazyListState(),
     orientation: ListOrientation = ListOrientation.Vertical,
@@ -30,6 +30,8 @@ fun <T> CoreList(
     userScrollEnabled: Boolean = true,
     itemContent: @Composable (T) -> Unit
 ) {
+    val counter = AtomicLong(1L)
+    fun nextId(): Long = counter.incrementAndGet()
     when (orientation) {
         ListOrientation.Vertical -> {
             LazyColumn(
@@ -42,18 +44,7 @@ fun <T> CoreList(
             ) {
                 items(
                     count = items.size,
-                    key = if (key != null) {
-                        { index ->
-                            val itemKey = key(items[index])
-                            if (itemKey == null || (itemKey is String && itemKey.isBlank())) {
-                                index
-                            } else {
-                                "$itemKey-$index"
-                            }
-                        }
-                    } else {
-                        { index -> index }
-                    },
+                    key = { nextId() },
                     contentType = { index -> contentType(items[index]) }
                 ) { index ->
                     itemContent(items[index])
@@ -71,18 +62,7 @@ fun <T> CoreList(
             ) {
                 items(
                     count = items.size,
-                    key = if (key != null) {
-                        { index ->
-                            val itemKey = key(items[index])
-                            if (itemKey == null || (itemKey is String && itemKey.isBlank())) {
-                                index
-                            } else {
-                                "$itemKey-$index"
-                            }
-                        }
-                    } else {
-                        { index -> index }
-                    },
+                    key = { nextId() },
                     contentType = { index -> contentType(items[index]) }
                 ) { index ->
                     itemContent(items[index])

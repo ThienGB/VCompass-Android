@@ -14,7 +14,6 @@ import com.vcompass.core.resource.MyDimen
 fun <T> VerticalList(
     modifier: Modifier = Modifier,
     items: List<T>,
-    key: ((T) -> Any?)? = null,
     state: LazyListState = rememberLazyListState(),
     contentType: (T) -> Any? = { null },
     contentPadding: PaddingValues = PaddingValues(MyDimen.zero),
@@ -26,7 +25,6 @@ fun <T> VerticalList(
     CoreList(
         modifier = modifier,
         items = items,
-        key = key,
         contentType = contentType,
         state = state,
         orientation = ListOrientation.Vertical,

@@ -13,6 +13,7 @@ import com.example.vcompass.screen.feed.HomeFeedScreen
 import com.example.vcompass.screen.home.HomeScreen
 import com.example.vcompass.screen.introduce.IntroduceScreen
 import com.example.vcompass.screen.login.LoginScreen
+import com.example.vcompass.screen.search.SearchScreen
 import com.example.vcompass.screen.splash.SplashScreen
 import com.vcompass.presentation.util.CoreRoute
 
@@ -47,8 +48,8 @@ fun AppNavGraph(navController: NavHostController = rememberNavController()) {
             ExploreSearchScreen(navController = navController)
         }
 
-        composable(CoreRoute.ConversationGraph.route) {
-            ConversationScreen(navController = navController)
+        composable(CoreRoute.HomeSearchGraph.route) {
+            SearchScreen(navController = navController)
         }
 
         composable(CoreRoute.ConnectionGraph.route) {

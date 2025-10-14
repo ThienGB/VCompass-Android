@@ -1,5 +1,6 @@
 package com.vcompass.core.compose_view
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.vcompass.core.compose_view.icon.IconBack
 import com.vcompass.core.compose_view.text.SearchTextField
+import com.vcompass.core.resource.MyColor
 import com.vcompass.core.resource.MyDimen
 
 @Composable
@@ -23,12 +25,13 @@ fun TitleSearchBarAction(
     onTextChange: (String) -> Unit = {},
     leftItem: (@Composable () -> Unit)? = null,
     rightItem: (@Composable () -> Unit)? = null,
-    onClick: () -> Unit = {},
+    onBack: () -> Unit = {},
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
             .fillMaxWidth()
+            .background(MyColor.White)
             .height(MyDimen.p56)
             .padding(
                 end = if (rightItem != null) MyDimen.zero else MyDimen.p10
@@ -37,7 +40,7 @@ fun TitleSearchBarAction(
         if (leftItem != null) {
             leftItem()
         } else {
-            IconBack(onClick = onClick)
+            IconBack(onClick = onBack)
         }
         SearchTextField(
             modifier = Modifier.weight(1f),

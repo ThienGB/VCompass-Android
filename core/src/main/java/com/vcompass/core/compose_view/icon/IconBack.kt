@@ -20,7 +20,7 @@ fun IconBack(
 ) {
     CoreIcon(
         imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
-        onClick = { onClick },
+        onClick = onClick,
         iconModifier = Modifier.size(size),
         boxModifier = Modifier.padding(padding).clip(CircleShape),
     )

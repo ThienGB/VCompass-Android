@@ -30,6 +30,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.lerp
 import com.accessed.core.compose_view.text.CoreText
+import com.vcompass.core.resource.MyColor
 import com.vcompass.core.resource.MyDimen
 import com.vcompass.core.typography.CoreTypographyMedium
 import kotlinx.coroutines.launch
@@ -85,7 +86,7 @@ fun <T> TabView(
                     .offset(x = indicatorOffset)
                     .width(indicatorWidth)
                     .height(MyDimen.p2)
-                    .background(MaterialTheme.colorScheme.primary)
+                    .background(MyColor.Primary)
             )
         }
 
@@ -104,13 +105,13 @@ fun <T> TabView(
                             text = tabTitle(tab),
                             style = CoreTypographyMedium.labelMedium,
                             color = if (currentPage == index)
-                                MaterialTheme.colorScheme.primary
+                                MyColor.Primary
                             else
-                                MaterialTheme.colorScheme.surfaceVariant
+                                MyColor.TextColorPrimary
                         )
                     },
-                    modifier = Modifier.height(MyDimen.p45)
-                        .background(Color.White)
+                    modifier = Modifier.height(MyDimen.p40)
+                        .background(MyColor.White)
                 )
             }
         }
@@ -122,7 +123,7 @@ fun <T> TabView(
                 edgePadding = MyDimen.zero,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(MaterialTheme.colorScheme.onPrimary),
+                    .background(MyColor.White),
             ) {
                 tabRowContent()
             }
@@ -132,7 +133,7 @@ fun <T> TabView(
                     .height(MyDimen.p8)
                     .background(
                         Brush.verticalGradient(
-                            colors = listOf(MaterialTheme.colorScheme.surfaceBright, MaterialTheme.colorScheme.onPrimary)
+                            colors = listOf(MyColor.GrayF5, MyColor.White)
                         )
                     )
             )

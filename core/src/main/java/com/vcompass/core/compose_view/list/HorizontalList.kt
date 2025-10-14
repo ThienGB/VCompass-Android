@@ -12,7 +12,6 @@ import com.vcompass.core.resource.MyDimen
 fun <T> HorizontalList(
     modifier: Modifier = Modifier,
     items: List<T>,
-    key: ((T) -> Any?)? = null,
     contentType: (T) -> Any? = { null },
     contentPadding: PaddingValues = PaddingValues(MyDimen.zero),
     horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
@@ -23,7 +22,6 @@ fun <T> HorizontalList(
     CoreList(
         modifier = modifier,
         items = items,
-        key = key,
         contentType = contentType,
         orientation = ListOrientation.Horizontal,
         contentPadding = contentPadding,

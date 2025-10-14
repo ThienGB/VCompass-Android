@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">VCompass</string>
+    <string name="lb_schedule">Lịch trình</string>
+    <string name="lb_accommodation">Chỗ ở</string>
+    <string name="lb_food_place">Quán ăn</string>
+    <string name="lb_attraction">Điểm tham quan</string>
+    <string name="lb_total_results"> Kết quả</string>
+    <string name="next">Tiếp</string>
+    <string name="previous">Trước</string>
+</resources>

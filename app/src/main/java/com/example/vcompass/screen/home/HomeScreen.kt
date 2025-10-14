@@ -17,6 +17,8 @@ import com.example.vcompass.screen.connection.ConnectionScreen
 import com.example.vcompass.screen.conversation.ConversationScreen
 import com.example.vcompass.screen.explore.ExploreScreen
 import com.example.vcompass.screen.feed.HomeFeedScreen
+import com.example.vcompass.screen.search.SearchLandingScreen
+import com.example.vcompass.screen.search.SearchScreen
 import com.example.vcompass.ui.core.ScreenWithBottomBar
 import com.example.vcompass.ui.core.bottombar.CustomBottomBar
 import com.example.vcompass.ui.core.bottombar.bottomDestinations
@@ -77,7 +79,7 @@ fun HomeScreen(
             when (page) {
                 AppConstants.HOME_FEED_INDEX -> HomeFeedScreen(navController)
                 AppConstants.HOME_EXPLORE_INDEX -> ExploreScreen(navController)
-                AppConstants.HOME_SEARCH_INDEX -> ConversationScreen(navController)
+                AppConstants.HOME_SEARCH_INDEX -> SearchLandingScreen(navController)
                 AppConstants.HOME_PROFILE_INDEX -> ConnectionScreen(navController)
             }
         }
