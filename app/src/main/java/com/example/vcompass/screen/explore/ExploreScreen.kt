@@ -36,7 +36,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.accessed.core.compose_view.text.CoreText
 import com.example.vcompass.util.add
-import com.vcompass.core.compose_view.AccessedBottomSheet
+import com.vcompass.core.compose_view.BaseBottomSheet
 import com.vcompass.core.compose_view.image.CoreIcon
 import com.vcompass.core.resource.MyColor
 import com.vcompass.core.resource.MyDimen
@@ -155,7 +155,7 @@ fun ExploreScreen(
         }
     }
 
-    AccessedBottomSheet(
+    BaseBottomSheet(
         bottomSheetState = bottomSheetState,
         sheetContent = {
             Column {

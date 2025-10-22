@@ -20,4 +20,5 @@ object MyColor {
     val GrayF5 = Color(0xFFF5F5F5)
     val Active = Color(0xFF4CAF50)
     val Favorite = Color(0xFFE91E63)
+    val RedE1 = Color(0xFFDE1E1E)
 }

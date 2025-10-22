@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.SheetValue
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -18,27 +19,37 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.vcompass.core.R
 import com.vcompass.core.resource.MyColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AccessedBottomSheet(
+fun BaseBottomSheet(
     bottomSheetState: MutableState<Boolean>,
     onDismiss: () -> Unit = {},
     isShowDragHandle: Boolean = true,
+    skipPartiallyExpanded: Boolean = true,
+    isAllowHidden: Boolean = true,
     sheetContent: @Composable () -> Unit
 ) {
     if (!bottomSheetState.value) return
+    val sheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = skipPartiallyExpanded,
+        confirmValueChange = { newValue ->
+            if (!isAllowHidden) {
+                newValue != SheetValue.Hidden
+            } else {
+                true
+            }
+        }
+    )
     ModalBottomSheet(
         onDismissRequest = {
             bottomSheetState.value = false
             onDismiss()
         },
-        sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
+        sheetState = sheetState,
         shape = RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp),
         containerColor = Color.White,
         dragHandle = {
@@ -69,7 +80,7 @@ fun AccessedBottomSheet(
 @Composable
 fun AccessedBottomSheetPreview() {
     val bottomSheetState = remember { mutableStateOf(true) }
-    AccessedBottomSheet(
+    BaseBottomSheet(
         bottomSheetState = bottomSheetState,
         sheetContent = {
             Column {

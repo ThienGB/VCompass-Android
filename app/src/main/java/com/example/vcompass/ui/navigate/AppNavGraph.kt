@@ -6,13 +6,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.vcompass.screen.connection.ConnectionScreen
-import com.example.vcompass.screen.conversation.ConversationScreen
 import com.example.vcompass.screen.explore.ExploreScreen
 import com.example.vcompass.screen.explore.search.ExploreSearchScreen
 import com.example.vcompass.screen.feed.HomeFeedScreen
 import com.example.vcompass.screen.home.HomeScreen
 import com.example.vcompass.screen.introduce.IntroduceScreen
 import com.example.vcompass.screen.login.LoginScreen
+import com.example.vcompass.screen.search.MapSearchScreen
 import com.example.vcompass.screen.search.SearchScreen
 import com.example.vcompass.screen.splash.SplashScreen
 import com.vcompass.presentation.util.CoreRoute
