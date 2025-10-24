@@ -141,7 +141,7 @@ fun SearchLandingScreen(
                     }
                 },
                 actions = {
-                    IconButton(onClick = { navController.add(CoreRoute.HomeSearchGraph.route) }) {
+                    IconButton(onClick = { navController.add(CoreRoute.HomeSearch.route) }) {
                         CoreIcon(imageVector = Icons.Default.Search)
                     }
                     IconButton(onClick = { }) {

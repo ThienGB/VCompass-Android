@@ -14,12 +14,10 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.vcompass.presentation.viewmodel.home.HomeViewModel
 import com.example.vcompass.screen.connection.ConnectionScreen
-import com.example.vcompass.screen.conversation.ConversationScreen
 import com.example.vcompass.screen.explore.ExploreScreen
 import com.example.vcompass.screen.feed.HomeFeedScreen
 import com.example.vcompass.screen.search.SearchLandingScreen
-import com.example.vcompass.screen.search.SearchScreen
-import com.example.vcompass.ui.core.ScreenWithBottomBar
+import com.example.vcompass.ui.core.general.ScreenWithBottomBar
 import com.example.vcompass.ui.core.bottombar.CustomBottomBar
 import com.example.vcompass.ui.core.bottombar.bottomDestinations
 import com.example.vcompass.util.AppConstants

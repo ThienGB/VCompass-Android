@@ -42,7 +42,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.accessed.core.compose_view.text.CoreText
 import com.example.vcompass.R
-import com.example.vcompass.ui.core.RatingBar
+import com.example.vcompass.ui.core.rating.RatingBar
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap

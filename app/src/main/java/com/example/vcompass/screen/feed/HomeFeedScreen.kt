@@ -50,7 +50,7 @@ fun HomeFeedScreen(
             verticalArrangement = Arrangement.spacedBy(MyDimen.p4),
             modifier = Modifier.fillMaxSize()
         ) {
-            TravelPost()
+            TravelPost(navController)
         }
 
         Box(

@@ -207,7 +207,7 @@ fun ExploreHeaderSection(
             imageVector = Icons.Default.Search,
             tintColor = MyColor.White,
             iconModifier = Modifier.size(MyDimen.p28),
-            onClick = { navController.add(CoreRoute.ExploreSearchGraph.route) }
+            onClick = { navController.add(CoreRoute.ExploreSearch.route) }
         )
     }
 }

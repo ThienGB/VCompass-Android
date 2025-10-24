@@ -58,9 +58,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.accessed.core.compose_view.text.CoreText
 import com.example.vcompass.R
 import com.example.vcompass.ui.module.user.schedule.ScheduleActivity
+import com.example.vcompass.util.add
 import com.example.vcompass.util.clickNoRipple
 import com.example.vcompass.util.formatThousandK
 import com.example.vcompass.util.scaleOnClick
@@ -77,11 +79,12 @@ import com.vcompass.core.resource.MyDimen
 import com.vcompass.core.typography.CoreTypography
 import com.vcompass.core.typography.CoreTypographyBold
 import com.vcompass.core.typography.CoreTypographySemiBold
+import com.vcompass.presentation.util.CoreRoute
 import kotlinx.coroutines.delay
 
-@Preview(showSystemUi = true)
 @Composable
 fun TravelPost(
+    navController: NavController = NavController(LocalContext.current),
     onLikeClick: () -> Unit = {},
     onCommentClick: () -> Unit = {},
     onShareClick: () -> Unit = {},
@@ -157,9 +160,7 @@ fun TravelPost(
             // Action button with modern styling
             Button(
                 onClick = {
-                    val intent = Intent(context, ScheduleActivity::class.java)
-                    intent.putExtra("scheduleId", scheduleId)
-                    context.startActivity(intent)
+                    navController.add(CoreRoute.Schedule.route)
                 },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MyColor.SecondPrimary,

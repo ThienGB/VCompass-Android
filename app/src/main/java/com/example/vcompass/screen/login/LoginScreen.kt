@@ -22,7 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.navigation.NavController
 import com.example.vcompass.R
-import com.example.vcompass.ui.core.ScreenNormal
+import com.example.vcompass.ui.core.general.ScreenNormal
 import com.example.vcompass.util.back
 import com.example.vcompass.util.goWithState
 import com.vcompass.core.resource.MyDimen

@@ -6,9 +6,10 @@ sealed class CoreRoute(val route: String) {
     data object Login : CoreRoute("login")
     data object Home : CoreRoute("home")
 
-    data object HomeGraph : CoreRoute("home_graph")
-    data object ExploreGraph : CoreRoute("explore_graph")
-    data object ExploreSearchGraph : CoreRoute("explore_search_graph")
-    data object HomeSearchGraph : CoreRoute("home_search_graph")
-    data object ConnectionGraph : CoreRoute("connection_graph")
+    data object HomeFeed : CoreRoute("home_feed")
+    data object Explore : CoreRoute("explore")
+    data object ExploreSearch : CoreRoute("explore_search")
+    data object HomeSearch : CoreRoute("home_search")
+    data object Connection : CoreRoute("connection")
+    data object Schedule : CoreRoute("schedule")
 }

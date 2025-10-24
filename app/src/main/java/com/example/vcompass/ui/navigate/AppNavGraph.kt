@@ -12,9 +12,9 @@ import com.example.vcompass.screen.feed.HomeFeedScreen
 import com.example.vcompass.screen.home.HomeScreen
 import com.example.vcompass.screen.introduce.IntroduceScreen
 import com.example.vcompass.screen.login.LoginScreen
-import com.example.vcompass.screen.search.MapSearchScreen
 import com.example.vcompass.screen.search.SearchScreen
 import com.example.vcompass.screen.splash.SplashScreen
+import com.example.vcompass.screen.schedule.ScheduleScreen
 import com.vcompass.presentation.util.CoreRoute
 
 @Composable
@@ -36,23 +36,27 @@ fun AppNavGraph(navController: NavHostController = rememberNavController()) {
             HomeScreen(navController = navController)
         }
 
-        composable(CoreRoute.HomeGraph.route) {
+        composable(CoreRoute.HomeFeed.route) {
             HomeFeedScreen(navController = navController)
         }
 
-        composable(CoreRoute.ExploreGraph.route) {
+        composable(CoreRoute.Explore.route) {
             ExploreScreen(navController = navController)
         }
 
-        composable(CoreRoute.ExploreSearchGraph.route) {
+        composable(CoreRoute.ExploreSearch.route) {
             ExploreSearchScreen(navController = navController)
         }
 
-        composable(CoreRoute.HomeSearchGraph.route) {
+        composable(CoreRoute.HomeSearch.route) {
             SearchScreen(navController = navController)
         }
 
-        composable(CoreRoute.ConnectionGraph.route) {
+        composable(CoreRoute.Schedule.route) {
+            ScheduleScreen(navController = navController)
+        }
+
+        composable(CoreRoute.Connection.route) {
             ConnectionScreen(navController = navController)
         }
     }

@@ -13,13 +13,13 @@ data class BottomBarUIModel(
 
 val bottomDestinations = listOf(
     BottomBarUIModel(
-        route = CoreRoute.HomeGraph.route,
+        route = CoreRoute.HomeFeed.route,
         label = "",
         unselectedIcon = R.drawable.ic_home_fill,
         selectedIcon = R.drawable.ic_home_fill
     ),
     BottomBarUIModel(
-        route = CoreRoute.ExploreGraph.route,
+        route = CoreRoute.Explore.route,
         label = "",
         unselectedIcon = R.drawable.ic_explore_filled_24dp,
         selectedIcon = R.drawable.ic_explore_filled_24dp
@@ -31,13 +31,13 @@ val bottomDestinations = listOf(
         selectedIcon = R.drawable.ic_home_fill
     ),
     BottomBarUIModel(
-        route = CoreRoute.HomeSearchGraph.route,
+        route = CoreRoute.HomeSearch.route,
         label = "",
         unselectedIcon = R.drawable.ic_travel_search_24dp,
         selectedIcon = R.drawable.ic_travel_search_24dp
     ),
     BottomBarUIModel(
-        route = CoreRoute.ConnectionGraph.route,
+        route = CoreRoute.Connection.route,
         label = "",
         unselectedIcon = R.drawable.ic_home_person_fill,
         selectedIcon = R.drawable.ic_home_person_fill

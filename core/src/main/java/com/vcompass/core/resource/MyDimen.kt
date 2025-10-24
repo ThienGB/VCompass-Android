@@ -5,6 +5,7 @@ import androidx.compose.ui.unit.sp
 
 object MyDimen {
     val zero = 0.dp
+    val pHalf = 0.5.dp
     val p1 = 1.dp
     val p2 = 2.dp
     val p4 = 4.dp
