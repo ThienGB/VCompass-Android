@@ -3,9 +3,6 @@ package com.example.vcompass.helper
 import android.content.SharedPreferences
 import android.net.Uri
 import com.example.vcompass.data.model.UserAccount
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
-import com.google.firebase.storage.UploadTask
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -15,8 +12,8 @@ import java.util.concurrent.TimeUnit
 
 object CommonUtils {
     @JvmStatic
-    fun formatCurrency(price: String): String {
-        if (price.isEmpty()) return "0"
+    fun formatCurrency(price: Int?): String {
+        if (price == null) return "0"
         val formatter = DecimalFormat("#,###")
         return formatter.format(price.toLong())
     }
@@ -45,20 +42,4 @@ object CommonUtils {
         sdf.timeZone = TimeZone.getTimeZone("Asia/Ho_Chi_Minh")
         return sdf.format(date)
     }
-    @JvmStatic
-    fun upLoadImage(uri: Uri, path: String, onSuccess: (String) -> Unit = {}) {
-        val storage = FirebaseStorage.getInstance()
-        val imageUrl = uri.toString()
-        val storageRef: StorageReference = storage.reference
-        val imageRef = storageRef.child("${path}/${System.currentTimeMillis()}.jpg")
-        val uploadTask: UploadTask = imageRef.putFile(uri)
-        uploadTask.addOnSuccessListener {
-            imageRef.downloadUrl.addOnSuccessListener { uri ->
-                onSuccess(uri.toString())
-            }
-        }.addOnFailureListener { exception ->
-            println("Image upload failed: ${exception.message}")
-        }
-    }
-
 }

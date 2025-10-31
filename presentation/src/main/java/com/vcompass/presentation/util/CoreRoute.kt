@@ -10,6 +10,5 @@ sealed class CoreRoute(val route: String) {
     data object Explore : CoreRoute("explore")
     data object ExploreSearch : CoreRoute("explore_search")
     data object HomeSearch : CoreRoute("home_search")
-    data object Connection : CoreRoute("connection")
     data object Schedule : CoreRoute("schedule")
 }

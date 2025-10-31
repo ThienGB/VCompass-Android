@@ -36,7 +36,7 @@
 //import com.example.vcompass.data.model.Search
 //import com.example.vcompass.data.model.UserAccount
 //import com.example.vcompass.helper.CommonUtils.formatCurrency
-//import com.example.vcompass.ui.components.NavTitle
+//import com.example.vcompass.ui.core.title.NavTitle
 //import com.example.vcompass.ui.module.user.main.MainUserViewModel
 //
 //@Composable

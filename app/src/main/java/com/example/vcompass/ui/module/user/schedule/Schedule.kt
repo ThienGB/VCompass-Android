@@ -110,7 +110,7 @@
 //import com.example.vcompass.data.api.model.Schedule
 //import com.example.vcompass.helper.BottomSheetType
 //import com.example.vcompass.helper.CommonUtils.formatCurrency
-//import com.example.vcompass.ui.components.Loading
+//import com.example.vcompass.ui.core.general.Loading
 //import com.example.vcompass.ui.components.sheet.AddActivityBottomSheet
 //import com.example.vcompass.ui.components.sheet.CommentBottomSheet
 //import com.example.vcompass.ui.components.sheet.CustomBottomSheet

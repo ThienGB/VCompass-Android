@@ -40,7 +40,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.accessed.core.compose_view.text.CoreText
 import com.example.vcompass.R
-import com.example.vcompass.enum.SearchHomeTabEnum
+import com.example.vcompass.enum.SearchHomeTab
 import com.example.vcompass.screen.feed.TravelPost
 import com.example.vcompass.ui.core.list.ListItemTab
 import com.vcompass.core.compose_view.TabView
@@ -60,7 +60,7 @@ import com.vcompass.core.typography.CoreTypographySemiBold
 fun SearchTabScreen(
     navController: NavController = rememberNavController(),
 ) {
-    val tabs = SearchHomeTabEnum.entries
+    val tabs = SearchHomeTab.entries
     val selectedTabIndex = remember { mutableIntStateOf(0) }
     Column(
         modifier = Modifier
@@ -79,25 +79,25 @@ fun SearchTabScreen(
             tabTitle = { tab -> stringResource(tab.titleRes) },
             content = { tab ->
                 when (tab) {
-                    SearchHomeTabEnum.SCHEDULE -> ListItemTab(
+                    SearchHomeTab.SCHEDULE -> ListItemTab(
                         items = listOf("", "12", "123")
                     ) { item ->
                         TravelPost()
                     }
 
-                    SearchHomeTabEnum.ACCOMMODATION -> ListItemTab(
+                    SearchHomeTab.ACCOMMODATION -> ListItemTab(
                         items = listOf(1, 2, 3, 4, 5, 6, 7)
                     ) { person ->
                         AccommodationHorizontalItem()
                     }
 
-                    SearchHomeTabEnum.FOODPLACE -> ListItemTab(
+                    SearchHomeTab.FOODPLACE -> ListItemTab(
                         items = listOf(1, 2, 3, 4, 5)
                     ) { person ->
                         TravelPost()
                     }
 
-                    SearchHomeTabEnum.ATTRACTION -> ListItemTab(
+                    SearchHomeTab.ATTRACTION -> ListItemTab(
                         items = listOf(1)
                     ) { person ->
                         TravelPost()

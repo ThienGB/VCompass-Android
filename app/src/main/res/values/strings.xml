@@ -7,4 +7,7 @@
     <string name="lb_total_results"> Results</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+    <string name="lb_summary">Summary</string>
+    <string name="lb_detail">Detail</string>
+    <string name="lb_map">Map</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.example.vcompass.ui.components.sheet
+package com.example.vcompass.ui.core.sheet
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

@@ -21,7 +21,7 @@
 //import androidx.compose.ui.text.font.FontWeight
 //import androidx.compose.ui.text.style.TextAlign
 //import androidx.compose.ui.unit.dp
-//import com.example.vcompass.ui.components.TimePickerDialog
+//import com.example.vcompass.ui.core.picker.TimePickerDialog
 //import com.example.vcompass.ui.module.user.schedule.ScheduleViewModel
 //
 //@OptIn(ExperimentalMaterial3Api::class)

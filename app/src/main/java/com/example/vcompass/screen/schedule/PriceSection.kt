@@ -65,7 +65,7 @@ fun PriceSection(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
-            text = formatCurrency(total.toString()), fontSize = 28.sp,
+            text = formatCurrency(total), fontSize = 28.sp,
             color = Color.White,
             fontWeight = FontWeight.W700,
             letterSpacing = 1.5.sp
@@ -206,7 +206,7 @@ fun PriceItem(
         }
         Spacer(modifier = Modifier.weight(1f))
         Text(
-            text = formatCurrency(price.toString()) + " đ",
+            text = formatCurrency(price) + " đ",
             fontWeight = FontWeight.W600,
             fontSize = 15.sp,
             textAlign = TextAlign.Center,

@@ -21,8 +21,7 @@ import com.google.maps.android.compose.Polyline
 import com.google.maps.android.compose.rememberCameraPositionState
 
 @Composable
-fun ScheduleMapTab(
-) {
+fun ScheduleMapTab() {
     val routePoints = listOf(
         LatLng(10.3401, 107.0843), // Bãi Sau
         LatLng(10.3372, 107.0840), // Tượng Chúa Kitô Vua

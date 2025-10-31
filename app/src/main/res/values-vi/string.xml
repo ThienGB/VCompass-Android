@@ -8,4 +8,7 @@
     <string name="lb_total_results"> Kết quả</string>
     <string name="next">Tiếp</string>
     <string name="previous">Trước</string>
+    <string name="lb_summary">Tổng quản</string>
+    <string name="lb_detail">Chi tiết</string>
+    <string name="lb_map">Bản đồ</string>
 </resources>

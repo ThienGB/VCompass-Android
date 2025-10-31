@@ -48,8 +48,8 @@
 //import com.example.vcompass.helper.CommonUtils.getUserFromShareRef
 //import com.example.vcompass.helper.RealmHelper
 //import com.example.vcompass.helper.SharedPreferencesHelper
-//import com.example.vcompass.ui.components.Loading
-//import com.example.vcompass.ui.components.NavTitle
+//import com.example.vcompass.ui.core.general.Loading
+//import com.example.vcompass.ui.core.title.NavTitle
 //import com.example.vcompass.ui.factory.ViewModelFactory
 //import com.example.vcompass.ui.module.general.accomodation.HotelDetailsScreen
 //import com.example.vcompass.ui.module.user.main.MainUserActivity

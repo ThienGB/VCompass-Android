@@ -13,11 +13,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
-import com.vcompass.core.resource.MyDimen
-import com.vcompass.presentation.viewmodel.splash.SplashViewModel
 import com.example.vcompass.R
-import com.example.vcompass.util.clearAllStackAndGo
+import com.example.vcompass.util.replace
+import com.vcompass.core.resource.MyDimen
 import com.vcompass.presentation.util.CoreRoute
+import com.vcompass.presentation.viewmodel.splash.SplashViewModel
 import kotlinx.coroutines.delay
 import org.koin.androidx.compose.koinViewModel
 
@@ -38,7 +38,7 @@ fun SplashScreen(
             else -> CoreRoute.Introduce.route
         }
         delay(2000)
-        navController.clearAllStackAndGo(route)
+        navController.replace(route)
     }
 
     Box(

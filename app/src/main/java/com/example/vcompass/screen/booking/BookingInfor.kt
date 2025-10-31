@@ -46,7 +46,7 @@
 //import androidx.navigation.NavController
 //import com.example.vcompass.R
 //import com.example.vcompass.helper.CommonUtils.formatDateHaveDay
-//import com.example.vcompass.ui.components.NavTitle
+//import com.example.vcompass.ui.core.title.NavTitle
 //
 //@Composable
 //fun BookingInformation(

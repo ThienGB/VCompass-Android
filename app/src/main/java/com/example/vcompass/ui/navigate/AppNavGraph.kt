@@ -5,7 +5,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.vcompass.screen.connection.ConnectionScreen
 import com.example.vcompass.screen.explore.ExploreScreen
 import com.example.vcompass.screen.explore.search.ExploreSearchScreen
 import com.example.vcompass.screen.feed.HomeFeedScreen
@@ -56,8 +55,5 @@ fun AppNavGraph(navController: NavHostController = rememberNavController()) {
             ScheduleScreen(navController = navController)
         }
 
-        composable(CoreRoute.Connection.route) {
-            ConnectionScreen(navController = navController)
-        }
     }
 }

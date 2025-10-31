@@ -1,9 +1,6 @@
 package com.example.vcompass.util
 
 import androidx.navigation.NavController
-import androidx.navigation.NavDestination
-import androidx.navigation.NavDestination.Companion.hierarchy
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.vcompass.presentation.state.NavigateState
 import kotlinx.coroutines.flow.StateFlow
 
@@ -13,16 +10,16 @@ fun NavController.goWithState(
     if (navigateState is NavigateState.AllowNavigate) {
         val route = navigateState.route
         when {
-            navigateState.isClearStack -> clearAllStackAndGo(route)
+            navigateState.isClearStack -> clearAllStackAndAdd(route)
             navigateState.isReplace -> replace(route)
             else -> add(route)
         }
     }
 }
 
-fun NavController.clearAllStackAndGo(route: String) {
+fun NavController.clearAllStackAndAdd(route: String) {
     navigate(route) {
-        popUpTo(0) { inclusive = true }
+        popUpTo(0)
         launchSingleTop = true
         restoreState = false
     }
@@ -44,6 +41,12 @@ fun NavController.back(target: String? = null) {
     }
 }
 
+fun NavController.backAllStack() {
+    while (popBackStack()) {
+        //TODO nothing
+    }
+}
+
 fun NavController.add(route: String) {
     navigate(route) {
         // avoid duplicate screen
@@ -56,18 +59,6 @@ fun NavController.replace(route: String) {
     val currentRoute = this.currentDestination?.route
     navigate(route) {
         currentRoute?.let { popUpTo(it) { inclusive = true } }
-        launchSingleTop = true
-        restoreState = true
-    }
-}
-
-fun NavDestination?.isTopLevelDestinationOf(route: String): Boolean {
-    return this?.hierarchy?.any { it.route == route } == true
-}
-
-fun NavController.navigateToTopLevel(route: String) {
-    navigate(route) {
-        popUpTo(graph.findStartDestination().id) { saveState = true }
         launchSingleTop = true
         restoreState = true
     }

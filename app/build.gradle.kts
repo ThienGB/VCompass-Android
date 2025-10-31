@@ -24,7 +24,8 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isShrinkResources = true
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -72,80 +73,70 @@ android {
 }
 
 dependencies {
+    // Modules
     implementation(project(":presentation"))
     implementation(project(":domain"))
     implementation(project(":data"))
     implementation(project(":core"))
 
+    // Core Android
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
-    implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.activity)
+
+    // Lifecycle
     implementation(libs.androidx.lifecycle.livedata.ktx)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+
+    // Navigation
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
-    implementation(libs.androidthings)
-    implementation(libs.firebase.firestore.ktx)
-    implementation(libs.androidx.activity)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.navigation.compose)
+
+    // Compose
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    implementation(libs.androidx.foundation.layout.android)
-    implementation(libs.firebase.firestore)
-    implementation(libs.androidx.ui.test.android)
     implementation(libs.androidx.runtime.livedata)
-    implementation(libs.firebase.storage)
-    implementation(libs.firebase.auth)
-    implementation(libs.androidx.compose.testing)
-    implementation(libs.androidx.media3.ui)
-    implementation(libs.androidx.media3.exoplayer)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(libs.androidx.ui.test.junit4)
-
-    implementation (libs.picasso)
-    implementation(libs.coil.compose)
-    implementation(libs.reflections)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-    implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.navigation.compose)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    implementation (libs.rxjava)
-    implementation (libs.rxandroid)
-    implementation (libs.accompanist.permissions)
-    implementation(libs.gson)
-    implementation(libs.kotlinx.serialization.json)
-    implementation (libs.accompanist.swiperefresh)
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.0") {
-        because("androidx.compose.ui:ui-test-junit4:1.7.2 requires 3.5.0")
-    }
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.7.2") {
-        exclude(group = "androidx.test.espresso", module = "espresso-core")
-    }
+    implementation(libs.androidx.compose.material.icons.extended)
 
-    implementation(platform(libs.firebase.bom))
-    implementation(libs.google.firebase.auth)
-    implementation(libs.play.services.auth)
-    implementation(libs.charty)
-    implementation (libs.okhttp)
-    implementation (libs.firebase.messaging.ktx)
-    implementation (libs.androidx.work.runtime.ktx)
-    implementation(libs.reorderable)
-    implementation(libs.maps.compose)
+    // Media
+    implementation(libs.androidx.media3.ui)
+    implementation(libs.androidx.media3.exoplayer)
+
+    // Image Loading
+    implementation(libs.coil.compose)
+
+    // Dependency Injection
     implementation(project.dependencies.platform(libs.koin.bom))
     implementation(libs.koin.core)
     implementation(libs.koin.android)
     implementation(libs.koin.compose)
-}
-configurations.all {
-    resolutionStrategy {
-        force("androidx.test.espresso:espresso-core:3.5.0")
-    }
+
+    // Accompanist
+    implementation(libs.accompanist.permissions)
+    implementation(libs.accompanist.swiperefresh)
+
+    // Utilities
+    implementation(libs.gson)
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.play.services.auth)
+    implementation(libs.charty)
+    implementation(libs.okhttp)
+    implementation(libs.androidx.work.runtime.ktx)
+    implementation(libs.reorderable)
+    implementation(libs.maps.compose)
+
+    // Testing
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.androidx.ui.test.junit4)
 }

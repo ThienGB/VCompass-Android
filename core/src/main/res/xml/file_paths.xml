@@ -2,7 +2,7 @@
 <paths>
     <external-path
         name="external_files"
-        path="Accessed" />
+        path="Vcompass" />
     <external-files-path
         name="images"
         path="Pictures/" />

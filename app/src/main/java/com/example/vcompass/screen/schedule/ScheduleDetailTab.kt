@@ -64,11 +64,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.net.toUri
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberAsyncImagePainter
+import com.accessed.core.compose_view.text.CoreText
 import com.example.vcompass.R
 import com.example.vcompass.data.api.model.Accommodation
 import com.example.vcompass.data.api.model.ActivityItem
@@ -84,40 +86,35 @@ import com.vcompass.core.compose_view.space.SpaceWidth4
 import com.vcompass.core.compose_view.space.SpaceWidth8
 import com.vcompass.core.resource.MyColor
 import com.vcompass.core.resource.MyDimen
+import com.vcompass.core.typography.CoreTypographyBold
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 
 @Composable
 fun ScheduleDetailTab(
-    showBottomSheet: (BottomSheetType) -> Unit,
-    schedule: Schedule?
+    showBottomSheet: (BottomSheetType) -> Unit = {},
+    schedule: Schedule? = null
 ) {
     val listState = rememberLazyListState()
-    val coroutineScope = rememberCoroutineScope()
     val selectedItem = remember { mutableStateOf(0) }
     val dayIndexToColumnIndex = remember(schedule) {
         val map = mutableMapOf<Int, Int>()
         var currentIndex = 0
         schedule?.activities?.forEachIndexed { index, dayActivity ->
             map[dayActivity.day ?: (index + 1)] = currentIndex
-            currentIndex++ // dòng tiêu đề "Ngày X"
-            currentIndex += dayActivity.activity?.size ?: 0 // số hoạt động trong ngày đó
+            currentIndex++
+            currentIndex += dayActivity.activity?.size ?: 0
         }
         map
     }
 
     LaunchedEffect(selectedItem.value) {
-        val targetIndex = dayIndexToColumnIndex[selectedItem.value] ?: 0
         listState.animateScrollBy(50f)
-        Log.d("ScrollDebug", "Scroll to item index: $targetIndex")
     }
     Column {
-        Spacer(modifier = Modifier.height(10.dp))
         LazyRow(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 3.dp),
-            horizontalArrangement = Arrangement.spacedBy(10.dp),
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(MyDimen.p10),
             verticalAlignment = Alignment.CenterVertically
         ) {
             item {
@@ -125,17 +122,16 @@ fun ScheduleDetailTab(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center,
                     modifier = Modifier
-                        .padding(start = 10.dp, end = 30.dp)
-                        .clip(RoundedCornerShape(99.dp))
+                        .padding(start = MyDimen.p10, end = MyDimen.p32)
+                        .clip(RoundedCornerShape(MyDimen.p100))
                         .background(MyColor.Black)
-                        .padding(7.dp)
+                        .padding(MyDimen.p8)
                         .clickableWithScale { showBottomSheet(BottomSheetType.RANGE_DAY_PICKER) }
                 ) {
-                    Icon(
-                        painter = painterResource(R.drawable.ic_calendar),
-                        contentDescription = null,
-                        tint = Color.White,
-                        modifier = Modifier.size(25.dp)
+                    CoreIcon(
+                        resDrawable = R.drawable.ic_calendar,
+                        tintColor = MyColor.White,
+                        iconModifier = Modifier.size(MyDimen.p24)
                     )
                 }
             }
@@ -150,17 +146,16 @@ fun ScheduleDetailTab(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.Center,
                         modifier = Modifier
-                            .clip(RoundedCornerShape(8.dp))
+                            .clip(RoundedCornerShape(MyDimen.p8))
                             .background(if (selectedItem.value != index) MyColor.White else MyColor.Gray999)
-                            .padding(vertical = 12.dp, horizontal = 20.dp)
+                            .padding(vertical = MyDimen.p12, horizontal = MyDimen.p20)
                             .clickableWithScale {
                                 selectedItem.value = index
                             }
                     ) {
-                        Text(
+                        CoreText(
                             text = "Ngày " + item.day.toString(),
-                            fontSize = 15.sp,
-                            fontWeight = FontWeight.W700,
+                            style = CoreTypographyBold.bodyMedium,
                             letterSpacing = 1.5.sp,
                             textAlign = TextAlign.Center
                         )
@@ -427,7 +422,7 @@ fun ActivityCard(
                 )
                 Spacer(modifier = Modifier.width(6.dp))
                 Text(
-                    text = formatCurrency(item.cost.toString()) + " đ",
+                    text = formatCurrency(item.cost) + " đ",
                     fontSize = 16.sp,
                     fontWeight = FontWeight.W500,
                     color = Color.Red,
@@ -596,7 +591,7 @@ fun ActivityCard(
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
-                            text = formatCurrency(price.toString()) + " đ",
+                            text = formatCurrency(price) + " đ",
                             fontSize = 12.sp,
                             fontWeight = FontWeight.W600,
                             color = Color.DarkGray,

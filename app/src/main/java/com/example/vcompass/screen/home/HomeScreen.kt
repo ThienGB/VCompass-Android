@@ -13,7 +13,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.vcompass.presentation.viewmodel.home.HomeViewModel
-import com.example.vcompass.screen.connection.ConnectionScreen
 import com.example.vcompass.screen.explore.ExploreScreen
 import com.example.vcompass.screen.feed.HomeFeedScreen
 import com.example.vcompass.screen.search.SearchLandingScreen
@@ -78,7 +77,7 @@ fun HomeScreen(
                 AppConstants.HOME_FEED_INDEX -> HomeFeedScreen(navController)
                 AppConstants.HOME_EXPLORE_INDEX -> ExploreScreen(navController)
                 AppConstants.HOME_SEARCH_INDEX -> SearchLandingScreen(navController)
-                AppConstants.HOME_PROFILE_INDEX -> ConnectionScreen(navController)
+                AppConstants.HOME_PROFILE_INDEX -> SearchLandingScreen(navController)
             }
         }
 
