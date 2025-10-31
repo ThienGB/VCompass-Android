@@ -33,7 +33,7 @@ android {
     productFlavors {
         create("stag") {
             dimension = "env"
-            buildConfigField("String", "BASE_URL", "\"https://vcompass-backend.onrender.com/\"")
+            buildConfigField("String", "BASE_URL", "\"https://vcompass-be.onrender.com/\"")
             buildConfigField(
                 "String",
                 "SOCKET_IO_URL",
@@ -44,7 +44,7 @@ android {
 
         create("prod") {
             dimension = "env"
-            buildConfigField("String", "BASE_URL", "\"https://vcompass-backend.onrender.com/\"")
+            buildConfigField("String", "BASE_URL", "\"https://vcompass-be.onrender.com/\"")
             buildConfigField(
                 "String",
                 "SOCKET_IO_URL",

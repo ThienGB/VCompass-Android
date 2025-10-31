@@ -1,7 +1,5 @@
 package com.vcompass.data.model.dto.destination.attraction
 
-import com.vcompass.data.model.dto.MapperDTO
-import com.vcompass.domain.model.response.destination.attraction.OperatingHour
 import com.google.gson.annotations.SerializedName
 
 data class OperatingHourDTO(
@@ -13,13 +11,4 @@ data class OperatingHourDTO(
     val openTime: String?,
     @SerializedName("closeTime")
     val closeTime: String?
-) : MapperDTO<OperatingHour> {
-    override fun toDomain(): OperatingHour {
-        return OperatingHour(
-            startDay = startDay,
-            endDay = endDay,
-            openTime = openTime,
-            closeTime = closeTime
-        )
-    }
-}
+)

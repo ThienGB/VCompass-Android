@@ -61,12 +61,10 @@ dependencies {
     implementation(project.dependencies.platform(libs.koin.bom))
     implementation(libs.koin.core)
     implementation(libs.koin.android)
-
     implementation(libs.coroutines.android)
     implementation(libs.coroutines.core)
-
     implementation(libs.viewmodel.lifecyle)
     implementation(libs.viewmodel.compose)
-
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.paging.common)
 }

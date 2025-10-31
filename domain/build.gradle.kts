@@ -54,9 +54,9 @@ android {
 }
 
 dependencies {
+    implementation(project(":data"))
     implementation(project.dependencies.platform(libs.koin.bom))
     implementation(libs.koin.core)
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.retrofit.converter)
     implementation(libs.retrofit.logging)

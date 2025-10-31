@@ -4,7 +4,6 @@ import com.google.gson.GsonBuilder
 import com.google.gson.JsonParseException
 import com.google.gson.reflect.TypeToken
 
-
 inline fun <reified T> Any?.tryParseListObject(): List<T>? {
     val gSon = GsonBuilder().create()
     return try {
@@ -23,12 +22,22 @@ inline fun <reified T> Any?.tryParseListObject(): List<T>? {
 inline fun <reified T> Any?.tryParseObject(): T? {
     val gSon = GsonBuilder().create()
     return try {
-        gSon.fromJson(this.toString(), T::class.java)
-    } catch (e: Exception) {
+        val jsonElement = gSon.toJson(this)
+        gSon.fromJson(jsonElement, T::class.java)
+    } catch (_: Exception) {
         try {
-            gSon.fromJson(this.toJson(), T::class.java)
-        } catch (e: JsonParseException) {
-            null
+            val jsonElement = gSon.toJson(this.toString())
+            gSon.fromJson(jsonElement, T::class.java)
+        } catch (_: Exception) {
+            try {
+                gSon.fromJson(this.toString(), T::class.java)
+            } catch (_: Exception) {
+                try {
+                    gSon.fromJson(this.toJson(), T::class.java)
+                } catch (_: Exception) {
+                    null
+                }
+            }
         }
     }
 }

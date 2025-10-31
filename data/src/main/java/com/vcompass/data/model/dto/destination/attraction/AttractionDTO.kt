@@ -1,26 +1,17 @@
 package com.vcompass.data.model.dto.destination.attraction
 
-import com.vcompass.data.model.dto.MapperDTO
-import com.vcompass.data.model.dto.destination.DestinationDTO
-import com.vcompass.data.model.dto.destination.withDestination
-import com.vcompass.domain.model.response.destination.attraction.Attraction
 import com.google.gson.annotations.SerializedName
+import com.vcompass.data.model.dto.destination.BusinessDTO
+import com.vcompass.data.util.tryParseObject
+import com.vcompass.domain.model.response.business.attraction.AttractionModel
 
 data class AttractionDTO(
-    @SerializedName("attractionName")
-    val attractionName: String?,
     @SerializedName("price")
     val price: Int?,
     @SerializedName("operatingHours")
     val operatingHours: List<OperatingHourDTO>?,
-) : DestinationDTO(), MapperDTO<Attraction> {
-    override fun toDomain(): Attraction {
-        return Attraction(
-            attractionName = attractionName,
-            price = price,
-            operatingHours = operatingHours?.map { it.toDomain() },
-        ).withDestination(this)
-    }
+) : BusinessDTO()
 
+fun AttractionDTO.toAttractionModel(): AttractionModel {
+    return tryParseObject<AttractionModel>() ?: AttractionModel()
 }
-

@@ -5,10 +5,14 @@ import com.vcompass.domain.model.response.common.add403
 import com.vcompass.domain.repository.login.LoginRepository
 import com.vcompass.presentation.util.PresentationConstants
 
-class GlobalConfig(private val loginRepo: LoginRepository) {
+class GlobalConfig(private val logoutUseCase: LogoutUseCase) {
     private var sessionDataModel: SessionDataModel? = null
 
-    fun setSessionData(data: SessionDataModel) {
+    fun getSessionData() = sessionDataModel
+
+    fun updateSessionData(data: SessionDataModel) {
+        if (data.isRememberMe == false)
+            data.userName = ""
         sessionDataModel = data
     }
 
@@ -18,7 +22,9 @@ class GlobalConfig(private val loginRepo: LoginRepository) {
         }
     }
 
-    suspend fun clearSessionData() {
-        loginRepo.logout().collect {  }
+    suspend fun userLogout() = logoutUseCase()
+
+    fun clearSessionData(){
+        sessionDataModel = null
     }
 }

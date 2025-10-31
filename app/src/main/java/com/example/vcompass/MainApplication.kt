@@ -1,8 +1,6 @@
 package com.example.vcompass
 
 import android.app.Application
-import com.vcompass.data.di.dataModule
-import com.vcompass.domain.di.domainModule
 import com.vcompass.presentation.di.presentationModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -16,9 +14,7 @@ class MainApplication : Application() {
         startKoin {
             androidLogger(Level.DEBUG)
             androidContext(this@MainApplication)
-            modules(
-                dataModule + domainModule + presentationModule
-            )
+            modules(presentationModule)
         }
     }
 }

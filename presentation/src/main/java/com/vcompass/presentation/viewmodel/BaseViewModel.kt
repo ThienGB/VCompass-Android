@@ -36,19 +36,86 @@ open class BaseViewModel(
         _stateUI.value = ViewUIState.Loading
     }
 
-    fun resetState() {
+    fun hideLoadingGlobal() {
+        emitGlobal(GlobalEvent.LoadingGlobal(false))
+    }
+
+    fun showLoadingGlobal() {
+        emitGlobal(GlobalEvent.LoadingGlobal(true))
+    }
+
+    private fun showSnackBar(){
+        _stateUI.value = ViewUIState.ShowSnackBar
+    }
+
+    fun resetStateLocal() {
         _stateUI.value = ViewUIState.Idle
+    }
+
+    fun resetStateGLobal() {
+        emitGlobal(GlobalEvent.Idle)
+    }
+
+    fun forceUpdateEvent() {
+        emitGlobal(GlobalEvent.ForceUpdate)
     }
 
     fun setSuccess() {
         _stateUI.value = ViewUIState.Success
     }
 
-    fun setError(message: String) {
-        _stateUI.value = ViewUIState.Error(message)
+    fun showError(
+        message: String,
+        duration: SnackBarDurationType = SnackBarDurationType.SHORT,
+        onClick: (() -> Unit)? = null
+    ) {
+        showSnackBar()
+        emitGlobal(
+            GlobalEvent.SnackBarErrorGlobal(
+                message, duration, onClick
+            )
+        )
     }
 
-    fun doNavigate(
+    fun showToastSuccess(
+        message: String,
+        duration: SnackBarDurationType = SnackBarDurationType.SHORT,
+        onClick: (() -> Unit)? = null
+    ) {
+        showSnackBar()
+        emitGlobal(
+            GlobalEvent.SnackBarSuccessGlobal(
+                message, duration, onClick
+            )
+        )
+    }
+
+    fun showToast(
+        message: String,
+        duration: SnackBarDurationType = SnackBarDurationType.SHORT,
+        onClick: (() -> Unit)? = null
+    ) {
+        showSnackBar()
+        emitGlobal(
+            GlobalEvent.SnackBarInfoGlobal(
+                message, duration, onClick
+            )
+        )
+    }
+
+    fun showToastWarning(
+        message: String,
+        duration: SnackBarDurationType = SnackBarDurationType.SHORT, onClick: (() -> Unit)? = null
+    ) {
+        showSnackBar()
+        emitGlobal(
+            GlobalEvent.SnackBarWarningGlobal(
+                message, duration, onClick
+            )
+        )
+    }
+
+    fun navigateTo(
         route: String,
         isClearStack: Boolean = false,
         isReplace: Boolean = false
@@ -64,11 +131,42 @@ open class BaseViewModel(
         }
     }
 
-    fun navigateToLoginScreen() {
-        emitGlobal(GlobalEvent.Logout)
+    fun globalLogout() {
+        if (globalConfig.getSessionData()?.accessToken?.isNotEmpty() == true)
+            emitGlobal(GlobalEvent.Logout)
     }
 
-    fun addError403() {
-        emitGlobal(GlobalEvent.Forbidden)
+    fun handleExpiredToken() {
+        collectToState(
+            showLoading = false,
+            block = {
+                globalConfig.userLogout()
+            },
+            onError = {
+                globalConfig.clearSessionData()
+            }
+        ) {
+            globalConfig.clearSessionData()
+        }
+    }
+
+    open fun onForceUpdate() {
+
+    }
+
+    fun handleErrorCode(errorCode: Int?, otherClick: (() -> Unit)? = null) {
+        when {
+            errorCode?.isExpiredToken() == true -> {
+                globalLogout()
+            }
+
+            errorCode?.isForbidden() == true -> {
+                emitGlobal(GlobalEvent.Forbidden)
+            }
+
+            else -> {
+                otherClick?.invoke()
+            }
+        }
     }
 }
