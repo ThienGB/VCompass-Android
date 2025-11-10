@@ -47,7 +47,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
-import com.accessed.core.compose_view.text.CoreText
+import com.example.vcompass.ui.core.text.CoreText
 import com.example.vcompass.util.add
 import com.vcompass.core.compose_view.image.CoreIcon
 import com.vcompass.core.compose_view.image.CoreImage

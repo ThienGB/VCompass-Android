@@ -3,7 +3,7 @@ package com.vcompass.data.model.dto.destination.foodservice
 import com.google.gson.annotations.SerializedName
 import com.vcompass.data.model.dto.destination.BusinessDTO
 import com.vcompass.data.model.dto.destination.attraction.OperatingHourDTO
-import com.vcompass.data.util.tryParseObject
+import com.vcompass.domain.util.tryParseObject
 import com.vcompass.domain.model.response.business.foodservice.FoodPlaceModel
 
 data class FoodPlaceDTO(

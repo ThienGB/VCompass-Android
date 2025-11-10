@@ -1,6 +1,6 @@
 package com.vcompass.data.model.response
 
-import com.vcompass.data.util.tryParseObject
+import com.vcompass.domain.util.tryParseObject
 import com.vcompass.data.util.tryParseToInt
 import com.google.gson.Gson
 import com.google.gson.JsonParseException

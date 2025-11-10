@@ -2,12 +2,13 @@ package com.vcompass.presentation.viewmodel.splash
 
 import com.vcompass.domain.model.response.common.isLogged
 import com.vcompass.domain.usecase.common.GetSessionDataUseCase
+import com.vcompass.presentation.enums.StatusOpenApp
 import com.vcompass.presentation.event.global.GlobalConfig
 import com.vcompass.presentation.event.global.GlobalEventBus
 import com.vcompass.presentation.util.collectToState
 import com.vcompass.presentation.viewmodel.BaseViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 class SplashViewModel(
     globalEventBus: GlobalEventBus,
@@ -15,19 +16,19 @@ class SplashViewModel(
     private val sessionUseCase: GetSessionDataUseCase,
 ) : BaseViewModel(globalEventBus, globalConfig) {
 
-    private val _isLogged = MutableStateFlow(false)
-    val isLogged: StateFlow<Boolean> get() = _isLogged
-
-    private val _isOpenedApp = MutableStateFlow(false)
-    val isOpenedApp: StateFlow<Boolean> get() = _isOpenedApp
+    private val _statusOpenApp = MutableStateFlow(StatusOpenApp.NONE)
+    val statusOpenApp = _statusOpenApp.asStateFlow()
 
     init {
         collectToState(block = {
-            sessionUseCase.invoke()
+            sessionUseCase()
         }) {
-            globalConfig.setSessionData(it)
-            _isOpenedApp.value = it.isOpenedApp ?: false
-            _isLogged.value = it.isLogged()
+            globalConfig.updateSessionData(it)
+            _statusOpenApp.value = when {
+                it.isOpenedApp == false -> StatusOpenApp.INTRODUCE
+                it.isLogged() -> StatusOpenApp.LOGGED
+                else -> StatusOpenApp.GUEST
+            }
         }
     }
 }

@@ -16,11 +16,8 @@ class StatusLoginRepositoryImpl(val secureStorageHelper: SecureStorageHelper) :
         secureStorageHelper.apply {
             sessionDataModel.let {
                 it.isOpenedApp = isOpenedApp ?: false
-                it.messengerId = messengerId
                 it.isRememberMe = isRememberMe
                 it.accessToken = accessToken
-                it.calendarId = calendarId
-                it.calendarUserId = calendarUserId
                 it.isOpenedApp = isOpenedApp
             }
         }

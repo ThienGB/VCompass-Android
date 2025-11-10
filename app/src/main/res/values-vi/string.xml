@@ -11,4 +11,26 @@
     <string name="lb_summary">Tổng quản</string>
     <string name="lb_detail">Chi tiết</string>
     <string name="lb_map">Bản đồ</string>
+    <string name="lb_error_other">Xin lỗi vì sự bất tiện này! Chúng tôi đang cố gắng khắc phục.</string>
+    <string name="lb_error_unauthorized">Vui lòng đăng nhập lại</string>
+    <string name="lb_error_forbidden">Vui lòng liên hệ quản trị viên để được cấp quyền</string>
+    <string name="lb_error_internal_server">Dịch vụ bất khả dụng</string>
+    <string name="lb_register_instantly">Đăng ký ngay</string>
+    <string name="lb_name">Nhập tên</string>
+    <string name="lb_email">Nhập email</string>
+    <string name="lb_or_continue_with">Hoặc tiếp tục với</string>
+    <string name="lb_continue_with_google">Tiếp tục với Google</string>
+    <string name="hint_login_password">Nhập mật khẩu</string>
+    <string name="lb_field_required">Trường này là bắt buôc</string>
+    <string name="hint_confirm_password">Nhập lại mật khẩu</string>
+    <string name="lb_remember_me">Ghi nhớ đăng nhập</string>
+    <string name="btn_login">Đăng nhập</string>
+    <string name="btn_sign_up">Đăng ký</string>
+    <string name="btn_submit">Xác nhận</string>
+    <string name="btn_forgot_password">Quên?</string>
+    <string name="btn_join_now">Đăng ký ngay</string>
+    <string name="lb_dont_have_account">Bạn chưa có tài khoản?</string>
+    <string name="lb_already_have_account">Đã có tài khoản?</string>
+    <string name="lb_forgot_password">Quên mật khẩu</string>
+    <string name="lb_forgot_infor">Chúng tôi sẽ gửi mã OTP đến email của bạn để bảo mật trong trường hợp bạn quên mật khẩu</string>
 </resources>

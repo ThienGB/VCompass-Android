@@ -5,7 +5,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.flowWithLifecycle
 import androidx.navigation.NavController
-import com.example.vcompass.util.replace
+import com.example.vcompass.util.clearAllStackAndAdd
 import com.vcompass.presentation.event.global.GlobalEvent
 import com.vcompass.presentation.util.CoreRoute
 import com.vcompass.presentation.viewmodel.BaseViewModel
@@ -13,7 +13,7 @@ import com.vcompass.presentation.viewmodel.BaseViewModel
 @Composable
 fun ObserveGlobalEvents(
     viewModel: BaseViewModel,
-    navController: NavController
+    navController: NavController? = null
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
 
@@ -23,23 +23,19 @@ fun ObserveGlobalEvents(
             .collect { event ->
                 when (event) {
                     is GlobalEvent.Logout -> {
-                        viewModel.globalConfig.clearSessionData()
-                        navController.replace(CoreRoute.Login.route)
-                    }
-
-                    is GlobalEvent.Forbidden -> {
-                        viewModel.globalConfig.add403 {
-                            viewModel.navigateToLoginScreen()
-                        }
-                    }
-
-                    is GlobalEvent.ShowDialog -> {
-                        //TODO implement after
+                        viewModel.handleExpiredToken()
+                        navController?.clearAllStackAndAdd(CoreRoute.Login.route)
                     }
 
                     is GlobalEvent.ForceUpdate -> {
-                        //TODO implement after
+                        viewModel.onForceUpdate()
                     }
+
+                    is GlobalEvent.Idle -> {
+                        viewModel.resetStateLocal()
+                    }
+
+                    else -> {}
                 }
             }
     }

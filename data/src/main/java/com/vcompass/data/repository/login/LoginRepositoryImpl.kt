@@ -26,7 +26,7 @@ class LoginRepositoryImpl(
                 response
             },
             transform = { dto ->
-                dto.toDomain()
+                LoginModel()
             }
         )
     }

@@ -2,16 +2,20 @@ package com.vcompass.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.vcompass.presentation.enums.SnackBarDurationType
 import com.vcompass.presentation.event.global.GlobalConfig
 import com.vcompass.presentation.event.global.GlobalEvent
 import com.vcompass.presentation.event.global.GlobalEventBus
 import com.vcompass.presentation.state.NavigateState
 import com.vcompass.presentation.state.ViewUIState
+import com.vcompass.presentation.util.collectToState
+import com.vcompass.presentation.util.isExpiredToken
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+
 
 open class BaseViewModel(
     val globalEventBus: GlobalEventBus,
@@ -158,10 +162,6 @@ open class BaseViewModel(
         when {
             errorCode?.isExpiredToken() == true -> {
                 globalLogout()
-            }
-
-            errorCode?.isForbidden() == true -> {
-                emitGlobal(GlobalEvent.Forbidden)
             }
 
             else -> {

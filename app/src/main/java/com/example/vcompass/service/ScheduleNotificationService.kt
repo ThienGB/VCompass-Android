@@ -6,8 +6,8 @@ import android.app.Service
 import android.content.Intent
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
-import com.vcompass.domain.model.response.schedule.ScheduleActivity
 import com.example.vcompass.R
+import com.example.vcompass.ui.module.user.schedule.ScheduleActivity
 
 class ScheduleNotificationService : Service() {
 

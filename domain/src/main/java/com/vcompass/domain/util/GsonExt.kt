@@ -1,16 +1,48 @@
 package com.vcompass.domain.util
 
-import com.vcompass.data.util.tryParseListObject
-import com.vcompass.data.util.tryParseObject
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonParseException
+import com.google.gson.reflect.TypeToken
 
 inline fun <reified T> Any?.tryParseListObject(): List<T>? {
-    return tryParseListObject<T>()
+    val gSon = GsonBuilder().create()
+    return try {
+        val jsonElement = gSon.toJson(this)
+        gSon.fromJson(jsonElement, object : TypeToken<List<T>>() {}.type)
+    } catch (e: JsonParseException) {
+        try {
+            val jsonElement = gSon.toJson(this.toString())
+            gSon.fromJson(jsonElement, object : TypeToken<List<T>>() {}.type)
+        } catch (e: Exception) {
+            null
+        }
+    }
 }
 
 inline fun <reified T> Any?.tryParseObject(): T? {
-    return tryParseObject<T>()
+    val gSon = GsonBuilder().create()
+    return try {
+        val jsonElement = gSon.toJson(this)
+        gSon.fromJson(jsonElement, T::class.java)
+    } catch (_: Exception) {
+        try {
+            val jsonElement = gSon.toJson(this.toString())
+            gSon.fromJson(jsonElement, T::class.java)
+        } catch (_: Exception) {
+            try {
+                gSon.fromJson(this.toString(), T::class.java)
+            } catch (_: Exception) {
+                try {
+                    gSon.fromJson(this.toJson(), T::class.java)
+                } catch (_: Exception) {
+                    null
+                }
+            }
+        }
+    }
 }
 
 fun Any?.toJson(): String {
-    return toJson()
+    val gSon = GsonBuilder().create()
+    return gSon.toJson(this)
 }

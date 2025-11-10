@@ -29,7 +29,7 @@ fun IntroduceScreen(
     }
 
     ScreenNormal(
-        state,
+        state = state,
         viewModel = viewModel,
         navController = navController,
     ) {

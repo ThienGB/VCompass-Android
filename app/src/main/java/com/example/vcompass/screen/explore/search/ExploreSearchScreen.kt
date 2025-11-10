@@ -31,10 +31,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.accessed.core.compose_view.text.CoreText
+import com.example.vcompass.ui.core.text.CoreText
 import com.example.vcompass.R
 import com.example.vcompass.util.clickNoRipple
-import com.vcompass.core.compose_view.TitleSearchBarAction
+import com.example.vcompass.ui.core.title.TitleSearchBarAction
 import com.vcompass.core.compose_view.image.CoreIcon
 import com.vcompass.core.compose_view.image.CoreImage
 import com.vcompass.core.compose_view.image.CoreImageSource

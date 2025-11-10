@@ -1,4 +1,4 @@
-package com.vcompass.core.compose_view
+package com.example.vcompass.ui.core.tab
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -26,10 +26,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.lerp
-import com.accessed.core.compose_view.text.CoreText
+import com.example.vcompass.ui.core.text.CoreText
 import com.vcompass.core.resource.MyColor
 import com.vcompass.core.resource.MyDimen
 import com.vcompass.core.typography.CoreTypographyMedium

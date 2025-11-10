@@ -14,9 +14,11 @@ object MyDimen {
     val p10 = 10.dp
     val p12 = 12.dp
     val p14 = 14.dp
+    val p15 = 15.dp
     val p16 = 16.dp
     val p18 = 18.dp
     val p20 = 20.dp
+    val p22 = 22.dp
     val p24 = 24.dp
     val p28 = 28.dp
     val p30 = 30.dp

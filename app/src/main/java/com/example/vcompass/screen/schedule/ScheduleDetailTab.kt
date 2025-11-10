@@ -1,7 +1,6 @@
 package com.example.vcompass.screen.schedule
 
 import android.content.Intent
-import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
@@ -46,7 +45,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
@@ -57,20 +55,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.net.toUri
-import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberAsyncImagePainter
-import com.accessed.core.compose_view.text.CoreText
+import com.example.vcompass.ui.core.text.CoreText
 import com.example.vcompass.R
 import com.example.vcompass.data.api.model.Accommodation
 import com.example.vcompass.data.api.model.ActivityItem
@@ -136,7 +131,7 @@ fun ScheduleDetailTab(
                 }
             }
             itemsIndexed(
-                schedule?.activities!!,
+                schedule?.activities ?: listOf(),
                 key = { index, item -> item.day.toString() }) { index, item ->
                 Row(
                     horizontalArrangement = Arrangement.SpaceBetween,
@@ -171,7 +166,7 @@ fun ScheduleDetailTab(
             state = listState
         ) {
             itemsIndexed(
-                schedule?.activities!!,
+                schedule?.activities ?: listOf(),
                 key = { index, item -> item.day.toString() }) { index, item ->
                 Text(
                     text = "Ngày ${item.day}: ${item.activity?.size} hoạt động",

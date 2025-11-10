@@ -1,0 +1,379 @@
+package com.example.vcompass.ui.core.text_field
+
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Error
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedCard
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.vcompass.ui.core.text.CoreText
+import com.vcompass.core.compose_view.image.CoreIcon
+import com.vcompass.core.resource.MyColor
+import com.vcompass.core.resource.MyDimen
+import com.vcompass.core.resource.MyDimen.p1
+import com.vcompass.core.resource.MyDimen.p12
+import com.vcompass.core.resource.MyDimen.p14
+import com.vcompass.core.resource.MyDimen.p16
+import com.vcompass.core.resource.MyDimen.p2
+import com.vcompass.core.resource.MyDimen.p4
+import com.vcompass.core.resource.MyDimen.p48
+import com.vcompass.core.resource.MyDimen.p6
+import com.vcompass.core.resource.MyDimen.p8
+import com.vcompass.core.resource.MyDimen.pHalf
+import com.vcompass.core.typography.CoreTypography
+import com.vcompass.core.typography.CoreTypographyMedium
+
+@Composable
+fun CoreTextField(
+    modifier: Modifier = Modifier,
+    value: String,
+    onValueChange: (String) -> Unit,
+    label: String,
+    placeholder: String? = null,
+    leadingIcon: @Composable (() -> Unit)? = null,
+    trailingIcon: @Composable (() -> Unit)? = null,
+    isError: Boolean = false,
+    errorMessage: String? = null,
+    // Thêm tham số isRequired
+    isRequired: Boolean = false,
+    requiredErrorMessage: String = "Trường này là bắt buộc",
+    // Thêm custom validator (tùy chọn)
+    customValidator: ((String) -> String?)? = null,
+    // Tham số xử lý mật khẩu
+    isPasswordToggleEnabled: Boolean = false,
+    visualTransformation: VisualTransformation = VisualTransformation.None,
+    imeAction: ImeAction = ImeAction.Next,
+    keyboardType: KeyboardType = KeyboardType.Text,
+    isSingleLine: Boolean = true,
+    maxLines: Int = Int.MAX_VALUE,
+    minLines: Int = 1,
+    enabled: Boolean = true,
+    textStyle: TextStyle = CoreTypography.labelLarge,
+    errorColor: Color = Color.Red,
+    primaryColor: Color = MaterialTheme.colorScheme.primary,
+    normalColor: Color = MyColor.TextColorPrimary,
+) {
+    // State quản lý focus
+    var isFocused by rememberSaveable { mutableStateOf(false) }
+
+    // State quản lý đã blur lần đầu chưa (để tránh hiện error ngay khi load)
+    var hasBlurred by rememberSaveable { mutableStateOf(false) }
+
+    // State quản lý ẩn/hiện mật khẩu
+    var passwordVisible by rememberSaveable { mutableStateOf(false) }
+
+    // State quản lý lỗi nội bộ
+    var internalError by rememberSaveable { mutableStateOf<String?>(null) }
+
+    // Validate khi blur
+    LaunchedEffect(isFocused, value) {
+        if (!isFocused && hasBlurred) {
+            internalError = when {
+                // Kiểm tra required trước
+                isRequired && value.isBlank() -> requiredErrorMessage
+                // Sau đó kiểm tra custom validator nếu có
+                customValidator != null && value.isNotBlank() -> customValidator(value)
+                else -> null
+            }
+        }
+    }
+
+    // Quyết định khi nào label cần "nổi" lên trên
+    val shouldFloatLabel by remember(isFocused, value) {
+        derivedStateOf { isFocused || value.isNotEmpty() }
+    }
+
+    // Xác định VisualTransformation
+    val finalVisualTransformation = when {
+        isPasswordToggleEnabled -> if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation()
+        else -> visualTransformation
+    }
+
+    // Xác định KeyboardType
+    val finalKeyboardType = when {
+        isPasswordToggleEnabled -> KeyboardType.Password
+        else -> keyboardType
+    }
+
+    // Xác định error cuối cùng (ưu tiên external error)
+    val finalIsError = isError || internalError != null
+    val finalErrorMessage = errorMessage ?: internalError
+
+    Column(modifier = modifier) {
+        BasicTextField(
+            value = value,
+            onValueChange = { newValue ->
+                onValueChange(newValue)
+                // Clear error khi user bắt đầu nhập
+                if (internalError != null && newValue.isNotBlank()) {
+                    internalError = null
+                }
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = p8)
+                .onFocusChanged { focusState ->
+                    val wasFocused = isFocused
+                    isFocused = focusState.isFocused
+
+                    // Đánh dấu đã blur lần đầu
+                    if (wasFocused && !focusState.isFocused) {
+                        hasBlurred = true
+                    }
+                },
+            singleLine = isSingleLine,
+            maxLines = maxLines,
+            minLines = minLines,
+            enabled = enabled,
+            readOnly = !enabled,
+            interactionSource = remember { MutableInteractionSource() },
+            keyboardActions = KeyboardActions.Default,
+            keyboardOptions = KeyboardOptions(
+                keyboardType = finalKeyboardType,
+                imeAction = imeAction
+            ),
+            textStyle = textStyle,
+            visualTransformation = finalVisualTransformation,
+            cursorBrush = SolidColor(Color(0xFF666666)),
+            decorationBox = { innerTextField ->
+                TextFieldDecorationBox(
+                    value = value,
+                    innerTextField = innerTextField,
+                    label = label,
+                    placeholder = placeholder,
+                    leadingIcon = leadingIcon,
+                    trailingIcon = trailingIcon,
+                    textStyle = textStyle,
+                    isError = finalIsError,
+                    isRequired = isRequired,
+                    shouldFloatLabel = shouldFloatLabel,
+                    isFocused = isFocused,
+                    isPasswordToggleEnabled = isPasswordToggleEnabled,
+                    passwordVisible = passwordVisible,
+                    onPasswordVisibilityToggle = { passwordVisible = !passwordVisible },
+                    errorColor = errorColor,
+                    primaryColor = primaryColor,
+                    normalColor = if (enabled) normalColor else normalColor.copy(alpha = 0.5f),
+                )
+            }
+        )
+
+        // Hiển thị lỗi (nếu có)
+        if (finalIsError && finalErrorMessage != null) {
+            Text(
+                text = finalErrorMessage,
+                style = CoreTypography.labelSmall,
+                color = errorColor,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = p16, top = p4)
+            )
+        }
+    }
+}
+
+@Composable
+private fun TextFieldDecorationBox(
+    value: String,
+    innerTextField: @Composable () -> Unit,
+    label: String,
+    placeholder: String?,
+    leadingIcon: @Composable (() -> Unit)?,
+    trailingIcon: @Composable (() -> Unit)?,
+    textStyle: TextStyle,
+    isError: Boolean,
+    isRequired: Boolean,
+    shouldFloatLabel: Boolean,
+    isFocused: Boolean,
+    isPasswordToggleEnabled: Boolean,
+    passwordVisible: Boolean,
+    onPasswordVisibilityToggle: () -> Unit,
+    errorColor: Color,
+    primaryColor: Color,
+    normalColor: Color,
+) {
+    // --- Các Animation ---
+
+    val labelScale by animateFloatAsState(
+        targetValue = if (shouldFloatLabel) 0.8f else 1f,
+        animationSpec = tween(200, easing = FastOutSlowInEasing),
+        label = "LabelScale"
+    )
+
+    val labelOffsetX by animateDpAsState(
+        targetValue = when {
+            shouldFloatLabel -> p12
+            leadingIcon != null -> p48
+            else -> p12
+        },
+        animationSpec = tween(200, easing = FastOutSlowInEasing),
+        label = "LabelOffsetX"
+    )
+
+    val labelOffsetY by animateDpAsState(
+        targetValue = if (shouldFloatLabel) (-8).dp else MyDimen.p15,
+        animationSpec = tween(200, easing = FastOutSlowInEasing),
+        label = "LabelOffsetY"
+    )
+
+
+
+    // --- Bố cục (Layout) ---
+
+    Box {
+        // 1. Khung viền (Container)
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+            shape = RoundedCornerShape(p6),
+            colors = CardDefaults.outlinedCardColors(containerColor = MyColor.GrayF5)
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = p16)
+                    .heightIn(min = p48)
+            ) {
+                // Icon đứng đầu (Leading Icon)
+                if (leadingIcon != null) {
+                    Box(modifier = Modifier.padding(end = p16)) {
+                        leadingIcon()
+                    }
+                }
+
+                // Vùng nhập text chính
+                Box(modifier = Modifier.weight(1f)) {
+                    innerTextField()
+
+                    // Placeholder
+                    if (shouldFloatLabel && value.isEmpty() && placeholder != null) {
+                        CoreText(
+                            text = placeholder,
+                            style = textStyle,
+                            color = normalColor.copy(alpha = 0.6f)
+                        )
+                    }
+                }
+
+                // Icon đứng cuối (Trailing Icon)
+                when {
+                    isPasswordToggleEnabled -> {
+                        CoreIcon(
+                            imageVector = if (passwordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
+                            tintColor = MyColor.Black.copy(0.3f),
+                            boxModifier = Modifier.clip(CircleShape),
+                            iconModifier = Modifier.size(MyDimen.p22),
+                            onClick = onPasswordVisibilityToggle
+                        )
+                    }
+
+                    isError -> {
+                        Icon(
+                            imageVector = Icons.Default.Error,
+                            contentDescription = "Error",
+                            modifier = Modifier.padding(start = p8),
+                            tint = errorColor
+                        )
+                    }
+
+                    trailingIcon != null -> {
+                        Box(modifier = Modifier.padding(start = p8)) {
+                            trailingIcon()
+                        }
+                    }
+                }
+            }
+        }
+
+        // 2. Label với dấu * nếu required
+        Box(
+            modifier = Modifier
+                .offset(x = labelOffsetX, y = labelOffsetY)
+                .background(
+                    color = MyColor.GrayF5,
+                    shape = RoundedCornerShape(p4)
+                )
+                .padding(horizontal = p4)
+        ) {
+            Row {
+                CoreText (
+                    text = label,
+                    style = textStyle.copy(fontSize = (textStyle.fontSize.value * labelScale).sp),
+                    color = normalColor.copy(alpha = 0.6f)
+                )
+                if (isRequired) {
+                    CoreText(
+                        text = " *",
+                        style = textStyle.copy(fontSize = (textStyle.fontSize.value * labelScale).sp),
+                        color = errorColor
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun TextFieldIcon(
+    imageVector: ImageVector? = null,
+    resDrawable: Int? = null,
+    tintColor: Color = MyColor.Black.copy(0.3f),
+    size: Dp = MyDimen.p22
+){
+    CoreIcon(
+        imageVector = imageVector,
+        resDrawable = resDrawable,
+        tintColor = tintColor,
+        iconModifier = Modifier.size(size)
+    )
+}

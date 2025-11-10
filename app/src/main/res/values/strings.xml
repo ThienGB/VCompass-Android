@@ -10,4 +10,26 @@
     <string name="lb_summary">Summary</string>
     <string name="lb_detail">Detail</string>
     <string name="lb_map">Map</string>
+    <string name="lb_error_other">Sorry!! Something went wrong. We\'re working hard to resolve it.</string>
+    <string name="lb_error_unauthorized">Unauthorized</string>
+    <string name="lb_error_forbidden">Forbidden</string>
+    <string name="lb_error_internal_server">Service unavailable</string>
+    <string name="lb_register_instantly">Register instantly</string>
+    <string name="lb_name">Enter name</string>
+    <string name="lb_email">Enter email</string>
+    <string name="lb_or_continue_with">Or continue with</string>
+    <string name="lb_continue_with_google">Continue with Google</string>
+    <string name="lb_remember_me">Remember me</string>
+    <string name="hint_login_password">Enter password</string>
+    <string name="lb_field_required">This field is required</string>
+    <string name="hint_confirm_password">Confirm Password</string>
+    <string name="btn_login">Login</string>
+    <string name="btn_sign_up">Sign Up</string>
+    <string name="btn_submit">Submit</string>
+    <string name="btn_forgot_password">Forgot?</string>
+    <string name="btn_join_now">Register Now</string>
+    <string name="lb_dont_have_account">Don\'t have an account?</string>
+    <string name="lb_already_have_account">Already have an account?</string>
+    <string name="lb_forgot_password">Forgot password</string>
+    <string name="lb_forgot_infor">We will send the OTP code to your email for security in forgetting your password</string>
 </resources>

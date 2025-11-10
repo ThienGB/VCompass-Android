@@ -54,7 +54,6 @@ android {
 }
 
 dependencies {
-    implementation(project(":data"))
     implementation(project.dependencies.platform(libs.koin.bom))
     implementation(libs.koin.core)
     implementation(libs.androidx.core.ktx)

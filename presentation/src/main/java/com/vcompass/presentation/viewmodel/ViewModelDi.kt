@@ -18,6 +18,6 @@ val viewModelModule = module {
         HomeViewModel(get(), get(), get())
     }
     viewModel {
-        LoginViewModel(get(), get(), get())
+        LoginViewModel(get(), get(), get(),get())
     }
 }

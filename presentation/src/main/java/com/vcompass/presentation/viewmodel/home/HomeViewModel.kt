@@ -12,7 +12,6 @@ class HomeViewModel(
 ) : BaseViewModel(globalEventBus, globalConfig) {
 
     fun logout() {
-        setError("401 / Forbidden")
 //        collectToState(
 //            block = {
 //                logoutUseCase.invoke()

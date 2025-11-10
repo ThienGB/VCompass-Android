@@ -1,12 +1,6 @@
 package com.example.vcompass.screen.schedule
 
-import androidx.activity.compose.LocalActivity
-import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
-import androidx.compose.animation.togetherWith
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -17,11 +11,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -30,13 +22,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
-import androidx.compose.material3.TabRowDefaults.SecondaryIndicator
-import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
-import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -50,36 +36,23 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.layout.positionInWindow
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
-import com.accessed.core.compose_view.text.CoreText
+import com.example.vcompass.ui.core.text.CoreText
 import com.example.vcompass.R
 import com.example.vcompass.data.api.model.Schedule
-import com.example.vcompass.enum.SearchHomeTab
 import com.example.vcompass.enum.tab.ScheduleTab
 import com.example.vcompass.helper.BottomSheetType
-import com.example.vcompass.screen.feed.TravelPost
-import com.example.vcompass.screen.search.AccommodationHorizontalItem
-import com.example.vcompass.ui.core.sheet.CustomBottomSheet
 import com.example.vcompass.ui.core.icon.MoreOptionIcon
-import com.example.vcompass.ui.core.list.ListItemTab
 import com.example.vcompass.util.back
 import com.example.vcompass.util.clickableWithScale
-import com.vcompass.core.compose_view.TabView
+import com.example.vcompass.ui.core.tab.TabView
 import com.vcompass.core.compose_view.image.CoreIcon
 import com.vcompass.core.compose_view.image.CoreImage
 import com.vcompass.core.compose_view.image.CoreImageSource
@@ -94,7 +67,6 @@ import com.vcompass.core.typography.CoreTypography
 import com.vcompass.core.typography.CoreTypographyBold
 import com.vcompass.core.typography.CoreTypographySemiBold
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlin.math.max
 
 @Preview(showSystemUi = true)
 @Composable

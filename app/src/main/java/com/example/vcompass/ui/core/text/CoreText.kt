@@ -1,4 +1,4 @@
-package com.accessed.core.compose_view.text
+package com.example.vcompass.ui.core.text
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
@@ -34,8 +34,8 @@ fun CoreText(
     textAlign: TextAlign = TextAlign.Start,
     textDecoration: TextDecoration? = null,
     lineHeight: TextUnit = TextUnit.Unspecified,
-    onClick: (() -> Unit)? = null,
     onTextLayout: (TextLayoutResult) -> Unit = {},
+    onClick: (() -> Unit)? = null,
 ) {
     val finalText = resString?.let {
         stringResource(it)

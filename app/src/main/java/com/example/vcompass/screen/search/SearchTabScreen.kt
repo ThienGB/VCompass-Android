@@ -38,13 +38,13 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.accessed.core.compose_view.text.CoreText
+import com.example.vcompass.ui.core.text.CoreText
 import com.example.vcompass.R
 import com.example.vcompass.enum.SearchHomeTab
 import com.example.vcompass.screen.feed.TravelPost
 import com.example.vcompass.ui.core.list.ListItemTab
-import com.vcompass.core.compose_view.TabView
-import com.vcompass.core.compose_view.TitleSearchBarAction
+import com.example.vcompass.ui.core.tab.TabView
+import com.example.vcompass.ui.core.title.TitleSearchBarAction
 import com.vcompass.core.compose_view.image.CoreIcon
 import com.vcompass.core.compose_view.image.CoreImage
 import com.vcompass.core.compose_view.image.CoreImageSource

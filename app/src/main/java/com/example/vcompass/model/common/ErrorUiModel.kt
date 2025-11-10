@@ -1,7 +1,7 @@
 package com.example.vcompass.model.common
 
-import com.vcompass.data.model.response.BaseResponse
 import com.example.vcompass.R
+import com.vcompass.presentation.util.PresentationConstants
 
 class ErrorUiModel(data: String) {
     var code: Int? = null
@@ -16,10 +16,10 @@ class ErrorUiModel(data: String) {
 
 fun ErrorUiModel.getErrorResId(): Int? {
     return when (code) {
-        BaseResponse.ERROR_BAD_REQUEST -> R.string.app_name
-        BaseResponse.ERROR_CODE_UNAUTHORIZED -> R.string.app_name
-        BaseResponse.ERROR_CODE_FORBIDDEN -> R.string.app_name
-        BaseResponse.ERROR_CODE_INTERNAL_SERVER -> R.string.app_name
+        PresentationConstants.ERROR_BAD_REQUEST -> R.string.lb_error_other
+        PresentationConstants.ERROR_CODE_UNAUTHORIZED -> R.string.lb_error_unauthorized
+        PresentationConstants.ERROR_CODE_FORBIDDEN -> R.string.lb_error_forbidden
+        PresentationConstants.ERROR_CODE_INTERNAL_SERVER -> R.string.lb_error_internal_server
         else -> null
     }
 }

@@ -3,7 +3,7 @@ package com.vcompass.data.model.dto.schedule
 import com.google.gson.annotations.SerializedName
 import com.vcompass.data.model.dto.BaseDTO
 import com.vcompass.data.model.dto.user.BaseUserDTO
-import com.vcompass.data.util.tryParseObject
+import com.vcompass.domain.util.tryParseObject
 import com.vcompass.domain.model.response.schedule.ScheduleModel
 
 data class ScheduleDTO(

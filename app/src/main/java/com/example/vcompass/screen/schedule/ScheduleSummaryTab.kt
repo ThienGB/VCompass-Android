@@ -45,7 +45,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.accessed.core.compose_view.text.CoreText
+import com.example.vcompass.ui.core.text.CoreText
 import com.example.vcompass.R
 import com.example.vcompass.data.api.model.Comment
 import com.example.vcompass.data.api.model.DayActivity
@@ -316,11 +316,11 @@ fun SummaryDay(
         ) {
             Column {
                 LazyColumn(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().heightIn(max = MyDimen.p5000),
                     verticalArrangement = Arrangement.spacedBy(MyDimen.p6)
                 ) {
                     itemsIndexed(
-                        activities.activity!!,
+                        activities.activity ?: listOf(),
                         key = { index, item -> item.id.toString() }) { index, item ->
                         ActivityCard(showBottomSheet, index, item)
                     }

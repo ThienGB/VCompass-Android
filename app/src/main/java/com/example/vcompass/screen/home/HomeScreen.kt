@@ -42,13 +42,8 @@ fun HomeScreen(
         }
     }
 
-    fun onBack() {
-        navController.back()
-    }
-
     ScreenWithBottomBar(
         state = state,
-        onBackPress = { onBack() },
         viewModel = viewModel,
         navController = navController,
         bottomBar = {
@@ -62,9 +57,6 @@ fun HomeScreen(
                     }
                 }
             )
-        },
-        onRetry = {
-            viewModel.logout()
         }
     ) {
         HorizontalPager(

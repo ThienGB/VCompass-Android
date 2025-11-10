@@ -1,32 +1,76 @@
 package com.example.vcompass.screen.login
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.togetherWith
+import androidx.compose.animation.with
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.DividerDefaults
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import com.example.vcompass.R
+import com.example.vcompass.enum.LoginActionType
+import com.example.vcompass.ui.core.button.PrimaryButton
+import com.example.vcompass.ui.core.check_box.CoreCheckBox
 import com.example.vcompass.ui.core.general.ScreenNormal
-import com.example.vcompass.util.back
+import com.example.vcompass.ui.core.row.RowBetween
+import com.example.vcompass.ui.core.text.CoreRichText
+import com.example.vcompass.ui.core.text.CoreText
+import com.example.vcompass.ui.core.text.RichTextItem
+import com.example.vcompass.ui.core.text_field.EmailTextField
+import com.example.vcompass.ui.core.text_field.PasswordTextField
+import com.example.vcompass.util.add
+import com.example.vcompass.util.backAndNavigate
 import com.example.vcompass.util.goWithState
+import com.vcompass.core.compose_view.image.CoreIcon
+import com.vcompass.core.compose_view.space.ExpandableSpacer
+import com.vcompass.core.compose_view.space.SpaceHeight
+import com.vcompass.core.compose_view.space.SpaceHeight8
+import com.vcompass.core.compose_view.space.SpaceWidth8
+import com.vcompass.core.resource.MyColor
 import com.vcompass.core.resource.MyDimen
 import com.vcompass.core.typography.CoreTypography
+import com.vcompass.core.typography.CoreTypographyMedium
+import com.vcompass.core.typography.CoreTypographySemiBold
+import com.vcompass.presentation.util.CoreRoute
 import com.vcompass.presentation.viewmodel.login.LoginViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -36,59 +80,82 @@ fun LoginScreen(
     navController: NavController
 ) {
     val state by viewModel.stateUI.collectAsState()
-    var email by remember { mutableStateOf("zoro") }
-    var password by remember { mutableStateOf("Password1!") }
+    var loginAction by remember { mutableStateOf(LoginActionType.LOGIN) }
+    val isLogin by remember { derivedStateOf { loginAction == LoginActionType.LOGIN } }
 
+    val topPadding by animateDpAsState(
+        targetValue = if (isLogin) MyDimen.p250 else MyDimen.zero,
+        animationSpec = tween(durationMillis = 600, easing = FastOutSlowInEasing),
+        label = "topPaddingAnim"
+    )
     LaunchedEffect(Unit) {
-        viewModel.navigate.collect {
-            navController.goWithState(it)
+        viewModel.registerSuccess.collect {
+            if (it)
+                navController.backAndNavigate(
+                    targetBack = CoreRoute.Login.route,
+                    navigate = CoreRoute.Home.route
+                )
         }
     }
 
+//    LaunchedEffect(Unit) {
+//        viewModel.notYetConfirm.collect {
+//            if (it)
+//                navController.add(CoreRoute.ConfirmEmail.path)
+//        }
+//    }
+
     ScreenNormal(
         state = state,
-        textRetry = stringResource(R.string.app_name),
-        onBackPress = { navController.back() },
         viewModel = viewModel,
         navController = navController,
-        onRetry = { viewModel.login(email, password) },
+        statusBarPadding = false
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(MyDimen.p16),
-            verticalArrangement = Arrangement.Center
+        Box(
+            modifier = Modifier.fillMaxSize(),
         ) {
-            TextField(
-                value = email,
-                onValueChange = { data ->
-                    email = data
-                },
-                textStyle = CoreTypography.labelLarge,
-                label = { Text("Email") },
-                modifier = Modifier.fillMaxWidth()
-            )
-
-            Spacer(modifier = Modifier.height(MyDimen.p8))
-
-            TextField(
-                value = password,
-                onValueChange = { data ->
-                    password = data
-                },
-                textStyle = CoreTypography.labelLarge,
-                label = { Text("Password") },
-                visualTransformation = PasswordVisualTransformation(),
-                modifier = Modifier.fillMaxWidth()
-            )
-
-            Spacer(modifier = Modifier.height(MyDimen.p16))
-
-            Button(
-                onClick = { viewModel.login(email, password) },
-                modifier = Modifier.fillMaxWidth()
+            TravelLoginAnimation()
+            Column(
+                modifier = Modifier
+                    .zIndex(1f)
+                    .padding(top = topPadding)
+                    .clip(RoundedCornerShape(topStart = MyDimen.p32, topEnd = MyDimen.p32))
+                    .background(MyColor.White)
+                    .padding(horizontal = MyDimen.p16),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text("Đăng nhập")
+                SpaceHeight()
+                if (!isLogin) {
+                    SpaceHeight()
+                }
+                CoreIcon(
+                    resDrawable = R.drawable.logo_vcompass,
+                    iconModifier = Modifier
+                        .height(MyDimen.p48)
+                        .width(MyDimen.p250),
+                    tintColor = Color.Unspecified
+                )
+                SpaceHeight()
+                AnimatedContent(targetState = isLogin) { target ->
+                    if (target) {
+                        LoginForm(
+                            navController = navController,
+                            onRegisterClick = { loginAction = LoginActionType.REGISTER },
+                            onForgotClick = { loginAction = LoginActionType.FORGOT }
+                        )
+                    } else {
+                        if (loginAction == LoginActionType.REGISTER)
+                            RegisterForm(
+                                navController = navController,
+                                onBackToLogin = { loginAction = LoginActionType.LOGIN },
+                            )
+                        else if (loginAction == LoginActionType.FORGOT)
+                            ForgotForm(
+                                navController = navController,
+                                onBackToLogin = { loginAction = LoginActionType.LOGIN }
+                            )
+                    }
+                }
             }
         }
     }
