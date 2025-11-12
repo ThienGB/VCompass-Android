@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -18,8 +17,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.vcompass.core.resource.MyDimen
-import com.vcompass.core.resource.MyColor
+import com.example.vcompass.resource.MyDimen
+import com.example.vcompass.resource.MyColor
 import com.example.vcompass.util.AppConstants
 
 @Preview(showBackground = true, showSystemUi = true, backgroundColor = 0xFFFF5555)

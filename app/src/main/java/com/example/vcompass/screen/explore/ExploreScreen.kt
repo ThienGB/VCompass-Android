@@ -36,12 +36,12 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.vcompass.ui.core.text.CoreText
 import com.example.vcompass.util.add
-import com.vcompass.core.compose_view.BaseBottomSheet
-import com.vcompass.core.compose_view.image.CoreIcon
-import com.vcompass.core.resource.MyColor
-import com.vcompass.core.resource.MyDimen
-import com.vcompass.core.typography.CoreTypography
-import com.vcompass.core.typography.CoreTypographySemiBold
+import com.example.vcompass.ui.core.bottom_sheet.BaseBottomSheet
+import com.example.vcompass.ui.core.icon.CoreIcon
+import com.example.vcompass.resource.MyColor
+import com.example.vcompass.resource.MyDimen
+import com.example.vcompass.resource.CoreTypography
+import com.example.vcompass.resource.CoreTypographySemiBold
 import com.vcompass.presentation.util.CoreRoute
 
 @Preview(showSystemUi = true)

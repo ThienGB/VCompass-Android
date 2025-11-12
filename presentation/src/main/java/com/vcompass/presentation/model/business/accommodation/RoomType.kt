@@ -1,5 +1,9 @@
 package com.vcompass.presentation.model.business.accommodation
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class RoomType(
     val nameRoomType: String?,
     val numBed: List<AccommodationBed>?,
@@ -10,4 +14,4 @@ data class RoomType(
     val description: String?,
     val amenities: List<String>?,
     val roomSize: Int?
-)
+) : Parcelable

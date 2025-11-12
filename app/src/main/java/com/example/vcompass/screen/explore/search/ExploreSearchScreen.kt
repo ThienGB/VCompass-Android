@@ -35,16 +35,16 @@ import com.example.vcompass.ui.core.text.CoreText
 import com.example.vcompass.R
 import com.example.vcompass.util.clickNoRipple
 import com.example.vcompass.ui.core.title.TitleSearchBarAction
-import com.vcompass.core.compose_view.image.CoreIcon
-import com.vcompass.core.compose_view.image.CoreImage
-import com.vcompass.core.compose_view.image.CoreImageSource
+import com.example.vcompass.ui.core.icon.CoreIcon
+import com.example.vcompass.ui.core.icon.CoreImage
+import com.example.vcompass.ui.core.icon.CoreImageSource
 import com.vcompass.core.compose_view.list.GridList
 import com.vcompass.core.compose_view.list.VerticalList
-import com.vcompass.core.compose_view.scroll_view.VerticalScrollView
-import com.vcompass.core.compose_view.space.SpaceWidth
-import com.vcompass.core.resource.MyColor
-import com.vcompass.core.resource.MyDimen
-import com.vcompass.core.typography.CoreTypographySemiBold
+import com.example.vcompass.ui.core.scroll_view.VerticalScrollView
+import com.example.vcompass.ui.core.space.SpaceWidth
+import com.example.vcompass.resource.MyColor
+import com.example.vcompass.resource.MyDimen
+import com.example.vcompass.resource.CoreTypographySemiBold
 
 @Preview(showSystemUi = true)
 @Composable

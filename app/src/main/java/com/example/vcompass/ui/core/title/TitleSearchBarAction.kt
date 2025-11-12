@@ -13,9 +13,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.vcompass.ui.core.text.SearchTextField
-import com.vcompass.core.compose_view.icon.IconBack
-import com.vcompass.core.resource.MyColor
-import com.vcompass.core.resource.MyDimen
+import com.example.vcompass.ui.core.icon.IconBack
+import com.example.vcompass.resource.MyColor
+import com.example.vcompass.resource.MyDimen
 
 @Composable
 fun TitleSearchBarAction(

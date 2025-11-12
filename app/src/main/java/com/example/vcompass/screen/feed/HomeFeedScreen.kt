@@ -28,10 +28,10 @@ import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import com.example.vcompass.R
 import com.example.vcompass.util.rippleClickable
-import com.vcompass.core.compose_view.image.CoreIcon
+import com.example.vcompass.ui.core.icon.CoreIcon
 import com.vcompass.core.compose_view.list.VerticalList
-import com.vcompass.core.resource.MyColor
-import com.vcompass.core.resource.MyDimen
+import com.example.vcompass.resource.MyColor
+import com.example.vcompass.resource.MyDimen
 
 @Composable
 fun HomeFeedScreen(

@@ -52,17 +52,17 @@ import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.MarkerComposable
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
-import com.vcompass.core.compose_view.image.CoreIcon
-import com.vcompass.core.compose_view.image.CoreImage
-import com.vcompass.core.compose_view.image.CoreImageSource
-import com.vcompass.core.compose_view.space.ExpandableSpacer
-import com.vcompass.core.compose_view.space.SpaceHeight
-import com.vcompass.core.compose_view.space.SpaceHeight4
-import com.vcompass.core.compose_view.space.SpaceWidth4
-import com.vcompass.core.resource.MyColor
-import com.vcompass.core.resource.MyDimen
-import com.vcompass.core.typography.CoreTypography
-import com.vcompass.core.typography.CoreTypographySemiBold
+import com.example.vcompass.ui.core.icon.CoreIcon
+import com.example.vcompass.ui.core.icon.CoreImage
+import com.example.vcompass.ui.core.icon.CoreImageSource
+import com.example.vcompass.ui.core.space.ExpandableSpacer
+import com.example.vcompass.ui.core.space.SpaceHeight
+import com.example.vcompass.ui.core.space.SpaceHeight4
+import com.example.vcompass.ui.core.space.SpaceWidth4
+import com.example.vcompass.resource.MyColor
+import com.example.vcompass.resource.MyDimen
+import com.example.vcompass.resource.CoreTypography
+import com.example.vcompass.resource.CoreTypographySemiBold
 
 data class Restaurant(
     val id: String,

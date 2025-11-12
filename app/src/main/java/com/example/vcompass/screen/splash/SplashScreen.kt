@@ -14,14 +14,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.vcompass.R
 import com.example.vcompass.util.clearAllStackAndAdd
-import com.example.vcompass.util.replace
-import com.vcompass.core.compose_view.image.CoreImage
-import com.vcompass.core.compose_view.image.CoreImageSource
-import com.vcompass.core.resource.MyDimen
+import com.example.vcompass.ui.core.icon.CoreImage
+import com.example.vcompass.ui.core.icon.CoreImageSource
+import com.example.vcompass.resource.MyDimen
 import com.vcompass.presentation.enums.StatusOpenApp
 import com.vcompass.presentation.util.CoreRoute
 import com.vcompass.presentation.viewmodel.splash.SplashViewModel
-import kotlinx.coroutines.delay
 import org.koin.androidx.compose.koinViewModel
 
 @Composable

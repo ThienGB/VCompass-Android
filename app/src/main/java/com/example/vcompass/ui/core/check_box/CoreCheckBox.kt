@@ -1,6 +1,5 @@
 package com.example.vcompass.ui.core.check_box
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
@@ -10,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.vcompass.core.typography.CoreTypographyMedium
+import com.example.vcompass.resource.CoreTypographyMedium
 
 @Composable
 fun CoreCheckBox(

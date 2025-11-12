@@ -1,21 +1,23 @@
-# Add project specific ProGuard rules here.
-# You can control the set of applied configuration files using the
-# proguardFiles setting in build.gradle.
-#
-# For more details, see
-#   http://developer.android.com/guide/developing/tools/proguard.html
+-keepattributes Signature
+-keepattributes *Annotation*
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
+-keep class com.google.gson.stream.** { *; }
+-dontwarn sun.misc.**
 
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+# model folders
+-keep class com.vcompass.domain.model.** { *; }
+-keep class com.vcompass.core.model.** { *; }
+-keep class com.example.vcompass.model.** { *; }
+-keep class com.vcompass.data.model.** { *; }
+-keep class com.vcompass.presentation.model.** { *; }
 
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
+# ViewModel & SavedStateHandle
+-keep class androidx.lifecycle.** { *; }
+-keepnames class androidx.lifecycle.SavedStateHandle
+-keep class **_KoinModule { *; }
+
+-keep class androidx.compose.** { *; }
+-keepclassmembers class * {
+    @androidx.compose.runtime.Composable <methods>;
+}
+-dontwarn androidx.compose.**

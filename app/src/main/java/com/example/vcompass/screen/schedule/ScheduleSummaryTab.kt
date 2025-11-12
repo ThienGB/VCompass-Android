@@ -45,38 +45,38 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.vcompass.ui.core.text.CoreText
 import com.example.vcompass.R
-import com.example.vcompass.data.api.model.Comment
-import com.example.vcompass.data.api.model.DayActivity
-import com.example.vcompass.data.api.model.Schedule
 import com.example.vcompass.helper.BottomSheetType
 import com.example.vcompass.ui.core.divider.DividerOrientation
 import com.example.vcompass.ui.core.divider.ItemDivider
 import com.example.vcompass.ui.core.icon.MoreOptionIcon
 import com.example.vcompass.ui.core.text.BorderLessTextField
+import com.example.vcompass.ui.core.text.CoreText
 import com.example.vcompass.util.clickableWithScale
 import com.example.vcompass.util.scaleOnClick
-import com.vcompass.core.compose_view.image.CoreIcon
-import com.vcompass.core.compose_view.space.SpaceHeight
-import com.vcompass.core.compose_view.space.SpaceHeight4
-import com.vcompass.core.compose_view.space.SpaceWidth8
-import com.vcompass.core.resource.MyColor
-import com.vcompass.core.resource.MyDimen
-import com.vcompass.core.typography.CoreTypography
-import com.vcompass.core.typography.CoreTypographyBold
-import com.vcompass.core.typography.CoreTypographySemiBold
+import com.example.vcompass.ui.core.icon.CoreIcon
+import com.example.vcompass.ui.core.space.SpaceHeight
+import com.example.vcompass.ui.core.space.SpaceHeight4
+import com.example.vcompass.ui.core.space.SpaceWidth8
+import com.example.vcompass.resource.MyColor
+import com.example.vcompass.resource.MyDimen
+import com.example.vcompass.resource.CoreTypography
+import com.example.vcompass.resource.CoreTypographyBold
+import com.example.vcompass.resource.CoreTypographySemiBold
+import com.vcompass.presentation.model.schedule.Comment
+import com.vcompass.presentation.model.schedule.DayActivity
+import com.vcompass.presentation.model.schedule.Schedule
 
 @Preview(showSystemUi = true)
 @Composable
 fun ScheduleSummaryTab(
     showBottomSheet: (BottomSheetType) -> Unit = {},
-    schedule: Schedule? = null
+    schedule: Schedule = Schedule()
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
         SummaryInfoSection(schedule)
         DescriptionSection(schedule)
-        schedule?.activities?.forEachIndexed { index, item ->
+        schedule.days?.forEachIndexed { index, item ->
             SpaceHeight()
             SummaryDay(
                 title = "Ngày ${index + 1}",
@@ -104,7 +104,7 @@ fun SummaryInfoSection(
 
     fun countActivitiesByType(type: String): Int {
         var count = 0
-        schedule?.activities?.forEach { activityDay ->
+        schedule?.days?.forEach { activityDay ->
             activityDay.activity?.forEach { activity ->
                 if (activity.activityType == type) {
                     count++

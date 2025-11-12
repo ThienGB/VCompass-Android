@@ -21,9 +21,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowForward
-import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowRight
-import androidx.compose.material.icons.rounded.KeyboardArrowRight
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -36,7 +34,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -45,11 +42,11 @@ import androidx.compose.ui.unit.sp
 import com.example.vcompass.R
 import com.example.vcompass.data.api.model.Schedule
 import com.example.vcompass.helper.CommonUtils.formatCurrency
-import com.vcompass.core.compose_view.image.CoreIcon
-import com.vcompass.core.compose_view.space.SpaceHeight
-import com.vcompass.core.compose_view.space.SpaceWidth4
-import com.vcompass.core.resource.MyColor
-import com.vcompass.core.resource.MyDimen
+import com.example.vcompass.ui.core.icon.CoreIcon
+import com.example.vcompass.ui.core.space.SpaceHeight
+import com.example.vcompass.ui.core.space.SpaceWidth4
+import com.example.vcompass.resource.MyColor
+import com.example.vcompass.resource.MyDimen
 
 @Composable
 fun PriceSection(

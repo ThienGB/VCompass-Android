@@ -11,8 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import com.vcompass.core.compose_view.image.CoreIcon
-import com.vcompass.core.resource.MyDimen
+import com.example.vcompass.ui.core.icon.CoreIcon
+import com.example.vcompass.resource.MyDimen
 
 @Composable
 fun BackButton(onClick: () -> Unit) {

@@ -29,9 +29,9 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.lerp
 import com.example.vcompass.ui.core.text.CoreText
-import com.vcompass.core.resource.MyColor
-import com.vcompass.core.resource.MyDimen
-import com.vcompass.core.typography.CoreTypographyMedium
+import com.example.vcompass.resource.MyColor
+import com.example.vcompass.resource.MyDimen
+import com.example.vcompass.resource.CoreTypographyMedium
 import kotlinx.coroutines.launch
 import kotlin.math.abs
 

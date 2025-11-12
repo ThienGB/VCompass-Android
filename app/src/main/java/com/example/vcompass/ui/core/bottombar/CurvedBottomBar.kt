@@ -19,7 +19,7 @@ import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
-import com.vcompass.core.resource.MyDimen
+import com.example.vcompass.resource.MyDimen
 
 @Preview(showBackground = true, showSystemUi = true, backgroundColor = 0xFFFF5555)
 @Composable

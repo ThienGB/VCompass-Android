@@ -19,7 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.vcompass.core.resource.MyColor
+import com.example.vcompass.resource.MyColor
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable

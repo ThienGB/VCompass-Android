@@ -17,8 +17,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.vcompass.core.resource.MyColor
-import com.vcompass.core.resource.MyDimen
+import com.example.vcompass.resource.MyColor
+import com.example.vcompass.resource.MyDimen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

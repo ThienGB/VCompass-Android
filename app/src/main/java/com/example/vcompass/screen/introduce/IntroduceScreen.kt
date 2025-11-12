@@ -10,7 +10,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavController
 import com.example.vcompass.ui.core.general.ScreenNormal
 import com.example.vcompass.util.replace
-import com.vcompass.core.typography.CoreTypography
+import com.example.vcompass.resource.CoreTypography
 import com.vcompass.presentation.util.CoreRoute
 import com.vcompass.presentation.viewmodel.splash.IntroduceViewModel
 import kotlinx.coroutines.delay

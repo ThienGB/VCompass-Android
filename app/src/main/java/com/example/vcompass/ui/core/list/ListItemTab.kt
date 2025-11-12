@@ -10,9 +10,9 @@ import androidx.compose.ui.res.stringResource
 import com.example.vcompass.ui.core.text.CoreText
 import com.example.vcompass.R
 import com.vcompass.core.compose_view.list.VerticalList
-import com.vcompass.core.resource.MyColor
-import com.vcompass.core.resource.MyDimen
-import com.vcompass.core.typography.CoreTypographySemiBold
+import com.example.vcompass.resource.MyColor
+import com.example.vcompass.resource.MyDimen
+import com.example.vcompass.resource.CoreTypographySemiBold
 
 @Composable
 fun <T>  ListItemTab(

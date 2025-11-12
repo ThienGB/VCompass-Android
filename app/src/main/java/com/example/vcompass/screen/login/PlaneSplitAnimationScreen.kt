@@ -1,10 +1,8 @@
 package com.example.vcompass.screen.login
 
 import androidx.compose.animation.core.*
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -12,12 +10,10 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import com.vcompass.core.compose_view.image.CoreIcon
-import com.vcompass.core.resource.MyColor
+import com.example.vcompass.ui.core.icon.CoreIcon
+import com.example.vcompass.resource.MyColor
 import kotlinx.coroutines.delay
 import com.example.vcompass.R
 

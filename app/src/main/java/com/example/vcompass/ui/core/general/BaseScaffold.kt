@@ -1,7 +1,5 @@
 package com.example.vcompass.ui.core.general
 
-import androidx.activity.SystemBarStyle
-import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -9,12 +7,10 @@ import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import com.vcompass.core.extensions.conditional
-import com.vcompass.core.resource.MyColor
+import com.example.vcompass.resource.MyColor
 
 @Composable
 fun BaseScaffold(

@@ -24,8 +24,8 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import com.example.vcompass.R
-import com.vcompass.core.compose_view.image.CoreIcon
-import com.vcompass.core.resource.MyColor
+import com.example.vcompass.ui.core.icon.CoreIcon
+import com.example.vcompass.resource.MyColor
 import kotlinx.coroutines.delay
 import kotlin.math.cos
 import kotlin.math.sin

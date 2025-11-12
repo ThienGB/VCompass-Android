@@ -56,13 +56,13 @@ import com.example.vcompass.R
 import com.example.vcompass.util.clickNoRipple
 import com.example.vcompass.util.formatThousandK
 import com.example.vcompass.util.scaleOnClick
-import com.vcompass.core.compose_view.image.CoreIcon
-import com.vcompass.core.compose_view.image.CoreImage
-import com.vcompass.core.compose_view.image.CoreImageSource
-import com.vcompass.core.resource.MyColor
-import com.vcompass.core.resource.MyDimen
-import com.vcompass.core.typography.CoreTypography
-import com.vcompass.core.typography.CoreTypographyBold
+import com.example.vcompass.ui.core.icon.CoreIcon
+import com.example.vcompass.ui.core.icon.CoreImage
+import com.example.vcompass.ui.core.icon.CoreImageSource
+import com.example.vcompass.resource.MyColor
+import com.example.vcompass.resource.MyDimen
+import com.example.vcompass.resource.CoreTypography
+import com.example.vcompass.resource.CoreTypographyBold
 
 @OptIn(UnstableApi::class)
 @Composable

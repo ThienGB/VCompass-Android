@@ -67,21 +67,21 @@ import androidx.core.net.toUri
 import coil.compose.rememberAsyncImagePainter
 import com.example.vcompass.ui.core.text.CoreText
 import com.example.vcompass.R
-import com.example.vcompass.data.api.model.Accommodation
-import com.example.vcompass.data.api.model.ActivityItem
-import com.example.vcompass.data.api.model.Attraction
-import com.example.vcompass.data.api.model.FoodService
-import com.example.vcompass.data.api.model.Rating
-import com.example.vcompass.data.api.model.Schedule
+
 import com.example.vcompass.helper.BottomSheetType
 import com.example.vcompass.helper.CommonUtils.formatCurrency
 import com.example.vcompass.util.clickableWithScale
-import com.vcompass.core.compose_view.image.CoreIcon
-import com.vcompass.core.compose_view.space.SpaceWidth4
-import com.vcompass.core.compose_view.space.SpaceWidth8
-import com.vcompass.core.resource.MyColor
-import com.vcompass.core.resource.MyDimen
-import com.vcompass.core.typography.CoreTypographyBold
+import com.example.vcompass.ui.core.icon.CoreIcon
+import com.example.vcompass.ui.core.space.SpaceWidth4
+import com.example.vcompass.ui.core.space.SpaceWidth8
+import com.example.vcompass.resource.MyColor
+import com.example.vcompass.resource.MyDimen
+import com.example.vcompass.resource.CoreTypographyBold
+import com.vcompass.presentation.model.business.accommodation.Accommodation
+import com.vcompass.presentation.model.business.attraction.Attraction
+import com.vcompass.presentation.model.business.foodplace.FoodPlace
+import com.vcompass.presentation.model.schedule.Activity
+import com.vcompass.presentation.model.schedule.Schedule
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 
@@ -95,7 +95,7 @@ fun ScheduleDetailTab(
     val dayIndexToColumnIndex = remember(schedule) {
         val map = mutableMapOf<Int, Int>()
         var currentIndex = 0
-        schedule?.activities?.forEachIndexed { index, dayActivity ->
+        schedule?.days?.forEachIndexed { index, dayActivity ->
             map[dayActivity.day ?: (index + 1)] = currentIndex
             currentIndex++
             currentIndex += dayActivity.activity?.size ?: 0
@@ -131,8 +131,8 @@ fun ScheduleDetailTab(
                 }
             }
             itemsIndexed(
-                schedule?.activities ?: listOf(),
-                key = { index, item -> item.day.toString() }) { index, item ->
+                schedule?.days ?: listOf(),
+                key = { index, item -> item.activity.toString() }) { index, item ->
                 Row(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     modifier = Modifier.fillMaxWidth()
@@ -166,8 +166,8 @@ fun ScheduleDetailTab(
             state = listState
         ) {
             itemsIndexed(
-                schedule?.activities ?: listOf(),
-                key = { index, item -> item.day.toString() }) { index, item ->
+                schedule?.days ?: listOf(),
+                key = { index, item -> item.activity.toString() }) { index, item ->
                 Text(
                     text = "Ngày ${item.day}: ${item.activity?.size} hoạt động",
                     fontSize = 26.sp,
@@ -189,7 +189,7 @@ fun ScheduleDetailTab(
 fun ActivityCard(
     showBottomSheet: (BottomSheetType) -> Unit = {},
     index: Int,
-    item: ActivityItem,
+    item: Activity,
     schedule: Schedule? = null,
 ) {
     val type = when (item.activityType) {
@@ -200,12 +200,12 @@ fun ActivityCard(
     }
     val attraction = item.destination as? Attraction
     val accommodation = item.destination as? Accommodation
-    val foodService = item.destination as? FoodService
+    val foodService = item.destination as? FoodPlace
 
     val operatingHours =
         attraction?.operatingHours?.firstOrNull() ?: foodService?.operatingHours?.firstOrNull()
     val price = foodService?.price?.minPrice ?: attraction?.price ?: 0
-    val ratings = attraction?.ratings ?: foodService?.ratings ?: accommodation?.ratings
+    val ratings = attraction?.totalRatings ?: foodService?.totalRatings ?: accommodation?.totalRatings
 
     val imageSrc = accommodation?.images?.firstOrNull()
         ?: attraction?.images?.firstOrNull()
@@ -227,7 +227,7 @@ fun ActivityCard(
             .distinctUntilChanged()
             .collect { newUserNote ->
                 val newSchedule = schedule?.copy(
-                    activities = schedule.activities?.map { day ->
+                    days = schedule.days?.map { day ->
                         day.copy(
                             activity = day.activity?.map { activity ->
                                 if (activity.id == item.id) {
@@ -325,8 +325,8 @@ fun ActivityCard(
                     )
                     Spacer(modifier = Modifier.width(6.dp))
                     Text(
-                        text = (accommodation?.name ?: attraction?.attractionName
-                        ?: foodService?.foodServiceName ?: item.name).toString(),
+                        text = (accommodation?.name ?: attraction?.name
+                        ?: foodService?.name ?: item.name).toString(),
                         fontSize = 15.sp,
                         fontWeight = FontWeight.W600,
                         maxLines = 4,
@@ -508,7 +508,7 @@ fun ActivityCard(
                         )
                         Spacer(modifier = Modifier.width(10.dp))
                         Text(
-                            text = calculateAverageRating(ratings).toString() + "★ (" + ratings?.size.toString() + ")",
+                            text = ratings.toString() + "★ (" + ratings.toString() + ")",
                             fontSize = 13.sp,
                             fontWeight = FontWeight.W400,
                             color = MyColor.Rating,
@@ -667,8 +667,3 @@ fun ActivityCard(
     HorizontalDivider(thickness = 0.5.dp, color = Color.LightGray)
 }
 
-fun calculateAverageRating(ratings: List<Rating>?): Double {
-    if (ratings.isNullOrEmpty()) return 0.0
-    val totalStars = ratings.sumOf { it.rate ?: 0 }
-    return totalStars.toDouble() / ratings.size
-}

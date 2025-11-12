@@ -1,7 +1,11 @@
 package com.vcompass.presentation.model.schedule
 
-import com.vcompass.domain.model.response.BaseModel
+import android.os.Parcelable
+import com.vcompass.presentation.model.Base
+import kotlinx.parcelize.Parcelize
+import kotlinx.parcelize.RawValue
 
+@Parcelize
 data class Activity(
     val activityType: String,
     val idDestination: String?,
@@ -13,5 +17,5 @@ data class Activity(
     val description: String?,
     val timeStart: String?,
     val timeEnd: String?,
-    val destination: Any?
-) : BaseModel()
+    val destination: @RawValue Any?
+) : Base(), Parcelable

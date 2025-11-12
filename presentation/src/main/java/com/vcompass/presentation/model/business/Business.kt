@@ -1,7 +1,10 @@
 package com.vcompass.presentation.model.business
 
-import com.vcompass.domain.model.response.BaseModel
+import android.os.Parcelable
+import com.vcompass.presentation.model.Base
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 open class Business(
     val partnerId: String? = null,
     var name: String? = null,
@@ -14,4 +17,4 @@ open class Business(
     var status: String? = null,
     val averageRating: Float? = null,
     val totalRatings: Float? = null,
-): BaseModel()
+): Base(), Parcelable

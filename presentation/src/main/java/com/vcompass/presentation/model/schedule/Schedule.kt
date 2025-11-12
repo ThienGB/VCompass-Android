@@ -1,8 +1,11 @@
 package com.vcompass.presentation.model.schedule
 
-import com.vcompass.domain.model.response.BaseModel
+import android.os.Parcelable
 import com.vcompass.domain.model.response.user.UserModel
+import com.vcompass.presentation.model.Base
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Schedule(
     val user: UserModel? = null,
     val name: String? = null,
@@ -20,7 +23,7 @@ data class Schedule(
     val tags: List<String>? = null,
     val idInvited: List<String>? = null,
     val days: List<DayActivity>? = null,
-    val additionalExpenses: List<AdditionalExpenseModel>? = null,
+    val additionalExpenses: List<AdditionalExpense>? = null,
     val comments: List<Comment>? = null,
     val likes: List<Like>? = null
-) : BaseModel()
+) : Base(), Parcelable

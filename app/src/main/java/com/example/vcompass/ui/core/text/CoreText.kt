@@ -16,8 +16,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
 import com.vcompass.core.extensions.conditional
 import com.vcompass.core.extensions.optional
-import com.vcompass.core.resource.MyColor
-import com.vcompass.core.typography.CoreTypography
+import com.example.vcompass.resource.MyColor
+import com.example.vcompass.resource.CoreTypography
 
 @Composable
 fun CoreText(

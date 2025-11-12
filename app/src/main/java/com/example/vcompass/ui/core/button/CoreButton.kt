@@ -18,8 +18,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import com.vcompass.core.extensions.conditional
-import com.vcompass.core.resource.MyDimen
-import com.vcompass.core.typography.CoreTypographySemiBold
+import com.example.vcompass.resource.MyDimen
+import com.example.vcompass.resource.CoreTypographySemiBold
 
 @Composable
 fun CoreButton(

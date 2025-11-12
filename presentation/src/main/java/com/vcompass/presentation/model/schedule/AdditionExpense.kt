@@ -1,6 +1,10 @@
 package com.vcompass.presentation.model.schedule
 
-data class AdditionalExpenseModel(
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+data class AdditionalExpense(
     val cost: Int?,
     val description: String?
-)
+) : Parcelable

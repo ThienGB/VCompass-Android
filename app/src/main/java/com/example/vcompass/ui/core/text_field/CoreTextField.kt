@@ -1,11 +1,9 @@
 package com.example.vcompass.ui.core.text_field
 
-import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
@@ -28,9 +26,7 @@ import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -56,21 +52,16 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.vcompass.ui.core.text.CoreText
-import com.vcompass.core.compose_view.image.CoreIcon
-import com.vcompass.core.resource.MyColor
-import com.vcompass.core.resource.MyDimen
-import com.vcompass.core.resource.MyDimen.p1
-import com.vcompass.core.resource.MyDimen.p12
-import com.vcompass.core.resource.MyDimen.p14
-import com.vcompass.core.resource.MyDimen.p16
-import com.vcompass.core.resource.MyDimen.p2
-import com.vcompass.core.resource.MyDimen.p4
-import com.vcompass.core.resource.MyDimen.p48
-import com.vcompass.core.resource.MyDimen.p6
-import com.vcompass.core.resource.MyDimen.p8
-import com.vcompass.core.resource.MyDimen.pHalf
-import com.vcompass.core.typography.CoreTypography
-import com.vcompass.core.typography.CoreTypographyMedium
+import com.example.vcompass.ui.core.icon.CoreIcon
+import com.example.vcompass.resource.MyColor
+import com.example.vcompass.resource.MyDimen
+import com.example.vcompass.resource.MyDimen.p12
+import com.example.vcompass.resource.MyDimen.p16
+import com.example.vcompass.resource.MyDimen.p4
+import com.example.vcompass.resource.MyDimen.p48
+import com.example.vcompass.resource.MyDimen.p6
+import com.example.vcompass.resource.MyDimen.p8
+import com.example.vcompass.resource.CoreTypography
 
 @Composable
 fun CoreTextField(

@@ -45,16 +45,16 @@ import com.example.vcompass.screen.feed.TravelPost
 import com.example.vcompass.ui.core.list.ListItemTab
 import com.example.vcompass.ui.core.tab.TabView
 import com.example.vcompass.ui.core.title.TitleSearchBarAction
-import com.vcompass.core.compose_view.image.CoreIcon
-import com.vcompass.core.compose_view.image.CoreImage
-import com.vcompass.core.compose_view.image.CoreImageSource
-import com.vcompass.core.compose_view.space.ExpandableSpacer
-import com.vcompass.core.compose_view.space.SpaceWidth
-import com.vcompass.core.resource.MyColor
-import com.vcompass.core.resource.MyDimen
-import com.vcompass.core.typography.CoreTypography
-import com.vcompass.core.typography.CoreTypographyBold
-import com.vcompass.core.typography.CoreTypographySemiBold
+import com.example.vcompass.ui.core.icon.CoreIcon
+import com.example.vcompass.ui.core.icon.CoreImage
+import com.example.vcompass.ui.core.icon.CoreImageSource
+import com.example.vcompass.ui.core.space.ExpandableSpacer
+import com.example.vcompass.ui.core.space.SpaceWidth
+import com.example.vcompass.resource.MyColor
+import com.example.vcompass.resource.MyDimen
+import com.example.vcompass.resource.CoreTypography
+import com.example.vcompass.resource.CoreTypographyBold
+import com.example.vcompass.resource.CoreTypographySemiBold
 
 @Composable
 fun SearchTabScreen(

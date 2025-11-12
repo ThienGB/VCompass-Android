@@ -1,9 +1,12 @@
 package com.vcompass.presentation.model.schedule
 
-import com.vcompass.domain.model.response.BaseModel
+import android.os.Parcelable
+import com.vcompass.presentation.model.Base
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Comment(
     val idUser: String?,
     val content: String?,
     val replies: List<Comment>?,
-) : BaseModel()
+) : Base(), Parcelable

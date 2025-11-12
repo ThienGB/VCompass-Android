@@ -44,35 +44,35 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
-import com.example.vcompass.ui.core.text.CoreText
 import com.example.vcompass.R
-import com.example.vcompass.data.api.model.Schedule
 import com.example.vcompass.enum.tab.ScheduleTab
 import com.example.vcompass.helper.BottomSheetType
 import com.example.vcompass.ui.core.icon.MoreOptionIcon
+import com.example.vcompass.ui.core.tab.TabView
+import com.example.vcompass.ui.core.text.CoreText
 import com.example.vcompass.util.back
 import com.example.vcompass.util.clickableWithScale
-import com.example.vcompass.ui.core.tab.TabView
-import com.vcompass.core.compose_view.image.CoreIcon
-import com.vcompass.core.compose_view.image.CoreImage
-import com.vcompass.core.compose_view.image.CoreImageSource
-import com.vcompass.core.compose_view.scroll_view.VerticalScrollView
-import com.vcompass.core.compose_view.space.ExpandableSpacer
-import com.vcompass.core.compose_view.space.SpaceHeight
-import com.vcompass.core.compose_view.space.SpaceHeight8
-import com.vcompass.core.compose_view.space.SpaceWidth4
-import com.vcompass.core.resource.MyColor
-import com.vcompass.core.resource.MyDimen
-import com.vcompass.core.typography.CoreTypography
-import com.vcompass.core.typography.CoreTypographyBold
-import com.vcompass.core.typography.CoreTypographySemiBold
+import com.example.vcompass.ui.core.icon.CoreIcon
+import com.example.vcompass.ui.core.icon.CoreImage
+import com.example.vcompass.ui.core.icon.CoreImageSource
+import com.example.vcompass.ui.core.scroll_view.VerticalScrollView
+import com.example.vcompass.ui.core.space.ExpandableSpacer
+import com.example.vcompass.ui.core.space.SpaceHeight
+import com.example.vcompass.ui.core.space.SpaceHeight8
+import com.example.vcompass.ui.core.space.SpaceWidth4
+import com.example.vcompass.resource.MyColor
+import com.example.vcompass.resource.MyDimen
+import com.example.vcompass.resource.CoreTypography
+import com.example.vcompass.resource.CoreTypographyBold
+import com.example.vcompass.resource.CoreTypographySemiBold
+import com.vcompass.presentation.model.schedule.Schedule
 import kotlinx.coroutines.flow.distinctUntilChanged
 
 @Preview(showSystemUi = true)
 @Composable
 fun ScheduleScreen(
     navController: NavController = NavController(LocalContext.current),
-    schedule: Schedule? = null
+    schedule: Schedule = Schedule()
 ) {
     val bottomSheetState = remember { mutableStateOf(BottomSheetType.NONE) }
     fun showBottomSheet(sheet: BottomSheetType) {
@@ -89,12 +89,12 @@ fun ScheduleScreen(
         }, label = "Box Alpha"
     )
     val activeScheduleId = remember { mutableStateOf("") }
-    var scheduleName by remember { mutableStateOf(schedule?.scheduleName) }
+    var scheduleName by remember { mutableStateOf(schedule.name.toString()) }
     LaunchedEffect(Unit) {
         snapshotFlow { scheduleName }
             .distinctUntilChanged()
             .collect { newName ->
-                val newSchedule = schedule?.copy(scheduleName = newName)
+                val newSchedule = schedule.copy(name = newName)
                 // viewModel.updateSchedule(newSchedule)
             }
     }
@@ -103,7 +103,7 @@ fun ScheduleScreen(
         Box(modifier = Modifier.fillMaxSize()) {
             Column(modifier = Modifier.fillMaxSize()) {
                 CoreImage(
-                    source = CoreImageSource.Url(schedule?.imgSrc?.firstOrNull() ?: ""),
+                    source = CoreImageSource.Url(schedule.images?.firstOrNull() ?: ""),
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(MyDimen.p170)
@@ -193,7 +193,7 @@ fun ScheduleScreen(
                                     )
                                     SpaceWidth4()
                                     CoreText(
-                                        text = schedule?.numDays.toString() + " ngày " + (schedule?.numDays?.minus(
+                                        text = schedule.numDays.toString() + " ngày " + (schedule.numDays?.minus(
                                             1
                                         )) + " đêm",
                                         style = CoreTypographySemiBold.displayMedium
@@ -239,7 +239,7 @@ fun ScheduleScreen(
                                 )
                                 Spacer(modifier = Modifier.width(2.dp))
                                 CoreText(
-                                    text = if (activeScheduleId.value != schedule?.id.toString()) "Bắt đầu" else "Dừng lại",
+                                    text = if (activeScheduleId.value != schedule.id.toString()) "Bắt đầu" else "Dừng lại",
                                     style = CoreTypography.displayMedium,
                                     color = MyColor.White,
                                     textAlign = TextAlign.Center
@@ -326,7 +326,7 @@ fun ScheduleTab(
     navController: NavController,
     showBottomSheet: (BottomSheetType) -> Unit = {},
     scrollState: ScrollState,
-    schedule: Schedule?
+    schedule: Schedule = Schedule()
 ) {
     val tabs = ScheduleTab.entries
     val density = LocalDensity.current
@@ -349,7 +349,7 @@ fun ScheduleTab(
                 onClick = { navController.back() }
             )
             CoreText(
-                text = schedule?.scheduleName.toString(),
+                text = schedule?.name.toString(),
                 style = CoreTypographyBold.displayMedium,
                 modifier = Modifier.weight(1f)
             )

@@ -13,8 +13,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import com.example.vcompass.R
-import com.vcompass.core.resource.MyDimen
-import com.vcompass.core.resource.MyColor
+import com.example.vcompass.resource.MyDimen
+import com.example.vcompass.resource.MyColor
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
