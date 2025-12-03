@@ -17,6 +17,12 @@ val CoreFontFamily = FontFamily(
 )
 
 val CoreTypography = Typography().copy(
+    bodySmall = TextStyle(
+        fontFamily = CoreFontFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = MyDimen.s11,
+        letterSpacing = MyDimen.sHalf
+    ),
     displaySmall = TextStyle(
         fontFamily = CoreFontFamily,
         fontWeight = FontWeight.Normal,
@@ -63,12 +69,6 @@ val CoreTypography = Typography().copy(
         fontFamily = CoreFontFamily,
         fontWeight = FontWeight.Normal,
         fontSize = MyDimen.s20,
-        letterSpacing = MyDimen.sHalf
-    ),
-    bodySmall = TextStyle(
-        fontFamily = CoreFontFamily,
-        fontWeight = FontWeight.Normal,
-        fontSize = MyDimen.s16,
         letterSpacing = MyDimen.sHalf
     ),
     titleLarge = TextStyle(

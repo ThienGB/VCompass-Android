@@ -10,8 +10,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
-import com.vcompass.core.extensions.optional
 import com.example.vcompass.resource.MyColor
+import com.example.vcompass.util.optional
 
 @Composable
 fun CoreIcon(

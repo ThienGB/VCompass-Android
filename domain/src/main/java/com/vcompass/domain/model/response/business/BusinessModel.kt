@@ -1,6 +1,7 @@
 package com.vcompass.domain.model.response.business
 
 import com.vcompass.domain.model.response.BaseModel
+import com.vcompass.domain.model.response.business.attraction.OperatingHourModel
 
 open class BusinessModel(
     val partnerId: String? = null,
@@ -14,4 +15,5 @@ open class BusinessModel(
     var status: String? = null,
     val averageRating: Float? = null,
     val totalRatings: Float? = null,
+    val operatingHours: List<OperatingHourModel>? = null,
 ): BaseModel()

@@ -1,24 +1,23 @@
 package com.example.vcompass.ui.navigate
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import com.example.vcompass.screen.explore.ExploreScreen
 import com.example.vcompass.screen.explore.search.ExploreSearchScreen
 import com.example.vcompass.screen.feed.HomeFeedScreen
 import com.example.vcompass.screen.home.HomeScreen
 import com.example.vcompass.screen.introduce.IntroduceScreen
 import com.example.vcompass.screen.login.LoginScreen
-import com.example.vcompass.screen.login.TravelLoginAnimation
+import com.example.vcompass.screen.schedule.ScheduleScreen
 import com.example.vcompass.screen.search.SearchScreen
 import com.example.vcompass.screen.splash.SplashScreen
-import com.example.vcompass.screen.schedule.ScheduleScreen
+import com.example.vcompass.util.ScreenContext
 import com.vcompass.presentation.util.CoreRoute
 
 @Composable
-fun AppNavGraph(navController: NavHostController = rememberNavController()) {
+fun AppNavGraph() {
+    val navController = ScreenContext.navController
     NavHost(navController, startDestination = CoreRoute.Splash.route) {
         composable(CoreRoute.Splash.route) {
             SplashScreen(navController = navController)
@@ -53,7 +52,7 @@ fun AppNavGraph(navController: NavHostController = rememberNavController()) {
         }
 
         composable(CoreRoute.Schedule.route) {
-            ScheduleScreen(navController = navController)
+            ScheduleScreen()
         }
 
     }

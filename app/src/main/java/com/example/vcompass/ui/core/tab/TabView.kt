@@ -21,17 +21,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.Saver
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.lerp
-import com.example.vcompass.ui.core.text.CoreText
+import com.example.vcompass.resource.CoreTypographyMedium
 import com.example.vcompass.resource.MyColor
 import com.example.vcompass.resource.MyDimen
-import com.example.vcompass.resource.CoreTypographyMedium
+import com.example.vcompass.ui.core.text.CoreText
 import kotlinx.coroutines.launch
 import kotlin.math.abs
 
@@ -47,7 +49,14 @@ fun <T> TabView(
 ) {
     val pagerState = rememberPagerState(pageCount = { tabs.size})
     val coroutineScope = rememberCoroutineScope()
-    val currentPage by remember { derivedStateOf { pagerState.currentPage } }
+    val currentPage by rememberSaveable(
+        saver = Saver(
+            save = { it.value },        // lưu Int ra Bundle
+            restore = { mutableStateOf(it) } // restore thành MutableState<Int>
+        )
+    ) {
+        derivedStateOf { pagerState.currentPage }
+    }
 
     LaunchedEffect(currentPage) {
         onTabSelected(currentPage)

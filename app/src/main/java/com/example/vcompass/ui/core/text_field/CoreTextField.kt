@@ -74,12 +74,9 @@ fun CoreTextField(
     trailingIcon: @Composable (() -> Unit)? = null,
     isError: Boolean = false,
     errorMessage: String? = null,
-    // Thêm tham số isRequired
     isRequired: Boolean = false,
     requiredErrorMessage: String = "Trường này là bắt buộc",
-    // Thêm custom validator (tùy chọn)
     customValidator: ((String) -> String?)? = null,
-    // Tham số xử lý mật khẩu
     isPasswordToggleEnabled: Boolean = false,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     imeAction: ImeAction = ImeAction.Next,
@@ -90,52 +87,38 @@ fun CoreTextField(
     enabled: Boolean = true,
     textStyle: TextStyle = CoreTypography.labelLarge,
     errorColor: Color = Color.Red,
-    primaryColor: Color = MaterialTheme.colorScheme.primary,
+    containerColor: Color = MyColor.GrayF5,
     normalColor: Color = MyColor.TextColorPrimary,
 ) {
-    // State quản lý focus
     var isFocused by rememberSaveable { mutableStateOf(false) }
-
-    // State quản lý đã blur lần đầu chưa (để tránh hiện error ngay khi load)
     var hasBlurred by rememberSaveable { mutableStateOf(false) }
-
-    // State quản lý ẩn/hiện mật khẩu
     var passwordVisible by rememberSaveable { mutableStateOf(false) }
-
-    // State quản lý lỗi nội bộ
     var internalError by rememberSaveable { mutableStateOf<String?>(null) }
 
-    // Validate khi blur
     LaunchedEffect(isFocused, value) {
         if (!isFocused && hasBlurred) {
             internalError = when {
-                // Kiểm tra required trước
                 isRequired && value.isBlank() -> requiredErrorMessage
-                // Sau đó kiểm tra custom validator nếu có
                 customValidator != null && value.isNotBlank() -> customValidator(value)
                 else -> null
             }
         }
     }
 
-    // Quyết định khi nào label cần "nổi" lên trên
     val shouldFloatLabel by remember(isFocused, value) {
         derivedStateOf { isFocused || value.isNotEmpty() }
     }
 
-    // Xác định VisualTransformation
     val finalVisualTransformation = when {
         isPasswordToggleEnabled -> if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation()
         else -> visualTransformation
     }
 
-    // Xác định KeyboardType
     val finalKeyboardType = when {
         isPasswordToggleEnabled -> KeyboardType.Password
         else -> keyboardType
     }
 
-    // Xác định error cuối cùng (ưu tiên external error)
     val finalIsError = isError || internalError != null
     val finalErrorMessage = errorMessage ?: internalError
 
@@ -144,7 +127,6 @@ fun CoreTextField(
             value = value,
             onValueChange = { newValue ->
                 onValueChange(newValue)
-                // Clear error khi user bắt đầu nhập
                 if (internalError != null && newValue.isNotBlank()) {
                     internalError = null
                 }
@@ -156,7 +138,6 @@ fun CoreTextField(
                     val wasFocused = isFocused
                     isFocused = focusState.isFocused
 
-                    // Đánh dấu đã blur lần đầu
                     if (wasFocused && !focusState.isFocused) {
                         hasBlurred = true
                     }
@@ -192,13 +173,12 @@ fun CoreTextField(
                     passwordVisible = passwordVisible,
                     onPasswordVisibilityToggle = { passwordVisible = !passwordVisible },
                     errorColor = errorColor,
-                    primaryColor = primaryColor,
+                    containerColor = containerColor,
                     normalColor = if (enabled) normalColor else normalColor.copy(alpha = 0.5f),
                 )
             }
         )
 
-        // Hiển thị lỗi (nếu có)
         if (finalIsError && finalErrorMessage != null) {
             Text(
                 text = finalErrorMessage,
@@ -228,12 +208,10 @@ private fun TextFieldDecorationBox(
     isPasswordToggleEnabled: Boolean,
     passwordVisible: Boolean,
     onPasswordVisibilityToggle: () -> Unit,
+    containerColor: Color,
     errorColor: Color,
-    primaryColor: Color,
     normalColor: Color,
 ) {
-    // --- Các Animation ---
-
     val labelScale by animateFloatAsState(
         targetValue = if (shouldFloatLabel) 0.8f else 1f,
         animationSpec = tween(200, easing = FastOutSlowInEasing),
@@ -256,17 +234,12 @@ private fun TextFieldDecorationBox(
         label = "LabelOffsetY"
     )
 
-
-
-    // --- Bố cục (Layout) ---
-
     Box {
-        // 1. Khung viền (Container)
         Card(
             modifier = Modifier.fillMaxWidth(),
             elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
             shape = RoundedCornerShape(p6),
-            colors = CardDefaults.outlinedCardColors(containerColor = MyColor.GrayF5)
+            colors = CardDefaults.outlinedCardColors(containerColor = containerColor)
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -275,18 +248,13 @@ private fun TextFieldDecorationBox(
                     .padding(horizontal = p16)
                     .heightIn(min = p48)
             ) {
-                // Icon đứng đầu (Leading Icon)
                 if (leadingIcon != null) {
                     Box(modifier = Modifier.padding(end = p16)) {
                         leadingIcon()
                     }
                 }
-
-                // Vùng nhập text chính
                 Box(modifier = Modifier.weight(1f)) {
                     innerTextField()
-
-                    // Placeholder
                     if (shouldFloatLabel && value.isEmpty() && placeholder != null) {
                         CoreText(
                             text = placeholder,
@@ -295,8 +263,6 @@ private fun TextFieldDecorationBox(
                         )
                     }
                 }
-
-                // Icon đứng cuối (Trailing Icon)
                 when {
                     isPasswordToggleEnabled -> {
                         CoreIcon(
@@ -325,29 +291,29 @@ private fun TextFieldDecorationBox(
                 }
             }
         }
-
-        // 2. Label với dấu * nếu required
-        Box(
-            modifier = Modifier
-                .offset(x = labelOffsetX, y = labelOffsetY)
-                .background(
-                    color = MyColor.GrayF5,
-                    shape = RoundedCornerShape(p4)
-                )
-                .padding(horizontal = p4)
-        ) {
-            Row {
-                CoreText (
-                    text = label,
-                    style = textStyle.copy(fontSize = (textStyle.fontSize.value * labelScale).sp),
-                    color = normalColor.copy(alpha = 0.6f)
-                )
-                if (isRequired) {
-                    CoreText(
-                        text = " *",
-                        style = textStyle.copy(fontSize = (textStyle.fontSize.value * labelScale).sp),
-                        color = errorColor
+        if (label.isNotBlank()) {
+            Box(
+                modifier = Modifier
+                    .offset(x = labelOffsetX, y = labelOffsetY)
+                    .background(
+                        color = containerColor,
+                        shape = RoundedCornerShape(p4)
                     )
+                    .padding(horizontal = p4)
+            ) {
+                Row {
+                    CoreText(
+                        text = label,
+                        style = textStyle.copy(fontSize = (textStyle.fontSize.value * labelScale).sp),
+                        color = normalColor.copy(alpha = 0.6f)
+                    )
+                    if (isRequired) {
+                        CoreText(
+                            text = " *",
+                            style = textStyle.copy(fontSize = (textStyle.fontSize.value * labelScale).sp),
+                            color = errorColor
+                        )
+                    }
                 }
             }
         }
@@ -360,7 +326,7 @@ fun TextFieldIcon(
     resDrawable: Int? = null,
     tintColor: Color = MyColor.Black.copy(0.3f),
     size: Dp = MyDimen.p22
-){
+) {
     CoreIcon(
         imageVector = imageVector,
         resDrawable = resDrawable,

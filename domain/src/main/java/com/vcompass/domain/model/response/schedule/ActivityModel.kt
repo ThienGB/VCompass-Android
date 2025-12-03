@@ -1,6 +1,7 @@
 package com.vcompass.domain.model.response.schedule
 
 import com.vcompass.domain.model.response.BaseModel
+import com.vcompass.domain.model.response.business.BusinessModel
 
 data class ActivityModel(
     val activityType: String,
@@ -13,5 +14,5 @@ data class ActivityModel(
     val description: String?,
     val timeStart: String?,
     val timeEnd: String?,
-    val destination: Any?
+    val business: BusinessModel? = null
 ) : BaseModel()

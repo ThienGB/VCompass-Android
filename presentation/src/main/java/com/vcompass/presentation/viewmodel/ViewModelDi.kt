@@ -2,6 +2,7 @@ package com.vcompass.presentation.viewmodel
 
 import com.vcompass.presentation.viewmodel.home.HomeViewModel
 import com.vcompass.presentation.viewmodel.login.LoginViewModel
+import com.vcompass.presentation.viewmodel.schedule.ScheduleViewModel
 import com.vcompass.presentation.viewmodel.splash.IntroduceViewModel
 import com.vcompass.presentation.viewmodel.splash.SplashViewModel
 import org.koin.core.module.dsl.viewModel
@@ -20,4 +21,5 @@ val viewModelModule = module {
     viewModel {
         LoginViewModel(get(), get(), get(),get())
     }
+    viewModel { ScheduleViewModel(get(), get()) }
 }

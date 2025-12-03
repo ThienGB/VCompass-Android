@@ -8,8 +8,9 @@ import com.vcompass.domain.repository.schedule.ScheduleRepository
 import kotlinx.coroutines.flow.Flow
 
 class ScheduleRepositoryImpl(
-    private val scheduleService: ScheduleService,) : ScheduleRepository {
-    override suspend fun get(id: String): Flow<Result<ScheduleModel>> {
+    private val scheduleService: ScheduleService
+) : ScheduleRepository {
+    override suspend fun getScheduleById(id: String): Flow<Result<ScheduleModel>> {
         return asSingleResultFlow(
             suspendFunc = { scheduleService.getScheduleById(id) },
             transform = { dto ->

@@ -28,10 +28,9 @@ import com.example.vcompass.R
  */
 @Composable
 fun PlaneSplitAnimationScreen(
-    onAnimationComplete: () -> Unit,
-    planeIcon: Int? = null, // Pass R.drawable.ic_plane nếu có
-    topScreenColor: Color = Color(0xFF1976D2), // Material Blue
-    bottomScreenColor: Color = Color(0xFF64B5F6), // Light Blue
+    planeIcon: Int? = null,
+    topScreenColor: Color = Color(0xFF1976D2),
+    bottomScreenColor: Color = Color(0xFF64B5F6),
     animationDuration: Long = 2500L
 ) {
     var animationState by remember { mutableStateOf(AnimationState.INITIAL) }
@@ -93,7 +92,6 @@ fun PlaneSplitAnimationScreen(
 
         // Chuyển sang màn hình tiếp theo
         animationState = AnimationState.COMPLETED
-        onAnimationComplete()
     }
 
     Box(

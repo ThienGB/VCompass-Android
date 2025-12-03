@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -35,9 +36,15 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.StickyNote2
+import androidx.compose.material.icons.rounded.AccessTimeFilled
+import androidx.compose.material.icons.rounded.Delete
+import androidx.compose.material.icons.rounded.EditNote
+import androidx.compose.material.icons.rounded.Info
+import androidx.compose.material.icons.rounded.KeyboardArrowUp
 import androidx.compose.material.icons.rounded.Place
 import androidx.compose.material.icons.rounded.Star
-import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material.icons.rounded.StickyNote2
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -47,15 +54,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -64,45 +72,41 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.net.toUri
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberAsyncImagePainter
-import com.example.vcompass.ui.core.text.CoreText
 import com.example.vcompass.R
-
-import com.example.vcompass.helper.BottomSheetType
+import com.example.vcompass.enum.ActivityTypeEnum
 import com.example.vcompass.helper.CommonUtils.formatCurrency
-import com.example.vcompass.util.clickableWithScale
-import com.example.vcompass.ui.core.icon.CoreIcon
-import com.example.vcompass.ui.core.space.SpaceWidth4
-import com.example.vcompass.ui.core.space.SpaceWidth8
+import com.example.vcompass.resource.CoreTypography
+import com.example.vcompass.resource.CoreTypographyBold
+import com.example.vcompass.resource.CoreTypographyMedium
+import com.example.vcompass.resource.CoreTypographySemiBold
 import com.example.vcompass.resource.MyColor
 import com.example.vcompass.resource.MyDimen
-import com.example.vcompass.resource.CoreTypographyBold
-import com.vcompass.presentation.model.business.accommodation.Accommodation
-import com.vcompass.presentation.model.business.attraction.Attraction
-import com.vcompass.presentation.model.business.foodplace.FoodPlace
+import com.example.vcompass.ui.core.divider.ItemDivider
+import com.example.vcompass.ui.core.icon.CoreIcon
+import com.example.vcompass.ui.core.space.ExpandableSpacer
+import com.example.vcompass.ui.core.space.SpaceHeight
+import com.example.vcompass.ui.core.space.SpaceHeight4
+import com.example.vcompass.ui.core.space.SpaceHeight8
+import com.example.vcompass.ui.core.space.SpaceWidth
+import com.example.vcompass.ui.core.space.SpaceWidth4
+import com.example.vcompass.ui.core.space.SpaceWidth8
+import com.example.vcompass.ui.core.text.CoreText
+import com.example.vcompass.util.clickableWithScale
+import com.vcompass.presentation.enums.BottomSheetType
 import com.vcompass.presentation.model.schedule.Activity
 import com.vcompass.presentation.model.schedule.Schedule
-import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.distinctUntilChanged
+import com.vcompass.presentation.viewmodel.schedule.ScheduleViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ScheduleDetailTab(
+    schedule: Schedule? = null,
     showBottomSheet: (BottomSheetType) -> Unit = {},
-    schedule: Schedule? = null
 ) {
     val listState = rememberLazyListState()
     val selectedItem = remember { mutableStateOf(0) }
-    val dayIndexToColumnIndex = remember(schedule) {
-        val map = mutableMapOf<Int, Int>()
-        var currentIndex = 0
-        schedule?.days?.forEachIndexed { index, dayActivity ->
-            map[dayActivity.day ?: (index + 1)] = currentIndex
-            currentIndex++
-            currentIndex += dayActivity.activity?.size ?: 0
-        }
-        map
-    }
-
     LaunchedEffect(selectedItem.value) {
         listState.animateScrollBy(50f)
     }
@@ -121,7 +125,7 @@ fun ScheduleDetailTab(
                         .clip(RoundedCornerShape(MyDimen.p100))
                         .background(MyColor.Black)
                         .padding(MyDimen.p8)
-                        .clickableWithScale { showBottomSheet(BottomSheetType.RANGE_DAY_PICKER) }
+                        .clickableWithScale { }
                 ) {
                     CoreIcon(
                         resDrawable = R.drawable.ic_calendar,
@@ -162,12 +166,12 @@ fun ScheduleDetailTab(
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
+                .heightIn(max = MyDimen.maxScrollHeight)
                 .padding(horizontal = 3.dp),
+            userScrollEnabled = false,
             state = listState
         ) {
-            itemsIndexed(
-                schedule?.days ?: listOf(),
-                key = { index, item -> item.activity.toString() }) { index, item ->
+            itemsIndexed(schedule?.days ?: listOf()) { day, item ->
                 Text(
                     text = "Ngày ${item.day}: ${item.activity?.size} hoạt động",
                     fontSize = 26.sp,
@@ -177,7 +181,7 @@ fun ScheduleDetailTab(
                     modifier = Modifier.padding(start = 10.dp, top = 15.dp, bottom = 5.dp)
                 )
                 item.activity?.forEachIndexed { index, item ->
-                    ActivityCard(showBottomSheet, index, item)
+                    ActivityCard(index, day, item)
                 }
             }
         }
@@ -187,70 +191,31 @@ fun ScheduleDetailTab(
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun ActivityCard(
-    showBottomSheet: (BottomSheetType) -> Unit = {},
     index: Int,
-    item: Activity,
-    schedule: Schedule? = null,
+    day: Int,
+    activity: Activity = Activity(),
+    viewModel: ScheduleViewModel = koinViewModel()
 ) {
-    val type = when (item.activityType) {
-        "Attraction" -> "Tham quan"
-        "Accommodation" -> "Nghỉ ngơi"
-        "FoodService" -> "Ẩm thực"
-        else -> "Khác"
-    }
-    val attraction = item.destination as? Attraction
-    val accommodation = item.destination as? Accommodation
-    val foodService = item.destination as? FoodPlace
-
-    val operatingHours =
-        attraction?.operatingHours?.firstOrNull() ?: foodService?.operatingHours?.firstOrNull()
-    val price = foodService?.price?.minPrice ?: attraction?.price ?: 0
-    val ratings = attraction?.totalRatings ?: foodService?.totalRatings ?: accommodation?.totalRatings
-
-    val imageSrc = accommodation?.images?.firstOrNull()
-        ?: attraction?.images?.firstOrNull()
-        ?: foodService?.images?.firstOrNull()
-        ?: item.imgSrc?.firstOrNull()
+    val business = activity.business
+    val type = ActivityTypeEnum.getType(activity.activityType)
+    val operatingHours = business.operatingHours?.firstOrNull()
+    val imageSrc = business.images?.firstOrNull()
 
     var seeMoreExtension by rememberSaveable { mutableStateOf(false) }
     var isShowDetail by rememberSaveable { mutableStateOf(false) }
     val keyboardController = LocalSoftwareKeyboardController.current
-    var userNote by rememberSaveable { mutableStateOf(item.description) }
-    val serviceList =
-        (accommodation?.amenities ?: attraction?.amenities ?: foodService?.amenities
-        ?: listOf())
-    var showDialog by remember { mutableStateOf(false) }
+    var userNote by rememberSaveable { mutableStateOf(activity.description) }
+    val serviceList = business.amenities
     val context = LocalContext.current
-    LaunchedEffect(Unit) {
-        snapshotFlow { userNote }
-            .debounce(3000)
-            .distinctUntilChanged()
-            .collect { newUserNote ->
-                val newSchedule = schedule?.copy(
-                    days = schedule.days?.map { day ->
-                        day.copy(
-                            activity = day.activity?.map { activity ->
-                                if (activity.id == item.id) {
-                                    activity.copy(description = newUserNote)
-                                } else activity
-                            }
-                        )
-                    }
-                )
-                if (newSchedule != null) {
-                    // viewModel.updateSchedule(newSchedule)
-                }
-            }
-    }
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 5.dp)
+            .padding(horizontal = MyDimen.p8)
             .background(
-                color = if (!isShowDetail) Color.White else MyColor.GrayEEE,
-                shape = RoundedCornerShape(8.dp)
+                color = if (!isShowDetail) MyColor.White else MyColor.GrayEEE,
+                shape = RoundedCornerShape(MyDimen.p8)
             )
-            .padding(10.dp)
+            .padding(horizontal = MyDimen.p8, vertical = MyDimen.p16)
             .clickableWithScale { isShowDetail = !isShowDetail }
     ) {
         Row(
@@ -259,95 +224,79 @@ fun ActivityCard(
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Box(
-                    modifier = Modifier
-                        .size(28.dp),
+                    modifier = Modifier.size(28.dp),
                     contentAlignment = Alignment.Center,
                 ) {
                     CoreIcon(
-                        imageVector = Icons.Rounded.Place,
-                        tintColor = MyColor.Purple,
-                        iconModifier = Modifier.fillMaxSize()
+                        resDrawable = R.drawable.ic_place_fill_24dp,
+                        tintColor = MyColor.DarkBlue,
+                        iconModifier = Modifier.fillMaxSize(),
+                        boxModifier = Modifier.offset(x = (-2).dp)
                     )
-                    Text(
+                    CoreText(
                         text = (index + 1).toString(),
-                        fontSize = 11.sp,
-                        fontWeight = FontWeight.W600,
-                        color = Color.White,
-                        modifier = Modifier.offset(x = (-2).dp, y = (-2).dp)
+                        style = CoreTypographyBold.bodySmall,
+                        color = MyColor.White,
+                        modifier = Modifier.offset(x = (-4.5).dp, y = (-3).dp)
                     )
                 }
-                Spacer(modifier = Modifier.width(6.dp))
-                Text(
-                    text = type,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.W700,
+                SpaceWidth4()
+                CoreText(
+                    text = stringResource(type.titleRes),
+                    style = CoreTypographyBold.displayLarge,
                     textAlign = TextAlign.Center
                 )
             }
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
-                    .clickable {
-                        //viewModel.activityId = item.id.toString()
-                        showBottomSheet(BottomSheetType.TIME_PICKER)
-                    }
-                    .background(
-                        MyColor.GrayEEE,
-                        shape = RoundedCornerShape(8.dp)
-                    )
-                    .padding(horizontal = 5.dp, vertical = 3.dp)
+                    .clip(RoundedCornerShape(MyDimen.p8))
+                    .background(MyColor.Primary.copy(0.05f))
+                    .clickable { }
+                    .padding(horizontal = MyDimen.p6, vertical = MyDimen.p2),
             ) {
                 CoreIcon(
-                    resDrawable = R.drawable.ic_clock_24dp,
-                    tintColor = MyColor.DarkBlue,
+                    imageVector = Icons.Rounded.AccessTimeFilled,
+                    tintColor = MyColor.Primary,
                     iconModifier = Modifier.size(MyDimen.p24)
                 )
                 SpaceWidth4()
-                Text(
-                    text = item.timeStart + " - " + item.timeEnd,
-                    fontSize = 15.sp,
-                    color = MyColor.DarkBlue,
-                    fontWeight = FontWeight.W600,
+                CoreText(
+                    text = activity.timeStart + " - " + activity.timeEnd,
+                    style = CoreTypographyMedium.labelLarge,
+                    color = MyColor.Primary,
                     textAlign = TextAlign.Center
                 )
             }
         }
-        Spacer(modifier = Modifier.height(3.dp))
+        SpaceHeight8()
         Row {
             Column(modifier = Modifier.weight(1f)) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Icon(
-                        painter = painterResource(R.drawable.ic_service_management),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .size(15.dp)
-                            .align(Alignment.Top)
+                    CoreIcon(
+                        resDrawable = type.iconRes,
+                        iconModifier = Modifier.size(MyDimen.p20)
                     )
-                    Spacer(modifier = Modifier.width(6.dp))
-                    Text(
-                        text = (accommodation?.name ?: attraction?.name
-                        ?: foodService?.name ?: item.name).toString(),
-                        fontSize = 15.sp,
-                        fontWeight = FontWeight.W600,
-                        maxLines = 4,
+                    SpaceWidth8()
+                    CoreText(
+                        text = business.name,
+                        style = CoreTypographySemiBold.labelLarge,
+                        maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
                 }
-                Spacer(modifier = Modifier.height(3.dp))
+                SpaceHeight4()
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     if (!isShowDetail) {
-                        Icon(
-                            painter = painterResource(R.drawable.ic_favorite_star_solid),
-                            contentDescription = null,
-                            tint = Color.DarkGray,
-                            modifier = Modifier
-                                .size(15.dp)
-                                .align(Alignment.Top)
+                        CoreIcon(
+                            imageVector = Icons.AutoMirrored.Rounded.StickyNote2,
+                            iconModifier = Modifier.size(MyDimen.p20),
+                            boxModifier = Modifier.align(Alignment.Top)
                         )
-                        Spacer(modifier = Modifier.width(6.dp))
+                        SpaceWidth8()
                     }
                     BasicTextField(
-                        value = userNote.toString(),
+                        value = userNote,
                         onValueChange = { userNote = it },
                         textStyle = TextStyle(
                             fontSize = 13.sp,
@@ -371,10 +320,7 @@ fun ActivityCard(
                 }
             }
             Spacer(modifier = Modifier.width(5.dp))
-            //////
 
-
-            //////
             Image(
                 painter = rememberAsyncImagePainter(
                     model = imageSrc,
@@ -395,39 +341,31 @@ fun ActivityCard(
         ) {
             Row(
                 modifier = Modifier
-                    .background(
-                        MyColor.GrayEEE,
-                        shape = RoundedCornerShape(8.dp)
-                    )
-                    .padding(horizontal = 5.dp, vertical = 3.dp)
-                    .clickable(
-                        indication = null,
-                        interactionSource = null
-                    ) {
-                        // viewModel.activityId = item.id.toString()
-                        showBottomSheet(BottomSheetType.PRICE_PICKER)
-                    },
+                    .clip(RoundedCornerShape(MyDimen.p8))
+                    .background(MyColor.Red.copy(0.05f))
+                    .clickable {
+                        viewModel.currentDay = day
+                        viewModel.currentActivity = activity
+                        viewModel.setSheetType(BottomSheetType.ADD_COST)
+                    }
+                    .padding(horizontal = MyDimen.p6, vertical = MyDimen.p2),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(
-                    painter = painterResource(R.drawable.ic_cost_24dp),
-                    contentDescription = null,
-                    tint = Color.Red,
-                    modifier = Modifier.size(15.dp)
+                CoreIcon(
+                    resDrawable = R.drawable.ic_cost_24dp,
+                    tintColor = Color.Red,
+                    iconModifier = Modifier.size(MyDimen.p20)
                 )
-                Spacer(modifier = Modifier.width(6.dp))
-                Text(
-                    text = formatCurrency(item.cost) + " đ",
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.W500,
+                SpaceWidth8()
+                CoreText(
+                    text = formatCurrency(activity.cost) + " đ",
+                    style = CoreTypographyMedium.labelLarge,
                     color = Color.Red,
-                    maxLines = 4,
-                    overflow = TextOverflow.Ellipsis,
                 )
             }
         }
     }
-    Spacer(modifier = Modifier.height(5.dp))
+    SpaceHeight8()
     AnimatedVisibility(
         visible = isShowDetail,
         enter = expandVertically(animationSpec = tween(300)) + fadeIn(),
@@ -436,41 +374,38 @@ fun ActivityCard(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 10.dp)
+                .padding(horizontal = MyDimen.p16)
         ) {
-            if (serviceList.isNotEmpty()) {
+            if (serviceList?.isNotEmpty() == true) {
                 Box(
                     contentAlignment = Alignment.CenterStart,
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     FlowRow(
-                        horizontalArrangement = Arrangement.spacedBy(6.dp),
-                        verticalArrangement = Arrangement.spacedBy(
-                            4.dp,
-                            Alignment.CenterVertically
-                        ),
+                        horizontalArrangement = Arrangement.spacedBy(MyDimen.p6),
+                        verticalArrangement = Arrangement.spacedBy(MyDimen.p4),
                         overflow = FlowRowOverflow.Clip,
                     ) {
-                        serviceList.take(if (seeMoreExtension) 10 else 3).forEach { item ->
-                            Row(
-                                modifier = Modifier
-                                    .background(
-                                        MyColor.Gray999,
-                                        shape = RoundedCornerShape(6.dp)
+                        serviceList.take(if (seeMoreExtension) 10 else 3)
+                            .forEach { item ->
+                                Row(
+                                    modifier = Modifier
+                                        .background(
+                                            MyColor.GrayF5,
+                                            shape = RoundedCornerShape(MyDimen.p6)
+                                        )
+                                        .padding(horizontal = MyDimen.p10, vertical = MyDimen.p6)
+                                ) {
+                                    CoreText(
+                                        text = item,
+                                        style = CoreTypographySemiBold.labelSmall,
+                                        color = MyColor.TextColorGray,
+                                        textAlign = TextAlign.Center
                                     )
-                                    .padding(horizontal = 10.dp, vertical = 5.dp),
-                            ) {
-                                Text(
-                                    text = item,
-                                    fontWeight = FontWeight.W600,
-                                    fontSize = 13.sp,
-                                    color = Color.DarkGray,
-                                    textAlign = TextAlign.Center
-                                )
+                                }
                             }
-                        }
                     }
-                    if (!seeMoreExtension) {
+                    if (!seeMoreExtension || serviceList.size > 3) {
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
                             modifier = Modifier
@@ -478,154 +413,99 @@ fun ActivityCard(
                                 .align(Alignment.CenterEnd)
                                 .background(
                                     Color.White.copy(alpha = 0.8f),
-                                    shape = RoundedCornerShape(6.dp)
+                                    shape = RoundedCornerShape(MyDimen.p6)
                                 )
-                                .padding(vertical = 6.dp, horizontal = 8.dp)
+                                .padding(vertical = MyDimen.p6, horizontal = MyDimen.p8)
                         ) {
-                            Text(
+                            CoreText(
                                 text = "Xem thêm",
-                                fontSize = 11.sp,
-                                fontWeight = FontWeight.W600,
-                                color = Color.DarkGray,
+                                style = CoreTypographyMedium.bodySmall,
+                                color = MyColor.TextColorGray,
                                 overflow = TextOverflow.Ellipsis
                             )
                         }
                     }
                 }
-                Spacer(modifier = Modifier.height(6.dp))
+                SpaceHeight8()
             }
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 4.dp)
-            ) {
-                if (item.activityType != "Other") {
+            Column(modifier = Modifier.fillMaxWidth()) {
+                if (type != ActivityTypeEnum.OTHER) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         CoreIcon(
                             imageVector = Icons.Rounded.Star,
                             tintColor = MyColor.Rating,
-                            iconModifier = Modifier.size(MyDimen.p16)
+                            iconModifier = Modifier.size(MyDimen.p20)
                         )
-                        Spacer(modifier = Modifier.width(10.dp))
-                        Text(
-                            text = ratings.toString() + "★ (" + ratings.toString() + ")",
-                            fontSize = 13.sp,
-                            fontWeight = FontWeight.W400,
+                        SpaceWidth8()
+                        CoreText(
+                            text = "${business.averageRating}★ (${business.totalRatings})",
+                            style = CoreTypography.labelSmall,
                             color = MyColor.Rating,
                             overflow = TextOverflow.Ellipsis
                         )
                     }
+                    SpaceWidth8()
                 }
-                Spacer(modifier = Modifier.height(6.dp))
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     CoreIcon(
-                        resDrawable = R.drawable.ic_information_24dp,
+                        imageVector = Icons.Rounded.Info,
                         tintColor = MyColor.Primary,
-                        iconModifier = Modifier
-                            .size(15.dp)
-                            .align(Alignment.Top)
+                        iconModifier = Modifier.size(MyDimen.p20)
                     )
                     SpaceWidth8()
-                    Text(
-                        text = accommodation?.description ?: attraction?.description
-                        ?: foodService?.description ?: item.description.toString(),
-                        fontSize = 12.sp,
-                        fontWeight = FontWeight.W400,
-                        color = Color.DarkGray,
+                    CoreText(
+                        text = activity.business.description.toString(),
+                        style = CoreTypography.labelSmall,
+                        color = MyColor.TextColorLight,
                         overflow = TextOverflow.Ellipsis
                     )
                 }
-                Spacer(modifier = Modifier.height(6.dp))
+                SpaceHeight8()
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     CoreIcon(
                         imageVector = Icons.Rounded.Place,
-                        iconModifier = Modifier
-                            .size(15.dp)
-                            .align(Alignment.Top)
+                        iconModifier = Modifier.size(MyDimen.p20)
                     )
                     SpaceWidth8()
-                    Text(
-                        text = accommodation?.location?.address ?: attraction?.location?.address
-                        ?: foodService?.location?.address ?: item.address.toString(),
-                        fontSize = 12.sp,
-                        fontWeight = FontWeight.W400,
+                    CoreText(
+                        text = activity.business.location?.address.toString(),
+                        style = CoreTypography.labelSmall,
                         color = MyColor.DarkBlue,
                         overflow = TextOverflow.Ellipsis
                     )
                 }
-                Spacer(modifier = Modifier.height(6.dp))
+                SpaceHeight8()
                 if (operatingHours != null) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         CoreIcon(
-                            resDrawable = R.drawable.ic_clock_24dp,
-                            iconModifier = Modifier
-                                .size(15.dp)
-                                .align(Alignment.Top)
+                            imageVector = Icons.Rounded.AccessTimeFilled,
+                            iconModifier = Modifier.size(MyDimen.p20)
                         )
                         SpaceWidth8()
-                        Text(
-                            text = operatingHours?.openTime + " - " + operatingHours?.closeTime + " (" + operatingHours?.startDay + " - " + operatingHours?.endDay + ")",
-                            fontSize = 12.sp,
-                            fontWeight = FontWeight.W600,
-                            color = Color.DarkGray,
+                        CoreText(
+                            text = operatingHours.openTime + " - " + operatingHours.closeTime + " (" + operatingHours?.startDay + " - " + operatingHours?.endDay + ")",
+                            style = CoreTypography.labelSmall,
+                            color = MyColor.TextColorLight,
                             overflow = TextOverflow.Ellipsis
                         )
                     }
                 }
-                Spacer(modifier = Modifier.height(6.dp))
-
-                if (item.activityType == "FoodService" || item.activityType == "Attraction") {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Icon(
-                            painter = painterResource(R.drawable.ic_cost_24dp),
-                            contentDescription = null,
-                            tint = Color.DarkGray,
-                            modifier = Modifier
-                                .size(15.dp)
-                                .align(Alignment.Top)
-                        )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(
-                            text = formatCurrency(price) + " đ",
-                            fontSize = 12.sp,
-                            fontWeight = FontWeight.W600,
-                            color = Color.DarkGray,
-                            overflow = TextOverflow.Ellipsis
-                        )
-                    }
-                }
-                Spacer(modifier = Modifier.height(10.dp))
+                SpaceHeight()
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Row(
                         modifier = Modifier
                             .background(
                                 MyColor.DarkOrange,
-                                shape = RoundedCornerShape(99.dp)
+                                shape = RoundedCornerShape(MyDimen.p100)
                             )
-                            .padding(horizontal = 10.dp, vertical = 8.dp)
+                            .padding(horizontal = MyDimen.p10, vertical = MyDimen.p8)
                             .clickableWithScale {
                                 var uri = "".toUri()
-                                val lat = accommodation?.location?.latitude
-                                    ?: attraction?.location?.latitude
-                                    ?: foodService?.location?.latitude
-                                val lng = accommodation?.location?.longitude
-                                    ?: attraction?.location?.longitude
-                                    ?: foodService?.location?.longitude
-                                val label = accommodation?.location?.address
-                                    ?: attraction?.location?.address
-                                    ?: foodService?.location?.address
+                                val lat = business.location?.latitude ?: 0
+                                val lng = business.location?.longitude ?: 0
+                                val label = business.location?.address
 
-                                uri = if (lat == null || lng == null) {
-                                    val address = item.address.toString()
-                                    if (address == "") {
-                                        return@clickableWithScale
-                                    } else
-                                        "geo:0,0?q=$address".toUri()
-                                } else {
-                                    "geo:$lat,$lng?q=$lat,$lng($label)".toUri()
-                                }
-                                // Chỉ đường
-                                // val uri = Uri.parse("google.navigation:q=$lat,$lng")
+                                uri = "geo:$lat,$lng?q=$lat,$lng($label)".toUri()
 
                                 val intent = Intent(Intent.ACTION_VIEW, uri).apply {
                                     setPackage("com.google.android.apps.maps")
@@ -637,33 +517,27 @@ fun ActivityCard(
                             },
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text(
+                        CoreText(
                             text = "Đường đi",
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.W600,
+                            style = CoreTypographySemiBold.labelLarge,
                             color = Color.White,
                         )
                     }
-                    Spacer(modifier = Modifier.weight(1f))
-                    Icon(
-                        painter = painterResource(R.drawable.ic_delete_24dp),
-                        contentDescription = null,
-                        tint = Color.DarkGray,
-                        modifier = Modifier
-                            .size(20.dp)
-                            .clickableWithScale { showDialog = true })
-                    Spacer(modifier = Modifier.width(16.dp))
-                    Icon(
-                        painter = painterResource(R.drawable.ic_article_outline_24dp),
-                        contentDescription = null,
-                        tint = Color.DarkGray,
-                        modifier = Modifier.size(20.dp)
+                    ExpandableSpacer()
+                    CoreIcon(
+                        imageVector = Icons.Rounded.Delete,
+                        iconModifier = Modifier.size(MyDimen.p24)
+                    )
+                    SpaceWidth()
+                    CoreIcon(
+                        imageVector = Icons.Rounded.KeyboardArrowUp,
+                        iconModifier = Modifier.size(MyDimen.p24)
                     )
                 }
-                Spacer(modifier = Modifier.height(10.dp))
+                SpaceHeight()
             }
         }
     }
-    HorizontalDivider(thickness = 0.5.dp, color = Color.LightGray)
+    ItemDivider()
 }
 

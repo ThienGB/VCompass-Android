@@ -5,6 +5,6 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class DayActivity(
-    val day: Int?,
-    val activity: List<Activity>?
+    val day: Int? = null,
+    val activity: List<Activity>? = null
 ) : Parcelable

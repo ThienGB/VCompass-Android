@@ -1,8 +1,10 @@
 package com.vcompass.presentation.model.schedule
 
 import android.os.Parcelable
+import com.vcompass.domain.model.response.schedule.ScheduleModel
 import com.vcompass.domain.model.response.user.UserModel
 import com.vcompass.presentation.model.Base
+import com.vcompass.presentation.util.tryParseObject
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -27,3 +29,7 @@ data class Schedule(
     val comments: List<Comment>? = null,
     val likes: List<Like>? = null
 ) : Base(), Parcelable
+
+fun ScheduleModel.toSchedule(): Schedule{
+    return tryParseObject<Schedule>() ?: Schedule()
+}

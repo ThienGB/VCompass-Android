@@ -2,11 +2,15 @@ package com.example.vcompass.ui.core.text_field
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import com.example.vcompass.R
+import com.example.vcompass.resource.CoreTypography
+import com.example.vcompass.resource.MyColor
 
 @Composable
 fun NormalTextField(
@@ -17,20 +21,30 @@ fun NormalTextField(
     errorMessage: String? = stringResource(R.string.lb_field_required),
     imeAction: ImeAction = ImeAction.Next,
     enabled: Boolean = true,
-    leadingIcon: ImageVector? = null
+    maxLines: Int = Int.MAX_VALUE,
+    minLines: Int = 1,
+    isSingleLine: Boolean = true,
+    textStyle: TextStyle = CoreTypography.labelLarge,
+    leadingIcon: ImageVector? = null,
+    containerColor: Color = MyColor.GrayF5
 ) {
     CoreTextField(
         modifier = modifier,
         value = value,
         onValueChange = onValueChange,
         label = label,
+        maxLines = maxLines,
+        minLines = minLines,
         leadingIcon = {
             if (leadingIcon != null)
                 TextFieldIcon(imageVector = leadingIcon)
         },
-        keyboardType = KeyboardType.Email, // Giá trị được "wrap"
+        textStyle = textStyle,
+        keyboardType = KeyboardType.Email,
         imeAction = imeAction,
         errorMessage = errorMessage,
-        enabled = enabled
+        enabled = enabled,
+        containerColor = containerColor,
+        isSingleLine = isSingleLine
     )
 }

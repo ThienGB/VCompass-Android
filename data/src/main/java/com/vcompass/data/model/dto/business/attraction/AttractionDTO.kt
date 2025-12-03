@@ -7,9 +7,7 @@ import com.vcompass.domain.model.response.business.attraction.AttractionModel
 
 data class AttractionDTO(
     @SerializedName("price")
-    val price: Int?,
-    @SerializedName("operatingHours")
-    val operatingHours: List<OperatingHourDTO>?,
+    val price: Int?
 ) : BusinessDTO()
 
 fun AttractionDTO.toAttractionModel(): AttractionModel {

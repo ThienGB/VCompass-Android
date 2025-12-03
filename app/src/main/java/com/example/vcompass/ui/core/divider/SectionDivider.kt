@@ -11,8 +11,8 @@ import com.example.vcompass.resource.MyDimen
 @Composable
 fun SectionDivider(
     modifier: Modifier = Modifier,
-    thickness: Dp = MyDimen.p2,
-    color: Color = MyColor.Gray999
+    thickness: Dp = MyDimen.p8,
+    color: Color = MyColor.GrayEEE
 ){
     HorizontalDivider(thickness = thickness, color = color, modifier = modifier)
 }

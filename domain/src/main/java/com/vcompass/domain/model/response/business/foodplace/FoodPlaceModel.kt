@@ -6,7 +6,6 @@ import com.vcompass.domain.model.response.business.attraction.OperatingHourModel
 data class FoodPlaceModel(
     val serviceType: String? = null,
     val price: PriceRangeModel? = null,
-    val menuImages: List<String>? = null,
-    val operatingHours: List<OperatingHourModel>? = null
+    val menuImages: List<String>? = null
 ) : BusinessModel()
 

@@ -8,7 +8,6 @@ import kotlinx.parcelize.Parcelize
 data class FoodPlace(
     val serviceType: String? = null,
     val price: PriceRange? = null,
-    val menuImages: List<String>? = null,
-    val operatingHours: List<OperatingHour>? = null
+    val menuImages: List<String>? = null
 ) : Business()
 

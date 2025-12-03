@@ -39,14 +39,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.zIndex
 import com.example.vcompass.R
-import com.example.vcompass.data.api.model.Schedule
 import com.example.vcompass.helper.CommonUtils.formatCurrency
 import com.example.vcompass.ui.core.icon.CoreIcon
 import com.example.vcompass.ui.core.space.SpaceHeight
 import com.example.vcompass.ui.core.space.SpaceWidth4
 import com.example.vcompass.resource.MyColor
 import com.example.vcompass.resource.MyDimen
+import com.vcompass.presentation.model.schedule.Schedule
 
 @Composable
 fun PriceSection(
@@ -105,6 +106,7 @@ fun PriceSection(
             modifier = Modifier
                 .fillMaxWidth()
                 .offset(y = (-12).dp)
+                .zIndex(2f)
                 .clip(RoundedCornerShape(16.dp))
                 .background(Color.White)
                 .padding(vertical = 10.dp, horizontal = 15.dp)
@@ -132,7 +134,7 @@ fun PriceSection(
                 )
             }
             SpaceHeight()
-            schedule?.activities?.forEach { day ->
+            schedule?.days?.forEach { day ->
                 day.activity?.filter { (it.cost ?: 0) > 0 }?.forEach { activity ->
                     PriceItem(
                         title = activity.costDescription ?: activity.name.toString(),
@@ -216,7 +218,7 @@ fun PriceItem(
 }
 
 fun Schedule.calculateTotalCost(): Int {
-    val activityCost = activities?.sumOf { day ->
+    val activityCost = days?.sumOf { day ->
         day.activity?.sumOf { it.cost ?: 0 } ?: 0
     } ?: 0
     val additionalCost = additionalExpenses?.sumOf { it.cost ?: 0 } ?: 0

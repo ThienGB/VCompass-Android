@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
@@ -20,13 +19,11 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowRight
+import androidx.compose.material.icons.rounded.AddLocationAlt
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
-import androidx.compose.material.icons.rounded.Place
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.VerticalDivider
@@ -42,47 +39,46 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.vcompass.R
-import com.example.vcompass.helper.BottomSheetType
+import com.example.vcompass.resource.CoreTypography
+import com.example.vcompass.resource.CoreTypographyBold
+import com.example.vcompass.resource.CoreTypographySemiBold
+import com.example.vcompass.resource.MyColor
+import com.example.vcompass.resource.MyDimen
 import com.example.vcompass.ui.core.divider.DividerOrientation
 import com.example.vcompass.ui.core.divider.ItemDivider
+import com.example.vcompass.ui.core.divider.SectionDivider
+import com.example.vcompass.ui.core.icon.CoreIcon
 import com.example.vcompass.ui.core.icon.MoreOptionIcon
+import com.example.vcompass.ui.core.space.SpaceHeight
+import com.example.vcompass.ui.core.space.SpaceHeight4
+import com.example.vcompass.ui.core.space.SpaceWidth8
 import com.example.vcompass.ui.core.text.BorderLessTextField
 import com.example.vcompass.ui.core.text.CoreText
 import com.example.vcompass.util.clickableWithScale
 import com.example.vcompass.util.scaleOnClick
-import com.example.vcompass.ui.core.icon.CoreIcon
-import com.example.vcompass.ui.core.space.SpaceHeight
-import com.example.vcompass.ui.core.space.SpaceHeight4
-import com.example.vcompass.ui.core.space.SpaceWidth8
-import com.example.vcompass.resource.MyColor
-import com.example.vcompass.resource.MyDimen
-import com.example.vcompass.resource.CoreTypography
-import com.example.vcompass.resource.CoreTypographyBold
-import com.example.vcompass.resource.CoreTypographySemiBold
+import com.vcompass.presentation.enums.BottomSheetType
 import com.vcompass.presentation.model.schedule.Comment
 import com.vcompass.presentation.model.schedule.DayActivity
 import com.vcompass.presentation.model.schedule.Schedule
+import com.vcompass.presentation.viewmodel.schedule.ScheduleViewModel
+import org.koin.androidx.compose.koinViewModel
 
-@Preview(showSystemUi = true)
 @Composable
 fun ScheduleSummaryTab(
+    schedule: Schedule = Schedule(),
     showBottomSheet: (BottomSheetType) -> Unit = {},
-    schedule: Schedule = Schedule()
 ) {
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column {
         SummaryInfoSection(schedule)
+        SectionDivider()
         DescriptionSection(schedule)
-        schedule.days?.forEachIndexed { index, item ->
-            SpaceHeight()
-            SummaryDay(
-                title = "Ngày ${index + 1}",
-                showBottomSheet = { showBottomSheet(it) },
-                activities = item
-            )
+        SectionDivider()
+        schedule.days?.forEachIndexed { index, activity ->
+            SummaryDay(day = index + 1, activities = activity)
+            SectionDivider()
         }
         SpaceHeight()
         PriceSection(schedule)
@@ -229,7 +225,7 @@ fun DescriptionSection(
             exit = shrinkVertically(animationSpec = tween(300)) + fadeOut()
         ) {
             TextField(
-                value = description.toString(),
+                value = description,
                 onValueChange = { description = it },
                 textStyle = TextStyle(
                     fontWeight = FontWeight.W400,
@@ -283,15 +279,17 @@ fun ScheduleSummaryInforItem(
 
 @Composable
 fun SummaryDay(
-    showBottomSheet: (BottomSheetType) -> Unit = {},
-    title: String = "",
+    day: Int,
     activities: DayActivity
 ) {
-    var isExpanded by rememberSaveable { mutableStateOf(true) }
+    val viewModel: ScheduleViewModel = koinViewModel()
+    val activities = activities.activity ?: emptyList()
+    var isExpanded by rememberSaveable { mutableStateOf(false) }
     Column {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
+                .clickable { isExpanded = !isExpanded }
                 .padding(vertical = MyDimen.p6),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -303,7 +301,7 @@ fun SummaryDay(
             )
             BorderLessTextField(
                 modifier = Modifier.weight(1f),
-                value = title,
+                value = "Ngày $day",
                 textStyle = CoreTypographyBold.bodyMedium,
                 enabled = false
             )
@@ -315,17 +313,10 @@ fun SummaryDay(
             exit = shrinkVertically(animationSpec = tween(300)) + fadeOut()
         ) {
             Column {
-                LazyColumn(
-                    modifier = Modifier.fillMaxWidth().heightIn(max = MyDimen.p5000),
-                    verticalArrangement = Arrangement.spacedBy(MyDimen.p6)
-                ) {
-                    itemsIndexed(
-                        activities.activity ?: listOf(),
-                        key = { index, item -> item.id.toString() }) { index, item ->
-                        ActivityCard(showBottomSheet, index, item)
-                    }
+                activities.forEachIndexed { index, activity ->
+                    ActivityCard(index, day, activity)
+                    SpaceWidth8()
                 }
-
                 Row(
                     modifier = Modifier.padding(horizontal = MyDimen.p16, vertical = MyDimen.p6),
                     verticalAlignment = Alignment.CenterVertically
@@ -334,13 +325,16 @@ fun SummaryDay(
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier
                             .clip(RoundedCornerShape(MyDimen.p8))
-                            .clickableWithScale { showBottomSheet(BottomSheetType.ADD_ACTIVITY) }
-                            .background(MyColor.Gray999)
+                            .clickableWithScale {
+                                viewModel.currentDay = day
+                                viewModel.setSheetType(BottomSheetType.ADD_ACTIVITY)
+                            }
+                            .background(MyColor.GrayEEE)
                             .weight(1f)
                             .padding(MyDimen.p10)
                     ) {
                         CoreIcon(
-                            imageVector = Icons.Rounded.Place,
+                            imageVector = Icons.Rounded.AddLocationAlt,
                             iconModifier = Modifier.size(MyDimen.p20)
                         )
                         Spacer(modifier = Modifier.width(MyDimen.p6))
@@ -354,9 +348,11 @@ fun SummaryDay(
                     Row(
                         modifier = Modifier
                             .clip(RoundedCornerShape(MyDimen.p100))
-                            .background(MyColor.Gray999)
+                            .background(MyColor.GrayEEE)
                             .padding(MyDimen.p8)
-                            .clickableWithScale { showBottomSheet(BottomSheetType.DRAG_ITEM) }
+                            .clickableWithScale {
+                                viewModel.setSheetType(BottomSheetType.DRAG_ACTIVITY)
+                            }
                     ) {
                         CoreIcon(
                             resDrawable = R.drawable.ic_drag_indicator_24dp,

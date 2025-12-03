@@ -5,6 +5,7 @@ import com.vcompass.domain.usecase.common.SetOpenedAppUseCase
 import com.vcompass.domain.usecase.login.LoginGoogleUseCase
 import com.vcompass.domain.usecase.login.LoginUseCase
 import com.vcompass.domain.usecase.login.LogoutUseCase
+import com.vcompass.domain.usecase.schedule.GetScheduleByIdUseCase
 import org.koin.dsl.module
 
 val useCaseModule = module {
@@ -14,4 +15,7 @@ val useCaseModule = module {
     factory { LogoutUseCase(get()) }
     factory { GetSessionDataUseCase(get()) }
     factory { SetOpenedAppUseCase(get()) }
+
+    //======= SCHEDULE =======//
+    factory { GetScheduleByIdUseCase(get()) }
 }

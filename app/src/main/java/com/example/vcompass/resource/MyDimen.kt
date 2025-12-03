@@ -50,7 +50,8 @@ object MyDimen {
     val p240 = 240.dp
     val p250 = 250.dp
     val p280 = 280.dp
-    val p5000 = 5000.dp
+    val p500 = 500.dp
+    val maxScrollHeight = 5000.dp
 
     val sHalf = 0.5.sp
     val s1 = 1.sp
@@ -59,6 +60,7 @@ object MyDimen {
     val s6 = 6.sp
     val s8 = 8.sp
     val s10 = 10.sp
+    val s11 = 11.sp
     val s12 = 12.sp
     val s13 = 13.sp
     val s14 = 14.sp

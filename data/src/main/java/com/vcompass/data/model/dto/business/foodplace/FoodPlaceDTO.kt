@@ -12,9 +12,7 @@ data class FoodPlaceDTO(
     @SerializedName("price")
     val price: PriceRangeDTO?,
     @SerializedName("menuImages")
-    val menuImages: List<String>?,
-    @SerializedName("operatingHours")
-    val operatingHours: List<OperatingHourDTO>?
+    val menuImages: List<String>?
 ) : BusinessDTO()
 
 fun FoodPlaceDTO.toAttractionModel(): FoodPlaceModel {

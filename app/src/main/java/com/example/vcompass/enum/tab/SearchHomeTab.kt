@@ -1,4 +1,4 @@
-package com.example.vcompass.enum
+package com.example.vcompass.enum.tab
 
 import com.example.vcompass.R
 

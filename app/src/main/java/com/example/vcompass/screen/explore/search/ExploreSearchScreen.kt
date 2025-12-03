@@ -75,7 +75,7 @@ fun CategorySection(
         columns = GridCells.Fixed(2),
         modifier = Modifier
             .padding(10.dp)
-            .heightIn(max = MyDimen.p5000),
+            .heightIn(max = MyDimen.maxScrollHeight),
         horizontalArrangement = Arrangement.spacedBy(10.dp),
     ) {
         CategoryItem(title = it)
@@ -127,7 +127,7 @@ fun SearchHistorySection(
             items = history.take(noOfItems),
             modifier = Modifier
                 .fillMaxWidth()
-                .heightIn(max = MyDimen.p5000)
+                .heightIn(max = MyDimen.maxScrollHeight)
                 .padding(16.dp)
                 .animateContentSize(),
             verticalArrangement = Arrangement.spacedBy(MyDimen.p8),

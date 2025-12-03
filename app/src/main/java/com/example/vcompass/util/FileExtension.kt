@@ -2,15 +2,12 @@ package com.example.vcompass.util
 
 import android.content.ContentUris
 import android.content.Context
-import android.content.Intent
 import android.graphics.Bitmap
 import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.os.Environment
 import android.provider.MediaStore
-import androidx.activity.result.ActivityResultLauncher
 import androidx.core.content.FileProvider
-import com.yalantis.ucrop.UCrop
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -87,21 +84,21 @@ suspend fun loadGalleryImages(context: Context, maxCount: Int): List<Uri> {
         images
     }
 }
-fun Context.launchCrop(inputUri: Uri, cropLauncher: ActivityResultLauncher<Intent>) {
-    val destinationUri = Uri.fromFile(
-        File(cacheDir, "cropped_${System.currentTimeMillis()}.jpg")
-    )
-    val options = UCrop.Options().apply {
-        setHideBottomControls(true)
-        setToolbarTitle("")
-    }
-    val uCrop = UCrop.of(inputUri, destinationUri)
-        .withOptions(options)
-        .withAspectRatio(1f, 1f)
-        .withMaxResultSize(1080, 1080)
-
-    cropLauncher.launch(uCrop.getIntent(this))
-}
+//fun Context.launchCrop(inputUri: Uri, cropLauncher: ActivityResultLauncher<Intent>) {
+//    val destinationUri = Uri.fromFile(
+//        File(cacheDir, "cropped_${System.currentTimeMillis()}.jpg")
+//    )
+//    val options = UCrop.Options().apply {
+//        setHideBottomControls(true)
+//        setToolbarTitle("")
+//    }
+//    val uCrop = UCrop.of(inputUri, destinationUri)
+//        .withOptions(options)
+//        .withAspectRatio(1f, 1f)
+//        .withMaxResultSize(1080, 1080)
+//
+//    cropLauncher.launch(uCrop.getIntent(this))
+//}
 
 fun Context.isVideoUri(uri: Uri): Boolean {
     val contentResolver = this.contentResolver

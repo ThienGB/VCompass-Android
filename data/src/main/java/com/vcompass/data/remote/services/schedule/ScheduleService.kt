@@ -6,7 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface ScheduleService {
-    @GET("api/schedule/mobile/{id}")
+    @GET("api/v1/schedule/{id}")
     suspend fun getScheduleById(
         @Path("id") id: String
     ): SingleResponse<ScheduleDTO>

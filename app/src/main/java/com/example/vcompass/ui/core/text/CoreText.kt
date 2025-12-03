@@ -14,10 +14,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
-import com.vcompass.core.extensions.conditional
-import com.vcompass.core.extensions.optional
-import com.example.vcompass.resource.MyColor
 import com.example.vcompass.resource.CoreTypography
+import com.example.vcompass.resource.MyColor
+import com.example.vcompass.util.conditional
+import com.example.vcompass.util.optional
 
 @Composable
 fun CoreText(

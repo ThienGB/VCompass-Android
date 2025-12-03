@@ -21,9 +21,9 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
-import com.vcompass.core.extensions.conditional
 import com.example.vcompass.resource.MyColor
 import com.example.vcompass.resource.MyDimen
+import com.example.vcompass.util.conditional
 import kotlin.math.cos
 import kotlin.math.roundToInt
 import kotlin.math.sin

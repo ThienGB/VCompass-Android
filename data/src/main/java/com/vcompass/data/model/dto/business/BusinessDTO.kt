@@ -2,6 +2,7 @@ package com.vcompass.data.model.dto.business
 
 import com.google.gson.annotations.SerializedName
 import com.vcompass.data.model.dto.BaseDTO
+import com.vcompass.data.model.dto.business.attraction.OperatingHourDTO
 
 open class BusinessDTO(
     @SerializedName("partnerId")
@@ -26,4 +27,6 @@ open class BusinessDTO(
     val averageRating: Float? = null,
     @SerializedName("totalRatings")
     val totalRatings: Float? = null,
+    @SerializedName("operatingHours")
+    val operatingHours: List<OperatingHourDTO>? = null,
 ) : BaseDTO()

@@ -23,7 +23,9 @@ import androidx.core.view.WindowCompat
 import androidx.navigation.compose.rememberNavController
 import com.example.vcompass.screen.login.PlaneSplitAnimationScreen
 import com.example.vcompass.ui.navigate.AppNavGraph
-import com.example.vcompass.ui.theme.VCompassTheme
+import com.example.vcompass.resource.VCompassTheme
+import com.example.vcompass.util.ScreenContext
+import org.koin.android.ext.android.getKoin
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,6 +36,11 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
+            val navController = rememberNavController()
+
+            val scope = getKoin().getOrCreateScope<MainActivity>(ScreenContext.SCOPE_ID)
+            scope.declare(navController)
+
             VCompassTheme {
                 Surface(
                     modifier = Modifier
@@ -50,13 +57,8 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun AppWithAnimation() {
-    var showAnimation by remember { mutableStateOf(true) }
-
     Box(modifier = Modifier.fillMaxSize()) {
         AppNavGraph()
-
-            PlaneSplitAnimationScreen(
-                onAnimationComplete = { showAnimation = false }
-            )
+        PlaneSplitAnimationScreen()
     }
 }

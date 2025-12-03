@@ -4,6 +4,7 @@
     <string name="lb_accommodation">Accommodation</string>
     <string name="lb_food_place">Food place</string>
     <string name="lb_attraction">Attraction</string>
+    <string name="lb_other">Other</string>
     <string name="lb_total_results"> Results</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
@@ -26,6 +27,8 @@
     <string name="btn_login">Login</string>
     <string name="btn_sign_up">Sign Up</string>
     <string name="btn_submit">Submit</string>
+    <string name="lb_reorder">reorder</string>
+    <string name="btn_done">Done</string>
     <string name="btn_forgot_password">Forgot?</string>
     <string name="btn_join_now">Register Now</string>
     <string name="lb_dont_have_account">Don\'t have an account?</string>

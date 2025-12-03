@@ -10,8 +10,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.Dp
-import com.vcompass.core.extensions.optional
 import com.example.vcompass.resource.MyDimen
+import com.example.vcompass.util.optional
 
 @Composable
 fun MoreOptionIcon(

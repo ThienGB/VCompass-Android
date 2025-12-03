@@ -2,12 +2,13 @@ package com.vcompass.data.model.dto.schedule
 
 import com.google.gson.annotations.SerializedName
 import com.vcompass.data.model.dto.BaseDTO
+import com.vcompass.data.model.dto.business.BusinessDTO
 
 data class ActivityDTO(
     @SerializedName("activityType")
     val activityType: String,
-    @SerializedName("destinationId")
-    val destinationId: String?,
+    @SerializedName("business")
+    val business: BusinessDTO?,
     @SerializedName("name")
     val name: String?,
     @SerializedName("imgSrc")

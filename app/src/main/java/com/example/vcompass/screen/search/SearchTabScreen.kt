@@ -40,7 +40,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.vcompass.ui.core.text.CoreText
 import com.example.vcompass.R
-import com.example.vcompass.enum.SearchHomeTab
+import com.example.vcompass.enum.tab.SearchHomeTab
 import com.example.vcompass.screen.feed.TravelPost
 import com.example.vcompass.ui.core.list.ListItemTab
 import com.example.vcompass.ui.core.tab.TabView
@@ -117,7 +117,8 @@ fun AccommodationHorizontalItem(
         "25km away",
         "$152",
         "https://xaydungancu.com.vn/wp-content/uploads/2023/03/anh-nha-dep-phong-cach-hien-dai-11.jpg"
-    )
+    ),
+    onClickItem: () -> Unit = {}
 ) {
     var isFavorite by remember { mutableStateOf(property.isFavorite) }
     Card(
@@ -132,7 +133,7 @@ fun AccommodationHorizontalItem(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable {}) {
+                .clickable { onClickItem() }) {
             Row {
                 Box(
                     modifier = Modifier

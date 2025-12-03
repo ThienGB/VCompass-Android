@@ -9,7 +9,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.vcompass.core.extensions.optional
+import com.example.vcompass.util.optional
 import java.io.File
 
 @Composable

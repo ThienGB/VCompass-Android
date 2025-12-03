@@ -9,8 +9,8 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.vcompass.core.extensions.conditional
 import com.example.vcompass.resource.MyColor
+import com.example.vcompass.util.conditional
 
 @Composable
 fun BaseScaffold(

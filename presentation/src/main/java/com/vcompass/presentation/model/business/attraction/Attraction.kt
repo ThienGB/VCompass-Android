@@ -5,6 +5,5 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Attraction(
-    val price: Int? = null,
-    val operatingHours: List<OperatingHour>? = null,
+    val price: Int? = null
 ): Business()

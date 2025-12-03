@@ -2,6 +2,7 @@ package com.vcompass.presentation.model.business
 
 import android.os.Parcelable
 import com.vcompass.presentation.model.Base
+import com.vcompass.presentation.model.business.attraction.OperatingHour
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -17,4 +18,5 @@ open class Business(
     var status: String? = null,
     val averageRating: Float? = null,
     val totalRatings: Float? = null,
+    val operatingHours: List<OperatingHour>? = null,
 ): Base(), Parcelable

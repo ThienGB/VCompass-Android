@@ -118,7 +118,7 @@ fun LoginForm(
         SpaceHeight()
         OrContinueWithDivider()
         SpaceHeight()
-        GoogleSignInButton()
+        GoogleSignInButton({ navController.add(CoreRoute.Home.route) })
         ExpandableSpacer()
         CoreRichText(
             items = listOf(
