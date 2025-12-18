@@ -68,4 +68,27 @@ class ScheduleViewModel(
 
         _schedule.value = currentSchedule.copy(days = updatedDays)
     }
+    fun addActivityTime(timeStart: String, timeEnd: String) {
+        val currentSchedule = _schedule.value
+
+        val updatedDays = currentSchedule.days?.map { dayActivity ->
+            if (dayActivity.day == currentDay) {
+                val updatedActivities = dayActivity.activity?.map { activity ->
+                    if (activity.id == currentActivity.id) {
+                        activity.copy(
+                            timeStart = timeStart,
+                            timeEnd = timeEnd
+                        )
+                    } else activity
+                }
+                dayActivity.copy(activity = updatedActivities)
+            } else dayActivity
+        }
+
+        _schedule.value = currentSchedule.copy(days = updatedDays)
+    }
+
+    fun updateSchedule(newSchedule: Schedule) {
+        _schedule.value = newSchedule
+    }
 }

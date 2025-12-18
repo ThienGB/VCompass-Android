@@ -2,13 +2,15 @@ package com.example.vcompass.ui.components.bottom_sheet
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.Notes
 import androidx.compose.material.icons.automirrored.rounded.ReceiptLong
@@ -22,6 +24,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -29,15 +32,13 @@ import com.example.vcompass.R
 import com.example.vcompass.enum.ActivityTypeEnum
 import com.example.vcompass.resource.CoreTypography
 import com.example.vcompass.resource.CoreTypographyBold
-import com.example.vcompass.resource.CoreTypographySemiBold
 import com.example.vcompass.resource.MyColor
 import com.example.vcompass.resource.MyDimen
 import com.example.vcompass.ui.core.bottom_sheet.BaseBottomSheet
 import com.example.vcompass.ui.core.divider.ItemDivider
 import com.example.vcompass.ui.core.icon.CoreIcon
-import com.example.vcompass.ui.core.space.ExpandableSpacer
 import com.example.vcompass.ui.core.space.SpaceHeight
-import com.example.vcompass.ui.core.space.SpaceHeight4
+import com.example.vcompass.ui.core.space.SpaceHeight8
 import com.example.vcompass.ui.core.text.CoreText
 import com.example.vcompass.ui.core.text_field.NoBorderTextField
 import com.vcompass.presentation.viewmodel.schedule.ScheduleViewModel
@@ -65,7 +66,7 @@ fun AddActivityCostSheet(
                 .background(MyColor.White)
                 .padding(horizontal = MyDimen.p16)
         ) {
-            SpaceHeight4()
+            SpaceHeight8()
             Row(modifier = Modifier.fillMaxWidth()) {
                 CoreText(
                     text = "Chi phí",
@@ -85,7 +86,7 @@ fun AddActivityCostSheet(
                     }
                 )
             }
-            SpaceHeight(MyDimen.p40)
+            SpaceHeight()
             ItemDivider()
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -95,13 +96,20 @@ fun AddActivityCostSheet(
                     imageVector = Icons.AutoMirrored.Rounded.ReceiptLong,
                     iconModifier = Modifier.size(MyDimen.p22)
                 )
-                ExpandableSpacer()
-                NoBorderTextField(
-                    value = costName,
-                    onValueChange = { costName = it },
-                    textStyle = CoreTypography.labelLarge.copy(textAlign = TextAlign.End),
-                    modifier = Modifier.fillMaxWidth()
-                )
+                Box(
+                    modifier = Modifier.fillMaxWidth(),
+                    contentAlignment = Alignment.CenterEnd
+                ) {
+                    NoBorderTextField(
+                        value = costName,
+                        onValueChange = { costName = it },
+                        modifier = Modifier.width(IntrinsicSize.Min).widthIn(min = MyDimen.p150),
+                        textStyle = CoreTypography.labelLarge.copy(
+                            textAlign = TextAlign.End
+                        ),
+                        maxLines = 1
+                    )
+                }
             }
             ItemDivider()
             Row(
@@ -112,31 +120,18 @@ fun AddActivityCostSheet(
                     imageVector = Icons.Rounded.Money,
                     iconModifier = Modifier.size(MyDimen.p22)
                 )
-                ExpandableSpacer()
-                NoBorderTextField(
-                    value = cost.toString(),
-                    onValueChange = { it.toIntOrNull()?.let { newCost -> cost = newCost } },
-                    keyboardType = KeyboardType.Number,
-                    textStyle = CoreTypography.labelLarge.copy(textAlign = TextAlign.End),
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
-            ItemDivider()
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                CoreIcon(
-                    resDrawable = type.iconRes,
-                    iconModifier = Modifier.size(MyDimen.p22)
-                )
-                Spacer(modifier = Modifier.weight(1f))
-                CoreText(
-                    text = stringResource(type.titleRes),
-                    style = CoreTypographySemiBold.labelLarge,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 20.dp)
-                )
+                Box(
+                    modifier = Modifier.fillMaxWidth(),
+                    contentAlignment = Alignment.CenterEnd
+                ) {
+                    NoBorderTextField(
+                        value = cost.toString(),
+                        onValueChange = { it.toIntOrNull()?.let { newCost -> cost = newCost } },
+                        keyboardType = KeyboardType.Number,
+                        textStyle = CoreTypography.labelLarge.copy(textAlign = TextAlign.End),
+                        modifier = Modifier.width(IntrinsicSize.Min).widthIn(min = MyDimen.p150),
+                    )
+                }
             }
             ItemDivider()
             Row(
@@ -147,15 +142,21 @@ fun AddActivityCostSheet(
                     imageVector = Icons.AutoMirrored.Rounded.Notes,
                     iconModifier = Modifier.size(MyDimen.p22)
                 )
-                ExpandableSpacer()
-                NoBorderTextField(
-                    value = costDescription,
-                    onValueChange = { costDescription = it },
-                    textStyle = CoreTypography.labelLarge.copy(textAlign = TextAlign.End),
-                )
+                Box(
+                    modifier = Modifier.fillMaxWidth(),
+                    contentAlignment = Alignment.CenterEnd
+                ) {
+                    NoBorderTextField(
+                        value = costDescription,
+                        onValueChange = { costDescription = it },
+                        textStyle = CoreTypography.labelLarge.copy(textAlign = TextAlign.End),
+                        imeAction = ImeAction.Done,
+                        modifier = Modifier.width(IntrinsicSize.Min).widthIn(min = MyDimen.p150),
+                    )
+                }
             }
             ItemDivider()
-            Spacer(modifier = Modifier.height(100.dp))
+            SpaceHeight(MyDimen.p36)
         }
     }
 }

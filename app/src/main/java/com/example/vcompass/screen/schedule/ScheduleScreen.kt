@@ -3,6 +3,7 @@ package com.example.vcompass.screen.schedule
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -49,8 +50,10 @@ import com.example.vcompass.resource.CoreTypographySemiBold
 import com.example.vcompass.resource.MyColor
 import com.example.vcompass.resource.MyDimen
 import com.example.vcompass.ui.components.bottom_sheet.AddActivityCostSheet
+import com.example.vcompass.ui.components.bottom_sheet.AddActivityTimeSheet
 import com.example.vcompass.ui.components.bottom_sheet.AddScheduleActivityPopup
 import com.example.vcompass.ui.components.bottom_sheet.DragActivityBottomSheet
+import com.example.vcompass.ui.components.bottom_sheet.SelectScheduleDaySheet
 import com.example.vcompass.ui.core.animation.StickyHeaderAnimationLayout
 import com.example.vcompass.ui.core.icon.CoreIcon
 import com.example.vcompass.ui.core.icon.CoreImage
@@ -92,7 +95,8 @@ fun ScheduleScreen(
             ScheduleInformationSection(
                 autoProgress,
                 avatarOffsetY,
-                schedule
+                schedule,
+                viewModel
             )
         },
         contentSection = { autoProgress, containerSpace, nestedScrollConnection, contentScrollState ->
@@ -104,6 +108,7 @@ fun ScheduleScreen(
             ScheduleContentSection(
                 nestedScrollConnection = nestedScrollConnection,
                 contentScrollState = contentScrollState,
+                        autoProgress = autoProgress,
                 navController = navController,
                 tabOffsetY = tabOffsetY,
                 schedule = schedule
@@ -120,10 +125,22 @@ fun ScheduleScreen(
             sheetState = sheetState,
             onDismiss = { viewModel.hideSheet() }
         )
+
         BottomSheetType.DRAG_ACTIVITY -> DragActivityBottomSheet(
             sheetState = sheetState,
             onDismiss = { viewModel.hideSheet() }
         )
+
+        BottomSheetType.ADD_TIME -> AddActivityTimeSheet(
+            sheetState = sheetState,
+            onDismiss = { viewModel.hideSheet() }
+        )
+
+        BottomSheetType.DAY_PICKER -> SelectScheduleDaySheet(
+            sheetState = sheetState,
+            onDismiss = { viewModel.hideSheet() }
+        )
+
         else -> {}
     }
 }
@@ -155,7 +172,8 @@ fun ScheduleHeaderSection(
 fun ScheduleInformationSection(
     autoProgress: Float,
     avatarOffsetY: Dp,
-    schedule: Schedule
+    schedule: Schedule,
+    viewModel: ScheduleViewModel
 ) {
     var activeScheduleId by remember { mutableStateOf(schedule.id.toString()) }
     var name by remember { mutableStateOf(schedule.name.toString()) }
@@ -191,18 +209,23 @@ fun ScheduleInformationSection(
                     modifier = Modifier.padding(horizontal = MyDimen.p16),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Column {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            CoreIcon(
-                                resDrawable = R.drawable.ic_calendar,
-                                iconModifier = Modifier.size(20.dp)
-                            )
-                            SpaceWidth4()
-                            CoreText(
-                                text = schedule.dateStart?.formatDateToDayMonth() + " - " + schedule.dateEnd?.formatDateToDayMonth(),
-                                style = CoreTypographySemiBold.labelSmall
-                            )
-                        }
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(MyDimen.p100))
+                            .clickable {
+                                viewModel.setSheetType(BottomSheetType.DAY_PICKER)
+                            }
+                    ) {
+                        CoreIcon(
+                            resDrawable = R.drawable.ic_calendar,
+                            iconModifier = Modifier.size(20.dp)
+                        )
+                        SpaceWidth4()
+                        CoreText(
+                            text = schedule.dateStart?.formatDateToDayMonth() + " - " + schedule.dateEnd?.formatDateToDayMonth(),
+                            style = CoreTypographySemiBold.labelSmall
+                        )
                     }
                     Spacer(modifier = Modifier.weight(1f))
                     Row(
@@ -221,7 +244,7 @@ fun ScheduleInformationSection(
                                 else R.drawable.ic_pause_circle_24dp,
                             tintColor = MyColor.White,
                         )
-                        Spacer(modifier = Modifier.width(2.dp))
+                        SpaceWidth4()
                         CoreText(
                             text = if (activeScheduleId != schedule.id.toString()) "Bắt đầu" else "Dừng lại",
                             style = CoreTypography.displayMedium,
@@ -229,8 +252,6 @@ fun ScheduleInformationSection(
                             textAlign = TextAlign.Center
                         )
                     }
-                    Spacer(modifier = Modifier.width(5.dp))
-                    MoreOptionIcon()
                 }
             }
         }
@@ -273,6 +294,7 @@ fun ScheduleAuthorSection() {
 fun ScheduleContentSection(
     nestedScrollConnection: NestedScrollConnection,
     contentScrollState: ScrollState,
+    autoProgress: Float,
     tabOffsetY: Dp,
     navController: NavController,
     schedule: Schedule = Schedule()
@@ -294,6 +316,7 @@ fun ScheduleContentSection(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .fillMaxWidth()
+                .alpha(autoProgress * 2)
                 .padding(start = MyDimen.p16)
         ) {
             CoreIcon(
@@ -319,7 +342,10 @@ fun ScheduleContentSection(
             isScrollable = false,
             tabTitle = { tab -> stringResource(tab.titleRes) },
         ) { tab ->
-            Column(modifier = Modifier.verticalScroll(contentScrollState)) {
+            Column(modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(contentScrollState)
+            ) {
                 when (tab) {
                     ScheduleTab.SUMMARY -> ScheduleSummaryTab(schedule)
 

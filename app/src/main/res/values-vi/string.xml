@@ -29,11 +29,31 @@
     <string name="btn_sign_up">Đăng ký</string>
     <string name="btn_submit">Xác nhận</string>
     <string name="lb_reorder">Sắp xếp</string>
+    <string name="lb_time">Thời gian</string>
     <string name="btn_done">Xong</string>
+    <string name="lb_start">Bắt đầu</string>
+    <string name="lb_day_start_and_end">Ngày đi và về</string>
+    <string name="lb_end">Kết thúc</string>
+    <string name="lb_activity">Hoạt động</string>
+    <string name="lb_activities">Hoạt động</string>
+    <string name="lb_day">Ngày</string>
+    <string name="lb_cancel">Hủy bỏ</string>
+    <string name="lb_ok">OK</string>
+    <string name="lb_please_choose">Vui lòng chọn</string>
+    <string name="lb_please_choose_day">Hãy chọn ngày</string>
     <string name="btn_forgot_password">Quên?</string>
     <string name="btn_join_now">Đăng ký ngay</string>
     <string name="lb_dont_have_account">Bạn chưa có tài khoản?</string>
     <string name="lb_already_have_account">Đã có tài khoản?</string>
     <string name="lb_forgot_password">Quên mật khẩu</string>
     <string name="lb_forgot_infor">Chúng tôi sẽ gửi mã OTP đến email của bạn để bảo mật trong trường hợp bạn quên mật khẩu</string>
+    <string-array name="weekdays">
+        <item>CN</item>
+        <item>T2</item>
+        <item>T3</item>
+        <item>T4</item>
+        <item>T5</item>
+        <item>T6</item>
+        <item>T7</item>
+    </string-array>
 </resources>

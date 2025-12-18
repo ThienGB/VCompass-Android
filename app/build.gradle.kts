@@ -129,7 +129,6 @@ dependencies {
     implementation(libs.charty)
     implementation(libs.okhttp)
     implementation(libs.androidx.work.runtime.ktx)
-    implementation(libs.reorderable)
     implementation(libs.maps.compose)
 
     // Testing

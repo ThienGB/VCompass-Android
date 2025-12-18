@@ -27,12 +27,32 @@
     <string name="btn_login">Login</string>
     <string name="btn_sign_up">Sign Up</string>
     <string name="btn_submit">Submit</string>
-    <string name="lb_reorder">reorder</string>
+    <string name="lb_reorder">Reorder</string>
+    <string name="lb_time">Time</string>
     <string name="btn_done">Done</string>
+    <string name="lb_start">Start</string>
+    <string name="lb_end">End</string>
+    <string name="lb_activity">Activity</string>
+    <string name="lb_activities">Activities</string>
+    <string name="lb_day">Day</string>
+    <string name="lb_cancel">Cancel</string>
+    <string name="lb_ok">OK</string>
+    <string name="lb_please_choose">Please choose</string>
+    <string name="lb_please_choose_day">Please choose day</string>
+    <string name="lb_day_start_and_end">Day start and end</string>
     <string name="btn_forgot_password">Forgot?</string>
     <string name="btn_join_now">Register Now</string>
     <string name="lb_dont_have_account">Don\'t have an account?</string>
     <string name="lb_already_have_account">Already have an account?</string>
     <string name="lb_forgot_password">Forgot password</string>
     <string name="lb_forgot_infor">We will send the OTP code to your email for security in forgetting your password</string>
+    <string-array name="weekdays">
+        <item>Sun</item>
+        <item>Mon</item>
+        <item>Tue</item>
+        <item>Wed</item>
+        <item>Thu</item>
+        <item>Fri</item>
+        <item>Sat</item>
+    </string-array>
 </resources>

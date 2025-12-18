@@ -7,7 +7,7 @@ data class DayActivityDTO(
     @SerializedName("day")
     val day: Int?,
     @SerializedName("activity")
-    val activity: List<ActivityDTO>?
+    val activity: List<Any>?
 ) : BaseDTO()
 
 

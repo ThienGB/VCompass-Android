@@ -10,7 +10,6 @@ import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.animateScrollBy
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -31,6 +30,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.relocation.BringIntoViewRequester
+import androidx.compose.foundation.relocation.bringIntoViewRequester
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
@@ -39,14 +41,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.StickyNote2
 import androidx.compose.material.icons.rounded.AccessTimeFilled
 import androidx.compose.material.icons.rounded.Delete
-import androidx.compose.material.icons.rounded.EditNote
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.KeyboardArrowUp
 import androidx.compose.material.icons.rounded.Place
 import androidx.compose.material.icons.rounded.Star
-import androidx.compose.material.icons.rounded.StickyNote2
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -58,7 +56,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -72,7 +69,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.net.toUri
-import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberAsyncImagePainter
 import com.example.vcompass.R
 import com.example.vcompass.enum.ActivityTypeEnum
@@ -102,15 +98,17 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ScheduleDetailTab(
-    schedule: Schedule? = null,
-    showBottomSheet: (BottomSheetType) -> Unit = {},
+    schedule: Schedule
 ) {
-    val listState = rememberLazyListState()
+    val bringIntoViewRequesters = remember {
+        List(schedule.days?.size ?: 0) { BringIntoViewRequester() }
+    }
     val selectedItem = remember { mutableStateOf(0) }
     LaunchedEffect(selectedItem.value) {
-        listState.animateScrollBy(50f)
+        bringIntoViewRequesters[selectedItem.value].bringIntoView()
     }
     Column {
+        SpaceHeight()
         LazyRow(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(MyDimen.p10),
@@ -121,9 +119,9 @@ fun ScheduleDetailTab(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center,
                     modifier = Modifier
-                        .padding(start = MyDimen.p10, end = MyDimen.p32)
-                        .clip(RoundedCornerShape(MyDimen.p100))
-                        .background(MyColor.Black)
+                        .padding(horizontal = MyDimen.p16)
+                        .clip(CircleShape)
+                        .background(MyColor.Gray333)
                         .padding(MyDimen.p8)
                         .clickableWithScale { }
                 ) {
@@ -134,9 +132,7 @@ fun ScheduleDetailTab(
                     )
                 }
             }
-            itemsIndexed(
-                schedule?.days ?: listOf(),
-                key = { index, item -> item.activity.toString() }) { index, item ->
+            itemsIndexed(schedule.days ?: listOf()) { index, item ->
                 Row(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     modifier = Modifier.fillMaxWidth()
@@ -146,17 +142,17 @@ fun ScheduleDetailTab(
                         horizontalArrangement = Arrangement.Center,
                         modifier = Modifier
                             .clip(RoundedCornerShape(MyDimen.p8))
-                            .background(if (selectedItem.value != index) MyColor.White else MyColor.Gray999)
-                            .padding(vertical = MyDimen.p12, horizontal = MyDimen.p20)
+                            .background(if (selectedItem.value != index) MyColor.GrayEEE else MyColor.SecondPrimary)
+                            .padding(vertical = MyDimen.p10, horizontal = MyDimen.p16)
                             .clickableWithScale {
                                 selectedItem.value = index
                             }
                     ) {
                         CoreText(
-                            text = "Ngày " + item.day.toString(),
-                            style = CoreTypographyBold.bodyMedium,
-                            letterSpacing = 1.5.sp,
-                            textAlign = TextAlign.Center
+                            text = stringResource(R.string.lb_day) + " " + item.day.toString(),
+                            style = CoreTypographySemiBold.labelLarge,
+                            textAlign = TextAlign.Center,
+                            color = if (selectedItem.value != index) MyColor.TextColorPrimary else MyColor.White
                         )
                     }
                 }
@@ -166,22 +162,24 @@ fun ScheduleDetailTab(
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
-                .heightIn(max = MyDimen.maxScrollHeight)
-                .padding(horizontal = 3.dp),
-            userScrollEnabled = false,
-            state = listState
+                .heightIn(max = MyDimen.maxScrollHeight),
+            userScrollEnabled = false
         ) {
-            itemsIndexed(schedule?.days ?: listOf()) { day, item ->
-                Text(
-                    text = "Ngày ${item.day}: ${item.activity?.size} hoạt động",
-                    fontSize = 26.sp,
-                    fontWeight = FontWeight.W700,
-                    letterSpacing = 1.sp,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(start = 10.dp, top = 15.dp, bottom = 5.dp)
-                )
-                item.activity?.forEachIndexed { index, item ->
-                    ActivityCard(index, day, item)
+            itemsIndexed(schedule.days ?: listOf()) { day, item ->
+                Column(
+                    modifier = Modifier.bringIntoViewRequester(bringIntoViewRequesters[day])
+                ) {
+                    CoreText(
+                        text = stringResource(R.string.lb_day) + " ${item.day}: ${item.activity?.size} " + if (item.activity?.size == 1)
+                            stringResource(R.string.lb_activity) else stringResource(R.string.lb_activities),
+                        style = CoreTypographyBold.bodyMedium,
+                        letterSpacing = 1.sp,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.padding(MyDimen.p16)
+                    )
+                    item.activity?.forEachIndexed { index, item ->
+                        ActivityCard(index, day, item)
+                    }
                 }
             }
         }
@@ -252,7 +250,11 @@ fun ActivityCard(
                 modifier = Modifier
                     .clip(RoundedCornerShape(MyDimen.p8))
                     .background(MyColor.Primary.copy(0.05f))
-                    .clickable { }
+                    .clickable {
+                        viewModel.currentDay = day
+                        viewModel.currentActivity = activity
+                        viewModel.setSheetType(BottomSheetType.ADD_TIME)
+                    }
                     .padding(horizontal = MyDimen.p6, vertical = MyDimen.p2),
             ) {
                 CoreIcon(
