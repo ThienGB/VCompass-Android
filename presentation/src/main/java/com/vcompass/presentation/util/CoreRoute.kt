@@ -1,7 +1,7 @@
 package com.vcompass.presentation.util
 
 sealed class CoreRoute(val route: String) {
-    //==== LOGIN ====
+    data object MainGraph : CoreRoute("main")
     data object Splash : CoreRoute("splash")
     data object Introduce : CoreRoute("introduce")
     data object Login : CoreRoute("login")
@@ -14,4 +14,5 @@ sealed class CoreRoute(val route: String) {
     data object ExploreSearch : CoreRoute("explore_search")
     data object HomeSearch : CoreRoute("home_search")
     data object Schedule : CoreRoute("schedule")
+    data object AccommodationDetail : CoreRoute("accommodation_detail")
 }

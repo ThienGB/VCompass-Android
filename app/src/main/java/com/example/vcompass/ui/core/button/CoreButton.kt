@@ -19,6 +19,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import com.example.vcompass.resource.MyDimen
 import com.example.vcompass.resource.CoreTypographySemiBold
+import com.example.vcompass.resource.MyColor
 import com.example.vcompass.util.conditional
 
 @Composable
@@ -39,7 +40,7 @@ fun CoreButton(
     content: (@Composable RowScope.() -> Unit)? = null,
 ) {
     val finalTextStyle = textStyle
-        ?: CoreTypographySemiBold.labelMedium.copy(color = MaterialTheme.colorScheme.onPrimary)
+        ?: CoreTypographySemiBold.labelMedium.copy(color = textColorActive ?: MyColor.White)
 
     val colorDisable = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
     val colorTextDisable = MaterialTheme.colorScheme.onSurface
@@ -95,7 +96,7 @@ fun CoreButton(
                 enabled = enabled,
                 shape = RoundedCornerShape(radius),
                 colors = ButtonDefaults.outlinedButtonColors(
-                    contentColor = textColorActive ?: MaterialTheme.colorScheme.outline,
+                    contentColor = textColorActive ?: MaterialTheme.colorScheme.primary,
                     disabledContentColor = textColorDeactivate ?: colorDisable,
                 ),
                 border = BorderStroke(

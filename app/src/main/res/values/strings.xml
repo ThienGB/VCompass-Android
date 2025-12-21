@@ -46,6 +46,8 @@
     <string name="lb_already_have_account">Already have an account?</string>
     <string name="lb_forgot_password">Forgot password</string>
     <string name="lb_forgot_infor">We will send the OTP code to your email for security in forgetting your password</string>
+    <string name="lb_btn_core_see_more">See more</string>
+    <string name="lb_btn_core_see_less">See less</string>
     <string-array name="weekdays">
         <item>Sun</item>
         <item>Mon</item>

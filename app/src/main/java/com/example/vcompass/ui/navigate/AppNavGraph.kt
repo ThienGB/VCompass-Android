@@ -3,6 +3,7 @@ package com.example.vcompass.ui.navigate
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.vcompass.screen.accommodation.AccommodationDetailScreen
 import com.example.vcompass.screen.explore.ExploreScreen
 import com.example.vcompass.screen.explore.search.ExploreSearchScreen
 import com.example.vcompass.screen.feed.HomeFeedScreen
@@ -18,7 +19,15 @@ import com.vcompass.presentation.util.CoreRoute
 @Composable
 fun AppNavGraph() {
     val navController = ScreenContext.navController
-    NavHost(navController, startDestination = CoreRoute.Splash.route) {
+    NavHost(
+        navController,
+        startDestination = CoreRoute.Splash.route,
+        route = CoreRoute.MainGraph.route,
+        enterTransition = { defaultEnterTransition(initialState, targetState) },
+        exitTransition = { defaultExitTransition(initialState, targetState) },
+        popEnterTransition = { defaultPopEnterTransition(initialState, targetState) },
+        popExitTransition = { defaultPopExitTransition(initialState, targetState) }
+    ) {
         composable(CoreRoute.Splash.route) {
             SplashScreen(navController = navController)
         }
@@ -50,10 +59,11 @@ fun AppNavGraph() {
         composable(CoreRoute.HomeSearch.route) {
             SearchScreen(navController = navController)
         }
-
         composable(CoreRoute.Schedule.route) {
             ScheduleScreen()
         }
-
+        composable(CoreRoute.AccommodationDetail.route) {
+            AccommodationDetailScreen()
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.example.vcompass.screen.search
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -58,6 +59,7 @@ import com.example.vcompass.resource.MyDimen
 import com.example.vcompass.resource.CoreTypography
 import com.example.vcompass.resource.CoreTypographyBold
 import com.example.vcompass.resource.CoreTypographySemiBold
+import com.example.vcompass.util.ScreenContext
 import com.vcompass.presentation.util.CoreRoute
 
 data class Property(
@@ -202,7 +204,7 @@ fun NearbySection(nearbyProperties: List<Property>) {
 }
 
 @Composable
-fun FeaturedDestinationSection(nearbyProperties: List<Property>){
+fun FeaturedDestinationSection(nearbyProperties: List<Property>) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -238,10 +240,14 @@ fun FeaturedDestinationSection(nearbyProperties: List<Property>){
 
 @Composable
 fun AccommodationVerticalItem(property: Property) {
+    val navController = ScreenContext.navController
     Card(
         modifier = Modifier
             .width(MyDimen.p170)
-            .height(MyDimen.p235),
+            .height(MyDimen.p235)
+            .clickable {
+                navController.add(CoreRoute.AccommodationDetail.route)
+            },
         shape = RoundedCornerShape(MyDimen.p8),
         colors = CardDefaults.cardColors(MyColor.White),
         elevation = CardDefaults.cardElevation(defaultElevation = MyDimen.p2)
@@ -343,7 +349,7 @@ fun DestinationCard(destination: Property) {
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxSize()
             )
-            Column (
+            Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(
@@ -359,7 +365,7 @@ fun DestinationCard(destination: Property) {
                     .padding(MyDimen.p8)
                     .padding(top = MyDimen.p56),
                 verticalArrangement = Arrangement.Bottom
-            ){
+            ) {
                 CoreText(
                     text = destination.name,
                     color = MyColor.White,

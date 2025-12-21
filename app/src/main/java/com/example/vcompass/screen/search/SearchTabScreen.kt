@@ -55,6 +55,8 @@ import com.example.vcompass.resource.MyDimen
 import com.example.vcompass.resource.CoreTypography
 import com.example.vcompass.resource.CoreTypographyBold
 import com.example.vcompass.resource.CoreTypographySemiBold
+import com.example.vcompass.util.add
+import com.vcompass.presentation.util.CoreRoute
 
 @Composable
 fun SearchTabScreen(
@@ -88,7 +90,9 @@ fun SearchTabScreen(
                     SearchHomeTab.ACCOMMODATION -> ListItemTab(
                         items = listOf(1, 2, 3, 4, 5, 6, 7)
                     ) { person ->
-                        AccommodationHorizontalItem()
+                        AccommodationHorizontalItem(){
+                            navController.add(CoreRoute.AccommodationDetail.route)
+                        }
                     }
 
                     SearchHomeTab.FOODPLACE -> ListItemTab(

@@ -25,7 +25,7 @@ import com.example.vcompass.ui.core.picker.TimePickerDialog
 import com.example.vcompass.ui.core.space.SpaceHeight
 import com.example.vcompass.ui.core.space.SpaceWidth
 import com.example.vcompass.ui.core.text.CoreText
-import com.example.vcompass.util.clickableNoEffect
+import com.example.vcompass.util.clickNoRipple
 import com.vcompass.presentation.viewmodel.schedule.ScheduleViewModel
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -88,7 +88,7 @@ fun AddActivityTimeSheet(
                 Row(
                     modifier = Modifier
                         .weight(1f)
-                        .clickableNoEffect { dialogType = "START" }
+                        .clickNoRipple { dialogType = "START" }
                 ) {
                     CoreText(
                         text = stringResource(R.string.lb_start) + " :",

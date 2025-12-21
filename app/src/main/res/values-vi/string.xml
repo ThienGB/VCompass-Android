@@ -47,6 +47,8 @@
     <string name="lb_already_have_account">Đã có tài khoản?</string>
     <string name="lb_forgot_password">Quên mật khẩu</string>
     <string name="lb_forgot_infor">Chúng tôi sẽ gửi mã OTP đến email của bạn để bảo mật trong trường hợp bạn quên mật khẩu</string>
+    <string name="lb_btn_core_see_more">Xem thêm</string>
+    <string name="lb_btn_core_see_less">Thu gọn</string>
     <string-array name="weekdays">
         <item>CN</item>
         <item>T2</item>

@@ -35,10 +35,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import com.example.vcompass.ui.core.text.CoreText
 import com.example.vcompass.R
@@ -340,7 +342,9 @@ fun DestinationInfoItem(
                     }
                     ExpandableSpacer()
                     CoreIcon(
-                        boxModifier = Modifier.clip(CircleShape).padding(MyDimen.p4),
+                        boxModifier = Modifier
+                            .clip(CircleShape)
+                            .padding(MyDimen.p4),
                         resDrawable = R.drawable.ic_director_24dp,
                         tintColor = MyColor.Primary,
                         onClick = {}
@@ -352,7 +356,11 @@ fun DestinationInfoItem(
 }
 
 @Composable
-fun ImageSliderWithIndicator(imageUrls: List<String>) {
+fun ImageSliderWithIndicator(
+    imageUrls: List<String>,
+    showIndicator: Boolean = true,
+    showDots: Boolean = true
+) {
     val pagerState = rememberPagerState(pageCount = { imageUrls.size })
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -362,39 +370,59 @@ fun ImageSliderWithIndicator(imageUrls: List<String>) {
         ) { page ->
             CoreImage(
                 source = CoreImageSource.Url(imageUrls[page]),
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier.fillMaxSize(),
+                error = painterResource(R.drawable.img_food_place)
             )
         }
-
-        if (imageUrls.size > 1) {
-            Row(
+        if (showIndicator) {
+            Box(
                 modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .padding(bottom = MyDimen.p8),
-                horizontalArrangement = Arrangement.Center
+                    .padding(end = MyDimen.p8, bottom = MyDimen.p40)
+                    .align(Alignment.BottomEnd)
+                    .padding(MyDimen.p4)
+                    .zIndex(1f)
+                    .clip(CircleShape)
+                    .background(MyColor.Black.copy(0.2f)),
+                contentAlignment = Alignment.Center
             ) {
-                val totalPages = imageUrls.size
-                val currentPage = pagerState.currentPage
+                CoreText(
+                    text = "${pagerState.currentPage + 1}/${imageUrls.size}",
+                    style = CoreTypography.labelSmall,
+                    color = MyColor.White
+                )
+            }
+        }
+        if (showDots) {
+            if (imageUrls.size > 1) {
+                Row(
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .padding(bottom = MyDimen.p8),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    val totalPages = imageUrls.size
+                    val currentPage = pagerState.currentPage
 
-                val indicatorCount = minOf(totalPages, 3)
+                    val indicatorCount = minOf(totalPages, 3)
 
-                repeat(indicatorCount) { index ->
-                    val isSelected = when {
-                        totalPages <= 3 -> currentPage == index
-                        currentPage == 0 -> index == 0
-                        currentPage == totalPages - 1 -> index == 2
-                        else -> index == 1
+                    repeat(indicatorCount) { index ->
+                        val isSelected = when {
+                            totalPages <= 3 -> currentPage == index
+                            currentPage == 0 -> index == 0
+                            currentPage == totalPages - 1 -> index == 2
+                            else -> index == 1
+                        }
+
+                        Box(
+                            modifier = Modifier
+                                .padding(horizontal = MyDimen.p4)
+                                .size(if (isSelected) MyDimen.p8 else MyDimen.p6)
+                                .background(
+                                    color = if (isSelected) Color.White else Color.White.copy(alpha = 0.5f),
+                                    shape = CircleShape
+                                )
+                        )
                     }
-
-                    Box(
-                        modifier = Modifier
-                            .padding(horizontal = MyDimen.p4)
-                            .size(if (isSelected) MyDimen.p8 else MyDimen.p6)
-                            .background(
-                                color = if (isSelected) Color.White else Color.White.copy(alpha = 0.5f),
-                                shape = CircleShape
-                            )
-                    )
                 }
             }
         }

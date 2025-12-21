@@ -39,7 +39,9 @@ fun StickyHeaderAnimationLayout(
     imageHeightRatio: Float = 0.3f,
     tabSpaceRatio: Float = 0.25f,
     contentSpaceRatio: Float = 0.18f,
-    headerSection: @Composable () -> Unit,
+    maxProgressRatio: Float = 0.3f,
+    imageSection: (@Composable (imageHeight: Dp) -> Unit)? = null,
+    headerSection: @Composable (autoProgress: Float) -> Unit,
     infoSection: @Composable (
         autoProgress: Float,
         avatarOffsetX: Dp,
@@ -58,9 +60,10 @@ fun StickyHeaderAnimationLayout(
     val imageHeight = screenHeight * imageHeightRatio
     val containerSpace = screenHeight * tabSpaceRatio
     val contentSpace = screenHeight * contentSpaceRatio
+    val maxProgress = screenHeight * maxProgressRatio
 
     // Scroll logic
-    val maxOffset = with(LocalDensity.current) { imageHeight.toPx() }
+    val maxOffset = with(LocalDensity.current) { maxProgress.toPx() }
     val scope = rememberCoroutineScope()
     val scrollOffset = rememberSaveable(
         saver = Saver(save = { it.value }, restore = { Animatable(it) })
@@ -114,21 +117,25 @@ fun StickyHeaderAnimationLayout(
 
     Box(modifier = Modifier.fillMaxSize()) {
         // Header
-        headerSection()
+        headerSection(autoProgress)
 
         // Cover image
-        CoreImage(
-            source = CoreImageSource.Url(coverUrl ?: ""),
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(MyColor.Gray999)
-                .height(imageHeight)
-        )
+        if (imageSection != null) {
+            imageSection(imageHeight)
+        } else {
+            CoreImage(
+                source = CoreImageSource.Url(coverUrl ?: ""),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(MyColor.Gray999)
+                    .height(imageHeight)
+            )
+        }
 
         // Info section (avatar, name, etc.)
         infoSection(autoProgress, avatarOffsetX, avatarOffsetY)
 
         // Main content (tabs, scrollable section)
-        contentSection(autoProgress,  containerSpace,nestedScrollConnection, contentScrollState)
+        contentSection(autoProgress, containerSpace, nestedScrollConnection, contentScrollState)
     }
 }

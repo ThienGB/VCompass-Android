@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
+import com.example.vcompass.resource.MyColor
 import com.example.vcompass.resource.MyDimen
 
 @Composable
@@ -19,9 +20,9 @@ fun OutlineButton(
     enabled: Boolean = true,
     radius: Dp = MyDimen.p8,
     fullWidth: Boolean = true,
-    textColorActive: Color? = null,
-    textColorDeactivate: Color? = null,
-    backgroundColorActivate: Color? = null,
+    textColorActive: Color? = MyColor.Primary,
+    textColorDeactivate: Color? = MyColor.TextColorGray.copy(0.7f),
+    backgroundColorActivate: Color? = MyColor.Primary,
     backgroundColorDeactivate: Color? = null,
     content: (@Composable RowScope.() -> Unit)? = null,
 ) = CoreButton(

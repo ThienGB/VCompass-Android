@@ -6,6 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
+import com.example.vcompass.resource.MyColor
 import com.example.vcompass.resource.MyDimen
 
 @Composable
@@ -17,7 +18,7 @@ fun PrimaryButton(
     enabled: Boolean = true,
     radius: Dp = MyDimen.p8,
     fullWidth: Boolean = true,
-    textColorActive: Color? = null,
+    textColorActive: Color? = MyColor.White,
     textColorDeactivate: Color? = null,
     backgroundColorActivate: Color? = null,
     backgroundColorDeactivate: Color? = null,
