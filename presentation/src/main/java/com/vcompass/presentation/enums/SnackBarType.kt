@@ -1,4 +1,5 @@
-package com.example.vcompass.ui.core.snack_bar
+package com.vcompass.presentation.enums
+
 
 enum class SnackBarType {
     SUCCESS,

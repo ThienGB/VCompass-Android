@@ -9,8 +9,10 @@ data class SessionDataModel(
     var isOpenedApp: Boolean? = false,
     var isRememberMe: Boolean? = false,
     var accessToken: String? = null,
-    var userName: String? = null,
+    var email: String? = null,
     var currentUser: UserModel = UserModel(),
 ) : Parcelable
 
-fun SessionDataModel.isLogged() = accessToken?.isNotEmpty() == true
+fun SessionDataModel.isLogged(): Boolean {
+    return accessToken?.isNotBlank() == true
+}

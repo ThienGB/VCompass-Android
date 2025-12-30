@@ -1,7 +1,8 @@
 package com.vcompass.domain.model.response.login
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+import com.vcompass.domain.model.response.user.UserModel
 
-@Parcelize
-data class LoginModel(val token: String? = null) : Parcelable
+data class LoginModel(
+    val tokens: TokenModel? = null,
+    val user: UserModel? = null
+)

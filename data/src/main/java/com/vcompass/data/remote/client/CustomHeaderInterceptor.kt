@@ -22,13 +22,6 @@ class CustomHeaderInterceptor(val secureStorageHelper: SecureStorageHelper) : In
                 )
             }
 
-            secureStorageHelper.fcmToken?.let {
-                builder.addHeader(
-                    HEADER_FCM_TOKEN,
-                   it
-                )
-            }
-
             builder.addHeader(
                 HEADER_ACCEPT_LANGUAGE,
                 Locale.getDefault().language
@@ -37,24 +30,6 @@ class CustomHeaderInterceptor(val secureStorageHelper: SecureStorageHelper) : In
             secureStorageHelper.userId?.let {
                 builder.addHeader(
                     HEADER_USER_ID,
-                    it
-                )
-            }
-            secureStorageHelper.messengerId?.let {
-                builder.addHeader(
-                    HEADER_MESSENGER_ID,
-                    it
-                )
-            }
-            secureStorageHelper.calendarUserId?.let {
-                builder.addHeader(
-                    HEADER_CALENDAR_USER_ID,
-                    it
-                )
-            }
-            secureStorageHelper.calendarId?.let {
-                builder.addHeader(
-                    HEADER_CALENDAR_ID,
                     it
                 )
             }

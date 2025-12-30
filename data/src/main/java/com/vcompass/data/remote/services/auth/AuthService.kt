@@ -1,4 +1,4 @@
-package com.vcompass.data.remote.services.party
+package com.vcompass.data.remote.services.auth
 
 import com.vcompass.data.model.dto.party.login.LoginDTO
 import com.vcompass.data.model.response.BaseResponse
@@ -8,10 +8,9 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface AuthService {
-
-    @POST("api/authenticate")
+    @POST("api/v1/auth/login")
     suspend fun login(@Body loginInfo: LoginRequest): SingleResponse<LoginDTO>
 
-    @POST("api/logout")
+    @POST("logout")
     suspend fun logout(): BaseResponse
 }

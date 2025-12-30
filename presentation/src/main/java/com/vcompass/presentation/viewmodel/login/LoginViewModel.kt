@@ -1,18 +1,18 @@
 package com.vcompass.presentation.viewmodel.login
 
-import com.vcompass.data.model.response.GenericException
 import com.vcompass.domain.model.request.login.LoginRequest
+import com.vcompass.domain.model.response.user.UserModel
 import com.vcompass.domain.usecase.login.LoginGoogleUseCase
 import com.vcompass.domain.usecase.login.LoginUseCase
 import com.vcompass.presentation.event.global.GlobalConfig
 import com.vcompass.presentation.event.global.GlobalEventBus
+import com.vcompass.presentation.model.login.toLoginUiModel
 import com.vcompass.presentation.util.CoreRoute
 import com.vcompass.presentation.util.collectToState
 import com.vcompass.presentation.viewmodel.BaseViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import org.json.JSONObject
-import java.io.File
+import kotlin.math.log
 
 class LoginViewModel(
     globalEventBus: GlobalEventBus,
@@ -29,33 +29,28 @@ class LoginViewModel(
 
     fun getRememberMe(onRemember: (String, Boolean) -> Unit) {
         globalConfig.getSessionData()?.let {
-            onRemember.invoke(it.userName ?: "", it.isRememberMe ?: false)
+            onRemember.invoke(it.email ?: "", it.isRememberMe ?: false)
         }
     }
 
-    fun login(username: String, password: String, hasRememberMe: Boolean = true) {
+    fun login(email: String, password: String, hasRemember: Boolean = true) {
         collectToState(
             block = {
-                loginUseCase(
-                    LoginRequest(username = username, password = password)
-                )
+                loginUseCase(LoginRequest(email = email, password = password))
             },
             onError = {
-                (it as? GenericException.ForbiddenException)?.let { exception ->
-                    exception.getData()?.let { data ->
-                        val email = JSONObject(data.toString()).get("email").toString()
-                        globalConfig.getSessionData()?.currentUser?.email = email
-                        _notYetConfirm.tryEmit(true)
-                        setSuccess()
-                    }
-                } ?: showError(it.message ?: "")
+                 showError(it.message ?: "")
             }
-        ) {
+        ) { login ->
+            val loginModel = login.toLoginUiModel()
             globalConfig.getSessionData()?.let {
-                it.isRememberMe = hasRememberMe
-                it.userName = username
+                it.isRememberMe = hasRemember
+                it.email = email
+                it.accessToken = loginModel.tokens?.accessToken
+                it.currentUser = login.user ?: UserModel()
                 globalConfig.updateSessionData(it)
             }
+
             navigateTo(CoreRoute.Home.route, isClearStack = true)
         }
     }

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -26,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import com.example.vcompass.R
 import com.example.vcompass.ui.core.icon.CoreIcon
 import com.example.vcompass.resource.MyColor
+import com.example.vcompass.resource.MyDimen
 import kotlinx.coroutines.delay
 import kotlin.math.cos
 import kotlin.math.sin
@@ -100,7 +102,7 @@ fun TravelLoginAnimation() {
 
     Box(
         modifier = Modifier
-            .fillMaxHeight(0.4f)
+            .height(MyDimen.p280)
             .fillMaxWidth()
             .pointerInput(Unit) {
                 detectTapGestures(

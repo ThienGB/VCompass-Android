@@ -20,9 +20,7 @@ class SplashViewModel(
     val statusOpenApp = _statusOpenApp.asStateFlow()
 
     init {
-        collectToState(block = {
-            sessionUseCase()
-        }) {
+        collectToState(block = { sessionUseCase() }) {
             globalConfig.updateSessionData(it)
             _statusOpenApp.value = when {
                 it.isOpenedApp == false -> StatusOpenApp.INTRODUCE

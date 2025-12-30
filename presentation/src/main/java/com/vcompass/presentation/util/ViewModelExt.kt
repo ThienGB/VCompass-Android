@@ -1,5 +1,6 @@
 package com.vcompass.presentation.util
 
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
@@ -27,27 +28,21 @@ inline fun <reified T> BaseViewModel.collectToState(
     noinline onError: ((Throwable) -> Unit)? = null,
     crossinline onSuccess: (T) -> Unit = {}
 ) {
-    viewModelScope.launch {
-        if (showLoading) setLoading()
-
-        block().collectLatest { result ->
-            result.fold(
-                onSuccess = { data ->
-                    setSuccess()
-                    onSuccess(data)
-                },
-                onFailure = { e ->
-                    defaultValue?.let {
-                        val fallback = runCatching { defaultValue(e) }.getOrNull()
-                        fallback?.let {
-                            setSuccess()
-                            onSuccess(it)
-                        } ?: onError?.invoke(e) ?: showError(e.message ?: "500/Unknown error")
-                    } ?: onError?.invoke(e) ?: showError(e.message ?: "500/Unknown error")
-                }
-            )
+    baseCollectToState(
+        block = block,
+        showLoading = showLoading,
+        onLoading = {
+            setLoading()
+        },
+        defaultValue = defaultValue,
+        onError = { e ->
+            onError?.invoke(e) ?: showError(e.message ?: "500/Unknown error")
+        },
+        onSuccess = {
+            setSuccess()
+            onSuccess(it)
         }
-    }
+    )
 }
 
 //===== Call multiple API =====
@@ -81,8 +76,118 @@ inline fun <reified T> BaseViewModel.collectToStateMany(
     noinline onError: ((Throwable) -> Unit)? = null,
     crossinline onSuccess: (List<T>) -> Unit = {},
 ) {
+    baseCollectToStateMany(
+        provider = provider,
+        showLoading = showLoading,
+        onLoading = {
+            setLoading()
+        },
+        onError = { e ->
+            onError?.invoke(e) ?: showError(e.message ?: "500/Unknown error")
+        },
+        onSuccess = {
+            setSuccess()
+            onSuccess(it)
+        }
+    )
+}
+
+fun <Domain : Any, Ui : Any> BaseViewModel.collectPagingToState(
+    source: Flow<PagingData<Domain>>,
+    showLoading: Boolean = true,
+    enableChangeState: Boolean = true,
+    onError: ((Throwable) -> Unit)? = null,
+    transform: (Domain) -> Ui,
+    onSuccess: (PagingData<Ui>) -> Unit = {}
+) {
+    baseCollectPagingToState(
+        source = source,
+        showLoading = showLoading,
+        onLoading = {
+            if (enableChangeState)
+                setLoading()
+        },
+        onError = { e ->
+            onError?.invoke(e) ?: run {
+                if (enableChangeState)
+                    showError(e.message ?: "500/Unknown error")
+            }
+        },
+        transform = transform,
+        onSuccess = {
+            onSuccess.invoke(it)
+            if (enableChangeState)
+                setSuccess()
+        },
+    )
+}
+
+internal fun <Domain : Any, Ui : Any> ViewModel.baseCollectPagingToState(
+    source: Flow<PagingData<Domain>>,
+    showLoading: Boolean = true,
+    onError: ((Throwable) -> Unit)? = null,
+    onLoading: (() -> Unit)? = null,
+    transform: (Domain) -> Ui,
+    onSuccess: (PagingData<Ui>) -> Unit = {},
+) {
+    val uiStateFlow = MutableStateFlow<PagingData<Ui>>(PagingData.empty())
     viewModelScope.launch {
-        if (showLoading) setLoading()
+        if (showLoading) onLoading?.invoke()
+        val uiPagingFlow: Flow<PagingData<Ui>> =
+            source
+                .map { pagingData -> pagingData.map(transform) }
+                .cachedIn(viewModelScope)
+        uiPagingFlow
+            .catch { e ->
+                if (e is CancellationException && e !is TimeoutCancellationException) throw e
+                onError?.invoke(e)
+            }
+            .collectLatest { pagingDataUi ->
+                uiStateFlow.value = pagingDataUi
+                onSuccess.invoke(pagingDataUi)
+            }
+    }
+}
+
+
+inline fun <reified T> ViewModel.baseCollectToState(
+    crossinline block: suspend () -> Flow<Result<T>>,
+    showLoading: Boolean = true,
+    crossinline onLoading: () -> Unit = {},
+    noinline defaultValue: ((Throwable) -> T)? = null,
+    noinline onError: ((Throwable) -> Unit)? = null,
+    crossinline onSuccess: (T) -> Unit = {}
+) {
+    viewModelScope.launch {
+        if (showLoading) onLoading.invoke()
+
+        block().collectLatest { result ->
+            result.fold(
+                onSuccess = { data ->
+                    onSuccess(data)
+                },
+                onFailure = { e ->
+                    defaultValue?.let {
+                        val fallback = runCatching { defaultValue(e) }.getOrNull()
+                        fallback?.let {
+                            onSuccess(it)
+                        } ?: onError?.invoke(e)
+                    } ?: onError?.invoke(e)
+                }
+            )
+        }
+    }
+}
+
+inline fun <reified T> BaseViewModel.baseCollectToStateMany(
+    crossinline provider: suspend () -> List<ApiCallModel<T>>,
+    showLoading: Boolean = true,
+    crossinline onLoading: () -> Unit = {},
+    noinline onError: ((Throwable) -> Unit)? = null,
+    crossinline onSuccess: (List<T>) -> Unit = {},
+) {
+    viewModelScope.launch {
+        if (showLoading) onLoading.invoke()
 
         val result = runCatching {
             runAllOrDefault(provider())
@@ -92,39 +197,11 @@ inline fun <reified T> BaseViewModel.collectToStateMany(
 
         result.fold(
             onSuccess = { list ->
-                setSuccess()
-                onSuccess(list)
+                onSuccess.invoke(list)
             },
             onFailure = { e ->
-                onError?.invoke(e) ?: showError(e.message ?: "500/Unknown error")
+                onError?.invoke(e)
             }
         )
-    }
-}
-
-
-fun <Domain : Any, Ui : Any> BaseViewModel.collectPagingToState(
-    source: Flow<PagingData<Domain>>,
-    showLoading: Boolean = true,
-    onError: ((Throwable) -> Unit)? = null,
-    transform: (Domain) -> Ui,
-    onSuccess: (PagingData<Ui>) -> Unit = {}
-) {
-    val uiStateFlow = MutableStateFlow<PagingData<Ui>>(PagingData.empty())
-    viewModelScope.launch {
-        if (showLoading) setLoading()
-        val uiPagingFlow: Flow<PagingData<Ui>> =
-            source
-                .map { pagingData -> pagingData.map(transform) }
-                .cachedIn(viewModelScope)
-        uiPagingFlow
-            .catch { e ->
-                if (e is CancellationException && e !is TimeoutCancellationException) throw e
-                onError?.invoke(e) ?: showError(e.message ?: "500/Unknown error")
-            }
-            .collectLatest { pagingDataUi ->
-                uiStateFlow.value = pagingDataUi
-                onSuccess.invoke(pagingDataUi)
-            }
     }
 }

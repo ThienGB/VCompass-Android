@@ -13,10 +13,10 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.vcompass.R
-import com.example.vcompass.util.clearAllStackAndAdd
+import com.example.vcompass.resource.MyDimen
 import com.example.vcompass.ui.core.icon.CoreImage
 import com.example.vcompass.ui.core.icon.CoreImageSource
-import com.example.vcompass.resource.MyDimen
+import com.example.vcompass.util.replace
 import com.vcompass.presentation.enums.StatusOpenApp
 import com.vcompass.presentation.util.CoreRoute
 import com.vcompass.presentation.viewmodel.splash.SplashViewModel
@@ -30,12 +30,13 @@ fun SplashScreen(
     val statusOpenApp by viewModel.statusOpenApp.collectAsStateWithLifecycle(initialValue = null)
 
     LaunchedEffect(statusOpenApp) {
+        if (statusOpenApp == null) return@LaunchedEffect
         val route = when (statusOpenApp) {
             StatusOpenApp.INTRODUCE -> CoreRoute.Login.route
             StatusOpenApp.LOGGED -> CoreRoute.Home.route
             else -> CoreRoute.Login.route
         }
-        navController.clearAllStackAndAdd(route)
+        navController.replace(route)
     }
 
     Box(

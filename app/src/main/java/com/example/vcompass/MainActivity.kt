@@ -12,18 +12,14 @@ import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.rememberNavController
+import com.example.vcompass.resource.VCompassTheme
 import com.example.vcompass.screen.login.PlaneSplitAnimationScreen
 import com.example.vcompass.ui.navigate.AppNavGraph
-import com.example.vcompass.resource.VCompassTheme
 import com.example.vcompass.util.ScreenContext
 import org.koin.android.ext.android.getKoin
 
@@ -42,23 +38,11 @@ class MainActivity : ComponentActivity() {
             scope.declare(navController)
 
             VCompassTheme {
-                Surface(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(WindowInsets.navigationBars.asPaddingValues()),
-                    color = Color.Transparent
-                ) {
-                    AppWithAnimation()
+                Box(modifier = Modifier.fillMaxSize()) {
+                    MainScreen()
+                    PlaneSplitAnimationScreen()
                 }
             }
         }
-    }
-}
-
-@Composable
-fun AppWithAnimation() {
-    Box(modifier = Modifier.fillMaxSize()) {
-        AppNavGraph()
-        PlaneSplitAnimationScreen()
     }
 }

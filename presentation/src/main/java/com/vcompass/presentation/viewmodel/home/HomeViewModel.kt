@@ -1,23 +1,39 @@
 package com.vcompass.presentation.viewmodel.home
 
-import com.vcompass.domain.usecase.login.LogoutUseCase
 import com.vcompass.presentation.event.global.GlobalConfig
 import com.vcompass.presentation.event.global.GlobalEventBus
+import com.vcompass.presentation.util.CoreRoute
+import com.vcompass.presentation.util.collectToState
 import com.vcompass.presentation.viewmodel.BaseViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 
 class HomeViewModel(
     globalEventBus: GlobalEventBus,
     globalConfig: GlobalConfig,
-    private val logoutUseCase: LogoutUseCase,
 ) : BaseViewModel(globalEventBus, globalConfig) {
 
-    fun logout() {
-//        collectToState(
-//            block = {
-//                logoutUseCase.invoke()
-//            }
-//        ) {
-//            doNavigate(Screen.Login.route)
-//        }
+    private val _bottomBarVisible = MutableSharedFlow<Boolean>(0, 1)
+    var bottomBarVisible = _bottomBarVisible.asSharedFlow()
+
+
+    fun hideBottomBar() {
+        _bottomBarVisible.tryEmit(false)
+    }
+
+    fun showBottomBar() {
+        _bottomBarVisible.tryEmit(true)
+    }
+
+    fun logout(isShowLoading: Boolean = false) {
+        collectToState(
+            showLoading = isShowLoading,
+            block = { globalConfig.userLogout() },
+            onError = {
+                navigateTo(CoreRoute.Login.route, isClearStack = true)
+            }
+        ) {
+            navigateTo(CoreRoute.Login.route, isClearStack = true)
+        }
     }
 }

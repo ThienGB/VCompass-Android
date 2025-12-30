@@ -108,17 +108,16 @@ fun LoginForm(
         })
         SpaceHeight()
         PrimaryButton(
-            text = stringResource(R.string.btn_sign_up),
+            text = stringResource(R.string.btn_login),
             enabled = enableLogin.value,
             onClick = {
-                // viewModel.login(userName, password, hasRemember)
-                navController.add(CoreRoute.Home.route)
+                viewModel.login(email, password, hasRemember)
             }
         )
         SpaceHeight()
         OrContinueWithDivider()
         SpaceHeight()
-        GoogleSignInButton({ navController.add(CoreRoute.Home.route) })
+        GoogleSignInButton { navController.add(CoreRoute.Home.route) }
         ExpandableSpacer()
         CoreRichText(
             items = listOf(

@@ -12,15 +12,15 @@ import com.vcompass.presentation.viewmodel.BaseViewModel
 
 @Composable
 fun ObserveGlobalEvents(
-    viewModel: BaseViewModel,
+    viewModel: BaseViewModel?=null,
     navController: NavController? = null
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
 
     LaunchedEffect(viewModel) {
-        viewModel.globalEventBus.events
-            .flowWithLifecycle(lifecycleOwner.lifecycle)
-            .collect { event ->
+        viewModel?.globalEventBus?.events
+            ?.flowWithLifecycle(lifecycleOwner.lifecycle)
+            ?.collect { event ->
                 when (event) {
                     is GlobalEvent.Logout -> {
                         viewModel.handleExpiredToken()

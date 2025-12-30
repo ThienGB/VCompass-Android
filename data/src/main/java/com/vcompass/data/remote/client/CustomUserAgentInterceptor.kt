@@ -8,7 +8,6 @@ class CustomUserAgentInterceptor(private val userAgent: String) : Interceptor {
         val request = chain.request()
             .newBuilder()
             .addHeader("User-Agent", userAgent)
-            .addHeader("Accessed-Platform", "ACCESSED_USER")
             .build()
         return chain.proceed(request)
     }

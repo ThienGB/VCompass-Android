@@ -7,7 +7,6 @@ object DataConstants {
     const val NETWORK_ERROR_MESS = "Network connection failed"
 
     //named Service
-    const val CALENDAR_SERVICE = "CALENDAR_SERVICE"
     const val FEED_SERVICE = "FEED_SERVICE"
     const val PARTY_SERVICE = "PARTY_SERVICE"
     const val JOB_SERVICE = "JOB_SERVICE"
@@ -23,5 +22,8 @@ object DataConstants {
     const val SUFFIX_URL_JOB_SERVICE = "job-service/"
     const val SUFFIX_URL_MESSAGE_SERVICE = "message-service/"
     const val SUFFIX_URL_PAYMENT_SERVICE = "payment-service/"
-    const val SUFFIX_URL_AUTH_SERVICE = "auth-service/"
+    const val SUFFIX_URL_AUTH_SERVICE = "auth/"
+
+    //version
+    const val SUFFIX_URL_V1 = "api/v1/"
 }

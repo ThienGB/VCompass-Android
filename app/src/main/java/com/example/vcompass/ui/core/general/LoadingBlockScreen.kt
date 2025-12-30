@@ -12,10 +12,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.zIndex
+import com.example.vcompass.ui.core.loading.CoreLoading
 
 @Composable
 fun LoadingBlockScreen(
-    isLoading : Boolean = false,
     isVisibility: Boolean = false
 ) {
     AnimatedVisibility(
@@ -30,8 +31,7 @@ fun LoadingBlockScreen(
                 .pointerInput(Unit) {},
             contentAlignment = Alignment.Center
         ) {
-            if (isVisibility && isLoading)
-                CircularProgressIndicator()
+            CoreLoading()
         }
     }
 }

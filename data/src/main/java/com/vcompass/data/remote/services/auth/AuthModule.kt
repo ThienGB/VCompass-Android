@@ -1,4 +1,4 @@
-package com.vcompass.data.remote.services.party
+package com.vcompass.data.remote.services.auth
 
 import com.vcompass.data.remote.client.provideService
 import com.vcompass.data.util.DataConstants

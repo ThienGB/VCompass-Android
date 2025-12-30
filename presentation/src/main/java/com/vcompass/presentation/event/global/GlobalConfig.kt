@@ -10,7 +10,7 @@ class GlobalConfig(private val logoutUseCase: LogoutUseCase) {
 
     fun updateSessionData(data: SessionDataModel) {
         if (data.isRememberMe == false)
-            data.userName = ""
+            data.email = ""
         sessionDataModel = data
     }
 

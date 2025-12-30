@@ -2,8 +2,8 @@ package com.vcompass.presentation.state
 
 sealed class ViewUIState {
     object Idle : ViewUIState()
-    object Loading : ViewUIState()
+    data class Loading(val type: LoadingType) : ViewUIState()
     object Success : ViewUIState()
-    object Error : ViewUIState()
+    data class Error(val error: String?) : ViewUIState()
     object ShowSnackBar : ViewUIState()
 }

@@ -6,6 +6,7 @@ import android.os.Build
 import com.vcompass.data.util.DataConstants
 import com.google.gson.Gson
 import com.vcompass.data.BuildConfig
+import okhttp3.ConnectionPool
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.core.qualifier.named
@@ -20,16 +21,17 @@ import javax.net.ssl.TrustManager
 import javax.net.ssl.X509TrustManager
 
 val clientModule = module {
-    single {
-        CustomHeaderInterceptor(get())
-    }
+    single { CustomHeaderInterceptor(get()) }
 
     single { provideOkHttpClient(get(), get()) }
 
-    single { provideRetrofitBuilder("https://resalon.onrender.com", get()) }
+    single { provideRetrofitBuilder(BuildConfig.BASE_URL, get()) }
 }
 
-fun provideOkHttpClient(context: Context, customHeaderInterceptor: CustomHeaderInterceptor): OkHttpClient {
+fun provideOkHttpClient(
+    context: Context,
+    customHeaderInterceptor: CustomHeaderInterceptor
+): OkHttpClient {
 
     val loggingInterceptor = HttpLoggingInterceptor().apply {
         level = if (BuildConfig.DEBUG)
@@ -38,56 +40,40 @@ fun provideOkHttpClient(context: Context, customHeaderInterceptor: CustomHeaderI
             HttpLoggingInterceptor.Level.NONE
     }
 
-    val httpClientBuilder = OkHttpClient.Builder()
-    try {
-        // Create a trust manager that does not validate certificate chains
-        val trustAllCerts: Array<TrustManager> = arrayOf(object : X509TrustManager {
+    val trustAllCerts = arrayOf<TrustManager>(
+        object : X509TrustManager {
             override fun checkClientTrusted(
-                chain: Array<out X509Certificate>?,
-                authType: String?
-            ) {
-            }
+                chain: Array<out X509Certificate>?, authType: String?
+            ) = Unit
 
             override fun checkServerTrusted(
-                chain: Array<out X509Certificate>?,
-                authType: String?
-            ) {
-            }
+                chain: Array<out X509Certificate>?, authType: String?
+            ) = Unit
 
-            override fun getAcceptedIssuers(): Array<X509Certificate> = arrayOf()
-        })
-
-        // Install the all-trusting trust manager
-        val sslContext = SSLContext.getInstance("SSL")
-        sslContext.init(null, trustAllCerts, SecureRandom())
-
-        // Create an ssl socket factory with our all-trusting manager
-        val sslSocketFactory = sslContext.socketFactory
-        if (trustAllCerts.isNotEmpty() && trustAllCerts.first() is X509TrustManager) {
-            httpClientBuilder.sslSocketFactory(
-                sslSocketFactory,
-                trustAllCerts.first() as X509TrustManager
-            )
-            httpClientBuilder.hostnameVerifier { hostName, _ ->
-                hostName.contains("accessed.co", true)
-            }
+            override fun getAcceptedIssuers(): Array<X509Certificate> = emptyArray()
         }
-    } catch (_: Exception) {
-    }
-    return httpClientBuilder
+    )
+
+    val sslContext = SSLContext.getInstance("TLS")
+    sslContext.init(null, trustAllCerts, SecureRandom())
+
+    val trustManager = trustAllCerts[0] as X509TrustManager
+
+    return OkHttpClient.Builder()
+        .sslSocketFactory(sslContext.socketFactory, trustManager)
+        .hostnameVerifier { _, _ -> true } // ⚠️ chỉ test
         .connectTimeout(DataConstants.TIME_OUT, TimeUnit.SECONDS)
         .readTimeout(DataConstants.TIME_OUT, TimeUnit.SECONDS)
         .writeTimeout(DataConstants.TIME_OUT, TimeUnit.SECONDS)
         .addInterceptor(loggingInterceptor)
         .addInterceptor(customHeaderInterceptor)
-        .addInterceptor(
-            CustomUserAgentInterceptor(
-                genderUserAgent(context)
-            )
-        )
+        .addInterceptor(CustomUserAgentInterceptor(genderUserAgent(context)))
         .retryOnConnectionFailure(true)
+        // Render fix
+        .connectionPool(ConnectionPool(0, 1, TimeUnit.SECONDS))
         .build()
 }
+
 
 fun provideRetrofitBuilder(baseUrl: String, okHttpClient: OkHttpClient): Retrofit {
     return Retrofit.Builder()

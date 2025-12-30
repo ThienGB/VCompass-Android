@@ -1,13 +1,6 @@
 package com.vcompass.data.local
 
 class SecureStorageHelper(val storage: SecureStorage) {
-
-    var fcmToken: String?
-        get() = storage.getString(FCM_TOKEN, "")
-        set(value) {
-            value?.let { storage.putString(FCM_TOKEN, it) }
-        }
-
     var accessToken: String?
         get() = storage.getString(ACCESS_TOKEN, "")
         set(value) {
@@ -32,35 +25,8 @@ class SecureStorageHelper(val storage: SecureStorage) {
             value?.let { storage.putString(USER_ID, it) }
         }
 
-    var messengerId: String?
-        get() = storage.getString(MESSENGER_ID, "")
-        set(value) {
-            value?.let { storage.putString(MESSENGER_ID, it) }
-        }
-
-    var calendarUserId: String?
-        get() = storage.getString(CALENDAR_USER_ID, "")
-        set(value) {
-            value?.let { storage.putString(CALENDAR_USER_ID, it) }
-        }
-
-    var calendarId: String?
-        get() = storage.getString(CALENDAR_ID, "")
-        set(value) {
-            value?.let { storage.putString(CALENDAR_ID, it) }
-        }
-
     fun clearDataAfterLogout() {
-        storage.remove(
-            listOf(
-                ACCESS_TOKEN,
-                FCM_TOKEN,
-                USER_ID,
-                MESSENGER_ID,
-                CALENDAR_USER_ID,
-                CALENDAR_ID,
-            )
-        )
+        storage.remove(listOf(ACCESS_TOKEN, USER_ID))
     }
 
     fun clearAll() {
@@ -69,12 +35,8 @@ class SecureStorageHelper(val storage: SecureStorage) {
 
     companion object {
         private const val ACCESS_TOKEN = "ACCESS_TOKEN"
-        private const val FCM_TOKEN = "FCM_TOKEN"
         private const val FIRST_LAUNCH_APP = "FIRST_LAUNCH_APP"
         private const val REMEMBER_ME = "REMEMBER_ME"
         private const val USER_ID = "UserID"
-        private const val MESSENGER_ID = "MessengerID"
-        private const val CALENDAR_USER_ID = "CalendarUserID"
-        private const val CALENDAR_ID = "CalendarID"
     }
 }

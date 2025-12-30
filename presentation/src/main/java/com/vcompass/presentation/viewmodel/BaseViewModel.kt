@@ -6,6 +6,7 @@ import com.vcompass.presentation.enums.SnackBarDurationType
 import com.vcompass.presentation.event.global.GlobalConfig
 import com.vcompass.presentation.event.global.GlobalEvent
 import com.vcompass.presentation.event.global.GlobalEventBus
+import com.vcompass.presentation.state.LoadingType
 import com.vcompass.presentation.state.NavigateState
 import com.vcompass.presentation.state.ViewUIState
 import com.vcompass.presentation.util.collectToState
@@ -21,7 +22,7 @@ open class BaseViewModel(
     val globalEventBus: GlobalEventBus,
     val globalConfig: GlobalConfig,
 ) : ViewModel() {
-
+    var typeLoading: LoadingType = LoadingType.FULL_SCREEN
     private val _stateUI = MutableStateFlow<ViewUIState>(ViewUIState.Idle)
     val stateUI: StateFlow<ViewUIState> get() = _stateUI
 
@@ -36,8 +37,11 @@ open class BaseViewModel(
         globalEventBus.emit(event)
     }
 
-    fun setLoading() {
-        _stateUI.value = ViewUIState.Loading
+    fun setLoading(newType: LoadingType? = null) {
+        newType?.let {
+            typeLoading = it
+        }
+        _stateUI.value = ViewUIState.Loading(typeLoading)
     }
 
     fun hideLoadingGlobal() {

@@ -28,7 +28,7 @@ import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import com.example.vcompass.R
 import com.example.vcompass.enum.LoginActionType
-import com.example.vcompass.ui.core.general.ScreenNormal
+import com.example.vcompass.ui.core.general.BaseView
 import com.example.vcompass.util.backAndNavigate
 import com.example.vcompass.ui.core.icon.CoreIcon
 import com.example.vcompass.ui.core.space.SpaceHeight
@@ -62,22 +62,13 @@ fun LoginScreen(
         }
     }
 
-//    LaunchedEffect(Unit) {
-//        viewModel.notYetConfirm.collect {
-//            if (it)
-//                navController.add(CoreRoute.ConfirmEmail.path)
-//        }
-//    }
-
-    ScreenNormal(
+    BaseView(
         state = state,
         viewModel = viewModel,
         navController = navController,
         statusBarPadding = false
     ) {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-        ) {
+        Box(modifier = Modifier.fillMaxSize()) {
             TravelLoginAnimation()
             Column(
                 modifier = Modifier

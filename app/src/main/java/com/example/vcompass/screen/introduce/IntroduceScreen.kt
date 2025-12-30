@@ -8,7 +8,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavController
-import com.example.vcompass.ui.core.general.ScreenNormal
+import com.example.vcompass.ui.core.general.BaseView
 import com.example.vcompass.util.replace
 import com.example.vcompass.resource.CoreTypography
 import com.vcompass.presentation.util.CoreRoute
@@ -28,7 +28,7 @@ fun IntroduceScreen(
 
     }
 
-    ScreenNormal(
+    BaseView(
         state = state,
         viewModel = viewModel,
         navController = navController,

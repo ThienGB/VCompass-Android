@@ -2,13 +2,13 @@ package com.vcompass.data.model.dto.schedule
 
 import com.google.gson.annotations.SerializedName
 import com.vcompass.data.model.dto.BaseDTO
-import com.vcompass.data.model.dto.user.BaseUserDTO
+import com.vcompass.data.model.dto.user.UserDTO
 import com.vcompass.domain.util.tryParseObject
 import com.vcompass.domain.model.response.schedule.ScheduleModel
 
 data class ScheduleDTO(
     @SerializedName("userId")
-    val user: BaseUserDTO?,
+    val user: UserDTO?,
     @SerializedName("name")
     val name: String?,
     @SerializedName("description")

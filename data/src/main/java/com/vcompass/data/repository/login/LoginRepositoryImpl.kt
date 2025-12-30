@@ -1,8 +1,8 @@
 package com.vcompass.data.repository.login
 
 import com.vcompass.data.local.SecureStorageHelper
-import com.vcompass.data.remote.services.message.FcmService
-import com.vcompass.data.remote.services.party.AuthService
+import com.vcompass.data.model.dto.party.login.toLoginModel
+import com.vcompass.data.remote.services.auth.AuthService
 import com.vcompass.data.util.api_call.ApiCallResult
 import com.vcompass.data.util.asMultipleResultFlow
 import com.vcompass.data.util.asSingleResultFlow
@@ -14,7 +14,6 @@ import kotlinx.coroutines.flow.flow
 
 class LoginRepositoryImpl(
     val authService: AuthService,
-    val fcmService: FcmService,
     val secureStorageHelper: SecureStorageHelper
 ) : LoginRepository {
 
@@ -22,20 +21,18 @@ class LoginRepositoryImpl(
         return asSingleResultFlow(
             suspendFunc = {
                 val response = authService.login(request)
-                secureStorageHelper.accessToken = response.data?.token
+                secureStorageHelper.accessToken = response.data?.tokens?.accessToken
+                secureStorageHelper.userId = response.data?.user?.id
                 response
             },
-            transform = { dto ->
-                LoginModel()
+            transform = {
+                it.toLoginModel()
             }
         )
     }
 
     override suspend fun logout(): Flow<Result<Unit>> = flow {
-        asMultipleResultFlow {
-            unit { authService.logout() }
-            unit { fcmService.removeFCMToken(secureStorageHelper.messengerId ?: "") }
-        }.collect {
+        asMultipleResultFlow { unit { authService.logout() } }.collect {
             when (it) {
                 is ApiCallResult.Failure -> {
                     emit(Result.failure(it.error))

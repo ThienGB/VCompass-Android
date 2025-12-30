@@ -10,18 +10,19 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import com.vcompass.presentation.viewmodel.home.HomeViewModel
 import com.example.vcompass.screen.explore.ExploreScreen
 import com.example.vcompass.screen.feed.HomeFeedScreen
 import com.example.vcompass.screen.search.SearchLandingScreen
-import com.example.vcompass.ui.core.general.ScreenWithBottomBar
 import com.example.vcompass.ui.core.bottombar.CustomBottomBar
 import com.example.vcompass.ui.core.bottombar.bottomDestinations
+import com.example.vcompass.ui.core.general.BaseView
 import com.example.vcompass.util.AppConstants
-import com.example.vcompass.util.back
 import com.example.vcompass.util.goWithState
+import com.vcompass.presentation.viewmodel.home.HomeViewModel
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
@@ -31,6 +32,7 @@ fun HomeScreen(
     viewModel: HomeViewModel = koinViewModel()
 ) {
     val listTabs = remember { bottomDestinations }
+    var bottomBarVisible by rememberSaveable { mutableStateOf(true) }
     val pagerState = rememberPagerState(initialPage = 0) { listTabs.size }
     val scope = rememberCoroutineScope()
     val showMoreMenu = remember { mutableStateOf(false) }
@@ -41,11 +43,18 @@ fun HomeScreen(
             navController.goWithState(it)
         }
     }
+    LaunchedEffect(Unit) {
+        viewModel.bottomBarVisible.collect {
+            bottomBarVisible = it
+        }
+    }
 
-    ScreenWithBottomBar(
+    BaseView(
         state = state,
         viewModel = viewModel,
+        bottomBarVisible = bottomBarVisible,
         navController = navController,
+
         bottomBar = {
             CustomBottomBar(
                 onClickMenu = {

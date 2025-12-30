@@ -10,6 +10,8 @@ import retrofit2.Response
 open class BaseResponse {
     @SerializedName("status")
     var status: Int? = null
+    @SerializedName("success")
+    var success: Boolean? = null
 
     @SerializedName("code")
     var code: Int? = null
@@ -27,7 +29,7 @@ open class BaseResponse {
 
     fun isUnauthorized(): Boolean = getResponseStatus().tryParseToInt() == ERROR_CODE_UNAUTHORIZED
 
-    fun isSuccess(): Boolean = getResponseStatus().tryParseToInt() in STATUS_CODE_SUCCEED..299
+    fun isSuccess(): Boolean = getResponseStatus().tryParseToInt() in STATUS_CODE_SUCCEED..299 || success == true
 
     fun isForbidden(): Boolean = getResponseStatus().tryParseToInt() == ERROR_CODE_FORBIDDEN
 
