@@ -57,4 +57,12 @@
         <item>Fri</item>
         <item>Sat</item>
     </string-array>
+    <string name="lb_core_retry">Error, please try again</string>
+    <string name="lb_btn_core_retry">Retry</string>
+    <string name="lb_no_result_search">No results.</string>
+    <string name="lb_loading_data">Loading…</string>
+    <string name="lb_hint_for_you">Hint for you</string>
+    <string name="lb_see_detail">View detail</string>
+    <string name="lb_hot_destination">Destination hot!</string>
+    <string name="lb_total_cost">Total cost:</string>
 </resources>

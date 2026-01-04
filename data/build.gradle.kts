@@ -81,4 +81,5 @@ dependencies {
     implementation (libs.androidx.datastore.preferences)
     implementation(libs.coroutines.android)
     implementation(libs.coroutines.core)
+    implementation(libs.paging3.runtime)
 }

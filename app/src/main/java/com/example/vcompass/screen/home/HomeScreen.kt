@@ -75,7 +75,7 @@ fun HomeScreen(
             key = { index -> listTabs[index].route }
         ) { page ->
             when (page) {
-                AppConstants.HOME_FEED_INDEX -> HomeFeedScreen(navController)
+                AppConstants.HOME_FEED_INDEX -> HomeFeedScreen()
                 AppConstants.HOME_EXPLORE_INDEX -> ExploreScreen(navController)
                 AppConstants.HOME_SEARCH_INDEX -> SearchLandingScreen(navController)
                 AppConstants.HOME_PROFILE_INDEX -> SearchLandingScreen(navController)

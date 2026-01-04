@@ -1,8 +1,11 @@
 package com.vcompass.presentation.model.user
 
-import com.vcompass.domain.model.response.BaseModel
+import android.os.Parcelable
 import com.vcompass.domain.model.response.user.UserFavoriteModel
+import com.vcompass.presentation.model.Base
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class User(
     val name: String?,
     val email: String?,
@@ -14,4 +17,4 @@ data class User(
     val status: String? = null,
     val role: String? = null,
     val favorites: UserFavoriteModel? = null
-) : BaseModel()
+) : Base(), Parcelable

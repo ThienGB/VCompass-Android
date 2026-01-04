@@ -94,7 +94,6 @@ val mockSchedule: Schedule = Schedule(
     name = "Hành trình Khám phá Đà Lạt 3 Ngày",
     description = "Chuyến đi 3 ngày 2 đêm khám phá các địa điểm check-in nổi tiếng và trải nghiệm ẩm thực Đà Lạt.",
     departure = "TP. Hồ Chí Minh",
-    destinations = listOf("Đà Lạt", "Lâm Đồng"),
     numDays = 3,
     dateStart = "2025-12-01",
     dateEnd = "2025-12-03",

@@ -1,6 +1,5 @@
 package com.vcompass.presentation.viewmodel.schedule
 
-import com.vcompass.domain.usecase.schedule.GetScheduleByIdUseCase
 import com.vcompass.presentation.enums.BottomSheetType
 import com.vcompass.presentation.event.global.GlobalConfig
 import com.vcompass.presentation.event.global.GlobalEventBus

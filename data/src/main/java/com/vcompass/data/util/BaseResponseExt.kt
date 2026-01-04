@@ -2,8 +2,10 @@ package com.vcompass.data.util
 
 import com.vcompass.data.model.response.BaseResponse
 import com.vcompass.data.model.response.ListResponse
-import com.vcompass.data.model.response.PagingResponse
+import com.vcompass.data.model.response.paging.PagingResponse
+import com.vcompass.domain.model.response.PagingResponseModel
 import com.vcompass.data.model.response.SingleResponse
+
 
 fun <DTO> toErrorResult(error: String? = null): Result<DTO> {
     return Result.failure(Exception(error ?: "Unknown error"))
@@ -15,6 +17,7 @@ fun BaseResponse.toUnitResult(): Result<Unit> {
     }
     return toErrorResult()
 }
+
 fun <DTO, Domain> SingleResponse<DTO>.toResult(transform: (DTO) -> Domain): Result<Domain> {
     if (this.isSuccess() && this.data != null) {
         return Result.success(transform(this.data))
@@ -34,11 +37,11 @@ fun <DTO, Domain> ListResponse<DTO>.toListResult(
 
 fun <DTO, Domain> PagingResponse<DTO>.toPagingResult(
     transform: (DTO) -> Domain
-): Result<PagingResponse<Domain>> {
+): Result<PagingResponseModel<Domain>> {
     if (content == null) return toErrorResult()
 
     val dataTransform = content.map { transform(it) }
-    val newPaging = PagingResponse(
+    val newPaging = PagingResponseModel(
         content = dataTransform,
         totalPages = this.totalPages,
         last = this.last,

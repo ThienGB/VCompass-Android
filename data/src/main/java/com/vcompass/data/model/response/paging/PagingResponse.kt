@@ -1,4 +1,4 @@
-package com.vcompass.data.model.response
+package com.vcompass.data.model.response.paging
 
 import com.google.gson.annotations.SerializedName
 

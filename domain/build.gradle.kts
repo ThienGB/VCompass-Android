@@ -59,4 +59,5 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.retrofit.converter)
     implementation(libs.retrofit.logging)
+    implementation(libs.paging3.runtime)
 }

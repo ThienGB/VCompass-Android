@@ -41,7 +41,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.vcompass.ui.core.text.CoreText
 import com.example.vcompass.R
 import com.example.vcompass.enum.tab.SearchHomeTab
-import com.example.vcompass.screen.feed.TravelPost
+import com.example.vcompass.screen.feed.SchedulePost
 import com.example.vcompass.ui.core.list.ListItemTab
 import com.example.vcompass.ui.core.tab.TabView
 import com.example.vcompass.ui.core.title.TitleSearchBarAction
@@ -84,7 +84,7 @@ fun SearchTabScreen(
                     SearchHomeTab.SCHEDULE -> ListItemTab(
                         items = listOf("", "12", "123")
                     ) { item ->
-                        TravelPost()
+                        SchedulePost()
                     }
 
                     SearchHomeTab.ACCOMMODATION -> ListItemTab(
@@ -98,13 +98,13 @@ fun SearchTabScreen(
                     SearchHomeTab.FOODPLACE -> ListItemTab(
                         items = listOf(1, 2, 3, 4, 5)
                     ) { person ->
-                        TravelPost()
+                        SchedulePost()
                     }
 
                     SearchHomeTab.ATTRACTION -> ListItemTab(
                         items = listOf(1)
                     ) { person ->
-                        TravelPost()
+                        SchedulePost()
                     }
                 }
             }

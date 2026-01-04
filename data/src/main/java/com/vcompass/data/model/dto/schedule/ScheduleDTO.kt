@@ -16,7 +16,7 @@ data class ScheduleDTO(
     @SerializedName("departure")
     val departure: String?,
     @SerializedName("destinations")
-    val destinations: List<String>?,
+    val destinations: List<DestinationDTO>?,
     @SerializedName("numDays")
     val numDays: Int,
     @SerializedName("dateStart")
@@ -41,10 +41,18 @@ data class ScheduleDTO(
     val days: List<DayActivityDTO>?,
     @SerializedName("additionalExpenses")
     val additionalExpenses: List<AdditionalExpenseDTO>?,
-    @SerializedName("comments")
-    val comments: List<CommentDTO>?,
-    @SerializedName("likes")
-    val likes: List<LikeDTO>?
+    @SerializedName("hasFavorite")
+    val hasFavorite: Boolean? = null,
+    @SerializedName("hasLiked")
+    val hasLiked: Boolean? = null,
+    @SerializedName("commentsCount")
+    val commentsCount: Int? = null,
+    @SerializedName("likesCount")
+    val likesCount: Int? = null,
+    @SerializedName("totalCost")
+    val totalCost: Int? = null,
+    @SerializedName("sharesCount")
+    val sharesCount: Int? = null,
 ) : BaseDTO()
 
 fun ScheduleDTO.toScheduleModel() : ScheduleModel{

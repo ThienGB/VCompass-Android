@@ -2,7 +2,7 @@ package com.vcompass.data.util.api_call
 
 import com.vcompass.data.model.response.BaseResponse
 import com.vcompass.data.model.response.ListResponse
-import com.vcompass.data.model.response.PagingResponse
+import com.vcompass.data.model.response.paging.PagingResponse
 import com.vcompass.data.model.response.SingleResponse
 
 class ApiCallDsl {

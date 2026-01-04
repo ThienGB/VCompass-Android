@@ -3,6 +3,7 @@ package com.vcompass.data.model.dto.schedule
 import com.google.gson.annotations.SerializedName
 import com.vcompass.data.model.dto.BaseDTO
 import com.vcompass.data.model.dto.business.BusinessDTO
+import com.vcompass.data.model.dto.business.LocationDTO
 
 data class ActivityDTO(
     @SerializedName("activityType")
@@ -24,6 +25,6 @@ data class ActivityDTO(
     @SerializedName("timeEnd")
     val timeEnd: String?,
     @SerializedName("bookingId")
-    val bookingId: String?,
+    val bookingId: String?
 ): BaseDTO()
 

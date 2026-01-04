@@ -58,4 +58,12 @@
         <item>T6</item>
         <item>T7</item>
     </string-array>
+    <string name="lb_core_retry">Đã có lỗi. Xin vui lòng thử lại</string>
+    <string name="lb_btn_core_retry">Thử lại</string>
+    <string name="lb_no_result_search">Không có dữ liệu.</string>
+    <string name="lb_loading_data">Đang tải dữ liệu…</string>
+    <string name="lb_hint_for_you">Gợi ý cho bạn</string>
+    <string name="lb_see_detail">Xem chi tiết</string>
+    <string name="lb_hot_destination">Điểm tham quan nổi bật!</string>
+    <string name="lb_total_cost">Tổng chi phí:</string>
 </resources>

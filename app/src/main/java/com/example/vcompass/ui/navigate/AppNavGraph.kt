@@ -44,10 +44,6 @@ fun AppNavGraph() {
             HomeScreen(navController = navController)
         }
 
-        composable(CoreRoute.HomeFeed.route) {
-            HomeFeedScreen(navController = navController)
-        }
-
         composable(CoreRoute.Explore.route) {
             ExploreScreen(navController = navController)
         }

@@ -136,7 +136,7 @@ fun SummaryInfoSection(
             )
             SpaceHeight4()
             CoreText(
-                text = schedule?.likes?.size.toString(),
+                text = schedule?.likesCount.toString(),
                 style = CoreTypographySemiBold.displaySmall
             )
         }
@@ -147,7 +147,7 @@ fun SummaryInfoSection(
         ScheduleSummaryInforItem(
             modifier = Modifier.weight(1f),
             resIcon = R.drawable.ic_comment_fill,
-            count = countComments(schedule?.comments)
+            count = schedule?.commentsCount ?: 0
         )
         ItemDivider(
             orientation = DividerOrientation.Vertical,

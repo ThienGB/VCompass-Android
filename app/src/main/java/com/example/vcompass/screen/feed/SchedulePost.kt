@@ -52,11 +52,10 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import com.example.vcompass.ui.core.text.CoreText
 import com.example.vcompass.R
 import com.example.vcompass.util.add
@@ -76,22 +75,26 @@ import com.example.vcompass.resource.MyDimen
 import com.example.vcompass.resource.CoreTypography
 import com.example.vcompass.resource.CoreTypographyBold
 import com.example.vcompass.resource.CoreTypographySemiBold
+import com.example.vcompass.ui.navigate.NavigateKeyArg
+import com.example.vcompass.util.AppConstants.SCHEDULE_TEMP_IMAGE_URL
+import com.example.vcompass.util.ScreenContext
+import com.example.vcompass.util.setArg
+import com.vcompass.presentation.model.schedule.Schedule
 import com.vcompass.presentation.util.CoreRoute
 import kotlinx.coroutines.delay
 
 @Composable
-fun TravelPost(
-    navController: NavController = NavController(LocalContext.current),
+fun SchedulePost(
+    schedule: Schedule = Schedule(),
     onLikeClick: () -> Unit = {},
     onCommentClick: () -> Unit = {},
     onShareClick: () -> Unit = {},
     onFavoriteClick: () -> Unit = {}
 ) {
-    var isFavourite by rememberSaveable { mutableStateOf(false) }
-    var isLiked by rememberSaveable { mutableStateOf(false) }
-    var likeCount by rememberSaveable { mutableIntStateOf(19500) }
-    val context = LocalContext.current
-    val scheduleId = "123"
+    val navController = ScreenContext.navController
+    var hasFavorite by rememberSaveable { mutableStateOf(schedule.hasFavorite ?: false) }
+    var hasLiked by rememberSaveable { mutableStateOf(schedule.hasLiked ?: false) }
+    var likeCount by rememberSaveable { mutableIntStateOf(schedule.likesCount ?: 0) }
     val animatedLikeCount by animateIntAsState(
         targetValue = likeCount,
         animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy)
@@ -115,7 +118,7 @@ fun TravelPost(
             // Profile picture with online indicator
             Box {
                 CoreImage(
-                    source = CoreImageSource.Url("https://tourhue.vn/wp-content/uploads/2024/07/di-hue-mac-gi-chup-anh-dep-2.jpg"),
+                    source = CoreImageSource.Url(schedule.user?.avatar ?: SCHEDULE_TEMP_IMAGE_URL),
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .size(MyDimen.p36)
@@ -147,16 +150,18 @@ fun TravelPost(
 
             Column(modifier = Modifier.weight(1f)) {
                 CoreText(
-                    text = "Thiện",
+                    text = schedule.user?.name,
                     style = CoreTypographyBold.labelLarge,
                     color = MyColor.TextColorPrimary
                 )
-                EnhancedTextSwitcher("Gợi ý cho bạn", "Hà Nội")
+                EnhancedTextSwitcher(
+                    stringResource(R.string.lb_hint_for_you),
+                    schedule.destinations?.firstOrNull()?.city ?: ""
+                )
             }
-
-            // Action button with modern styling
             Button(
                 onClick = {
+                    navController.setArg(NavigateKeyArg.SCHEDULE_ID, schedule.id)
                     navController.add(CoreRoute.Schedule.route)
                 },
                 colors = ButtonDefaults.buttonColors(
@@ -171,7 +176,7 @@ fun TravelPost(
                 modifier = Modifier.height(MyDimen.p36)
             ) {
                 CoreText(
-                    text = "Xem chi tiết",
+                    text = stringResource(R.string.lb_see_detail),
                     style = CoreTypography.labelSmall,
                     color = MyColor.White
                 )
@@ -190,13 +195,14 @@ fun TravelPost(
             }
         }
 
-        // Enhanced image with loading state
         Card(
             modifier = Modifier.fillMaxWidth(),
             shape = RectangleShape
         ) {
             CoreImage(
-                source = CoreImageSource.Url("https://tourhue.vn/wp-content/uploads/2024/07/di-hue-mac-gi-chup-anh-dep-2.jpg"),
+                source = CoreImageSource.Url(
+                    schedule.images?.firstOrNull() ?: SCHEDULE_TEMP_IMAGE_URL
+                ),
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -209,25 +215,26 @@ fun TravelPost(
                 .padding(horizontal = MyDimen.p16),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // Like button with animation
             Row(verticalAlignment = Alignment.CenterVertically) {
                 CoreIcon(
-                    resDrawable = if (isLiked) R.drawable.ic_heart_solid else R.drawable.ic_heart,
-                    tintColor = if (isLiked) MyColor.Favorite else MyColor.Gray666,
+                    resDrawable = if (hasLiked) R.drawable.ic_heart_solid else R.drawable.ic_heart,
+                    tintColor = if (hasLiked) MyColor.Favorite else MyColor.Gray666,
                     iconModifier = Modifier
                         .scaleOnClick {
                             onLikeClick()
-                            isLiked = !isLiked
-                            likeCount += if (isLiked) 1 else -1
+                            hasLiked = !hasLiked
+                            likeCount += if (hasLiked) 1 else -1
                         }
                         .size(MyDimen.p24)
                 )
                 Spacer(modifier = Modifier.width(MyDimen.p6))
-                CoreText(
-                    text = animatedLikeCount.formatThousandK(),
-                    style = CoreTypography.labelMedium,
-                    color = MyColor.TextColorLight
-                )
+                if (schedule.likesCount != 0) {
+                    CoreText(
+                        text = animatedLikeCount.formatThousandK(),
+                        style = CoreTypography.labelMedium,
+                        color = MyColor.TextColorLight
+                    )
+                }
             }
 
             Spacer(modifier = Modifier.width(MyDimen.p12))
@@ -242,11 +249,13 @@ fun TravelPost(
                     iconModifier = Modifier.size(MyDimen.p24),
                 )
                 Spacer(modifier = Modifier.width(MyDimen.p6))
-                CoreText(
-                    text = "19",
-                    style = CoreTypography.labelMedium,
-                    color = MyColor.TextColorLight,
-                )
+                if (schedule.commentsCount != 0) {
+                    CoreText(
+                        text = schedule.commentsCount.toString(),
+                        style = CoreTypography.labelMedium,
+                        color = MyColor.TextColorLight,
+                    )
+                }
             }
 
             SpaceWidth(MyDimen.p12)
@@ -261,11 +270,13 @@ fun TravelPost(
                     iconModifier = Modifier.size(MyDimen.p24),
                 )
                 SpaceWidth(MyDimen.p6)
-                CoreText(
-                    text = "12",
-                    style = CoreTypography.labelMedium,
-                    color = MyColor.TextColorLight,
-                )
+                if (schedule.sharesCount != 0) {
+                    CoreText(
+                        text = schedule.sharesCount.toString(),
+                        style = CoreTypography.labelMedium,
+                        color = MyColor.TextColorLight,
+                    )
+                }
             }
             ExpandableSpacer()
 
@@ -273,19 +284,22 @@ fun TravelPost(
             IconButton(
                 onClick = {
                     onFavoriteClick()
-                    isFavourite = !isFavourite
+                    hasFavorite = !hasFavorite
                 },
                 modifier = Modifier.size(MyDimen.p40)
             ) {
                 CoreIcon(
-                    resDrawable = if (isFavourite) R.drawable.ic_favorite_star_solid
+                    resDrawable = if (hasFavorite) R.drawable.ic_favorite_star_solid
                     else R.drawable.ic_favorite_star,
-                    tintColor = if (isFavourite) MyColor.Rating else MyColor.Gray666,
+                    tintColor = if (hasFavorite) MyColor.Rating else MyColor.Gray666,
                     iconModifier = Modifier.size(MyDimen.p24)
                 )
             }
         }
-        EnhancedPostContent()
+        EnhancedPostContent(
+            title = schedule.name.orEmpty(),
+            description = schedule.description.orEmpty()
+        )
     }
 }
 
@@ -374,7 +388,8 @@ fun EnhancedPostContent(
         if (description.length > maxPreviewLength) {
             SpaceHeight(MyDimen.p6)
             CoreText(
-                text = if (isExpanded) "Thu gọn" else "Xem thêm",
+                text = if (isExpanded) stringResource(R.string.lb_btn_core_see_less)
+                else stringResource(R.string.lb_btn_core_see_more),
                 style = CoreTypography.labelSmall,
                 color = MyColor.Primary,
                 modifier = Modifier.clickable {
@@ -392,7 +407,7 @@ fun EnhancedPostContent(
                 Spacer(modifier = Modifier.height(MyDimen.p16))
 
                 CoreText(
-                    text = "Điểm tham quan nổi bật",
+                    text = stringResource(R.string.lb_hot_destination),
                     style = CoreTypographySemiBold.displayMedium,
                 )
 
@@ -419,7 +434,7 @@ fun EnhancedPostContent(
                             .padding(MyDimen.p12)
                     ) {
                         CoreText(
-                            text = "Tổng chi phí:",
+                            text = stringResource(R.string.lb_total_cost),
                             style = CoreTypography.labelMedium,
                             color = MyColor.TextColorLight
                         )
