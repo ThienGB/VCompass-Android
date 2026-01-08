@@ -23,6 +23,7 @@ fun BaseViewWithPullToRefresh(
     onRefresh: (() -> Unit)? = null,
     viewModel: BaseViewModel,
     navController: NavController,
+    statusBarPadding: Boolean = true,
     topBar: @Composable (() -> Unit)? = null,
     content: @Composable () -> Unit
 ) {
@@ -35,6 +36,7 @@ fun BaseViewWithPullToRefresh(
     BaseView(
         state = state,
         modifier = modifier,
+        statusBarPadding = statusBarPadding,
         viewModel = viewModel,
         navController = navController,
         topBar = topBar,

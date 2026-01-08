@@ -63,6 +63,11 @@
     <string name="lb_loading_data">Loading…</string>
     <string name="lb_hint_for_you">Hint for you</string>
     <string name="lb_see_detail">View detail</string>
+    <string name="lb_create_schedule">Create schedule</string>
+    <string name="lb_edit_profile">Edit profile</string>
+    <string name="lb_image">Image</string>
+    <string name="lb_video">Video</string>
+    <string name="lb_information">Information</string>
     <string name="lb_hot_destination">Destination hot!</string>
     <string name="lb_total_cost">Total cost:</string>
 </resources>

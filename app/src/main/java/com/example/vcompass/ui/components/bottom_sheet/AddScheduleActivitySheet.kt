@@ -50,7 +50,6 @@ import com.example.vcompass.ui.core.text.CoreText
 import com.example.vcompass.ui.core.title.TitleSearchBarAction
 import com.example.vcompass.util.scaleOnClick
 import com.vcompass.presentation.model.schedule.Activity
-import com.vcompass.presentation.viewmodel.schedule.mockActivityDay2
 
 @Composable
 fun AddScheduleActivityPopup(
@@ -121,7 +120,7 @@ fun AddScheduleActivityPopup(
                         ) {
                             repeat(9) {
                                 AccommodationHorizontalItem{
-                                    onActivitySelected(mockActivityDay2)
+                                  //  onActivitySelected(mockActivityDay2)
                                     onDismiss()
                                 }
                             }

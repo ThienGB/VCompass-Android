@@ -86,7 +86,7 @@ fun DragActivityBottomSheet(
         mutableStateMapOf<String, MutableList<Activity>>().apply {
             schedule.days?.forEach { dayActivity ->
                 val dayTitle = "Ngày ${dayActivity.day}"
-                val activitiesForDay = dayActivity.activity ?: emptyList()
+                val activitiesForDay = dayActivity.activities ?: emptyList()
                 this[dayTitle] = activitiesForDay.toMutableList()
             }
         }
@@ -108,7 +108,7 @@ fun DragActivityBottomSheet(
             val dayNumber = group.removePrefix("Ngày ").toIntOrNull() ?: 0
             DayActivity(
                 day = dayNumber,
-                activity = items
+                activities = items
             )
         }
         val newSchedule = schedule.copy(days = newActivities)

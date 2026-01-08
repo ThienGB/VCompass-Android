@@ -135,10 +135,10 @@ fun PriceSection(
             }
             SpaceHeight()
             schedule?.days?.forEach { day ->
-                day.activity?.filter { (it.cost ?: 0) > 0 }?.forEach { activity ->
+                day.activities?.filter { it.cost > 0 }?.forEach { activity ->
                     PriceItem(
-                        title = activity.costDescription ?: activity.name.toString(),
-                        price = activity.cost ?: 0,
+                        title = activity.costDescription.ifBlank { activity.name },
+                        price = activity.cost,
                         type = activity.activityType
                     )
                 }
@@ -146,8 +146,7 @@ fun PriceSection(
             schedule?.additionalExpenses?.filter { (it.cost ?: 0) > 0 }
                 ?.forEach { expense ->
                     PriceItem(
-                        title = expense.description ?: expense.description
-                        ?: "Chi phí khác",
+                        title = expense.description ?: "Chi phí khác",
                         price = expense.cost ?: 0,
                         type = "other"
                     )
@@ -219,7 +218,7 @@ fun PriceItem(
 
 fun Schedule.calculateTotalCost(): Int {
     val activityCost = days?.sumOf { day ->
-        day.activity?.sumOf { it.cost ?: 0 } ?: 0
+        day.activities?.sumOf { it.cost } ?: 0
     } ?: 0
     val additionalCost = additionalExpenses?.sumOf { it.cost ?: 0 } ?: 0
     return activityCost + additionalCost

@@ -6,8 +6,10 @@ import com.vcompass.data.model.dto.BaseDTO
 data class DayActivityDTO(
     @SerializedName("day")
     val day: Int?,
-    @SerializedName("activity")
-    val activity: List<Any>?
+    @SerializedName("activities")
+    val activities: List<ActivityDTO>?,
+    @SerializedName("name")
+    val name: String?
 ) : BaseDTO()
 
 

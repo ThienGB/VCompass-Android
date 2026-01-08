@@ -7,6 +7,12 @@ class SecureStorageHelper(val storage: SecureStorage) {
             value?.let { storage.putString(ACCESS_TOKEN, it) }
         }
 
+    var refreshToken: String?
+        get() = storage.getString(REFRESH_TOKEN, "")
+        set(value) {
+            value?.let { storage.putString(REFRESH_TOKEN, it) }
+        }
+
     var isOpenedApp: Boolean?
         get() = storage.getBoolean(FIRST_LAUNCH_APP)
         set(value) {
@@ -35,6 +41,7 @@ class SecureStorageHelper(val storage: SecureStorage) {
 
     companion object {
         private const val ACCESS_TOKEN = "ACCESS_TOKEN"
+        private const val REFRESH_TOKEN = "REFRESH_TOKEN"
         private const val FIRST_LAUNCH_APP = "FIRST_LAUNCH_APP"
         private const val REMEMBER_ME = "REMEMBER_ME"
         private const val USER_ID = "UserID"

@@ -14,7 +14,9 @@ import com.example.vcompass.screen.schedule.ScheduleScreen
 import com.example.vcompass.screen.search.SearchScreen
 import com.example.vcompass.screen.splash.SplashScreen
 import com.example.vcompass.util.ScreenContext
+import com.example.vcompass.util.getArg
 import com.vcompass.presentation.util.CoreRoute
+import org.koin.core.parameter.parametersOf
 
 @Composable
 fun AppNavGraph() {
@@ -56,7 +58,9 @@ fun AppNavGraph() {
             SearchScreen(navController = navController)
         }
         composable(CoreRoute.Schedule.route) {
-            ScheduleScreen()
+            val scheduleId = navController.getArg<String>(NavigateKeyArg.SCHEDULE_ID)
+            val params = parametersOf(scheduleId)
+            ScheduleScreen(params)
         }
         composable(CoreRoute.AccommodationDetail.route) {
             AccommodationDetailScreen()

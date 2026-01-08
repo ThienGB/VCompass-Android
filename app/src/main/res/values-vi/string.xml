@@ -64,6 +64,11 @@
     <string name="lb_loading_data">Đang tải dữ liệu…</string>
     <string name="lb_hint_for_you">Gợi ý cho bạn</string>
     <string name="lb_see_detail">Xem chi tiết</string>
+    <string name="lb_create_schedule">Tạo lịch trình</string>
+    <string name="lb_edit_profile">Chỉnh sửa trang cá nhân</string>
+    <string name="lb_image">Ảnh</string>
+    <string name="lb_video">Video</string>
+    <string name="lb_information">Thông tin</string>
     <string name="lb_hot_destination">Điểm tham quan nổi bật!</string>
     <string name="lb_total_cost">Tổng chi phí:</string>
 </resources>

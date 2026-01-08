@@ -145,17 +145,8 @@ open class BaseViewModel(
     }
 
     fun handleExpiredToken() {
-        collectToState(
-            showLoading = false,
-            block = {
-                globalConfig.userLogout()
-            },
-            onError = {
-                globalConfig.clearSessionData()
-            }
-        ) {
-            globalConfig.clearSessionData()
-        }
+        globalConfig.userLogout()
+        globalConfig.clearSessionData()
     }
 
     open fun onForceUpdate() {

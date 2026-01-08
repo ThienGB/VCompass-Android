@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -55,6 +54,7 @@ import com.example.vcompass.ui.components.bottom_sheet.AddScheduleActivityPopup
 import com.example.vcompass.ui.components.bottom_sheet.DragActivityBottomSheet
 import com.example.vcompass.ui.components.bottom_sheet.SelectScheduleDaySheet
 import com.example.vcompass.ui.core.animation.StickyHeaderAnimationLayout
+import com.example.vcompass.ui.core.general.BaseViewWithPullToRefresh
 import com.example.vcompass.ui.core.icon.CoreIcon
 import com.example.vcompass.ui.core.icon.CoreImage
 import com.example.vcompass.ui.core.icon.CoreImageSource
@@ -73,48 +73,54 @@ import com.vcompass.presentation.enums.BottomSheetType
 import com.vcompass.presentation.model.schedule.Schedule
 import com.vcompass.presentation.viewmodel.schedule.ScheduleViewModel
 import org.koin.androidx.compose.koinViewModel
+import org.koin.core.parameter.ParametersHolder
 
 @Composable
-fun ScheduleScreen(
-    viewModel: ScheduleViewModel = koinViewModel()
-) {
+fun ScheduleScreen(params: ParametersHolder) {
+    val viewModel: ScheduleViewModel = koinViewModel(parameters = { params })
     val navController = ScreenContext.navController
+    val state by viewModel.stateUI.collectAsState()
     val schedule by viewModel.schedule.collectAsState()
     val sheetType by viewModel.sheetType.collectAsState()
     val sheetState = rememberSaveable { mutableStateOf(true) }
     LaunchedEffect(sheetType) {
         sheetState.value = sheetType != BottomSheetType.NONE
     }
-    LaunchedEffect(Unit) {
-        viewModel.getSchedule()
+    BaseViewWithPullToRefresh(
+        viewModel = viewModel,
+        onRefresh = { viewModel.getScheduleDetail() },
+        state = state,
+        navController = navController,
+        statusBarPadding = false
+    ) {
+        StickyHeaderAnimationLayout(
+            coverUrl = schedule.images?.firstOrNull(),
+            headerSection = { ScheduleHeaderSection(navController, schedule) },
+            infoSection = { autoProgress, avatarOffsetX, avatarOffsetY ->
+                ScheduleInformationSection(
+                    autoProgress,
+                    avatarOffsetY,
+                    schedule,
+                    viewModel
+                )
+            },
+            contentSection = { autoProgress, containerSpace, nestedScrollConnection, contentScrollState ->
+                val tabOffsetY = lerp(
+                    containerSpace * (1 - autoProgress) + MyDimen.p8,
+                    MyDimen.zero,
+                    autoProgress
+                )
+                ScheduleContentSection(
+                    nestedScrollConnection = nestedScrollConnection,
+                    contentScrollState = contentScrollState,
+                    autoProgress = autoProgress,
+                    navController = navController,
+                    tabOffsetY = tabOffsetY,
+                    schedule = schedule
+                )
+            }
+        )
     }
-    StickyHeaderAnimationLayout(
-        coverUrl = schedule.images?.firstOrNull(),
-        headerSection = { ScheduleHeaderSection(navController) },
-        infoSection = { autoProgress, avatarOffsetX, avatarOffsetY ->
-            ScheduleInformationSection(
-                autoProgress,
-                avatarOffsetY,
-                schedule,
-                viewModel
-            )
-        },
-        contentSection = { autoProgress, containerSpace, nestedScrollConnection, contentScrollState ->
-            val tabOffsetY = lerp(
-                containerSpace * (1 - autoProgress) + MyDimen.p8,
-                MyDimen.zero,
-                autoProgress
-            )
-            ScheduleContentSection(
-                nestedScrollConnection = nestedScrollConnection,
-                contentScrollState = contentScrollState,
-                        autoProgress = autoProgress,
-                navController = navController,
-                tabOffsetY = tabOffsetY,
-                schedule = schedule
-            )
-        }
-    )
     when (sheetType) {
         BottomSheetType.ADD_ACTIVITY -> AddScheduleActivityPopup(
             sheetState = sheetState,
@@ -147,7 +153,8 @@ fun ScheduleScreen(
 
 @Composable
 fun ScheduleHeaderSection(
-    navController: NavController
+    navController: NavController,
+    schedule: Schedule
 ) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -164,7 +171,7 @@ fun ScheduleHeaderSection(
             onClick = { navController.back() }
         )
         ExpandableSpacer()
-        ScheduleAuthorSection()
+        ScheduleAuthorSection(schedule)
     }
 }
 
@@ -177,6 +184,9 @@ fun ScheduleInformationSection(
 ) {
     var activeScheduleId by remember { mutableStateOf(schedule.id.toString()) }
     var name by remember { mutableStateOf(schedule.name.toString()) }
+    LaunchedEffect(schedule) {
+        name = schedule.name.toString()
+    }
     if (autoProgress != 1f) {
         Surface(
             shape = RoundedCornerShape(MyDimen.p8),
@@ -259,9 +269,12 @@ fun ScheduleInformationSection(
 }
 
 @Composable
-fun ScheduleAuthorSection() {
+fun ScheduleAuthorSection(
+    schedule: Schedule
+) {
+    val currentUserAvatar = schedule.user?.avatar ?: ""
     val avatars = listOf(
-        "https://example.com/avatar1.jpg",
+        currentUserAvatar,
         "https://example.com/avatar2.jpg",
         "https://example.com/avatar3.jpg"
     )

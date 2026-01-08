@@ -18,7 +18,6 @@ class StatusLoginRepositoryImpl(val secureStorageHelper: SecureStorageHelper) :
                 it.isOpenedApp = isOpenedApp ?: false
                 it.isRememberMe = isRememberMe
                 it.accessToken = accessToken
-                it.isOpenedApp = isOpenedApp
             }
         }
         return sessionDataModel.asResultFlow()

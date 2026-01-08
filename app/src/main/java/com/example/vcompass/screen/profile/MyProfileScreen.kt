@@ -1,4 +1,4 @@
-package com.example.vcompass.screen.accommodation
+package com.example.vcompass.screen.profile
 
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
@@ -23,50 +23,60 @@ import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.FavoriteBorder
 import androidx.compose.material.icons.rounded.Share
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.lerp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.times
 import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
+import com.example.vcompass.R
+import com.example.vcompass.resource.CoreTypography
+import com.example.vcompass.resource.CoreTypographyMedium
 import com.example.vcompass.resource.CoreTypographySemiBold
 import com.example.vcompass.resource.MyColor
 import com.example.vcompass.resource.MyDimen
+import com.example.vcompass.screen.feed.SchedulePost
 import com.example.vcompass.screen.search.ImageSliderWithIndicator
-import com.example.vcompass.ui.components.bottom_sheet.AddScheduleActivityPopup
+import com.example.vcompass.ui.components.avatar.UserAvatar
 import com.example.vcompass.ui.core.animation.StickyHeaderAnimationLayout
+import com.example.vcompass.ui.core.button.OutlineButton
+import com.example.vcompass.ui.core.button.PrimaryButton
+import com.example.vcompass.ui.core.divider.ItemDivider
 import com.example.vcompass.ui.core.general.BaseViewWithPullToRefresh
 import com.example.vcompass.ui.core.icon.CoreIcon
-import com.example.vcompass.ui.core.rating.RatingBar
 import com.example.vcompass.ui.core.space.ExpandableSpacer
 import com.example.vcompass.ui.core.space.SpaceHeight
+import com.example.vcompass.ui.core.space.SpaceHeight4
+import com.example.vcompass.ui.core.space.SpaceHeight8
 import com.example.vcompass.ui.core.text.CoreText
 import com.example.vcompass.util.ScreenContext
 import com.example.vcompass.util.back
+import com.example.vcompass.util.clearAllStackAndAdd
 import com.example.vcompass.util.glassmorphism
-import com.vcompass.presentation.enums.BottomSheetType
-import com.vcompass.presentation.viewmodel.accommodation.AccommodationDetailViewModel
-import com.vcompass.presentation.viewmodel.schedule.ScheduleViewModel
+import com.vcompass.presentation.model.user.User
+import com.vcompass.presentation.util.CoreRoute
+import com.vcompass.presentation.viewmodel.profile.UserProfileViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun AccommodationDetailScreen() {
-    val viewModel: AccommodationDetailViewModel = koinViewModel()
+fun MyProfileScreen() {
+    val viewModel: UserProfileViewModel = koinViewModel()
     val navController = ScreenContext.navController
 
     val state by viewModel.stateUI.collectAsState()
+    val currentUser = viewModel.currentUser
+
     BaseViewWithPullToRefresh(
         viewModel = viewModel,
         state = state,
@@ -81,9 +91,10 @@ fun AccommodationDetailScreen() {
                     ImageSliderWithIndicator(listOf("1", "2", "3", "4", "5"))
                 }
             },
-            headerSection = { AccommodationHeaderSection(it, navController) },
+            headerSection = { UserProfileInformationSection(it, navController) },
             infoSection = { autoProgress, offsetX, offsetY ->
-                AccommodationInformationSection(
+                UserProfileInformationSection(
+                    currentUser,
                     autoProgress,
                     offsetX,
                     offsetY
@@ -107,16 +118,17 @@ fun AccommodationDetailScreen() {
 }
 
 @Composable
-fun AccommodationHeaderSection(
+fun UserProfileInformationSection(
     autoProgress: Float,
-    navController: NavController
+    navController: NavController,
+    viewModel: UserProfileViewModel = koinViewModel()
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .background(MyColor.White.copy(autoProgress))
             .statusBarsPadding()
-            .padding(horizontal = MyDimen.p4)
+            .padding(start = MyDimen.p4, end = MyDimen.p4, bottom = MyDimen.p2)
             .zIndex(2f),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
@@ -147,38 +159,73 @@ fun AccommodationHeaderSection(
             boxModifier = Modifier
                 .size(MyDimen.p48)
                 .glassmorphism()
-                .clickable { }
+                .clickable {
+                    viewModel.logout()
+                    navController.clearAllStackAndAdd(CoreRoute.Login.route)
+                }
         )
     }
 }
 
 @Composable
-fun AccommodationInformationSection(
+fun UserProfileInformationSection(
+    user: User,
     autoProgress: Float,
     offsetX: Dp,
     offsetY: Dp
 ) {
+    val infoStartPadding = lerp(MyDimen.zero, MyDimen.p56, autoProgress)
+    val infoTopPadding = lerp(MyDimen.p100, MyDimen.p16, autoProgress)
     val fontSize = lerp(
         start = 22.sp,
         stop = 15.sp,
         fraction = autoProgress
     )
-    Row(
+    Box(
         modifier = Modifier
             .statusBarsPadding()
-            .padding(start = MyDimen.p16, top = MyDimen.p20 * (1 - autoProgress))
-            .offset(x = offsetX, y = offsetY)
-            .zIndex(3f),
-        verticalAlignment = Alignment.CenterVertically
+            .padding(
+                start = MyDimen.p16,
+                top = MyDimen.p20 * (1 - autoProgress)
+            )
+            .offset(x = offsetX, y = offsetY - MyDimen.p64 * (1 - autoProgress))
+            .zIndex(3f)
+            .fillMaxWidth()
     ) {
-        Column {
+        UserAvatar(
+            pathUrl = user.avatar,
+            size = MyDimen.p48 + MyDimen.p52 * (1 - autoProgress),
+        )
+        Column(modifier = Modifier.fillMaxWidth()) {
             CoreText(
-                text = "Accommodation Name",
+                text = user.name ?: "Thiện Hoàng",
                 style = CoreTypographySemiBold.displayMedium.copy(fontSize = fontSize),
                 color = MyColor.TextColorPrimary,
-                modifier = Modifier.padding(top = MyDimen.p8)
+                modifier = Modifier.padding(start = infoStartPadding, top = infoTopPadding)
             )
-            RatingBar(starSize = MyDimen.p16, rating = 4.5f)
+            SpaceHeight4()
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(end = MyDimen.p16)
+                    .alpha(1 - autoProgress * 2)
+            ) {
+                CoreText(
+                    text = "12 Người theo dõi | 15 Đang theo dõi",
+                    style = CoreTypography.labelSmall,
+                    color = MyColor.TextColorLight,
+                )
+                SpaceHeight()
+                PrimaryButton(
+                    text = stringResource(R.string.lb_create_schedule),
+                    modifier = Modifier.height(MyDimen.p36)
+                )
+                SpaceHeight8()
+                OutlineButton(
+                    text = stringResource(R.string.lb_edit_profile),
+                    modifier = Modifier.height(MyDimen.p36)
+                )
+            }
         }
     }
 }
@@ -190,31 +237,69 @@ fun AccommodationContentSection(
     autoProgress: Float,
     tabOffsetY: Dp
 ) {
+    var selectedTab by rememberSaveable { mutableStateOf(0) }
 
     Column(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxWidth()
             .offset(y = tabOffsetY)
-            .zIndex(1f)
             .clip(RoundedCornerShape(topStart = MyDimen.p12, topEnd = MyDimen.p12))
+            .zIndex(1f)
             .background(MyColor.White)
-            .statusBarsPadding()
             .nestedScroll(nestedScrollConnection)
-            .verticalScroll(contentScrollState),
     ) {
-        SpaceHeight(MyDimen.p36 + autoProgress * MyDimen.p24)
-        RatingSection()
-        LocationSection()
-        PopularAmenities()
-        ChooseRoomHeader()
-        ConfirmDateCard()
-        PromotionBanner()
-        RoomCard()
-        ReviewOverviewCard()
-        LocationCard()
+        SpaceHeight(MyDimen.p56 + MyDimen.p120 * (1 - autoProgress))
+        ItemDivider(modifier = Modifier.statusBarsPadding())
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(MyDimen.p8),
+            modifier = Modifier.padding(vertical = MyDimen.p4, horizontal = MyDimen.p4)
+                .zIndex(5f)
+        ) {
+            TabButtonSection(
+                stringResource(R.string.lb_schedule),
+                selectedTab == 0
+            ) { selectedTab = 0 }
+            TabButtonSection(
+                stringResource(R.string.lb_image),
+                selectedTab == 1
+            ) { selectedTab = 1 }
+            TabButtonSection(
+                stringResource(R.string.lb_video),
+                selectedTab == 2
+            ) { selectedTab = 2 }
+        }
+        ItemDivider()
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(contentScrollState),
+        ) {
+            UserProfileInformationSection()
+            SpaceHeight()
+            repeat(8){
+                SchedulePost()
+            }
+        }
     }
 }
 
+@Composable
+fun TabButtonSection(
+    text: String,
+    isSelected: Boolean,
+    onClick: () -> Unit = {}
+) {
+    CoreText(
+        text = text,
+        style = CoreTypographyMedium.labelLarge,
+        modifier = Modifier
+            .clip(RoundedCornerShape(MyDimen.p100))
+            .clickable(onClick = onClick)
+            .background(if (isSelected) MyColor.Primary.copy(0.1f) else MyColor.Transparent)
+            .padding(horizontal = MyDimen.p10, vertical = MyDimen.p8),
+        color = if (isSelected) MyColor.Primary else MyColor.TextColorPrimary
+    )
+}
 
 
 

@@ -18,8 +18,9 @@ fun NavController.goWithState(
 }
 
 fun NavController.clearAllStackAndAdd(route: String) {
+    val currentRoute = this.currentDestination?.route
     navigate(route) {
-        popUpTo(0)
+        currentRoute?.let { popUpTo(it) { inclusive = true } }
         launchSingleTop = true
         restoreState = false
     }

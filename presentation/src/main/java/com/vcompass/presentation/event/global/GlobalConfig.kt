@@ -1,9 +1,11 @@
 package com.vcompass.presentation.event.global
 
+import com.vcompass.data.local.SecureStorageHelper
 import com.vcompass.domain.model.response.common.SessionDataModel
-import com.vcompass.domain.usecase.login.LogoutUseCase
 
-class GlobalConfig(private val logoutUseCase: LogoutUseCase) {
+class GlobalConfig(
+    private val secureStorageHelper: SecureStorageHelper
+) {
     private var sessionDataModel: SessionDataModel? = null
 
     fun getSessionData() = sessionDataModel
@@ -14,9 +16,11 @@ class GlobalConfig(private val logoutUseCase: LogoutUseCase) {
         sessionDataModel = data
     }
 
-    suspend fun userLogout() = logoutUseCase()
+    fun userLogout() {
+        secureStorageHelper.clearDataAfterLogout()
+    }
 
-    fun clearSessionData(){
+    fun clearSessionData() {
         sessionDataModel = null
     }
 }

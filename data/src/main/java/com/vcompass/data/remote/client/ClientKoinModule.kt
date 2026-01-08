@@ -3,9 +3,9 @@ package com.vcompass.data.remote.client
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
-import com.vcompass.data.util.DataConstants
 import com.google.gson.Gson
 import com.vcompass.data.BuildConfig
+import com.vcompass.data.util.DataConstants
 import okhttp3.ConnectionPool
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -22,15 +22,28 @@ import javax.net.ssl.X509TrustManager
 
 val clientModule = module {
     single { CustomHeaderInterceptor(get()) }
+    single { TokenAuthenticator(get(), get()) }
 
-    single { provideOkHttpClient(get(), get()) }
+    single { provideOkHttpClient(get(), get(), get()) }
 
     single { provideRetrofitBuilder(BuildConfig.BASE_URL, get()) }
+
+    single(named("auth_okhttp")) {
+        provideAuthOkHttpClient()
+    }
+
+    single(named("auth_retrofit")) {
+        provideAuthRetrofit(
+            BuildConfig.BASE_URL,
+            get(named("auth_okhttp"))
+        )
+    }
 }
 
 fun provideOkHttpClient(
     context: Context,
-    customHeaderInterceptor: CustomHeaderInterceptor
+    customHeaderInterceptor: CustomHeaderInterceptor,
+    tokenAuthenticator: TokenAuthenticator
 ): OkHttpClient {
 
     val loggingInterceptor = HttpLoggingInterceptor().apply {
@@ -68,6 +81,7 @@ fun provideOkHttpClient(
         .addInterceptor(loggingInterceptor)
         .addInterceptor(customHeaderInterceptor)
         .addInterceptor(CustomUserAgentInterceptor(genderUserAgent(context)))
+        .authenticator(tokenAuthenticator)
         .retryOnConnectionFailure(true)
         // Render fix
         .connectionPool(ConnectionPool(0, 1, TimeUnit.SECONDS))
@@ -116,3 +130,20 @@ private fun genderUserAgent(context: Context): String {
         platform
     )
 }
+
+fun provideAuthOkHttpClient(): OkHttpClient {
+    return OkHttpClient.Builder()
+        .connectTimeout(DataConstants.TIME_OUT, TimeUnit.SECONDS)
+        .readTimeout(DataConstants.TIME_OUT, TimeUnit.SECONDS)
+        .writeTimeout(DataConstants.TIME_OUT, TimeUnit.SECONDS)
+        .build()
+}
+
+fun provideAuthRetrofit(baseUrl: String, okHttpClient: OkHttpClient): Retrofit {
+    return Retrofit.Builder()
+        .baseUrl(baseUrl)
+        .client(okHttpClient)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+}
+

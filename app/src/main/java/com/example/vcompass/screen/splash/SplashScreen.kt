@@ -32,7 +32,7 @@ fun SplashScreen(
     LaunchedEffect(statusOpenApp) {
         if (statusOpenApp == null) return@LaunchedEffect
         val route = when (statusOpenApp) {
-            StatusOpenApp.INTRODUCE -> CoreRoute.Login.route
+            StatusOpenApp.INTRODUCE -> CoreRoute.Introduce.route
             StatusOpenApp.LOGGED -> CoreRoute.Home.route
             else -> CoreRoute.Login.route
         }

@@ -24,16 +24,4 @@ class HomeViewModel(
     fun showBottomBar() {
         _bottomBarVisible.tryEmit(true)
     }
-
-    fun logout(isShowLoading: Boolean = false) {
-        collectToState(
-            showLoading = isShowLoading,
-            block = { globalConfig.userLogout() },
-            onError = {
-                navigateTo(CoreRoute.Login.route, isClearStack = true)
-            }
-        ) {
-            navigateTo(CoreRoute.Login.route, isClearStack = true)
-        }
-    }
 }

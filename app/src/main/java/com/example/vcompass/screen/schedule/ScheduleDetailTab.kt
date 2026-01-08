@@ -29,7 +29,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.relocation.BringIntoViewRequester
 import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.foundation.shape.CircleShape
@@ -170,14 +169,14 @@ fun ScheduleDetailTab(
                     modifier = Modifier.bringIntoViewRequester(bringIntoViewRequesters[day])
                 ) {
                     CoreText(
-                        text = stringResource(R.string.lb_day) + " ${item.day}: ${item.activity?.size} " + if (item.activity?.size == 1)
+                        text = stringResource(R.string.lb_day) + " ${item.day}: ${item.activities?.size} " + if (item.activities?.size == 1)
                             stringResource(R.string.lb_activity) else stringResource(R.string.lb_activities),
                         style = CoreTypographyBold.bodyMedium,
                         letterSpacing = 1.sp,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.padding(MyDimen.p16)
                     )
-                    item.activity?.forEachIndexed { index, item ->
+                    item.activities?.forEachIndexed { index, item ->
                         ActivityCard(index, day, item)
                     }
                 }
@@ -503,8 +502,8 @@ fun ActivityCard(
                             .padding(horizontal = MyDimen.p10, vertical = MyDimen.p8)
                             .clickableWithScale {
                                 var uri = "".toUri()
-                                val lat = business.location?.latitude ?: 0
-                                val lng = business.location?.longitude ?: 0
+                                val lat = business.location?.coordinates?.get(0) ?: 0
+                                val lng = business.location?.coordinates?.get(1) ?: 0
                                 val label = business.location?.address
 
                                 uri = "geo:$lat,$lng?q=$lat,$lng($label)".toUri()

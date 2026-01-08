@@ -6,13 +6,15 @@ import com.vcompass.data.model.dto.business.BusinessDTO
 import com.vcompass.data.model.dto.business.LocationDTO
 
 data class ActivityDTO(
+    @SerializedName("itemType")
+    val itemType: String,
     @SerializedName("activityType")
     val activityType: String,
     @SerializedName("business")
     val business: BusinessDTO?,
     @SerializedName("name")
     val name: String?,
-    @SerializedName("imgSrc")
+    @SerializedName("images")
     val images: List<String>?,
     @SerializedName("cost")
     val cost: Int?,

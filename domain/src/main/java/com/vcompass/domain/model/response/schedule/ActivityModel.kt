@@ -4,11 +4,12 @@ import com.vcompass.domain.model.response.BaseModel
 import com.vcompass.domain.model.response.business.BusinessModel
 
 data class ActivityModel(
+    val itemType: String,
     val activityType: String,
     val idDestination: String?,
     val name: String?,
     val address: String?,
-    val imgSrc: List<String>?,
+    val images: List<String>?,
     val cost: Int?,
     val costDescription: String?,
     val description: String?,

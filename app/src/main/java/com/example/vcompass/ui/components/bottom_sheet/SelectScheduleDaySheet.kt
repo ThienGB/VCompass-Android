@@ -86,7 +86,7 @@ fun SelectScheduleDaySheet(
             oldDays + List(newNumDays - oldNum) { index ->
                 DayActivity(
                     day = oldNum + index + 1,
-                    activity = emptyList()
+                    activities = emptyList()
                 )
             }
         } else {

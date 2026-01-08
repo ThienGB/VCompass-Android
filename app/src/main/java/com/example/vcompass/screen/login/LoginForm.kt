@@ -50,6 +50,7 @@ import com.example.vcompass.resource.MyDimen
 import com.example.vcompass.resource.CoreTypography
 import com.example.vcompass.resource.CoreTypographyMedium
 import com.example.vcompass.resource.CoreTypographySemiBold
+import com.example.vcompass.util.clearAllStackAndAdd
 import com.vcompass.presentation.util.CoreRoute
 import com.vcompass.presentation.viewmodel.login.LoginViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -111,7 +112,9 @@ fun LoginForm(
             text = stringResource(R.string.btn_login),
             enabled = enableLogin.value,
             onClick = {
-                viewModel.login(email, password, hasRemember)
+                viewModel.login(email, password, hasRemember){
+                    navController.clearAllStackAndAdd(CoreRoute.Home.route)
+                }
             }
         )
         SpaceHeight()

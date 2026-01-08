@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.example.vcompass.screen.explore.ExploreScreen
 import com.example.vcompass.screen.feed.HomeFeedScreen
+import com.example.vcompass.screen.profile.MyProfileScreen
 import com.example.vcompass.screen.search.SearchLandingScreen
 import com.example.vcompass.ui.core.bottombar.CustomBottomBar
 import com.example.vcompass.ui.core.bottombar.bottomDestinations
@@ -37,6 +38,7 @@ fun HomeScreen(
     val scope = rememberCoroutineScope()
     val showMoreMenu = remember { mutableStateOf(false) }
     val state by viewModel.stateUI.collectAsState()
+    var statusBarPadding by rememberSaveable() { mutableStateOf(true) }
 
     LaunchedEffect(Unit) {
         viewModel.navigate.collect {
@@ -49,12 +51,16 @@ fun HomeScreen(
         }
     }
 
+    LaunchedEffect(pagerState.currentPage) {
+        statusBarPadding = pagerState.currentPage != 4
+    }
+
     BaseView(
         state = state,
         viewModel = viewModel,
         bottomBarVisible = bottomBarVisible,
         navController = navController,
-
+        statusBarPadding = statusBarPadding,
         bottomBar = {
             CustomBottomBar(
                 onClickMenu = {
@@ -62,7 +68,7 @@ fun HomeScreen(
                 },
                 onClickItemBottomBar = {
                     scope.launch {
-                        pagerState.animateScrollToPage(it)
+                        pagerState.scrollToPage(it)
                     }
                 }
             )
@@ -78,7 +84,7 @@ fun HomeScreen(
                 AppConstants.HOME_FEED_INDEX -> HomeFeedScreen()
                 AppConstants.HOME_EXPLORE_INDEX -> ExploreScreen(navController)
                 AppConstants.HOME_SEARCH_INDEX -> SearchLandingScreen(navController)
-                AppConstants.HOME_PROFILE_INDEX -> SearchLandingScreen(navController)
+                AppConstants.HOME_PROFILE_INDEX -> MyProfileScreen()
             }
         }
 

@@ -2,8 +2,6 @@ package com.example.vcompass.screen.feed
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.animateIntAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
@@ -56,29 +54,30 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.sp
-import com.example.vcompass.ui.core.text.CoreText
 import com.example.vcompass.R
-import com.example.vcompass.util.add
-import com.example.vcompass.util.clickNoRipple
-import com.example.vcompass.util.formatThousandK
-import com.example.vcompass.util.scaleOnClick
+import com.example.vcompass.resource.CoreTypography
+import com.example.vcompass.resource.CoreTypographyBold
+import com.example.vcompass.resource.CoreTypographySemiBold
+import com.example.vcompass.resource.MyColor
+import com.example.vcompass.resource.MyDimen
+import com.example.vcompass.ui.components.avatar.UserAvatar
 import com.example.vcompass.ui.core.icon.CoreIcon
 import com.example.vcompass.ui.core.icon.CoreImage
 import com.example.vcompass.ui.core.icon.CoreImageSource
-import com.vcompass.core.compose_view.list.HorizontalList
 import com.example.vcompass.ui.core.space.ExpandableSpacer
 import com.example.vcompass.ui.core.space.SpaceHeight
 import com.example.vcompass.ui.core.space.SpaceWidth
 import com.example.vcompass.ui.core.space.SpaceWidth8
-import com.example.vcompass.resource.MyColor
-import com.example.vcompass.resource.MyDimen
-import com.example.vcompass.resource.CoreTypography
-import com.example.vcompass.resource.CoreTypographyBold
-import com.example.vcompass.resource.CoreTypographySemiBold
+import com.example.vcompass.ui.core.text.CoreText
 import com.example.vcompass.ui.navigate.NavigateKeyArg
 import com.example.vcompass.util.AppConstants.SCHEDULE_TEMP_IMAGE_URL
 import com.example.vcompass.util.ScreenContext
+import com.example.vcompass.util.add
+import com.example.vcompass.util.clickNoRipple
+import com.example.vcompass.util.formatThousandK
+import com.example.vcompass.util.scaleOnClick
 import com.example.vcompass.util.setArg
+import com.vcompass.core.compose_view.list.HorizontalList
 import com.vcompass.presentation.model.schedule.Schedule
 import com.vcompass.presentation.util.CoreRoute
 import kotlinx.coroutines.delay
@@ -95,10 +94,6 @@ fun SchedulePost(
     var hasFavorite by rememberSaveable { mutableStateOf(schedule.hasFavorite ?: false) }
     var hasLiked by rememberSaveable { mutableStateOf(schedule.hasLiked ?: false) }
     var likeCount by rememberSaveable { mutableIntStateOf(schedule.likesCount ?: 0) }
-    val animatedLikeCount by animateIntAsState(
-        targetValue = likeCount,
-        animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy)
-    )
     Column(
         modifier = Modifier
             .shadow(elevation = MyDimen.p4)
@@ -115,36 +110,10 @@ fun SchedulePost(
                     end = MyDimen.p4
                 )
         ) {
-            // Profile picture with online indicator
-            Box {
-                CoreImage(
-                    source = CoreImageSource.Url(schedule.user?.avatar ?: SCHEDULE_TEMP_IMAGE_URL),
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .size(MyDimen.p36)
-                        .clip(CircleShape)
-                        .border(
-                            width = MyDimen.p1,
-                            color = MyColor.GrayF5,
-                            shape = CircleShape
-                        )
-                )
-                // Online indicator
-                Box(
-                    modifier = Modifier
-                        .size(MyDimen.p10)
-                        .background(
-                            color = MyColor.Active,
-                            shape = CircleShape
-                        )
-                        .border(
-                            width = MyDimen.p1,
-                            color = Color.White,
-                            shape = CircleShape
-                        )
-                        .align(Alignment.BottomEnd)
-                )
-            }
+            UserAvatar(
+                pathUrl = schedule.user?.avatar,
+                isOnline = true
+            )
 
             Spacer(modifier = Modifier.width(MyDimen.p12))
 
@@ -228,9 +197,9 @@ fun SchedulePost(
                         .size(MyDimen.p24)
                 )
                 Spacer(modifier = Modifier.width(MyDimen.p6))
-                if (schedule.likesCount != 0) {
+                if (likeCount != 0) {
                     CoreText(
-                        text = animatedLikeCount.formatThousandK(),
+                        text = likeCount.formatThousandK(),
                         style = CoreTypography.labelMedium,
                         color = MyColor.TextColorLight
                     )

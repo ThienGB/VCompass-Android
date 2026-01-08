@@ -12,7 +12,6 @@ import com.vcompass.presentation.util.collectToState
 import com.vcompass.presentation.viewmodel.BaseViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlin.math.log
 
 class LoginViewModel(
     globalEventBus: GlobalEventBus,
@@ -33,13 +32,18 @@ class LoginViewModel(
         }
     }
 
-    fun login(email: String, password: String, hasRemember: Boolean = true) {
+    fun login(
+        email: String,
+        password: String,
+        hasRemember: Boolean = true,
+        onSuccess: () -> Unit = {}
+    ) {
         collectToState(
             block = {
                 loginUseCase(LoginRequest(email = email, password = password))
             },
             onError = {
-                 showError(it.message ?: "")
+                showError(it.message ?: "")
             }
         ) { login ->
             val loginModel = login.toLoginUiModel()
@@ -50,8 +54,7 @@ class LoginViewModel(
                 it.currentUser = login.user ?: UserModel()
                 globalConfig.updateSessionData(it)
             }
-
-            navigateTo(CoreRoute.Home.route, isClearStack = true)
+            onSuccess()
         }
     }
 

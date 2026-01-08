@@ -42,6 +42,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.vcompass.R
+import com.example.vcompass.enum.ActivityTypeEnum
 import com.example.vcompass.resource.CoreTypography
 import com.example.vcompass.resource.CoreTypographyBold
 import com.example.vcompass.resource.CoreTypographySemiBold
@@ -60,7 +61,6 @@ import com.example.vcompass.ui.core.text.CoreText
 import com.example.vcompass.util.clickableWithScale
 import com.example.vcompass.util.scaleOnClick
 import com.vcompass.presentation.enums.BottomSheetType
-import com.vcompass.presentation.model.schedule.Comment
 import com.vcompass.presentation.model.schedule.DayActivity
 import com.vcompass.presentation.model.schedule.Schedule
 import com.vcompass.presentation.viewmodel.schedule.ScheduleViewModel
@@ -68,8 +68,7 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ScheduleSummaryTab(
-    schedule: Schedule = Schedule(),
-    showBottomSheet: (BottomSheetType) -> Unit = {},
+    schedule: Schedule = Schedule()
 ) {
     Column {
         SummaryInfoSection(schedule)
@@ -91,17 +90,10 @@ fun SummaryInfoSection(
 ) {
     var isLiked by rememberSaveable { mutableStateOf(false) }
 
-    fun countComments(comments: List<Comment>?): Int {
-        if (comments.isNullOrEmpty()) return 0
-        return comments.sumOf { comment ->
-            1 + (comment.replies?.size ?: 0)
-        }
-    }
-
     fun countActivitiesByType(type: String): Int {
         var count = 0
         schedule?.days?.forEach { activityDay ->
-            activityDay.activity?.forEach { activity ->
+            activityDay.activities?.forEach { activity ->
                 if (activity.activityType == type) {
                     count++
                 }
@@ -156,7 +148,7 @@ fun SummaryInfoSection(
         ScheduleSummaryInforItem(
             modifier = Modifier.weight(1f),
             resIcon = R.drawable.ic_accommodation_24dp,
-            count = countActivitiesByType("Accommodation")
+            count = countActivitiesByType(ActivityTypeEnum.ACCOMMODATION.name)
         )
         ItemDivider(
             orientation = DividerOrientation.Vertical,
@@ -165,7 +157,7 @@ fun SummaryInfoSection(
         ScheduleSummaryInforItem(
             modifier = Modifier.weight(1f),
             resIcon = R.drawable.ic_food,
-            count = countActivitiesByType("FoodService")
+            count = countActivitiesByType(ActivityTypeEnum.FOODPLACE.name)
         )
         VerticalDivider(
             thickness = 0.5.dp, color = Color.LightGray,
@@ -174,7 +166,7 @@ fun SummaryInfoSection(
         ScheduleSummaryInforItem(
             modifier = Modifier.weight(1f),
             resIcon = R.drawable.ic_beach_24dp,
-            count = countActivitiesByType("Attraction")
+            count = countActivitiesByType(ActivityTypeEnum.ATTRACTION.name)
         )
         VerticalDivider(
             thickness = 0.5.dp, color = Color.LightGray,
@@ -183,7 +175,7 @@ fun SummaryInfoSection(
         ScheduleSummaryInforItem(
             modifier = Modifier.weight(1f),
             resIcon = R.drawable.ic_notification,
-            count = countActivitiesByType("Other")
+            count = countActivitiesByType(ActivityTypeEnum.OTHER.name)
         )
         SpaceHeight()
     }
@@ -283,7 +275,8 @@ fun SummaryDay(
     activities: DayActivity
 ) {
     val viewModel: ScheduleViewModel = koinViewModel()
-    val activities = activities.activity ?: emptyList()
+    val name by remember { mutableStateOf(activities.name.ifBlank { "Ngày $day" }) }
+    val activities = activities.activities ?: emptyList()
     var isExpanded by rememberSaveable { mutableStateOf(false) }
     Column {
         Row(
@@ -301,7 +294,7 @@ fun SummaryDay(
             )
             BorderLessTextField(
                 modifier = Modifier.weight(1f),
-                value = "Ngày $day",
+                value = name,
                 textStyle = CoreTypographyBold.bodyMedium,
                 enabled = false
             )

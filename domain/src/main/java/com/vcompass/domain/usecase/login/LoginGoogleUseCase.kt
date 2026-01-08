@@ -1,11 +1,14 @@
 package com.vcompass.domain.usecase.login
 
+import com.vcompass.domain.model.request.login.LoginRequest
+import com.vcompass.domain.model.response.login.LoginModel
+import com.vcompass.domain.model.response.user.UserModel
 import com.vcompass.domain.repository.login.LoginRepository
 import kotlinx.coroutines.flow.Flow
 
 class LoginGoogleUseCase(private val repo: LoginRepository) {
 
-    suspend operator fun invoke(): Flow<Result<Unit>> {
-        return repo.logout()
+    suspend operator fun invoke(): Flow<Result<LoginModel>> {
+        return repo.login(LoginRequest("", "", ""))
     }
 }
