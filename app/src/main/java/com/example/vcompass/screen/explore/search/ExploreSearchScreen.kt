@@ -38,7 +38,7 @@ import com.example.vcompass.ui.core.title.TitleSearchBarAction
 import com.example.vcompass.ui.core.icon.CoreIcon
 import com.example.vcompass.ui.core.icon.CoreImage
 import com.example.vcompass.ui.core.icon.CoreImageSource
-import com.vcompass.core.compose_view.list.GridList
+import com.example.vcompass.ui.core.list.GridList
 import com.vcompass.core.compose_view.list.VerticalList
 import com.example.vcompass.ui.core.scroll_view.VerticalScrollView
 import com.example.vcompass.ui.core.space.SpaceWidth

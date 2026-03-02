@@ -16,6 +16,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -25,9 +27,7 @@ import androidx.compose.material.icons.rounded.Share
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
@@ -37,7 +37,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.lerp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.unit.times
 import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import com.example.vcompass.R
@@ -67,10 +66,11 @@ import com.example.vcompass.util.glassmorphism
 import com.vcompass.presentation.model.user.User
 import com.vcompass.presentation.util.CoreRoute
 import com.vcompass.presentation.viewmodel.profile.UserProfileViewModel
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun MyProfileScreen() {
+fun UserProfileScreen() {
     val viewModel: UserProfileViewModel = koinViewModel()
     val navController = ScreenContext.navController
 
@@ -91,9 +91,9 @@ fun MyProfileScreen() {
                     ImageSliderWithIndicator(listOf("1", "2", "3", "4", "5"))
                 }
             },
-            headerSection = { UserProfileInformationSection(it, navController) },
+            headerSection = { UserProfileInformationTab(it, navController) },
             infoSection = { autoProgress, offsetX, offsetY ->
-                UserProfileInformationSection(
+                UserProfileInformationTab(
                     currentUser,
                     autoProgress,
                     offsetX,
@@ -118,7 +118,7 @@ fun MyProfileScreen() {
 }
 
 @Composable
-fun UserProfileInformationSection(
+fun UserProfileInformationTab(
     autoProgress: Float,
     navController: NavController,
     viewModel: UserProfileViewModel = koinViewModel()
@@ -168,7 +168,7 @@ fun UserProfileInformationSection(
 }
 
 @Composable
-fun UserProfileInformationSection(
+fun UserProfileInformationTab(
     user: User,
     autoProgress: Float,
     offsetX: Dp,
@@ -181,6 +181,7 @@ fun UserProfileInformationSection(
         stop = 15.sp,
         fraction = autoProgress
     )
+    val enableClick = autoProgress < 0.5f
     Box(
         modifier = Modifier
             .statusBarsPadding()
@@ -189,7 +190,7 @@ fun UserProfileInformationSection(
                 top = MyDimen.p20 * (1 - autoProgress)
             )
             .offset(x = offsetX, y = offsetY - MyDimen.p64 * (1 - autoProgress))
-            .zIndex(3f)
+            .zIndex(5f)
             .fillMaxWidth()
     ) {
         UserAvatar(
@@ -218,12 +219,14 @@ fun UserProfileInformationSection(
                 SpaceHeight()
                 PrimaryButton(
                     text = stringResource(R.string.lb_create_schedule),
-                    modifier = Modifier.height(MyDimen.p36)
+                    modifier = Modifier.height(MyDimen.p36),
+                    enabled = enableClick
                 )
                 SpaceHeight8()
                 OutlineButton(
                     text = stringResource(R.string.lb_edit_profile),
-                    modifier = Modifier.height(MyDimen.p36)
+                    modifier = Modifier.height(MyDimen.p36),
+                    enabled = enableClick
                 )
             }
         }
@@ -237,8 +240,13 @@ fun AccommodationContentSection(
     autoProgress: Float,
     tabOffsetY: Dp
 ) {
-    var selectedTab by rememberSaveable { mutableStateOf(0) }
-
+    val coroutine = rememberCoroutineScope()
+    val pagerState = rememberPagerState(initialPage = INFORMATION_INDEX) { 3 }
+    fun onPageChange(page: Int) {
+        coroutine.launch {
+            pagerState.scrollToPage(page)
+        }
+    }
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -252,21 +260,22 @@ fun AccommodationContentSection(
         ItemDivider(modifier = Modifier.statusBarsPadding())
         Row(
             horizontalArrangement = Arrangement.spacedBy(MyDimen.p8),
-            modifier = Modifier.padding(vertical = MyDimen.p4, horizontal = MyDimen.p4)
+            modifier = Modifier
+                .padding(vertical = MyDimen.p4, horizontal = MyDimen.p4)
                 .zIndex(5f)
         ) {
             TabButtonSection(
                 stringResource(R.string.lb_schedule),
-                selectedTab == 0
-            ) { selectedTab = 0 }
+                pagerState.currentPage == INFORMATION_INDEX
+            ) { onPageChange(INFORMATION_INDEX) }
             TabButtonSection(
                 stringResource(R.string.lb_image),
-                selectedTab == 1
-            ) { selectedTab = 1 }
+                pagerState.currentPage == IMAGE_INDEX
+            ) { onPageChange(IMAGE_INDEX) }
             TabButtonSection(
                 stringResource(R.string.lb_video),
-                selectedTab == 2
-            ) { selectedTab = 2 }
+                pagerState.currentPage == VIDEO_INDEX
+            ) { onPageChange(VIDEO_INDEX) }
         }
         ItemDivider()
         Column(
@@ -274,10 +283,32 @@ fun AccommodationContentSection(
                 .fillMaxSize()
                 .verticalScroll(contentScrollState),
         ) {
-            UserProfileInformationSection()
-            SpaceHeight()
-            repeat(8){
-                SchedulePost()
+            HorizontalPager(
+                state = pagerState,
+                modifier = Modifier.fillMaxSize(),
+                userScrollEnabled = false
+            ) { page ->
+                Column {
+                    when (page) {
+                        INFORMATION_INDEX -> {
+                            UserProfileInformationTab()
+                            SpaceHeight()
+                            repeat(8) {
+                                SchedulePost()
+                            }
+                        }
+
+                        IMAGE_INDEX -> {
+                            SpaceHeight8()
+                            UserProfileImageTab()
+                        }
+
+                        VIDEO_INDEX -> {
+                            SpaceHeight8()
+                            UserProfileVideoTab()
+                        }
+                    }
+                }
             }
         }
     }
@@ -297,9 +328,11 @@ fun TabButtonSection(
             .clickable(onClick = onClick)
             .background(if (isSelected) MyColor.Primary.copy(0.1f) else MyColor.Transparent)
             .padding(horizontal = MyDimen.p10, vertical = MyDimen.p8),
-        color = if (isSelected) MyColor.Primary else MyColor.TextColorPrimary
+        color = if (isSelected) MyColor.Primary else MyColor.TextColorPrimary,
     )
 }
 
-
+private const val INFORMATION_INDEX = 0
+private const val IMAGE_INDEX = 1
+private const val VIDEO_INDEX = 2
 

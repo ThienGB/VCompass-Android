@@ -20,6 +20,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.TravelExplore
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
@@ -47,9 +49,13 @@ import com.example.vcompass.ui.core.icon.CoreImageSource
 import com.example.vcompass.ui.core.space.SpaceHeight
 import com.example.vcompass.ui.core.space.SpaceWidth8
 import com.example.vcompass.ui.core.text.CoreText
+import com.example.vcompass.ui.core.title.ActionIcon
 import com.example.vcompass.ui.core.title.TitleSearchBarAction
+import com.example.vcompass.util.ScreenContext
+import com.example.vcompass.util.add
 import com.example.vcompass.util.scaleOnClick
 import com.vcompass.presentation.model.schedule.Activity
+import com.vcompass.presentation.util.CoreRoute
 
 @Composable
 fun AddScheduleActivityPopup(
@@ -58,6 +64,7 @@ fun AddScheduleActivityPopup(
     onActivitySelected: (Activity) -> Unit = {}
 ) {
     var type by remember { mutableStateOf<ActivityTypeEnum?>(null) }
+    val navController = ScreenContext.navController
     BaseBottomSheet(
         bottomSheetState = sheetState,
         onDismiss = onDismiss,
@@ -112,15 +119,21 @@ fun AddScheduleActivityPopup(
                 } else {
                     Column {
                         Spacer(modifier = Modifier.height(15.dp))
-                        TitleSearchBarAction { type = null }
+                        TitleSearchBarAction(
+                            rightItem = {
+                                ActionIcon(imageVector = Icons.Rounded.TravelExplore) {
+                                    navController.add(CoreRoute.MapSearch.route)
+                                }
+                            }
+                        ) { type = null }
                         Column(
                             modifier = Modifier
                                 .verticalScroll(rememberScrollState())
                                 .padding(vertical = 10.dp)
                         ) {
                             repeat(9) {
-                                AccommodationHorizontalItem{
-                                  //  onActivitySelected(mockActivityDay2)
+                                AccommodationHorizontalItem {
+                                    //  onActivitySelected(mockActivityDay2)
                                     onDismiss()
                                 }
                             }

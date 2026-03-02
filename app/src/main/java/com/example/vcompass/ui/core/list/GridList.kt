@@ -1,4 +1,4 @@
-package com.vcompass.core.compose_view.list
+package com.example.vcompass.ui.core.list
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -18,6 +18,7 @@ fun <T> GridList(
     contentPadding: PaddingValues = PaddingValues(MyDimen.zero),
     horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
     verticalArrangement: Arrangement.Vertical = Arrangement.Top,
+    userScrollEnabled: Boolean = true,
     itemContent: @Composable (T) -> Unit
 ) {
     LazyVerticalGrid(
@@ -25,7 +26,8 @@ fun <T> GridList(
         modifier = modifier,
         contentPadding = contentPadding,
         horizontalArrangement = horizontalArrangement,
-        verticalArrangement = verticalArrangement
+        verticalArrangement = verticalArrangement,
+        userScrollEnabled = userScrollEnabled
     ) {
         items(
             count = items.size,

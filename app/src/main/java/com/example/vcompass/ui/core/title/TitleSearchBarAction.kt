@@ -12,10 +12,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.vcompass.ui.core.text.SearchTextField
-import com.example.vcompass.ui.core.icon.IconBack
 import com.example.vcompass.resource.MyColor
 import com.example.vcompass.resource.MyDimen
+import com.example.vcompass.ui.core.button.BackButton
+import com.example.vcompass.ui.core.text.SearchTextField
 
 @Composable
 fun TitleSearchBarAction(
@@ -40,7 +40,7 @@ fun TitleSearchBarAction(
         if (leftItem != null) {
             leftItem()
         } else {
-            IconBack(onClick = onBack)
+            BackButton(onClick = onBack)
         }
         SearchTextField(
             modifier = Modifier.weight(1f),

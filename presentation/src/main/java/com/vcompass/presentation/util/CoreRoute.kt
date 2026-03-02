@@ -12,7 +12,7 @@ sealed class CoreRoute(val route: String) {
     data object HomeFeed : CoreRoute("home_feed")
     data object Explore : CoreRoute("explore")
     data object ExploreSearch : CoreRoute("explore_search")
-    data object HomeSearch : CoreRoute("home_search")
+    data object MapSearch : CoreRoute("map_search")
     data object Schedule : CoreRoute("schedule")
     data object AccommodationDetail : CoreRoute("accommodation_detail")
 }

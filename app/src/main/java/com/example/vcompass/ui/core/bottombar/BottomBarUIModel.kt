@@ -31,7 +31,7 @@ val bottomDestinations = listOf(
         selectedIcon = R.drawable.ic_home_fill
     ),
     BottomBarUIModel(
-        route = CoreRoute.HomeSearch.route,
+        route = CoreRoute.MapSearch.route,
         label = "",
         unselectedIcon = R.drawable.ic_travel_search_24dp,
         selectedIcon = R.drawable.ic_travel_search_24dp

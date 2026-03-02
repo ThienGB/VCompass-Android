@@ -80,7 +80,7 @@ fun SearchTextField(
                         CoreText(
                             text = placeholder,
                             color = Color.Gray,
-                            style = CoreTypography.bodySmall,
+                            style = CoreTypography.displayMedium,
                         )
                     }
                     innerTextField()

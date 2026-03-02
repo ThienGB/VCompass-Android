@@ -71,4 +71,6 @@
     <string name="lb_information">Thông tin</string>
     <string name="lb_hot_destination">Điểm tham quan nổi bật!</string>
     <string name="lb_total_cost">Tổng chi phí:</string>
+    <string name="lb_find_your_place">Vị trí hiện tại 🏡</string>
+    <string name="lb_finding_your_place">Đang lấy vị trí hiện tại... </string>
 </resources>

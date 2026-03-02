@@ -6,6 +6,8 @@ import com.vcompass.presentation.viewmodel.home.HomeViewModel
 import com.vcompass.presentation.viewmodel.login.LoginViewModel
 import com.vcompass.presentation.viewmodel.profile.UserProfileViewModel
 import com.vcompass.presentation.viewmodel.schedule.ScheduleViewModel
+import com.vcompass.presentation.viewmodel.search.MapSearchViewModel
+import com.vcompass.presentation.viewmodel.search.SearchLandingViewModel
 import com.vcompass.presentation.viewmodel.splash.IntroduceViewModel
 import com.vcompass.presentation.viewmodel.splash.SplashViewModel
 import org.koin.core.module.dsl.viewModel
@@ -23,4 +25,6 @@ val viewModelModule = module {
     viewModel { HomeFeedViewModel(get(), get(), get()) }
     viewModel { AccommodationDetailViewModel(get(), get()) }
     viewModel { UserProfileViewModel(get(), get()) }
+    viewModel { SearchLandingViewModel(get(), get(), get()) }
+    viewModel { MapSearchViewModel(get(), get(), get()) }
 }

@@ -15,9 +15,12 @@ import com.example.vcompass.ui.core.icon.CoreIcon
 import com.example.vcompass.resource.MyDimen
 
 @Composable
-fun BackButton(onClick: () -> Unit) {
+fun BackButton(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
+) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .size(MyDimen.p56)
             .clip(
                 shape = RoundedCornerShape(MyDimen.p56)

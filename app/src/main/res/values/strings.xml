@@ -70,4 +70,6 @@
     <string name="lb_information">Information</string>
     <string name="lb_hot_destination">Destination hot!</string>
     <string name="lb_total_cost">Total cost:</string>
+    <string name="lb_find_your_place">Find your place 🏡</string>
+    <string name="lb_finding_your_place">Finding your place... </string>
 </resources>

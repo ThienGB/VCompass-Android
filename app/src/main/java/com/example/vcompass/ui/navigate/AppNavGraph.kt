@@ -6,12 +6,11 @@ import androidx.navigation.compose.composable
 import com.example.vcompass.screen.accommodation.AccommodationDetailScreen
 import com.example.vcompass.screen.explore.ExploreScreen
 import com.example.vcompass.screen.explore.search.ExploreSearchScreen
-import com.example.vcompass.screen.feed.HomeFeedScreen
 import com.example.vcompass.screen.home.HomeScreen
 import com.example.vcompass.screen.introduce.IntroduceScreen
 import com.example.vcompass.screen.login.LoginScreen
 import com.example.vcompass.screen.schedule.ScheduleScreen
-import com.example.vcompass.screen.search.SearchScreen
+import com.example.vcompass.screen.search.MapSearchScreen
 import com.example.vcompass.screen.splash.SplashScreen
 import com.example.vcompass.util.ScreenContext
 import com.example.vcompass.util.getArg
@@ -54,8 +53,8 @@ fun AppNavGraph() {
             ExploreSearchScreen(navController = navController)
         }
 
-        composable(CoreRoute.HomeSearch.route) {
-            SearchScreen(navController = navController)
+        composable(CoreRoute.MapSearch.route) {
+            MapSearchScreen()
         }
         composable(CoreRoute.Schedule.route) {
             val scheduleId = navController.getArg<String>(NavigateKeyArg.SCHEDULE_ID)

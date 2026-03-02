@@ -82,4 +82,5 @@ dependencies {
     implementation(libs.coroutines.android)
     implementation(libs.coroutines.core)
     implementation(libs.paging3.runtime)
+    implementation(libs.play.services.location)
 }
