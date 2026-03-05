@@ -1,7 +1,10 @@
 package com.vcompass.domain.usecase
 
+import com.vcompass.domain.usecase.accommodation.GetAccommodationsUseCase
+import com.vcompass.domain.usecase.attraction.GetAttractionsUseCase
 import com.vcompass.domain.usecase.common.GetSessionDataUseCase
 import com.vcompass.domain.usecase.common.SetOpenedAppUseCase
+import com.vcompass.domain.usecase.foodplace.GetFoodPlacesUseCase
 import com.vcompass.domain.usecase.location.GetCurrentLocationUseCase
 import com.vcompass.domain.usecase.location.GetLocationFromLatLngUseCase
 import com.vcompass.domain.usecase.location.ObserveSelectedLocationUseCase
@@ -23,6 +26,11 @@ val useCaseModule = module {
     //======= SCHEDULE =======//
     factory { GetScheduleDetailUseCase(get()) }
     factory { GetAllSchedulesUseCase(get()) }
+
+    //======= ACCOMMODATION =======//
+    factory { GetAccommodationsUseCase(get()) }
+    factory { GetAttractionsUseCase(get()) }
+    factory { GetFoodPlacesUseCase(get()) }
 
     //======= LOCATION =======//
     factory { ObserveSelectedLocationUseCase(get()) }

@@ -72,4 +72,6 @@
     <string name="lb_total_cost">Total cost:</string>
     <string name="lb_find_your_place">Find your place 🏡</string>
     <string name="lb_finding_your_place">Finding your place... </string>
+    <string name="lb_no_of_rating">(%s Rating)</string>
+    <string name="lb_night">/night</string>
 </resources>

@@ -25,10 +25,13 @@ class LocationRepositoryImpl(
     ): Flow<Result<Unit>> {
         val short = geocoder.getShortAddress(latitude, longitude)
         val full = geocoder.getFullAddress(latitude, longitude)
+        val city = geocoder.getCity(latitude, longitude)
+
 
         _selectedLocation.value = AppLocationModel(
             latitude = latitude,
             longitude = longitude,
+            city = city,
             shortAddress = short,
             fullAddress = full
         )
@@ -52,6 +55,7 @@ class LocationRepositoryImpl(
             latitude = latitude,
             longitude = longitude,
             shortAddress = geocoder.getShortAddress(latitude, longitude),
+            city = geocoder.getCity(latitude, longitude),
             fullAddress = geocoder.getFullAddress(latitude, longitude)
         ).asResultFlow()
     }
@@ -64,6 +68,7 @@ class LocationRepositoryImpl(
             latitude = latitude,
             longitude = longitude,
             shortAddress = geocoder.getShortAddress(latitude, longitude),
+            city = geocoder.getCity(latitude, longitude),
             fullAddress = geocoder.getFullAddress(latitude, longitude)
         ).asResultFlow()
 }

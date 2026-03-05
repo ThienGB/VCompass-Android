@@ -54,7 +54,7 @@ import androidx.media3.ui.PlayerView
 import com.example.vcompass.ui.core.text.CoreText
 import com.example.vcompass.R
 import com.example.vcompass.util.clickNoRipple
-import com.example.vcompass.util.formatThousandK
+import com.vcompass.presentation.util.formatThousandK
 import com.example.vcompass.util.scaleOnClick
 import com.example.vcompass.ui.core.icon.CoreIcon
 import com.example.vcompass.ui.core.icon.CoreImage

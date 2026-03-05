@@ -74,7 +74,7 @@ import com.example.vcompass.util.AppConstants.SCHEDULE_TEMP_IMAGE_URL
 import com.example.vcompass.util.ScreenContext
 import com.example.vcompass.util.add
 import com.example.vcompass.util.clickNoRipple
-import com.example.vcompass.util.formatThousandK
+import com.vcompass.presentation.util.formatThousandK
 import com.example.vcompass.util.scaleOnClick
 import com.example.vcompass.util.setArg
 import com.vcompass.core.compose_view.list.HorizontalList

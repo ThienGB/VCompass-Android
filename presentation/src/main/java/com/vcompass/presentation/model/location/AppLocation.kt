@@ -6,8 +6,9 @@ import com.vcompass.presentation.util.tryParseObject
 data class AppLocation(
     val latitude: Double = 0.0,
     val longitude: Double = 0.0,
-    val shortAddress: String? = null,
-    val fullAddress: String? = null
+    val city: String = "",
+    val shortAddress: String = "",
+    val fullAddress: String = ""
 )
 
 fun AppLocationModel.toAppLocation() : AppLocation{

@@ -1,0 +1,213 @@
+package com.example.vcompass.screen.search.components
+
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
+import com.example.vcompass.R
+import com.example.vcompass.resource.CoreTypography
+import com.example.vcompass.resource.CoreTypographyBold
+import com.example.vcompass.resource.CoreTypographySemiBold
+import com.example.vcompass.resource.MyColor
+import com.example.vcompass.resource.MyDimen
+import com.example.vcompass.ui.core.icon.CoreIcon
+import com.example.vcompass.ui.core.icon.CoreImage
+import com.example.vcompass.ui.core.icon.CoreImageSource
+import com.example.vcompass.ui.core.space.ExpandableSpacer
+import com.example.vcompass.ui.core.space.SpaceWidth
+import com.example.vcompass.ui.core.text.CoreText
+import com.vcompass.presentation.model.business.accommodation.Accommodation
+import com.vcompass.presentation.util.formatThousandK
+
+@Composable
+fun AccommodationHorizontalItem(
+    accommodation: Accommodation = Accommodation(),
+    onClickItem: () -> Unit = {}
+) {
+    var isFavorite by remember { mutableStateOf(false) }
+    Card(
+        shape = RoundedCornerShape(MyDimen.p12),
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(MyDimen.p160)
+            .padding(horizontal = MyDimen.p16, vertical = MyDimen.p8),
+        colors = CardDefaults.cardColors(MyColor.White),
+        elevation = CardDefaults.cardElevation(defaultElevation = MyDimen.p2)
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { onClickItem() }) {
+            Row {
+                Box(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .fillMaxWidth(0.3f)
+                ) {
+                    CoreImage(
+                        source = CoreImageSource.Url(accommodation.images?.firstOrNull().orEmpty()),
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
+
+                Column(
+                    modifier = Modifier.padding(MyDimen.p8)
+                ) {
+                    CoreText(
+                        text = accommodation.name,
+                        style = CoreTypographySemiBold.labelLarge,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                    Spacer(modifier = Modifier.height(MyDimen.p4))
+                    CoreText(
+                        text = accommodation.location?.address,
+                        style = CoreTypography.displaySmall,
+                        color = MyColor.TextColorLight
+                    )
+                    Spacer(modifier = Modifier.height(MyDimen.p4))
+                    accommodation.totalRatings?.let {
+                        if (it > 0)
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Icon(
+                                    painter = painterResource(android.R.drawable.btn_star_big_on),
+                                    contentDescription = null,
+                                    tint = MyColor.Rating,
+                                    modifier = Modifier.size(MyDimen.p12)
+                                )
+                                Spacer(modifier = Modifier.width(MyDimen.p2))
+                                CoreText(
+                                    text = accommodation.averageRating.toString(),
+                                    style = CoreTypography.displaySmall,
+                                )
+                                Spacer(modifier = Modifier.width(MyDimen.p4))
+                                CoreText(
+                                    text = stringResource(
+                                        R.string.lb_no_of_rating,
+                                        accommodation.totalRatings.toString()
+                                    ),
+                                    style = CoreTypography.displaySmall,
+                                    color = MyColor.TextColorLight
+                                )
+                            }
+                    }
+                    Spacer(modifier = Modifier.height(MyDimen.p4))
+                    FlowRow(
+                        maxLines = 2
+                    ) {
+                        IconTextHorizontal(
+                            icon = R.drawable.ic_king_bed_24dp,
+                            text = "2 giuong"
+                        )
+                        SpaceWidth(MyDimen.p6)
+                        IconTextHorizontal(
+                            icon = R.drawable.ic_bathtub_24dp,
+                            text = "2 phong tam"
+                        )
+                        SpaceWidth(MyDimen.p6)
+                        IconTextHorizontal(
+                            icon = R.drawable.ic_home_fill,
+                            text = "42 m",
+                            iconSize = MyDimen.p12
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(MyDimen.p4))
+                    ExpandableSpacer()
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.padding(vertical = MyDimen.p4)
+                    ) {
+                        CoreText(
+                            text = accommodation.price?.formatThousandK(),
+                            style = CoreTypographyBold.displayMedium,
+                            color = MyColor.Black,
+                            lineHeight = MyDimen.s16,
+                        )
+                        CoreText(
+                            text = stringResource(R.string.lb_night),
+                            style = CoreTypography.displaySmall,
+                            color = MyColor.TextColorLight,
+                        )
+                    }
+                }
+            }
+            FavoriteSelector(
+                modifier = Modifier.align(Alignment.TopEnd),
+                isFavorite = isFavorite,
+                onFavoriteChange = { isFavorite = it }
+            )
+        }
+    }
+}
+
+@Composable
+fun IconTextHorizontal(
+    icon: Int,
+    text: String,
+    style: TextStyle = CoreTypography.displaySmall,
+    iconSize: Dp = MyDimen.p16,
+) {
+    Row {
+        CoreIcon(
+            resDrawable = icon,
+            tintColor = MyColor.Gray999,
+            iconModifier = Modifier.size(iconSize)
+        )
+        Spacer(modifier = Modifier.width(MyDimen.p2))
+        CoreText(
+            text = text,
+            style = style,
+            color = MyColor.TextColorLight
+        )
+    }
+}
+
+@Composable
+fun FavoriteSelector(
+    modifier: Modifier = Modifier,
+    isFavorite: Boolean,
+    onFavoriteChange: (Boolean) -> Unit
+) {
+    IconButton(
+        onClick = { onFavoriteChange(!isFavorite) },
+        modifier = modifier
+    ) {
+        CoreIcon(
+            imageVector = if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+            tintColor = if (isFavorite) MyColor.Favorite else MyColor.Gray999
+        )
+    }
+}

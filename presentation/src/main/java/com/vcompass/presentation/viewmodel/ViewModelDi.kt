@@ -26,5 +26,5 @@ val viewModelModule = module {
     viewModel { AccommodationDetailViewModel(get(), get()) }
     viewModel { UserProfileViewModel(get(), get()) }
     viewModel { SearchLandingViewModel(get(), get(), get()) }
-    viewModel { MapSearchViewModel(get(), get(), get()) }
+    viewModel { MapSearchViewModel(get(),get(),get(),get(),  get(), get()) }
 }

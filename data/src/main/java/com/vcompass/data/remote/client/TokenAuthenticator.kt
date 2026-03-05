@@ -1,7 +1,7 @@
 package com.vcompass.data.remote.client
 
 import com.vcompass.data.local.SecureStorageHelper
-import com.vcompass.data.remote.services.auth.AuthService
+import com.vcompass.data.remote.services.AuthService
 import com.vcompass.domain.model.request.login.RefreshTokenRequest
 import kotlinx.coroutines.runBlocking
 import okhttp3.Request

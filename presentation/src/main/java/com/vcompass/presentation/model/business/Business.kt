@@ -19,4 +19,16 @@ open class Business(
     val averageRating: Float? = null,
     val totalRatings: Float? = null,
     val operatingHours: List<OperatingHour>? = null,
-): Base(), Parcelable
+) : Base(), Parcelable
+
+fun Business.getLongitude(): Double {
+    return location?.coordinates?.get(0) ?: 0.0
+}
+
+fun Business.getLatitude(): Double {
+    return location?.coordinates?.get(1) ?: 0.0
+}
+
+fun Business.getFirstImage(): String {
+    return images.orEmpty().firstOrNull().orEmpty()
+}

@@ -1,7 +1,6 @@
-package com.vcompass.data.remote.services.auth
+package com.vcompass.data.remote.services
 
 import com.vcompass.data.model.dto.party.login.LoginDTO
-import com.vcompass.data.model.response.BaseResponse
 import com.vcompass.data.model.response.SingleResponse
 import com.vcompass.domain.model.request.login.LoginRequest
 import com.vcompass.domain.model.request.login.RefreshTokenRequest

@@ -41,7 +41,7 @@ import com.example.vcompass.enum.ActivityTypeEnum
 import com.example.vcompass.resource.CoreTypographySemiBold
 import com.example.vcompass.resource.MyColor
 import com.example.vcompass.resource.MyDimen
-import com.example.vcompass.screen.search.AccommodationHorizontalItem
+import com.example.vcompass.screen.search.components.AccommodationHorizontalItem
 import com.example.vcompass.ui.core.bottom_sheet.BaseBottomSheet
 import com.example.vcompass.ui.core.icon.CoreIcon
 import com.example.vcompass.ui.core.icon.CoreImage

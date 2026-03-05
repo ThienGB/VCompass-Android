@@ -2,7 +2,7 @@ package com.vcompass.data.repository.schedule
 
 import androidx.paging.PagingData
 import com.vcompass.data.model.dto.schedule.toScheduleModel
-import com.vcompass.data.remote.services.schedule.ScheduleService
+import com.vcompass.data.remote.services.ScheduleService
 import com.vcompass.data.util.asSingleResultFlow
 import com.vcompass.data.util.createPagingFlow
 import com.vcompass.domain.model.response.schedule.ScheduleModel

@@ -2,7 +2,7 @@ package com.vcompass.data.repository.login
 
 import com.vcompass.data.local.SecureStorageHelper
 import com.vcompass.data.model.dto.party.login.toLoginModel
-import com.vcompass.data.remote.services.auth.AuthService
+import com.vcompass.data.remote.services.AuthService
 import com.vcompass.data.util.asSingleResultFlow
 import com.vcompass.domain.model.request.login.LoginRequest
 import com.vcompass.domain.model.response.login.LoginModel

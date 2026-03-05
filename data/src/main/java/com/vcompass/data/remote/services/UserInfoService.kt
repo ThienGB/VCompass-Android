@@ -1,4 +1,4 @@
-package com.vcompass.data.remote.services.auth
+package com.vcompass.data.remote.services
 
 import com.vcompass.data.model.dto.party.person.PersonDTO
 import com.vcompass.data.model.response.SingleResponse

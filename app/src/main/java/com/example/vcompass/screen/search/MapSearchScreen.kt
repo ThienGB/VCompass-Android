@@ -12,6 +12,7 @@ import androidx.compose.material3.SheetValue
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -33,6 +34,14 @@ fun MapSearchScreen() {
 
     val state by viewModel.stateUI.collectAsState()
     val location by viewModel.location.collectAsState()
+
+    LaunchedEffect(location) {
+        if (location != null) {
+            viewModel.getAccommodations(city = location?.city)
+            viewModel.getFoodPlaces(city = location?.city)
+            viewModel.getAttractions(city = location?.city)
+        }
+    }
 
     val scaffoldState = rememberBottomSheetScaffoldState(
         bottomSheetState = rememberStandardBottomSheetState(

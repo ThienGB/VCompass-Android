@@ -31,6 +31,15 @@ class AndroidGeocodingDataSource(
         )
     }
 
+    override suspend fun getCity(
+        latitude: Double,
+        longitude: Double
+    ): String? {
+        return locationToAddress(
+            context, latitude, longitude, AddressFormat.CITY_ONLY
+        )
+    }
+
     override suspend fun getCurrentLocation(): Location? =
         suspendCancellableCoroutine { cont ->
 
@@ -76,6 +85,10 @@ fun locationToAddress(
                     .mapNotNull { address.getAddressLine(it) }
                     .joinToString(", ")
             }
+
+            AddressFormat.CITY_ONLY -> {
+                address.adminArea
+            }
         }
     } catch (_: Exception) {
         null
@@ -84,5 +97,6 @@ fun locationToAddress(
 
 enum class AddressFormat {
     SHORT,
-    FULL
+    FULL,
+    CITY_ONLY
 }

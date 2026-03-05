@@ -26,6 +26,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -42,11 +43,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
-import androidx.navigation.NavController
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.vcompass.ui.core.text.CoreText
 import com.example.vcompass.R
 import com.example.vcompass.ui.core.rating.RatingBar
-import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
@@ -66,81 +66,39 @@ import com.example.vcompass.resource.MyColor
 import com.example.vcompass.resource.MyDimen
 import com.example.vcompass.resource.CoreTypography
 import com.example.vcompass.resource.CoreTypographySemiBold
+import com.example.vcompass.screen.search.components.FavoriteSelector
 import com.example.vcompass.ui.core.button.BackButton
 import com.example.vcompass.util.ScreenContext
 import com.example.vcompass.util.back
-import com.vcompass.presentation.model.business.Location
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.vcompass.presentation.model.business.Business
+import com.vcompass.presentation.model.business.getFirstImage
+import com.vcompass.presentation.model.business.getLatitude
+import com.vcompass.presentation.model.business.getLongitude
 import com.vcompass.presentation.model.location.AppLocation
-
-data class Restaurant(
-    val id: String,
-    val name: String,
-    val address: String,
-    val rating: Float,
-    val priceRange: String,
-    val cuisine: String,
-    val latitude: Double,
-    val longitude: Double,
-    val imageUrls: List<String> = listOf(
-        "https://r2.nucuoimekong.com/wp-content/uploads/khu-du-lich-suoi-tien-hcm.jpg",
-        "https://gaohouse.vn/wp-content/uploads/2023/07/khu-du-lich-suoi-tien_d6775284e6f94581952951744f0d4bc0_grande.jpg",
-        "https://cdn3.ivivu.com/2023/03/KDL-Su%E1%BB%91i-Ti%C3%AAn-ivivu-6.jpg"
-    )
-)
+import com.vcompass.presentation.viewmodel.search.MapSearchViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun MapSearchSection(
     location: AppLocation
 ) {
     val navController = ScreenContext.navController
-    val restaurants = remember {
-        listOf(
-            Restaurant(
-                id = "1",
-                name = "Phở Hòa Pasteur",
-                address = "260C Pasteur, Q3",
-                rating = 4.5f,
-                priceRange = "50.000đ - 100.000đ",
-                cuisine = "Phở",
-                latitude = 10.7769,
-                longitude = 106.6955
-            ),
-            Restaurant(
-                id = "2",
-                name = "Cơm Tấm Mộc",
-                address = "6 Phạm Ngọc Thạch, Q3",
-                rating = 4.3f,
-                priceRange = "30.000đ - 80.000đ",
-                cuisine = "Cơm tấm",
-                latitude = 10.7823,
-                longitude = 106.6908
-            ),
-            Restaurant(
-                id = "3",
-                name = "Bánh Xèo 46A",
-                address = "46A Đinh Công Tràng, Q1",
-                rating = 4.6f,
-                priceRange = "40.000đ - 90.000đ",
-                cuisine = "Bánh xèo",
-                latitude = 10.7756,
-                longitude = 106.7019
-            ),
-            Restaurant(
-                id = "4",
-                name = "Quán Bún Bò Huế",
-                address = "12 Lý Chính Thắng, Q3",
-                rating = 4.4f,
-                priceRange = "45.000đ - 85.000đ",
-                cuisine = "Bún bò Huế",
-                latitude = 10.7785,
-                longitude = 106.6889
+    val viewModel: MapSearchViewModel = koinViewModel()
+    val accommodations = viewModel.accommodations.collectAsLazyPagingItems()
+    val attractions = viewModel.attractions.collectAsLazyPagingItems()
+    val foodPlaces = viewModel.foodPlaces.collectAsLazyPagingItems()
+    var selectedBusiness by remember { mutableStateOf<Business?>(null) }
+    val cameraPositionState = rememberCameraPositionState()
+    LaunchedEffect(location.latitude, location.longitude) {
+        if (location.latitude != 0.0 && location.longitude != 0.0) {
+            cameraPositionState.animate(
+                update = CameraUpdateFactory.newLatLngZoom(
+                    LatLng(location.latitude, location.longitude),
+                    14f
+                )
             )
-        )
-    }
-    var selectedRestaurant by remember { mutableStateOf<Restaurant?>(null) }
-    val defaultLocation = LatLng(location.latitude, location.longitude)
-    val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(defaultLocation, 14f)
+        }
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -148,7 +106,7 @@ fun MapSearchSection(
             modifier = Modifier.fillMaxSize(),
             cameraPositionState = cameraPositionState,
             properties = MapProperties(
-                isMyLocationEnabled = false,
+                isMyLocationEnabled = true,
                 mapType = MapType.NORMAL
             ),
             uiSettings = MapUiSettings(
@@ -156,42 +114,70 @@ fun MapSearchSection(
                 myLocationButtonEnabled = true
             )
         ) {
-            restaurants.forEach { restaurant ->
-                MarkerComposable(
-                    state = MarkerState(
-                        position = LatLng(restaurant.latitude, restaurant.longitude)
-                    ),
-                    onClick = {
-                        selectedRestaurant = restaurant
-                        true
+            repeat(accommodations.itemCount) { index ->
+                val item = accommodations[index]
+                item?.let { business ->
+                    BusinessMarker(business){
+                        selectedBusiness = business
                     }
-                ) {
-                    CustomMarkerView(rating = restaurant.rating)
+                }
+            }
+            repeat(attractions.itemCount) { index ->
+                val item = attractions[index]
+                item?.let { business ->
+                    BusinessMarker(business){
+                        selectedBusiness = business
+                    }
+                }
+            }
+            repeat(foodPlaces.itemCount) { index ->
+                val item = foodPlaces[index]
+                item?.let { business ->
+                    BusinessMarker(business){
+                        selectedBusiness = business
+                    }
                 }
             }
         }
-        if (selectedRestaurant != null) {
+        if (selectedBusiness != null) {
             DestinationInfoItem(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .padding(bottom = MyDimen.p128),
-                restaurant = selectedRestaurant!!,
+                business = selectedBusiness ?: Business(),
                 onDismiss = {
-                    selectedRestaurant = null
+                    selectedBusiness = null
                 }
             )
         }
-        BackButton(modifier = Modifier
-            .zIndex(5f)
-            .statusBarsPadding()
-            .align(Alignment.TopStart)) {
+        BackButton(
+            modifier = Modifier
+                .zIndex(5f)
+                .statusBarsPadding()
+                .align(Alignment.TopStart)
+        ) {
             navController.back()
         }
     }
 }
 
 @Composable
-fun CustomMarkerView(rating: Float) {
+fun BusinessMarker(business: Business, onSelect: () -> Unit) {
+    MarkerComposable(
+        state = MarkerState(
+            position = LatLng(business.getLatitude(), business.getLongitude())
+        ),
+        onClick = {
+            onSelect()
+            true
+        }
+    ) {
+        CustomMarkerView(rating = business.averageRating ?: 0f, business.getFirstImage())
+    }
+}
+
+@Composable
+fun CustomMarkerView(rating: Float, image: String) {
     val (backgroundColor, textColor) = when {
         rating >= 4.5f -> Color(0xFF00796B) to Color.White // Xanh đậm
         rating >= 4.0f -> Color(0xFF388E3C) to Color.White // Xanh lá
@@ -207,10 +193,15 @@ fun CustomMarkerView(rating: Float) {
             modifier = Modifier
                 .size(48.dp)
                 .shadow(4.dp, CircleShape)
-                .background(backgroundColor, CircleShape)
-                .border(3.dp, Color.White, CircleShape),
+                .border(2.dp, backgroundColor, CircleShape),
             contentAlignment = Alignment.Center
         ) {
+            CoreImage(
+                source = CoreImageSource.Url(image),
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize()
+                    .clip(CircleShape),
+            )
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
@@ -228,6 +219,7 @@ fun CustomMarkerView(rating: Float) {
                     fontWeight = FontWeight.Bold
                 )
             }
+
         }
     }
 }
@@ -235,7 +227,7 @@ fun CustomMarkerView(rating: Float) {
 @Composable
 fun DestinationInfoItem(
     modifier: Modifier = Modifier,
-    restaurant: Restaurant,
+    business: Business,
     onDismiss: () -> Unit
 ) {
     var isFavorite by rememberSaveable { mutableStateOf(false) }
@@ -252,13 +244,13 @@ fun DestinationInfoItem(
                     .fillMaxWidth()
                     .height(MyDimen.p180)
             ) {
-                if (restaurant.imageUrls.isEmpty()) {
+                if (business.images == null) {
                     CoreImage(
                         source = CoreImageSource.Url("https://d2s2rtcxxwjegp.cloudfront.net/images/hotels/hotel_placeholder.png"),
                         modifier = Modifier.fillMaxSize()
                     )
                 } else {
-                    ImageSliderWithIndicator(imageUrls = restaurant.imageUrls)
+                    ImageSliderWithIndicator(imageUrls = business.images.orEmpty())
                 }
                 Row(
                     modifier = Modifier
@@ -287,7 +279,7 @@ fun DestinationInfoItem(
                     .padding(horizontal = MyDimen.p16, vertical = MyDimen.p8)
             ) {
                 CoreText(
-                    text = restaurant.name,
+                    text = business.name,
                     style = CoreTypographySemiBold.displayMedium,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
@@ -295,18 +287,18 @@ fun DestinationInfoItem(
                 Spacer(modifier = Modifier.height(MyDimen.p8))
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     CoreText(
-                        text = restaurant.rating.toString(),
+                        text = business.averageRating.toString(),
                         style = CoreTypography.labelMedium,
                     )
                     SpaceWidth4()
                     RatingBar(
-                        rating = restaurant.rating,
+                        rating = business.averageRating ?: 0f,
                         readOnly = true,
                         starSize = MyDimen.p14
                     )
                     SpaceWidth4()
                     CoreText(
-                        text = "(351)",
+                        text = "(" + business.totalRatings + ")",
                         style = CoreTypography.labelMedium,
                         color = MyColor.TextColorLight
                     )
@@ -348,7 +340,7 @@ fun DestinationInfoItem(
                             style = CoreTypographySemiBold.labelSmall,
                         )
                         CoreText(
-                            text = "Từ " + restaurant.priceRange + "/người lớn",
+                            text = "Từ " + "999999" + "/người lớn",
                             style = CoreTypographySemiBold.displayMedium,
                             color = MyColor.Primary
                         )

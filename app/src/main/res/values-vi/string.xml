@@ -73,4 +73,6 @@
     <string name="lb_total_cost">Tổng chi phí:</string>
     <string name="lb_find_your_place">Vị trí hiện tại 🏡</string>
     <string name="lb_finding_your_place">Đang lấy vị trí hiện tại... </string>
+    <string name="lb_no_of_rating">(%s Đánh giá)</string>
+    <string name="lb_night">/đêm</string>
 </resources>

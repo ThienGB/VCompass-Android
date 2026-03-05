@@ -13,5 +13,10 @@ interface GeocodingDataSource {
         longitude: Double
     ): String?
 
+    suspend fun getCity(
+        latitude: Double,
+        longitude: Double
+    ): String?
+
     suspend fun getCurrentLocation(): Location?
 }
