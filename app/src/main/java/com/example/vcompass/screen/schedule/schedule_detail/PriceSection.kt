@@ -1,4 +1,4 @@
-package com.example.vcompass.screen.schedule
+package com.example.vcompass.screen.schedule.schedule_detail
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween

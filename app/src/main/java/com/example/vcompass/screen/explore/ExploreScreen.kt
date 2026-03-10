@@ -113,7 +113,6 @@ fun ExploreScreen(
             .fillMaxSize()
             .background(Color.Black)
             .padding(bottom = MyDimen.p56)
-            .statusBarsPadding()
     ) {
         ExploreHeaderSection(
             navController = navController,

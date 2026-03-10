@@ -55,7 +55,7 @@ fun Modifier.clickableWithScale(
 }
 
 fun Modifier.rippleClickable(
-    radius: Dp = 24.dp,
+    radius: Dp = MyDimen.p16,
     bounded: Boolean = false,
     onClick: () -> Unit
 ): Modifier = composed {

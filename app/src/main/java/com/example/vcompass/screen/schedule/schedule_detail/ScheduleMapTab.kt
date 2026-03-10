@@ -1,4 +1,4 @@
-package com.example.vcompass.screen.schedule
+package com.example.vcompass.screen.schedule.schedule_detail
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth

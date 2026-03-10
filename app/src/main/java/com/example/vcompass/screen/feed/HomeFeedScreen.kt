@@ -89,7 +89,7 @@ fun HomeHeader() {
     Surface(
         modifier = Modifier.fillMaxWidth(),
         color = Color.White,
-        shadowElevation = MyDimen.p8
+        shadowElevation = MyDimen.p4
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,

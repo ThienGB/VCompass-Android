@@ -64,7 +64,7 @@ fun HomeScreen(
         bottomBar = {
             CustomBottomBar(
                 onClickMenu = {
-                    showMoreMenu.value = true
+                    showMoreMenu.value = !showMoreMenu.value
                 },
                 onClickItemBottomBar = {
                     scope.launch {
@@ -87,9 +87,11 @@ fun HomeScreen(
                 AppConstants.HOME_PROFILE_INDEX -> UserProfileScreen()
             }
         }
-
-        MoreMenuHomeBottomSheet(showMoreMenu.value) {
-            showMoreMenu.value = false
-        }
+        ArcMenu(
+            expanded = showMoreMenu.value,
+            onDismiss = {
+                showMoreMenu.value = false
+            }
+        )
     }
 }

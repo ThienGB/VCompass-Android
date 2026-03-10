@@ -14,5 +14,6 @@ sealed class CoreRoute(val route: String) {
     data object ExploreSearch : CoreRoute("explore_search")
     data object MapSearch : CoreRoute("map_search")
     data object Schedule : CoreRoute("schedule")
+    data object CreateSchedule : CoreRoute("create_schedule")
     data object AccommodationDetail : CoreRoute("accommodation_detail")
 }

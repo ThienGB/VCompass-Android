@@ -198,7 +198,6 @@ fun CustomMarkerView(rating: Float, image: String) {
         ) {
             CoreImage(
                 source = CoreImageSource.Url(image),
-                contentDescription = null,
                 modifier = Modifier.fillMaxSize()
                     .clip(CircleShape),
             )

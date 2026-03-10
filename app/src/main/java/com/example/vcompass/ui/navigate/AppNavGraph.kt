@@ -9,7 +9,8 @@ import com.example.vcompass.screen.explore.search.ExploreSearchScreen
 import com.example.vcompass.screen.home.HomeScreen
 import com.example.vcompass.screen.introduce.IntroduceScreen
 import com.example.vcompass.screen.login.LoginScreen
-import com.example.vcompass.screen.schedule.ScheduleScreen
+import com.example.vcompass.screen.schedule.create_schedule.CreateScheduleScreen
+import com.example.vcompass.screen.schedule.schedule_detail.ScheduleScreen
 import com.example.vcompass.screen.search.MapSearchScreen
 import com.example.vcompass.screen.splash.SplashScreen
 import com.example.vcompass.util.ScreenContext
@@ -63,6 +64,9 @@ fun AppNavGraph() {
         }
         composable(CoreRoute.AccommodationDetail.route) {
             AccommodationDetailScreen()
+        }
+        composable(CoreRoute.CreateSchedule.route) {
+            CreateScheduleScreen()
         }
     }
 }
