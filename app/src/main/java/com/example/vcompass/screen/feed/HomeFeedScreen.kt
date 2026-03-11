@@ -35,6 +35,9 @@ import com.example.vcompass.ui.core.list.ScrollDirection
 import com.example.vcompass.ui.core.space.SpaceHeight
 import com.example.vcompass.ui.pagination.BasePaginationItem
 import com.example.vcompass.util.HandleBottomBarOnScroll
+import com.example.vcompass.util.ScreenContext
+import com.example.vcompass.util.add
+import com.vcompass.presentation.util.CoreRoute
 import com.vcompass.presentation.viewmodel.feed.HomeFeedViewModel
 import com.vcompass.presentation.viewmodel.home.HomeViewModel
 import org.koin.compose.viewmodel.koinViewModel
@@ -86,6 +89,7 @@ fun HomeFeedScreen() {
 
 @Composable
 fun HomeHeader() {
+    val navController = ScreenContext.navController
     Surface(
         modifier = Modifier.fillMaxWidth(),
         color = Color.White,
@@ -114,7 +118,9 @@ fun HomeHeader() {
                 Box(
                     contentAlignment = Alignment.Center,
                     modifier = Modifier
-                        .rippleClickable {}
+                        .rippleClickable {
+                            navController.add(CoreRoute.Notification.route)
+                        }
                         .size(MyDimen.p36)
                         .background(
                             color = MyColor.GrayF5,
@@ -131,7 +137,9 @@ fun HomeHeader() {
                 Box(
                     contentAlignment = Alignment.Center,
                     modifier = Modifier
-                        .rippleClickable {}
+                        .rippleClickable {
+                            navController.add(CoreRoute.Conversation.route)
+                        }
                         .size(MyDimen.p36)
                         .background(
                             color = MyColor.GrayF5,

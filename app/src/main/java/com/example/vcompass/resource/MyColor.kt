@@ -25,4 +25,5 @@ object MyColor {
     val RedE1 = Color(0xFFDE1E1E)
     val Purple = Color(0xFF470DAD)
     val DarkOrange = Color(0xFFE33F01)
+    val Green = Color(0xFF01CC01)
 }

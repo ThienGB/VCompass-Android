@@ -74,4 +74,17 @@
     <string name="lb_finding_your_place">Finding your place... </string>
     <string name="lb_no_of_rating">(%s Rating)</string>
     <string name="lb_night">/night</string>
+    <string name="lb_start_your_trip">Start your trip</string>
+    <string name="lb_create_memories">Together we create memorable memories for the upcoming journey.</string>
+    <string name="lb_schedule_name_optional">Schedule name (Optional)</string>
+    <string name="hint_schedule_name">Example: Summer vacation in Da Nang</string>
+    <string name="lb_date_go">Start date</string>
+    <string name="lb_date_back">End date</string>
+    <string name="lb_travel_type">Travel type</string>
+    <string name="lb_type_resort">Resort</string>
+    <string name="lb_type_explore">Explore</string>
+    <string name="lb_type_business">Business</string>
+    <string name="lb_type_backpacking">Backpacking</string>
+    <string name="lb_create_manually">Create manually</string>
+    <string name="lb_create_with_ai">Create with AI</string>
 </resources>

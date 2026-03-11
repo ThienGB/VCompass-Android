@@ -16,7 +16,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AutoAwesome
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.EditNote
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -26,14 +25,16 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
 import com.example.vcompass.R
 import com.example.vcompass.resource.CoreTypography
 import com.example.vcompass.resource.CoreTypographyBold
+import com.example.vcompass.resource.CoreTypographyMedium
 import com.example.vcompass.resource.CoreTypographySemiBold
 import com.example.vcompass.resource.MyColor
 import com.example.vcompass.resource.MyDimen
+import com.example.vcompass.ui.components.bottom_sheet.DateRangePicker
+import com.example.vcompass.ui.core.bottom_sheet.BaseBottomSheet
 import com.example.vcompass.ui.core.button.OutlineButton
 import com.example.vcompass.ui.core.button.PrimaryButton
 import com.example.vcompass.ui.core.general.BaseView
@@ -43,12 +44,12 @@ import com.example.vcompass.ui.core.text.CoreText
 import com.example.vcompass.ui.core.text_field.NormalTextField
 import com.example.vcompass.ui.core.title.TitleBarAction
 import com.example.vcompass.util.ScreenContext
-import com.example.vcompass.util.add
 import com.example.vcompass.util.replace
 import com.vcompass.presentation.util.CoreRoute
 import com.vcompass.presentation.viewmodel.accommodation.AccommodationDetailViewModel
-import com.vcompass.presentation.viewmodel.search.MapSearchViewModel
 import org.koin.androidx.compose.koinViewModel
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun CreateScheduleScreen() {
@@ -60,7 +61,7 @@ fun CreateScheduleScreen() {
         state = state,
         navController = navController,
         topBar = {
-            TitleBarAction(text = "Tạo lịch trình")
+            TitleBarAction(text = stringResource(R.string.lb_create_schedule))
         }
     ) {
         CreateScheduleForm()
@@ -71,11 +72,18 @@ fun CreateScheduleScreen() {
 fun CreateScheduleForm() {
     val navController = ScreenContext.navController
     var name by remember { mutableStateOf("") }
-    var startDate by remember { mutableStateOf("") }
-    var endDate by remember { mutableStateOf("") }
-    var selectedType by remember { mutableStateOf("") }
+    val formatter = remember { DateTimeFormatter.ofPattern("dd-MM-yyyy") }
+    var startDate by remember { mutableStateOf(LocalDate.now()) }
+    var endDate by remember { mutableStateOf<LocalDate?>(null) }
+    var selectedTypes by remember { mutableStateOf(listOf<String>()) }
+    val showDatePicker = remember { mutableStateOf(false) }
 
-    val types = listOf("Nghỉ dưỡng", "Khám phá", "Công tác", "Phượt")
+    val types = listOf(
+        stringResource(R.string.lb_type_resort),
+        stringResource(R.string.lb_type_explore),
+        stringResource(R.string.lb_type_business),
+        stringResource(R.string.lb_type_backpacking)
+    )
 
     Column(
         modifier = Modifier
@@ -86,14 +94,14 @@ fun CreateScheduleForm() {
         Spacer(Modifier.height(MyDimen.p16))
 
         CoreText(
-            text = "Bắt đầu chuyến đi của bạn",
+            text = stringResource(R.string.lb_start_your_trip),
             style = CoreTypographyBold.titleSmall
         )
 
         Spacer(Modifier.height(MyDimen.p6))
 
         CoreText(
-            text = "Cùng chúng tôi tạo nên những kỷ niệm đáng nhớ cho hành trình sắp tới.",
+            text = stringResource(R.string.lb_create_memories),
             style = CoreTypography.labelLarge,
             color = MyColor.TextColorLight
         )
@@ -101,7 +109,7 @@ fun CreateScheduleForm() {
         Spacer(Modifier.height(MyDimen.p24))
 
         CoreText(
-            text = "Tên lịch trình (Tùy chọn)",
+            text = stringResource(R.string.lb_schedule_name_optional),
             style = CoreTypographySemiBold.labelMedium
         )
 
@@ -110,7 +118,7 @@ fun CreateScheduleForm() {
         NormalTextField(
             value = name,
             onValueChange = { name = it },
-            label = "Ví dụ: Kỳ nghỉ hè tại Đà Nẵng",
+            label = stringResource(R.string.hint_schedule_name),
             containerColor = MyColor.GrayEEE,
             leadingIcon = Icons.Rounded.EditNote,
             modifier = Modifier.fillMaxWidth()
@@ -121,18 +129,17 @@ fun CreateScheduleForm() {
         Row(
             horizontalArrangement = Arrangement.spacedBy(MyDimen.p12)
         ) {
-
             DateBox(
-                title = "Ngày đi",
-                date = startDate,
-                onClick = {},
+                title = stringResource(R.string.lb_date_go),
+                date = startDate?.format(formatter) ?: "--/--",
+                onClick = { showDatePicker.value = true },
                 modifier = Modifier.weight(1f)
             )
 
             DateBox(
-                title = "Ngày về",
-                date = endDate,
-                onClick = {},
+                title = stringResource(R.string.lb_date_back),
+                date = endDate?.format(formatter) ?: "--/--",
+                onClick = { showDatePicker.value = true },
                 modifier = Modifier.weight(1f)
             )
         }
@@ -140,7 +147,7 @@ fun CreateScheduleForm() {
         Spacer(Modifier.height(MyDimen.p24))
 
         CoreText(
-            text = "Loại hình du lịch",
+            text = stringResource(R.string.lb_travel_type),
             style = CoreTypographySemiBold.labelMedium
         )
 
@@ -153,7 +160,7 @@ fun CreateScheduleForm() {
 
             types.forEach { type ->
 
-                val selected = type == selectedType
+                val selected = selectedTypes.contains(type)
 
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -162,23 +169,21 @@ fun CreateScheduleForm() {
                         .background(
                             if (selected) MyColor.Primary else MyColor.GrayEEE
                         )
-                        .clickable { selectedType = type }
+                        .clickable {
+                            selectedTypes = if (selected) {
+                                selectedTypes - type
+                            } else {
+                                selectedTypes + type
+                            }
+                        }
                         .padding(
                             horizontal = MyDimen.p16,
                             vertical = MyDimen.p10
                         )
                 ) {
-
-                    CoreIcon(
-                        resDrawable = R.drawable.ic_food,
-                        tintColor = if (selected) MyColor.White else MyColor.TextColorPrimary
-                    )
-
-                    SpaceWidth8()
-
                     CoreText(
                         text = type,
-                        style = CoreTypographySemiBold.bodySmall,
+                        style = CoreTypographyMedium.labelMedium,
                         color = if (selected) MyColor.White else MyColor.TextColorPrimary
                     )
                 }
@@ -197,7 +202,7 @@ fun CreateScheduleForm() {
             )
             SpaceWidth8()
             CoreText(
-                text = "Tạo thủ công",
+                text = stringResource(R.string.lb_create_manually),
                 style = CoreTypographySemiBold.labelLarge,
                 color = MyColor.Primary
             )
@@ -212,17 +217,24 @@ fun CreateScheduleForm() {
             CoreIcon(imageVector = Icons.Rounded.AutoAwesome, tintColor = MyColor.White)
             SpaceWidth8()
             CoreText(
-                text = "Tạo bằng AI",
+                text = stringResource(R.string.lb_create_with_ai),
                 style = CoreTypographySemiBold.labelLarge,
                 color = MyColor.White
             )
         }
 
         Spacer(Modifier.height(MyDimen.p20))
+        BaseBottomSheet(
+            bottomSheetState = showDatePicker,
+            onDismiss = { showDatePicker.value = false }
+        ) {
+            DateRangePicker(
+                selectedStartDate = startDate,
+                selectedEndDate = endDate,
+                onStartDateSelected = { startDate = it },
+                onEndDateSelected = { endDate = it }
+            )
+        }
     }
 }
-
-
-
-
 

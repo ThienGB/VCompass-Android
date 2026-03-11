@@ -4,11 +4,14 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.vcompass.screen.accommodation.AccommodationDetailScreen
+import com.example.vcompass.screen.conversation.ChatDetailScreen
+import com.example.vcompass.screen.conversation.ConversationScreen
 import com.example.vcompass.screen.explore.ExploreScreen
 import com.example.vcompass.screen.explore.search.ExploreSearchScreen
 import com.example.vcompass.screen.home.HomeScreen
 import com.example.vcompass.screen.introduce.IntroduceScreen
 import com.example.vcompass.screen.login.LoginScreen
+import com.example.vcompass.screen.notification.NotificationScreen
 import com.example.vcompass.screen.schedule.create_schedule.CreateScheduleScreen
 import com.example.vcompass.screen.schedule.schedule_detail.ScheduleScreen
 import com.example.vcompass.screen.search.MapSearchScreen
@@ -67,6 +70,15 @@ fun AppNavGraph() {
         }
         composable(CoreRoute.CreateSchedule.route) {
             CreateScheduleScreen()
+        }
+        composable(CoreRoute.Notification.route) {
+            NotificationScreen()
+        }
+        composable(CoreRoute.Conversation.route) {
+            ConversationScreen()
+        }
+        composable(CoreRoute.ChatDetail.route) {
+            ChatDetailScreen()
         }
     }
 }

@@ -18,6 +18,7 @@ fun NoBorderTextField(
     value: String,
     onValueChange: (String) -> Unit,
     label: String = "",
+    placeholder: String? = null,
     errorMessage: String? = stringResource(R.string.lb_field_required),
     imeAction: ImeAction = ImeAction.Next,
     enabled: Boolean = true,
@@ -26,6 +27,7 @@ fun NoBorderTextField(
     isSingleLine: Boolean = true,
     textStyle: TextStyle = CoreTypography.labelLarge,
     leadingIcon: ImageVector? = null,
+    trailingIcon: @Composable (() -> Unit)? = null,
     containerColor: Color = MyColor.Transparent,
     keyboardType: KeyboardType = KeyboardType.Text,
 ) {
@@ -40,6 +42,11 @@ fun NoBorderTextField(
             if (leadingIcon != null)
                 TextFieldIcon(imageVector = leadingIcon)
         },
+        trailingIcon = {
+            if (trailingIcon != null)
+                trailingIcon()
+        },
+        placeholder = placeholder,
         textStyle = textStyle,
         keyboardType = keyboardType,
         imeAction = imeAction,

@@ -75,4 +75,17 @@
     <string name="lb_finding_your_place">Đang lấy vị trí hiện tại... </string>
     <string name="lb_no_of_rating">(%s Đánh giá)</string>
     <string name="lb_night">/đêm</string>
+    <string name="lb_start_your_trip">Bắt đầu chuyến đi của bạn</string>
+    <string name="lb_create_memories">Cùng chúng tôi tạo nên những kỷ niệm đáng nhớ cho hành trình sắp tới.</string>
+    <string name="lb_schedule_name_optional">Tên lịch trình (Tùy chọn)</string>
+    <string name="hint_schedule_name">Ví dụ: Kỳ nghỉ hè tại Đà Nẵng</string>
+    <string name="lb_date_go">Ngày đi</string>
+    <string name="lb_date_back">Ngày về</string>
+    <string name="lb_travel_type">Loại hình du lịch</string>
+    <string name="lb_type_resort">Nghỉ dưỡng</string>
+    <string name="lb_type_explore">Khám phá</string>
+    <string name="lb_type_business">Công tác</string>
+    <string name="lb_type_backpacking">Phượt</string>
+    <string name="lb_create_manually">Tạo thủ công</string>
+    <string name="lb_create_with_ai">Tạo bằng AI</string>
 </resources>

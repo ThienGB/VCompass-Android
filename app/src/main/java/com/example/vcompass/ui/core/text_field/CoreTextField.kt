@@ -133,7 +133,6 @@ fun CoreTextField(
             },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = p8)
                 .onFocusChanged { focusState ->
                     val wasFocused = isFocused
                     isFocused = focusState.isFocused
@@ -253,9 +252,12 @@ private fun TextFieldDecorationBox(
                         leadingIcon()
                     }
                 }
-                Box(modifier = Modifier.weight(1f)) {
+                Box(
+                    modifier = Modifier.weight(1f),
+                    contentAlignment = Alignment.CenterStart
+                ) {
                     innerTextField()
-                    if (shouldFloatLabel && value.isEmpty() && placeholder != null) {
+                    if (!shouldFloatLabel && value.isEmpty() && placeholder != null) {
                         CoreText(
                             text = placeholder,
                             style = textStyle,
